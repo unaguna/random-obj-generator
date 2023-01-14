@@ -12,16 +12,16 @@ def randint(
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory[int]:
-    """整数乱数ファクトリー
+    """Return a factory generating random int values.
 
     Parameters
     ----------
     a : int
-        最小値
+        the minimum
     b : int
-        最大値
-    rnd : int, optional
-        使用する乱数生成器
+        the maximum
+    rnd : Random, optional
+        random number generator to be used
 
     Raises
     ------
@@ -32,7 +32,7 @@ def randint(
 
 
 class IntRandomFactory(Factory[int]):
-    """整数乱数ファクトリー"""
+    """factory generating random int values"""
 
     _random: Random
     _min: int
@@ -45,16 +45,16 @@ class IntRandomFactory(Factory[int]):
         *,
         rnd: t.Optional[Random] = None,
     ):
-        """整数乱数ファクトリー
+        """Return a factory generating random int values.
 
         Parameters
         ----------
         minimum : int
-            最小値
+            the minimum
         maximum : int
-            最大値
-        rnd : int, optional
-            使用する乱数生成器
+            the maximum
+        rnd : Random, optional
+            random number generator to be used
 
         Raises
         ------

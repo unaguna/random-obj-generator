@@ -1,11 +1,11 @@
 import pytest
 
-import ranog.f
+import ranog.factory
 from ranog.exceptions import FactoryConstructionError
 
 
 def test__random_str__without_options():
-    factory = ranog.f.randstr()
+    factory = ranog.factory.randstr()
 
     value = factory.next()
 
@@ -14,7 +14,7 @@ def test__random_str__without_options():
 
 @pytest.mark.parametrize("length", (0, 1, 2, 3))
 def test__random_str__with_length(length):
-    factory = ranog.f.randstr(length=length)
+    factory = ranog.factory.randstr(length=length)
 
     value = factory.next()
 
@@ -31,7 +31,7 @@ def test__random_str__with_length(length):
     ),
 )
 def test__random_str__with_charset(charset):
-    factory = ranog.f.randstr(charset=charset)
+    factory = ranog.factory.randstr(charset=charset)
 
     value = factory.next()
 
@@ -48,7 +48,7 @@ def test__random_str__with_charset(charset):
     ),
 )
 def test__random_str__with_charset_and_length(charset, length):
-    factory = ranog.f.randstr(length=length, charset=charset)
+    factory = ranog.factory.randstr(length=length, charset=charset)
 
     value = factory.next()
 
@@ -58,7 +58,7 @@ def test__random_str__with_charset_and_length(charset, length):
 
 
 def test__random_str_normal_when_empty_charset_and_zero_length():
-    factory = ranog.f.randstr(length=0, charset="")
+    factory = ranog.factory.randstr(length=0, charset="")
 
     value = factory.next()
 
@@ -69,7 +69,7 @@ def test__random_str_normal_when_empty_charset_and_zero_length():
 @pytest.mark.parametrize("length", (1, 2))
 def test__random_str_error_when_empty_charset_and_nonzero_length(length):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.f.randstr(length=length, charset="")
+        ranog.factory.randstr(length=length, charset="")
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

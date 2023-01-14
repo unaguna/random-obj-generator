@@ -1,8 +1,10 @@
+import string
 import typing as t
 from random import Random
 
 from ._base import Factory
 from .._utils.nullsafe import dfor
+from ..exceptions import FactoryConstructionError
 
 
 def randstr(
@@ -34,6 +36,8 @@ class StrRandomFactory(Factory[str]):
     """factory generating random int values"""
 
     _random: Random
+    _length: int
+    _charset: str
 
     def __init__(
         self,
@@ -59,6 +63,12 @@ class StrRandomFactory(Factory[str]):
             When the specified generating conditions are inconsistent.
         """
         self._random = dfor(rnd, Random())
+        self._length = length
+        self._charset = dfor(charset, string.ascii_letters + string.digits)
 
-    def next(self) -> int:
-        pass
+        if length > 0 and len(self._charset) == 0:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
+
+    def next(self) -> str:
+        length = self._length
+        return "".join(self._random.choices(self._charset, k=length))

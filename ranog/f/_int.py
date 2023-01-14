@@ -3,6 +3,7 @@ import typing as t
 
 from ._base import Factory
 from .._utils.nullsafe import dfor
+from ..exceptions import FactoryConstructionError
 
 
 def randint(
@@ -11,22 +12,27 @@ def randint(
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory[int]:
-    """整数乱数ファクトリー
+    """Return a factory generating random int values.
 
     Parameters
     ----------
     a : int
-        最小値
+        the minimum
     b : int
-        最大値
-    rnd : int, optional
-        使用する乱数生成器
+        the maximum
+    rnd : Random, optional
+        random number generator to be used
+
+    Raises
+    ------
+    FactoryConstructionError
+        When the specified generating conditions are inconsistent.
     """
     return IntRandomFactory(a, b, rnd=rnd)
 
 
 class IntRandomFactory(Factory[int]):
-    """整数乱数ファクトリー"""
+    """factory generating random int values"""
 
     _random: Random
     _min: int
@@ -39,20 +45,28 @@ class IntRandomFactory(Factory[int]):
         *,
         rnd: t.Optional[Random] = None,
     ):
-        """整数乱数ファクトリー
+        """Return a factory generating random int values.
 
         Parameters
         ----------
         minimum : int
-            最小値
+            the minimum
         maximum : int
-            最大値
-        rnd : int, optional
-            使用する乱数生成器
+            the maximum
+        rnd : Random, optional
+            random number generator to be used
+
+        Raises
+        ------
+        FactoryConstructionError
+            When the specified generating conditions are inconsistent.
         """
         self._random = dfor(rnd, Random())
         self._min = minimum
         self._max = maximum
+
+        if minimum > maximum:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
 
     def next(self) -> int:
         return self._random.randint(self._min, self._max)

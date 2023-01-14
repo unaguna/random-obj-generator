@@ -1,0 +1,75 @@
+import pytest
+
+import ranog.f
+from ranog.exceptions import FactoryConstructionError
+
+
+def test__random_str__without_options():
+    factory = ranog.f.randstr()
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+
+
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_str__with_length(length):
+    factory = ranog.f.randstr(length=length)
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert len(value) == length
+
+
+@pytest.mark.parametrize(
+    ("charset",),
+    (
+        ("a",),
+        ("abc",),
+        ("xyz",),
+    ),
+)
+def test__random_str__with_charset(charset):
+    factory = ranog.f.randstr(charset=charset)
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert set(value) <= set(charset)
+
+
+@pytest.mark.parametrize(
+    ("charset", "length"),
+    (
+        ("a", 2),
+        ("abc", 3),
+        ("xyz", 3),
+    ),
+)
+def test__random_str__with_charset_and_length(charset, length):
+    factory = ranog.f.randstr(length=length, charset=charset)
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert len(value) == length
+    assert set(value) <= set(charset)
+
+
+def test__random_str_normal_when_empty_charset_and_zero_length():
+    factory = ranog.f.randstr(length=0, charset="")
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert value == ""
+
+
+@pytest.mark.parametrize("length", (1, 2))
+def test__random_str_error_when_empty_charset_and_nonzero_length(length):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        ranog.f.randstr(length=length, charset="")
+    e = e_ctx.value
+
+    assert e.message == "the generating conditions are inconsistent"

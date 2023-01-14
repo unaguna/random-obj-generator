@@ -4,6 +4,41 @@ import ranog.f
 from ranog.exceptions import FactoryConstructionError
 
 
+def test__random_str__without_options():
+    factory = ranog.f.randstr()
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+
+
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_str__with_length(length):
+    factory = ranog.f.randstr(length=length)
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert len(value) == length
+
+
+@pytest.mark.parametrize(
+    ("charset",),
+    (
+        ("a",),
+        ("abc",),
+        ("xyz",),
+    ),
+)
+def test__random_str__with_charset(charset):
+    factory = ranog.f.randstr(charset=charset)
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert set(value) <= set(charset)
+
+
 @pytest.mark.parametrize(
     ("charset", "length"),
     (
@@ -12,7 +47,7 @@ from ranog.exceptions import FactoryConstructionError
         ("xyz", 3),
     ),
 )
-def test__random_str(charset, length):
+def test__random_str__with_charset_and_length(charset, length):
     factory = ranog.f.randstr(length=length, charset=charset)
 
     value = factory.next()

@@ -110,6 +110,7 @@ def test__from_example__dict_value():
         "g": ranog.DictItemExample(ranog.Example(1, str)),
         "h": ranog.factory.randint(5, 5),
         "i": ranog.DictItemExample(ranog.factory.randint(5, 5)),
+        "j": [1, ranog.Example(str)],
         "z": ranog.DictItemExample(int, 0.0),
     }
     factory = ranog.factory.from_example(example)
@@ -127,6 +128,11 @@ def test__from_example__dict_value():
     assert isinstance(value.get("g"), (int, str))
     assert value.get("h") == 5
     assert value.get("i") == 5
+    assert (
+        isinstance(value.get("j"), list)
+        and isinstance(value.get("j")[0], int)
+        and isinstance(value.get("j")[1], str)
+    )
     assert "z" not in value
 
 

@@ -31,6 +31,18 @@ def test__from_example__str_value(obj):
     assert isinstance(value, str)
 
 
+def test__from_example__list_type():
+    factory = ranog.factory.from_example(list)
+    value = factory.next()
+    assert isinstance(value, list)
+
+
+def test__from_example__tuple_type():
+    factory = ranog.factory.from_example(tuple)
+    value = factory.next()
+    assert isinstance(value, tuple)
+
+
 def test__from_example__dict_type():
     factory = ranog.factory.from_example(dict)
     value = factory.next()

@@ -1,7 +1,7 @@
 import typing as t
 from random import Random
 
-from . import DictItem, Factory, randdict, randint, randstr, union
+from . import DictItem, Factory, randdict, randlist, randint, randstr, union
 from ..exceptions import FactoryConstructionError
 
 import ranog
@@ -10,6 +10,8 @@ import ranog
 _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = {
     int: lambda rnd: randint(0, 100, rnd=rnd),
     str: lambda rnd: randstr(rnd=rnd),
+    list: lambda rnd: randlist(randstr(), rnd=rnd),
+    tuple: lambda rnd: randlist(randstr(), type=tuple, rnd=rnd),
     dict: lambda rnd: randdict({"key": randint(0, 100, rnd=rnd)}, rnd=rnd),
 }
 

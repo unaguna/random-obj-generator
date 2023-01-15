@@ -23,22 +23,40 @@ def randdict(
     rnd : Random, optional
         random number generator to be used
     """
-
-    def normalize_item(item: t.Union[Factory, _item_tuple]) -> _Item:
-        if isinstance(item, Factory):
-            return _Item(1.0, item)
-        else:
-            return _Item(item[1], item[0])
-
-    items_normalized = {k: normalize_item(v) for k, v in items.items()}
+    items_normalized = {k: _Item(v) for k, v in items.items()}
 
     return DictRandomFactory(items_normalized, rnd=rnd)
 
 
 @dataclass
 class _Item:
-    prop_exists: float
     factory: Factory
+    prop_exists: float
+
+    @t.overload
+    def __init__(self, factory: Factory):
+        ...
+
+    @t.overload
+    def __init__(self, factory: Factory, prop_exists: float):
+        ...
+
+    @t.overload
+    def __init__(self, item: _item_tuple):
+        ...
+
+    def __init__(self, *args):
+        if len(args) == 1 and isinstance(args[0], Factory):
+            self.prop_exists = 1.0
+            self.factory = args[0]
+        elif len(args) == 1 and isinstance(args[0], tuple):
+            self.prop_exists = args[0][1]
+            self.factory = args[0][0]
+        elif len(args) == 2:
+            self.prop_exists = args[0]
+            self.factory = args[1]
+        else:
+            raise ValueError()
 
 
 class DictRandomFactory(Factory[dict]):

@@ -9,27 +9,8 @@ from .._utils.nullsafe import dfor
 _item_tuple = t.Tuple[Factory, float]
 
 
-def randdict(
-    items: t.Mapping[t.Hashable, t.Union[Factory, _item_tuple]],
-    *,
-    rnd: t.Optional[Random] = None,
-) -> Factory[int]:
-    """Return a factory generating random dict.
-
-    Parameters
-    ----------
-    items : Mapping
-        the factories of each key
-    rnd : Random, optional
-        random number generator to be used
-    """
-    items_normalized = {k: _Item(v) for k, v in items.items()}
-
-    return DictRandomFactory(items_normalized, rnd=rnd)
-
-
 @dataclass
-class _Item:
+class DictItem:
     factory: Factory
     prop_exists: float
 
@@ -59,15 +40,36 @@ class _Item:
             raise ValueError()
 
 
+def randdict(
+    items: t.Mapping[t.Hashable, t.Union[Factory, _item_tuple, DictItem]],
+    *,
+    rnd: t.Optional[Random] = None,
+) -> Factory[int]:
+    """Return a factory generating random dict.
+
+    Parameters
+    ----------
+    items : Mapping
+        the factories of each key
+    rnd : Random, optional
+        random number generator to be used
+    """
+    items_normalized = {
+        k: v if isinstance(v, DictItem) else DictItem(v) for k, v in items.items()
+    }
+
+    return DictRandomFactory(items_normalized, rnd=rnd)
+
+
 class DictRandomFactory(Factory[dict]):
     """factory generating random dict"""
 
     _random: Random
-    _items: t.Mapping[t.Hashable, _Item]
+    _items: t.Mapping[t.Hashable, DictItem]
 
     def __init__(
         self,
-        items: t.Mapping[t.Hashable, _Item],
+        items: t.Mapping[t.Hashable, DictItem],
         *,
         rnd: t.Optional[Random] = None,
     ):

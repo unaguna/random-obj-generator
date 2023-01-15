@@ -41,19 +41,27 @@ class DictItem:
 
 
 def randdict(
-    items: t.Mapping[t.Hashable, t.Union[Factory, _item_tuple, DictItem]],
+    items_dict: t.Optional[
+        t.Mapping[t.Hashable, t.Union[Factory, _item_tuple, DictItem]]
+    ] = None,
     *,
     rnd: t.Optional[Random] = None,
+    **items: t.Union[Factory, _item_tuple, DictItem],
 ) -> Factory[int]:
     """Return a factory generating random dict.
 
     Parameters
     ----------
     items : Mapping
-        the factories of each key
+        the factories of each key. If `items_dict` is specified, `items` will be ignored.
+    items_dict: Mapping
+        the factories of each key. Use when keyword arguments cannot be specified.
     rnd : Random, optional
         random number generator to be used
     """
+    if items_dict is not None:
+        items = items_dict
+
     items_normalized = {
         k: v if isinstance(v, DictItem) else DictItem(v) for k, v in items.items()
     }

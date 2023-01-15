@@ -11,15 +11,18 @@ def test__random_list(length):
         ranog.factory.randstr(length=0),
         length=length,
     )
-    value = factory.next()
 
-    assert len(value) == length
-    if length >= 1:
-        assert value[0] == 1
-    if length >= 2:
-        assert value[1] == ""
-    if length >= 3:
-        assert value[2] == ""
+    # generator の実装の正しさの検証のため2回実行する
+    for _ in range(2):
+        value = factory.next()
+
+        assert len(value) == length
+        if length >= 1:
+            assert value[0] == 1
+        if length >= 2:
+            assert value[1] == ""
+        if length >= 3:
+            assert value[2] == ""
 
 
 def test__random_list__without_length():

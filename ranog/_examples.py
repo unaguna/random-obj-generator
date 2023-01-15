@@ -1,4 +1,5 @@
 import typing as t
+from dataclasses import dataclass
 
 
 class Example(t.Sequence):
@@ -20,3 +21,9 @@ class Example(t.Sequence):
 
     def __init__(self, *objs):
         self._objs = objs
+
+
+@dataclass
+class DictItemExample:
+    example: t.Any
+    prop_exists: float = 1.0

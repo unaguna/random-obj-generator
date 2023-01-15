@@ -34,8 +34,8 @@ class DictItem:
             self.prop_exists = args[0][1]
             self.factory = args[0][0]
         elif len(args) == 2:
-            self.prop_exists = args[0]
-            self.factory = args[1]
+            self.factory = args[0]
+            self.prop_exists = args[1]
         else:
             raise ValueError()
 

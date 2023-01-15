@@ -55,5 +55,13 @@ def from_example(
             )
     elif isinstance(example, t.Mapping):
         return randdict({k: _dict_item(v, rnd=rnd) for k, v in example.items()})
+    elif isinstance(example, t.Sequence) and not isinstance(example, str):
+        if isinstance(example, (tuple, list)):
+            _type = type(example)
+        else:
+            _type = None
+        return randlist(
+            *map(lambda x: from_example(x, rnd=rnd), example), type=_type, rnd=rnd
+        )
     else:
         return from_example(type(example), rnd=rnd)

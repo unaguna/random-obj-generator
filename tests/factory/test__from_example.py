@@ -31,6 +31,12 @@ def test__from_example__str_value(obj):
     assert isinstance(value, str)
 
 
+def test__from_example__dict_type():
+    factory = ranog.factory.from_example(dict)
+    value = factory.next()
+    assert isinstance(value, dict)
+
+
 @pytest.mark.parametrize("obj", (type, pytest.mark))
 def test__from_example__error_when_unsupported_obj(obj):
     with pytest.raises(FactoryConstructionError) as e_ctx:

@@ -13,8 +13,8 @@ _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = 
 }
 
 
-def from_object(
-    obj: t.Any,
+def from_example(
+    example: t.Any,
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory:
@@ -22,7 +22,7 @@ def from_object(
 
     Parameters
     ----------
-    obj : int
+    example : Any
         the type or the example
     rnd : Random, optional
         random number generator to be used
@@ -32,14 +32,14 @@ def from_object(
     FactoryConstructionError
         When the specified example or type is not supported.
     """
-    if isinstance(obj, ranog.Example):
-        return union(*map(lambda x: from_object(x, rnd=rnd), obj), rnd=rnd)
-    elif isinstance(obj, type):
-        if obj in _FACTORY_CONSTRUCTOR:
-            return _FACTORY_CONSTRUCTOR[obj](rnd)
+    if isinstance(example, ranog.Example):
+        return union(*map(lambda x: from_example(x, rnd=rnd), example), rnd=rnd)
+    elif isinstance(example, type):
+        if example in _FACTORY_CONSTRUCTOR:
+            return _FACTORY_CONSTRUCTOR[example](rnd)
         else:
             raise FactoryConstructionError(
-                f"cannot construct factory for unsupported type: {obj}"
+                f"cannot construct factory for unsupported type: {example}"
             )
     else:
-        return from_object(type(obj), rnd=rnd)
+        return from_example(type(example), rnd=rnd)

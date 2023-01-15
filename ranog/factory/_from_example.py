@@ -42,6 +42,8 @@ def from_example(
     """
     if isinstance(example, ranog.Example):
         return union(*map(lambda x: from_example(x, rnd=rnd), example), rnd=rnd)
+    elif isinstance(example, Factory):
+        return example
     elif isinstance(example, type):
         if example in _FACTORY_CONSTRUCTOR:
             return _FACTORY_CONSTRUCTOR[example](rnd)

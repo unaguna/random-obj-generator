@@ -46,6 +46,8 @@ def test__from_example__dict_value():
         "e": ranog.DictItemExample(int),
         "f": ranog.Example(1, str),
         "g": ranog.DictItemExample(ranog.Example(1, str)),
+        "h": ranog.factory.randint(5, 5),
+        "i": ranog.DictItemExample(ranog.factory.randint(5, 5)),
         "z": ranog.DictItemExample(int, 0.0),
     }
     factory = ranog.factory.from_example(example)
@@ -61,7 +63,21 @@ def test__from_example__dict_value():
     assert isinstance(value.get("e"), int)
     assert isinstance(value.get("f"), (int, str))
     assert isinstance(value.get("g"), (int, str))
+    assert value.get("h") == 5
+    assert value.get("i") == 5
     assert "z" not in value
+
+
+@pytest.mark.parametrize(
+    "input_factory",
+    (
+        ranog.factory.randint(1, 1),
+        ranog.factory.randstr(),
+    ),
+)
+def test__from_example__factory(input_factory):
+    factory = ranog.factory.from_example(input_factory)
+    assert factory is input_factory
 
 
 @pytest.mark.parametrize("obj", (type, pytest.mark))

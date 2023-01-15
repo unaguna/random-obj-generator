@@ -1,1 +1,1 @@
-from ._examples import Example
+from ._examples import DictItemExample, Example

@@ -31,6 +31,68 @@ def test__from_example__str_value(obj):
     assert isinstance(value, str)
 
 
+def test__from_example__list_type():
+    factory = ranog.factory.from_example(list)
+    value = factory.next()
+    assert isinstance(value, list)
+
+
+def test__from_example__list_value():
+    example = [
+        str,
+        -1000,
+        {"cc": 1},
+        [1, 2],
+        ranog.Example(1, str),
+        ranog.factory.randint(5, 5),
+    ]
+    factory = ranog.factory.from_example(example)
+    value = factory.next()
+
+    assert isinstance(value, list)
+    assert isinstance(value[0], str)
+    assert isinstance(value[1], int) and value[1] != -1000
+    assert isinstance(value[2], dict) and isinstance(value[2].get("cc"), int)
+    assert (
+        isinstance(value[3], list)
+        and isinstance(value[3][0], int)
+        and isinstance(value[3][1], int)
+    )
+    assert isinstance(value[4], (int, str))
+    assert value[5] == 5
+
+
+def test__from_example__tuple_type():
+    factory = ranog.factory.from_example(tuple)
+    value = factory.next()
+    assert isinstance(value, tuple)
+
+
+def test__from_example__tuple_value():
+    example = (
+        str,
+        -1000,
+        {"cc": 1},
+        [1, 2],
+        ranog.Example(1, str),
+        ranog.factory.randint(5, 5),
+    )
+    factory = ranog.factory.from_example(example)
+    value = factory.next()
+
+    assert isinstance(value, tuple)
+    assert isinstance(value[0], str)
+    assert isinstance(value[1], int) and value[1] != -1000
+    assert isinstance(value[2], dict) and isinstance(value[2].get("cc"), int)
+    assert (
+        isinstance(value[3], list)
+        and isinstance(value[3][0], int)
+        and isinstance(value[3][1], int)
+    )
+    assert isinstance(value[4], (int, str))
+    assert value[5] == 5
+
+
 def test__from_example__dict_type():
     factory = ranog.factory.from_example(dict)
     value = factory.next()
@@ -48,6 +110,7 @@ def test__from_example__dict_value():
         "g": ranog.DictItemExample(ranog.Example(1, str)),
         "h": ranog.factory.randint(5, 5),
         "i": ranog.DictItemExample(ranog.factory.randint(5, 5)),
+        "j": [1, ranog.Example(str)],
         "z": ranog.DictItemExample(int, 0.0),
     }
     factory = ranog.factory.from_example(example)
@@ -65,6 +128,11 @@ def test__from_example__dict_value():
     assert isinstance(value.get("g"), (int, str))
     assert value.get("h") == 5
     assert value.get("i") == 5
+    assert (
+        isinstance(value.get("j"), list)
+        and isinstance(value.get("j")[0], int)
+        and isinstance(value.get("j")[1], str)
+    )
     assert "z" not in value
 
 

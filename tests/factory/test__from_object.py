@@ -1,5 +1,6 @@
 import pytest
 
+import ranog
 import ranog.factory
 from ranog.exceptions import FactoryConstructionError
 
@@ -37,3 +38,10 @@ def test__from_object__error_when_unsupported_obj(obj):
     e = e_ctx.value
 
     assert e.message.startswith("cannot construct factory for unsupported type: ")
+
+
+def test__from_object__union_type():
+    factory = ranog.factory.from_object(ranog.Example(int, str))
+    values = set(map(lambda x: factory.next(), range(200)))
+    value_types = set(map(type, values))
+    assert value_types == {int, str}

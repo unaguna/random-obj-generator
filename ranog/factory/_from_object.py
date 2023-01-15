@@ -1,8 +1,10 @@
 import typing as t
 from random import Random
 
-from . import Factory, randint, randstr
+from . import Factory, randint, randstr, union
 from ..exceptions import FactoryConstructionError
+
+import ranog
 
 
 _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = {
@@ -30,7 +32,9 @@ def from_object(
     FactoryConstructionError
         When the specified example or type is not supported.
     """
-    if isinstance(obj, type):
+    if isinstance(obj, ranog.Example):
+        return union(*map(lambda x: from_object(x, rnd=rnd), obj), rnd=rnd)
+    elif isinstance(obj, type):
         if obj in _FACTORY_CONSTRUCTOR:
             return _FACTORY_CONSTRUCTOR[obj](rnd)
         else:

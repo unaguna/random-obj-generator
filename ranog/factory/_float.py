@@ -7,8 +7,8 @@ from ..exceptions import FactoryConstructionError
 
 
 def randfloat(
-    a: float,
-    b: float,
+    a: t.SupportsFloat,
+    b: t.SupportsFloat,
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory[float]:
@@ -40,8 +40,8 @@ class FloatRandomFactory(Factory[float]):
 
     def __init__(
         self,
-        minimum: float,
-        maximum: float,
+        minimum: t.SupportsFloat,
+        maximum: t.SupportsFloat,
         *,
         rnd: t.Optional[Random] = None,
     ):
@@ -62,8 +62,8 @@ class FloatRandomFactory(Factory[float]):
             When the specified generating conditions are inconsistent.
         """
         self._random = dfor(rnd, Random())
-        self._min = minimum
-        self._max = maximum
+        self._min = float(minimum)
+        self._max = float(maximum)
 
         if minimum > maximum:
             raise FactoryConstructionError("the generating conditions are inconsistent")

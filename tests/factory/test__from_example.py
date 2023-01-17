@@ -18,6 +18,19 @@ def test__from_example__int_value(obj):
     assert isinstance(value, int)
 
 
+def test__from_example__float_type():
+    factory = ranog.factory.from_example(float)
+    value = factory.next()
+    assert isinstance(value, float)
+
+
+@pytest.mark.parametrize("obj", (-1.0, 0.0, 0.1))
+def test__from_example__float_value(obj):
+    factory = ranog.factory.from_example(obj)
+    value = factory.next()
+    assert isinstance(value, float)
+
+
 def test__from_example__str_type():
     factory = ranog.factory.from_example(str)
     value = factory.next()

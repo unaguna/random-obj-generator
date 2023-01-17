@@ -7,19 +7,25 @@ from ..exceptions import FactoryConstructionError
 
 
 def randfloat(
-    a: t.SupportsFloat,
-    b: t.SupportsFloat,
+    a: t.Optional[t.SupportsFloat] = None,
+    b: t.Optional[t.SupportsFloat] = None,
     *,
+    p_inf: t.SupportsFloat = 0.0,
+    n_inf: t.SupportsFloat = 0.0,
     rnd: t.Optional[Random] = None,
 ) -> Factory[float]:
     """Return a factory generating random float values.
 
     Parameters
     ----------
-    a : float
+    a : float, optional
         the minimum
-    b : float
+    b : float, optional
         the maximum
+    p_inf : float, default=0
+        the probability of positive infinity
+    n_inf : float, default=0
+        the probability of negative infinity
     rnd : Random, optional
         random number generator to be used
 
@@ -28,7 +34,7 @@ def randfloat(
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    return FloatRandomFactory(a, b, rnd=rnd)
+    return FloatRandomFactory(a, b, p_inf=p_inf, n_inf=n_inf, rnd=rnd)
 
 
 class FloatRandomFactory(Factory[float]):
@@ -37,22 +43,30 @@ class FloatRandomFactory(Factory[float]):
     _random: Random
     _min: float
     _max: float
+    _p_inf: float
+    _n_inf: float
 
     def __init__(
         self,
-        minimum: t.SupportsFloat,
-        maximum: t.SupportsFloat,
+        minimum: t.Optional[t.SupportsFloat] = None,
+        maximum: t.Optional[t.SupportsFloat] = None,
         *,
+        p_inf: t.SupportsFloat = 0.0,
+        n_inf: t.SupportsFloat = 0.0,
         rnd: t.Optional[Random] = None,
     ):
         """Return a factory generating random float values.
 
         Parameters
         ----------
-        minimum : float
+        minimum : float, optional
             the minimum
-        maximum : float
+        maximum : float, optional
             the maximum
+        p_inf : float, default=0
+            the probability of positive infinity
+        n_inf : float, default=0
+            the probability of negative infinity
         rnd : Random, optional
             random number generator to be used
 
@@ -62,12 +76,42 @@ class FloatRandomFactory(Factory[float]):
             When the specified generating conditions are inconsistent.
         """
         self._random = dfor(rnd, Random())
-        self._min = float(minimum)
-        self._max = float(maximum)
+        self._min, self._max = self._normalize(minimum, maximum)
+        self._p_inf = float(p_inf)
+        self._n_inf = float(n_inf)
 
-        if minimum > maximum:
+        if self._min > self._max:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
+        if self._p_inf + self._n_inf > 1.0:
             raise FactoryConstructionError("the generating conditions are inconsistent")
 
     def next(self) -> float:
+        pre_weight = self._random.random()
+        pre_weight -= self._p_inf
+        if pre_weight < 0:
+            return float("inf")
+        pre_weight -= self._n_inf
+        if pre_weight < 0:
+            return float("-inf")
+
         weight = self._random.random()
         return self._max * weight + self._min * (1 - weight)
+
+    @classmethod
+    def _normalize(
+        cls,
+        minimum: t.Optional[t.SupportsFloat],
+        maximum: t.Optional[t.SupportsFloat],
+    ) -> t.Tuple[float, float]:
+        default_range = 1.0
+
+        if minimum is None and maximum is None:
+            return 0.0, 1.0
+        elif minimum is None:
+            maximum = float(maximum)
+            return maximum - default_range, maximum
+        elif maximum is None:
+            minimum = float(minimum)
+            return minimum, minimum + default_range
+        else:
+            return float(minimum), float(maximum)

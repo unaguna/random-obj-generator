@@ -4,13 +4,14 @@ from random import Random
 
 from ._base import Factory
 from ._float import randfloat
-from .._utils.nullsafe import dfor
+from .._utils.nullsafe import dfor, dforc
 
 
 def randdecimal(
     a: t.Optional[t.SupportsFloat] = None,
     b: t.Optional[t.SupportsFloat] = None,
     *,
+    decimal_len: t.Optional[int] = None,
     p_inf: t.SupportsFloat = 0.0,
     n_inf: t.SupportsFloat = 0.0,
     nan: t.SupportsFloat = 0.0,
@@ -24,6 +25,8 @@ def randdecimal(
         the minimum
     b : float, optional
         the maximum
+    decimal_len : int, optional
+        the length of decimal part
     p_inf : float, default=0
         the probability of positive infinity
     n_inf : float, default=0
@@ -38,7 +41,9 @@ def randdecimal(
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    return DecimalRandomFactory(a, b, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=rnd)
+    return DecimalRandomFactory(
+        a, b, decimal_len=decimal_len, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=rnd
+    )
 
 
 class DecimalRandomFactory(Factory[Decimal]):
@@ -46,12 +51,14 @@ class DecimalRandomFactory(Factory[Decimal]):
 
     _random: Random
     _factory: Factory[float]
+    _decimal_len: t.Optional[Decimal]
 
     def __init__(
         self,
         minimum: t.Optional[t.SupportsFloat] = None,
         maximum: t.Optional[t.SupportsFloat] = None,
         *,
+        decimal_len: t.Optional[int] = None,
         p_inf: t.SupportsFloat = 0.0,
         n_inf: t.SupportsFloat = 0.0,
         nan: t.SupportsFloat = 0.0,
@@ -65,6 +72,8 @@ class DecimalRandomFactory(Factory[Decimal]):
             the minimum
         maximum : float, optional
             the maximum
+        decimal_len : int, optional
+            the length of decimal part
         p_inf : float, default=0
             the probability of positive infinity
         n_inf : float, default=0
@@ -83,8 +92,13 @@ class DecimalRandomFactory(Factory[Decimal]):
         self._factory = randfloat(
             minimum, maximum, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=self._random
         )
+        self._decimal_len = dforc(lambda x: Decimal(1).scaleb(-x), decimal_len)
 
     def next(self) -> Decimal:
         pre_value = self._factory.next()
+        value = Decimal(pre_value)
 
-        return Decimal(pre_value)
+        if self._decimal_len is not None:
+            value = value.quantize(self._decimal_len)
+
+        return value

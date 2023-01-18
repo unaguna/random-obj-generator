@@ -90,6 +90,15 @@ def test__random_float__inf(p_inf, n_inf, expected_value):
     assert value == expected_value
 
 
+def test__random_float__nan():
+    factory = ranog.factory.randfloat(nan=1.0)
+
+    value = factory.next()
+
+    assert isinstance(value, float)
+    assert math.isnan(value)
+
+
 @pytest.mark.parametrize(
     ("p_inf", "n_inf"),
     (
@@ -125,16 +134,20 @@ def test__random_float_error_when_probability_gt_1():
 
 
 @pytest.mark.parametrize(
-    ("p_inf", "n_inf"),
+    ("p_inf", "n_inf", "nan"),
     (
-        (-0.1, 0.1),
-        (0.1, -0.1),
-        (-0.1, -0.1),
+        (-0.1, 0.1, 0.1),
+        (0.1, -0.1, 0.1),
+        (-0.1, -0.1, 0.1),
+        (0.1, 0.1, -0.1),
+        (-0.1, 0.1, -0.1),
+        (0.1, -0.1, -0.1),
+        (-0.1, -0.1, -0.1),
     ),
 )
-def test__random_float__error_when_p_inf_or_n_inf_is_negative(p_inf, n_inf):
+def test__random_float__error_when_negative_probability(p_inf, n_inf, nan):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randfloat(p_inf=p_inf, n_inf=n_inf)
+        ranog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, nan=nan)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

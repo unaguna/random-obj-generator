@@ -12,6 +12,7 @@ def randfloat(
     *,
     p_inf: t.SupportsFloat = 0.0,
     n_inf: t.SupportsFloat = 0.0,
+    nan: t.SupportsFloat = 0.0,
     rnd: t.Optional[Random] = None,
 ) -> Factory[float]:
     """Return a factory generating random float values.
@@ -26,6 +27,8 @@ def randfloat(
         the probability of positive infinity
     n_inf : float, default=0
         the probability of negative infinity
+    nan : float, default=0
+        the probability of NaN
     rnd : Random, optional
         random number generator to be used
 
@@ -34,7 +37,7 @@ def randfloat(
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    return FloatRandomFactory(a, b, p_inf=p_inf, n_inf=n_inf, rnd=rnd)
+    return FloatRandomFactory(a, b, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=rnd)
 
 
 class FloatRandomFactory(Factory[float]):
@@ -45,6 +48,7 @@ class FloatRandomFactory(Factory[float]):
     _max: float
     _p_inf: float
     _n_inf: float
+    _nan: float
 
     def __init__(
         self,
@@ -53,6 +57,7 @@ class FloatRandomFactory(Factory[float]):
         *,
         p_inf: t.SupportsFloat = 0.0,
         n_inf: t.SupportsFloat = 0.0,
+        nan: t.SupportsFloat = 0.0,
         rnd: t.Optional[Random] = None,
     ):
         """Return a factory generating random float values.
@@ -67,6 +72,8 @@ class FloatRandomFactory(Factory[float]):
             the probability of positive infinity
         n_inf : float, default=0
             the probability of negative infinity
+        nan : float, default=0
+            the probability of NaN
         rnd : Random, optional
             random number generator to be used
 
@@ -79,6 +86,7 @@ class FloatRandomFactory(Factory[float]):
         self._min, self._max = self._normalize(minimum, maximum)
         self._p_inf = float(p_inf)
         self._n_inf = float(n_inf)
+        self._nan = float(nan)
 
         if self._min > self._max:
             raise FactoryConstructionError("the generating conditions are inconsistent")
@@ -86,7 +94,9 @@ class FloatRandomFactory(Factory[float]):
             raise FactoryConstructionError("the generating conditions are inconsistent")
         if self._n_inf < 0.0:
             raise FactoryConstructionError("the generating conditions are inconsistent")
-        if self._p_inf + self._n_inf > 1.0:
+        if self._nan < 0.0:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
+        if self._p_inf + self._n_inf + self._nan > 1.0:
             raise FactoryConstructionError("the generating conditions are inconsistent")
 
     def next(self) -> float:
@@ -97,6 +107,9 @@ class FloatRandomFactory(Factory[float]):
         pre_weight -= self._n_inf
         if pre_weight < 0:
             return float("-inf")
+        pre_weight -= self._nan
+        if pre_weight < 0:
+            return float("NaN")
 
         weight = self._random.random()
         return self._max * weight + self._min * (1 - weight)

@@ -82,6 +82,10 @@ class FloatRandomFactory(Factory[float]):
 
         if self._min > self._max:
             raise FactoryConstructionError("the generating conditions are inconsistent")
+        if self._p_inf < 0.0:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
+        if self._n_inf < 0.0:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
         if self._p_inf + self._n_inf > 1.0:
             raise FactoryConstructionError("the generating conditions are inconsistent")
 

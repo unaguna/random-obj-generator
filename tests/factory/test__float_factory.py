@@ -1,3 +1,4 @@
+import math
 from decimal import Decimal
 from fractions import Fraction
 
@@ -89,6 +90,24 @@ def test__random_float__inf(p_inf, n_inf, expected_value):
     assert value == expected_value
 
 
+@pytest.mark.parametrize(
+    ("p_inf", "n_inf"),
+    (
+        (0.0, 0.0),
+        (-0.0, 0.0),
+        (0.0, -0.0),
+        (-0.0, -0.0),
+    ),
+)
+def test__random_float__inf_zero(p_inf, n_inf):
+    factory = ranog.factory.randfloat(p_inf=p_inf, n_inf=n_inf)
+
+    value = factory.next()
+
+    assert isinstance(value, float)
+    assert math.isfinite(value)
+
+
 def test__random_float_error_when_edges_inverse():
     with pytest.raises(FactoryConstructionError) as e_ctx:
         ranog.factory.randfloat(2, 1)
@@ -105,5 +124,17 @@ def test__random_float_error_when_probability_gt_1():
     assert e.message == "the generating conditions are inconsistent"
 
 
-# TODO: error when p_inf < 0
-# TODO: error when n_inf < 0
+@pytest.mark.parametrize(
+    ("p_inf", "n_inf"),
+    (
+        (-0.1, 0.1),
+        (0.1, -0.1),
+        (-0.1, -0.1),
+    ),
+)
+def test__random_float__error_when_p_inf_or_n_inf_is_negative(p_inf, n_inf):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        ranog.factory.randfloat(p_inf=p_inf, n_inf=n_inf)
+    e = e_ctx.value
+
+    assert e.message == "the generating conditions are inconsistent"

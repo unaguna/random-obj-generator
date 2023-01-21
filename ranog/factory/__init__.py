@@ -1,4 +1,5 @@
 from ._base import Factory
+from ._choice import ChoiceRandomFactory, randchoice
 from ._int import IntRandomFactory, randint
 from ._float import FloatRandomFactory, randfloat
 from ._decimal import DecimalRandomFactory, randdecimal

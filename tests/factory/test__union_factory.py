@@ -27,7 +27,10 @@ def test__random_union__value(expected_value):
     assert value == expected_value
 
 
-def test__random_union__weight():
+@pytest.mark.parametrize(
+    "weights", ([0.8, 0.2, 0], (0.8, 0.2, 0), [0.8, 0.2, 0, 0][:2])
+)
+def test__random_union__weight(weights):
     factory = ranog.factory.union(
         ranog.factory.const(1),
         ranog.factory.const(2),
@@ -48,4 +51,20 @@ def test__random_union__error_when_no_factory_specified():
     assert (
         e.message
         == "the generating conditions are inconsistent: specify at least one factory"
+    )
+
+
+@pytest.mark.parametrize("weights_len", (0, 1, 3))
+def test__random_union__error_when_weights_does_not_match(weights_len):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        ranog.factory.union(
+            ranog.factory.const("1"),
+            ranog.factory.const("2"),
+            weights=[1, 1, 1, 1][:weights_len],
+        )
+    e = e_ctx.value
+
+    assert (
+        e.message
+        == "the generating conditions are inconsistent: the number of weights does not match the values"
     )

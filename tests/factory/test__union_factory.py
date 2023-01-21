@@ -27,6 +27,19 @@ def test__random_union__value(expected_value):
     assert value == expected_value
 
 
+def test__random_union__weight():
+    factory = ranog.factory.union(
+        ranog.factory.const(1),
+        ranog.factory.const(2),
+        ranog.factory.const(3),
+        weights=[0.8, 0.2, 0],
+    )
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {1, 2}
+
+
 def test__random_union__error_when_no_factory_specified():
     with pytest.raises(FactoryConstructionError) as e_ctx:
         ranog.factory.union()

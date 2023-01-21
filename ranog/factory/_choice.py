@@ -60,5 +60,5 @@ class ChoiceRandomFactory(Factory[t.Any]):
                 "the generating conditions are inconsistent: specify at least one value"
             )
 
-    def next(self) -> int:
+    def next(self) -> t.Any:
         return self._random.choice(self._values)

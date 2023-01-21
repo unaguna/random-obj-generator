@@ -1,7 +1,18 @@
+from decimal import Decimal
 import typing as t
 from random import Random
 
-from . import DictItem, Factory, randdict, randfloat, randlist, randint, randstr, union
+from . import (
+    DictItem,
+    Factory,
+    randdecimal,
+    randdict,
+    randfloat,
+    randlist,
+    randint,
+    randstr,
+    union,
+)
 from ..exceptions import FactoryConstructionError
 
 import ranog
@@ -10,6 +21,7 @@ import ranog
 _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = {
     int: lambda rnd: randint(0, 100, rnd=rnd),
     float: lambda rnd: randfloat(0, 1.0, rnd=rnd),
+    Decimal: lambda rnd: randdecimal(0, 1.0, rnd=rnd),
     str: lambda rnd: randstr(rnd=rnd),
     list: lambda rnd: randlist(randstr(), rnd=rnd),
     tuple: lambda rnd: randlist(randstr(), type=tuple, rnd=rnd),
@@ -58,6 +70,8 @@ def from_example(
             raise FactoryConstructionError(
                 f"cannot construct factory for unsupported type: {example}"
             )
+    elif isinstance(example, Decimal):
+        return _from_decimal(example, rnd=rnd)
     elif isinstance(example, t.Mapping):
         return randdict(
             {k: _dict_item(v, _recursive=_recursive) for k, v in example.items()}
@@ -70,3 +84,20 @@ def from_example(
         return randlist(*map(_recursive, example), type=_type, rnd=rnd)
     else:
         return _recursive(type(example))
+
+
+def _from_decimal(example: Decimal, *, rnd: t.Optional[Random]) -> Factory[Decimal]:
+    p_inf, n_inf, nan = 0.0, 0.0, 0.0
+    decimal_len = None
+    if example.is_infinite():
+        if example > 0:
+            p_inf = 1.0
+        else:
+            n_inf = 1.0
+    elif example.is_nan():
+        nan = 1.0
+    else:
+        decimal_len = -example.as_tuple()[2]
+    return randdecimal(
+        p_inf=p_inf, n_inf=n_inf, nan=nan, decimal_len=decimal_len, rnd=rnd
+    )

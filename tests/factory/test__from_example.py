@@ -1,3 +1,6 @@
+import math
+from decimal import Decimal
+
 import pytest
 
 import ranog
@@ -42,6 +45,35 @@ def test__from_example__str_value(obj):
     factory = ranog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, str)
+
+
+def test__from_example__decimal_type():
+    factory = ranog.factory.from_example(Decimal)
+    value = factory.next()
+    assert isinstance(value, Decimal)
+
+
+@pytest.mark.parametrize("obj", (Decimal("1.2"), Decimal("2.35"), Decimal("2.35E+3")))
+def test__from_example__decimal_value(obj):
+    factory = ranog.factory.from_example(obj)
+    value = factory.next()
+    assert isinstance(value, Decimal)
+    assert value.as_tuple()[2] == obj.as_tuple()[2]
+
+
+@pytest.mark.parametrize("obj", (Decimal("inf"), Decimal("-inf")))
+def test__from_example__decimal_inf_value(obj):
+    factory = ranog.factory.from_example(obj)
+    value = factory.next()
+    assert isinstance(value, Decimal)
+    assert value == obj
+
+
+def test__from_example__decimal_nan_value():
+    factory = ranog.factory.from_example(Decimal("nan"))
+    value = factory.next()
+    assert isinstance(value, Decimal)
+    assert math.isnan(value)
 
 
 def test__from_example__list_type():
@@ -124,6 +156,7 @@ def test__from_example__dict_value():
         "h": ranog.factory.randint(5, 5),
         "i": ranog.DictItemExample(ranog.factory.randint(5, 5)),
         "j": [1, ranog.Example(str)],
+        "k": Decimal("1.00"),
         "z": ranog.DictItemExample(int, 0.0),
     }
     factory = ranog.factory.from_example(example)
@@ -146,6 +179,8 @@ def test__from_example__dict_value():
         and isinstance(value.get("j")[0], int)
         and isinstance(value.get("j")[1], str)
     )
+    assert isinstance(value.get("k"), Decimal)
+    assert value.get("k").as_tuple()[2] == -2
     assert "z" not in value
 
 

@@ -43,6 +43,32 @@ def test__random_union__weight(weights):
     assert values == {1, 2}
 
 
+def test__random_union__or_none():
+    factory = ranog.factory.union(
+        ranog.factory.const(1),
+        ranog.factory.const(2),
+        ranog.factory.const(3),
+        weights=[0.5, 0.5, 0],
+    ).or_none(0.5)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {1, 2, None}
+
+
+def test__random_int__or_none_0():
+    factory = ranog.factory.union(
+        ranog.factory.const(1),
+        ranog.factory.const(2),
+        ranog.factory.const(3),
+        weights=[0.5, 0.5, 0],
+    ).or_none(0)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {1, 2}
+
+
 def test__random_union__error_when_no_factory_specified():
     with pytest.raises(FactoryConstructionError) as e_ctx:
         ranog.factory.union()

@@ -1,10 +1,26 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic
+import typing as t
+from random import Random
 
-T = TypeVar("T")
+T = t.TypeVar("T")
 
 
-class Factory(ABC, Generic[T]):
+class Factory(ABC, t.Generic[T]):
     @abstractmethod
     def next(self) -> T:
         pass
+
+    def or_none(
+        self,
+        prob: float = 0.1,
+        *,
+        rnd: t.Optional[Random] = None,
+    ) -> "Factory[t.Union[T, None]]":
+        import ranog.factory
+
+        return ranog.factory.union(
+            self,
+            ranog.factory.const(None),
+            weights=[1 - prob, prob],
+            rnd=rnd,
+        )

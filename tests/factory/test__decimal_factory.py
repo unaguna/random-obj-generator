@@ -148,6 +148,26 @@ def test__random_decimal__inf_zero(p_inf, n_inf):
     assert math.isfinite(value)
 
 
+def test__random_decimal__or_none():
+    factory = ranog.factory.randdecimal(1, 1).or_none(0.5)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {Decimal("1"), None}
+    value = next(filter(lambda x: x is not None, values))
+    assert isinstance(value, Decimal)
+
+
+def test__random_decimal__or_none_0():
+    factory = ranog.factory.randdecimal(1, 1).or_none(0)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {Decimal("1")}
+    value = next(filter(lambda x: x is not None, values))
+    assert isinstance(value, Decimal)
+
+
 def test__random_decimal__error_when_edges_inverse():
     with pytest.raises(FactoryConstructionError) as e_ctx:
         ranog.factory.randdecimal(2, 1)

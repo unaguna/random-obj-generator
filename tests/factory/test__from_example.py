@@ -210,3 +210,24 @@ def test__from_example__union_type():
     values = set(map(lambda x: factory.next(), range(200)))
     value_types = set(map(type, values))
     assert value_types == {int, str}
+
+
+def test__from_example__custom_func():
+    def _custom_func(example, *, rnd, custom_func, **kwargs):
+        if example == 2:
+            return "2"
+        elif example == 3:
+            return ranog.factory.const(True)
+        else:
+            return example
+
+    factory = ranog.factory.from_example(
+        {"a": 1, "b": 2, "c": 3},
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, dict)
+    assert isinstance(value.get("a"), int)
+    assert isinstance(value.get("b"), str)
+    assert value.get("c") is True

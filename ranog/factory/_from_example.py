@@ -36,9 +36,21 @@ def _dict_item(obj, *, _recursive) -> DictItem:
         return DictItem(_recursive(obj))
 
 
+class _CustomFunc(t.Protocol):
+    def __call__(
+        self,
+        example: t.Any,
+        *,
+        custom_func: "_CustomFunc",
+        rnd: t.Optional[Random],
+    ) -> t.Any:
+        ...
+
+
 def from_example(
     example: t.Any,
     *,
+    custom_func: t.Optional[_CustomFunc] = None,
     rnd: t.Optional[Random] = None,
 ) -> Factory:
     """Returns a factory generating value like specified example or type.
@@ -47,6 +59,12 @@ def from_example(
     ----------
     example : Any
         the type or the example
+    custom_func : Callable
+        If specified, this function is executed first and its return value is used as a new example.
+        If it returns a factory, it is used as is.
+        The same arguments are passed to this function as those passed to from_example.
+        It is recommended that `custom_func` receives `**kwargs` to allow for more keyword arguments in future updates.
+        This process is also used to create factories for child elements of dict and list.
     rnd : Random, optional
         random number generator to be used
 
@@ -57,7 +75,12 @@ def from_example(
     """
 
     def _recursive(child: t.Any) -> Factory:
-        return from_example(child, rnd=rnd)
+        return from_example(child, custom_func=custom_func, rnd=rnd)
+
+    if custom_func is not None:
+        custom_result = custom_func(example, custom_func=custom_func, rnd=rnd)
+        if custom_result is not NotImplemented:
+            example = custom_result
 
     if isinstance(example, ranog.Example):
         return union(*map(_recursive, example), rnd=rnd)

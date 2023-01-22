@@ -150,7 +150,7 @@ def from_example(
     custom_func : Callable
         If specified, this function is executed first and its return value is used as a new example.
         If it returns a factory, it is used as is.
-        The same arguments are passed to this function as those passed to from_example.
+        The context is passed to this function.
         It is recommended that `custom_func` receives `**kwargs` to allow for more keyword arguments in future updates.
         This process is also used to create factories for child elements of dict and list.
     rnd : Random, optional

@@ -122,16 +122,16 @@ class _CustomFunc(t.Protocol):
         ...
 
 
-def _dict_item(obj, *, _recursive) -> DictItem:
+def _dict_item(obj, key, context: FromExampleContext) -> DictItem:
     if isinstance(obj, ranog.DictItemExample):
-        return DictItem(_recursive(obj.example), obj.prop_exists)
+        return DictItem(context.recursive(obj.example, key), obj.prop_exists)
     else:
-        return DictItem(_recursive(obj))
+        return DictItem(context.recursive(obj, key))
 
 
-def _list_item(item: t.Tuple[int, t.Any], *, _recursive_child) -> Factory:
+def _list_item(item: t.Tuple[int, t.Any], context: FromExampleContext) -> Factory:
     index, obj = item
-    return _recursive_child(obj, index)
+    return context.recursive(obj, index)
 
 
 def from_example(
@@ -197,12 +197,7 @@ def from_example(
     elif isinstance(example, Decimal):
         return _from_decimal(example, rnd=context.rnd)
     elif isinstance(example, t.Mapping):
-        return randdict(
-            {
-                k: _dict_item(v, _recursive=lambda exm: context.recursive(exm, k))
-                for k, v in example.items()
-            }
-        )
+        return randdict({k: _dict_item(v, k, context) for k, v in example.items()})
     elif isinstance(example, t.Sequence) and not isinstance(example, str):
         if isinstance(example, (tuple, list)):
             _type = type(example)
@@ -210,7 +205,7 @@ def from_example(
             _type = None
         return randlist(
             *map(
-                lambda exm: _list_item(exm, _recursive_child=context.recursive),
+                lambda exm: _list_item(exm, context),
                 enumerate(example),
             ),
             type=_type,

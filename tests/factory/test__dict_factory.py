@@ -31,3 +31,23 @@ def test__random_dict__items_by_dict():
     assert value.get("a") == 1
     assert value.get("b") == 2
     assert "z" not in value
+
+
+def test__random_dict__or_none():
+    factory = ranog.factory.randdict(
+        a=ranog.factory.randint(1, 1),
+    ).or_none(0.5)
+
+    values = set(map(lambda x: type(factory.next()), range(200)))
+
+    assert values == {dict, type(None)}
+
+
+def test__random_dict__or_none_0():
+    factory = ranog.factory.randdict(
+        a=ranog.factory.randint(1, 1),
+    ).or_none(0)
+
+    values = set(map(lambda x: type(factory.next()), range(200)))
+
+    assert values == {dict}

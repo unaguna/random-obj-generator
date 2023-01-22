@@ -117,6 +117,22 @@ def test__random_float__inf_zero(p_inf, n_inf):
     assert math.isfinite(value)
 
 
+def test__random_float__or_none():
+    factory = ranog.factory.randfloat(1, 1).or_none(0.5)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {1.0, None}
+
+
+def test__random_float__or_none_0():
+    factory = ranog.factory.randfloat(1, 1).or_none(0)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {1.0}
+
+
 def test__random_float_error_when_edges_inverse():
     with pytest.raises(FactoryConstructionError) as e_ctx:
         ranog.factory.randfloat(2, 1)

@@ -66,6 +66,22 @@ def test__random_str_normal_when_empty_charset_and_zero_length():
     assert value == ""
 
 
+def test__random_str__or_none():
+    factory = ranog.factory.randstr(length=0).or_none(0.5)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {"", None}
+
+
+def test__random_str__or_none_0():
+    factory = ranog.factory.randstr(length=0).or_none(0)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {""}
+
+
 @pytest.mark.parametrize("length", (1, 2))
 def test__random_str_error_when_empty_charset_and_nonzero_length(length):
     with pytest.raises(FactoryConstructionError) as e_ctx:

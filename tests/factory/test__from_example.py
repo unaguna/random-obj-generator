@@ -213,7 +213,7 @@ def test__from_example__union_type():
 
 
 def test__from_example__custom_func():
-    def _custom_func(example, *, rnd, custom_func, **kwargs):
+    def _custom_func(example, *, context, **kwargs):
         if example == 2:
             return "2"
         elif example == 3:
@@ -237,8 +237,6 @@ def test__from_example__custom_func__context_key():
     def _custom_func(
         example,
         *,
-        rnd,
-        custom_func,
         context: ranog.factory.FromExampleContext,
         **kwargs,
     ):
@@ -281,8 +279,6 @@ def test__from_example__custom_func__recursive():
     def _custom_func(
         example,
         *,
-        rnd,
-        custom_func,
         context: ranog.factory.FromExampleContext,
         **kwargs,
     ):

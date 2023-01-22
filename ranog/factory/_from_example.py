@@ -55,6 +55,14 @@ class FromExampleContext:
     def example_is_customized(self) -> bool:
         return self._example_is_customized
 
+    @property
+    def rnd(self) -> t.Optional[Random]:
+        return self._rnd
+
+    @property
+    def custom_func(self) -> t.Optional["_CustomFunc"]:
+        return self._custom_func
+
     @classmethod
     def root(
         cls,
@@ -109,8 +117,6 @@ class _CustomFunc(t.Protocol):
         self,
         example: t.Any,
         *,
-        custom_func: "_CustomFunc",
-        rnd: t.Optional[Random],
         context: FromExampleContext,
     ) -> t.Any:
         ...
@@ -151,6 +157,7 @@ def from_example(
         random number generator to be used
     context : FromExampleContext, optional
         the context of generation. Normally, you should not specify it.
+        If specified, the context property takes precedence over other arguments.
 
     Raises
     ------
@@ -166,13 +173,11 @@ def from_example(
         )
 
     def _recursive(child: t.Any) -> Factory:
-        return from_example(child, custom_func=custom_func, rnd=rnd, context=context)
+        return from_example(child, context=context)
 
-    if not context.example_is_customized and custom_func is not None:
-        custom_result = custom_func(
+    if not context.example_is_customized and context.custom_func is not None:
+        custom_result = context.custom_func(
             example,
-            custom_func=custom_func,
-            rnd=rnd,
             context=context.customized(),
         )
         if isinstance(custom_result, Factory):
@@ -181,16 +186,16 @@ def from_example(
             example = custom_result
 
     if isinstance(example, ranog.Example):
-        return union(*map(_recursive, example), rnd=rnd)
+        return union(*map(_recursive, example), rnd=context.rnd)
     elif isinstance(example, type):
         if example in _FACTORY_CONSTRUCTOR:
-            return _FACTORY_CONSTRUCTOR[example](rnd)
+            return _FACTORY_CONSTRUCTOR[example](context.rnd)
         else:
             raise FactoryConstructionError(
                 f"cannot construct factory for unsupported type: {example}"
             )
     elif isinstance(example, Decimal):
-        return _from_decimal(example, rnd=rnd)
+        return _from_decimal(example, rnd=context.rnd)
     elif isinstance(example, t.Mapping):
         return randdict(
             {
@@ -209,7 +214,7 @@ def from_example(
                 enumerate(example),
             ),
             type=_type,
-            rnd=rnd,
+            rnd=context.rnd,
         )
     else:
         return _recursive(type(example))

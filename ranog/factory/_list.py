@@ -13,13 +13,14 @@ def randlist(
     length: t.Optional[int] = None,
     type: t.Callable[[t.Iterator[t.Any]], T] = list,
     rnd: t.Optional[Random] = None,
+    items_list: t.Optional[t.Sequence[Factory]] = None,
 ) -> Factory[list]:
     """Return a factory generating random list.
 
     Parameters
     ----------
     items : Factory
-        the factories of each item
+        the factories of each item. If `items_list` is specified, `items` will be ignored.
     length : int, optional
         length of generated list.
         If not specified, the length of generated list will be equals to the number of `items`.
@@ -27,13 +28,18 @@ def randlist(
         the type of generated object
     rnd : Random, optional
         random number generator to be used
+    items_list : Sequence[Factory], optional
+        the factories of each item. Use when positional arguments cannot be specified.
 
     Raises
     ------
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    return ListRandomFactory(*items, length=length, type=type, rnd=rnd)
+    if items_list is not None:
+        items = items_list
+
+    return ListRandomFactory(items, length=length, type=type, rnd=rnd)
 
 
 class ListRandomFactory(Factory[list], t.Generic[T]):
@@ -46,7 +52,8 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
 
     def __init__(
         self,
-        *items: Factory,
+        items: t.Sequence[Factory],
+        *,
         length: t.Optional[int] = None,
         type: t.Callable[[t.Iterator[t.Any]], T] = list,
         rnd: t.Optional[Random] = None,
@@ -55,7 +62,7 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
 
         Parameters
         ----------
-        items : Factory
+        items : t.Sequence[Factory]
             the factories of each item
         length : int, optional
             length of generated list.

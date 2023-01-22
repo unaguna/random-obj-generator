@@ -204,12 +204,9 @@ def from_example(
         else:
             _type = None
         return randlist(
-            *map(
-                lambda exm: _list_item(exm, context),
-                enumerate(example),
-            ),
             type=_type,
             rnd=context.rnd,
+            items_list=tuple(_list_item(exm, context) for exm in enumerate(example)),
         )
     else:
         return _recursive(type(example))

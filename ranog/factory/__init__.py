@@ -8,4 +8,4 @@ from ._str import StrRandomFactory, randstr
 from ._list import randlist
 from ._dict import DictItem, DictRandomFactory, randdict
 from ._union import UnionRandomFactory, union
-from ._from_example import from_example, FromExampleContext, FromExampleRecursiveFunc
+from ._from_example import from_example, FromExampleContext

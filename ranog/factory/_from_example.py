@@ -31,33 +31,77 @@ _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = 
 
 class FromExampleContext:
     _path: t.Tuple[t.Any, ...]
+    _custom_func: t.Optional["_CustomFunc"]
+    _rnd: t.Optional[Random]
+    _example_is_customized: bool
 
-    def __init__(self, path: t.Tuple[t.Any, ...]):
+    def __init__(
+        self,
+        path: t.Tuple[t.Any, ...],
+        custom_func: t.Optional["_CustomFunc"],
+        rnd: t.Optional[Random],
+        example_is_customized: bool,
+    ):
         self._path = path
+        self._custom_func = custom_func
+        self._rnd = rnd
+        self._example_is_customized = example_is_customized
 
     @property
     def path(self) -> t.Sequence[t.Any]:
         return self._path
 
+    @property
+    def example_is_customized(self) -> bool:
+        return self._example_is_customized
+
     @classmethod
-    def root(cls) -> "FromExampleContext":
+    def root(
+        cls,
+        custom_func: t.Optional["_CustomFunc"],
+        rnd: t.Optional[Random],
+    ) -> "FromExampleContext":
         return FromExampleContext(
             path=tuple(),
+            custom_func=custom_func,
+            rnd=rnd,
+            example_is_customized=False,
         )
 
     def child(self, key: t.Any) -> "FromExampleContext":
         return FromExampleContext(
             path=(*self._path, key),
+            custom_func=self._custom_func,
+            rnd=self._rnd,
+            example_is_customized=False,
         )
 
+    def customized(self) -> "FromExampleContext":
+        return FromExampleContext(
+            path=self._path,
+            custom_func=self._custom_func,
+            rnd=self._rnd,
+            example_is_customized=True,
+        )
 
-class FromExampleRecursiveFunc(t.Protocol):
-    def __call__(
-        self,
-        example: t.Any,
-        key: t.Any,
-    ) -> Factory:
-        ...
+    def from_example(self, example: t.Any) -> Factory:
+        return from_example(
+            example,
+            custom_func=self._custom_func,
+            rnd=self._rnd,
+            context=self,
+        )
+
+    def recursive(self, child: t.Any, key: t.Any) -> Factory:
+        new_context = self.child(
+            key=key,
+        )
+        return from_example(
+            child,
+            custom_func=self._custom_func,
+            rnd=self._rnd,
+            context=new_context,
+        )
 
 
 class _CustomFunc(t.Protocol):
@@ -65,7 +109,6 @@ class _CustomFunc(t.Protocol):
         self,
         example: t.Any,
         *,
-        recursive: FromExampleRecursiveFunc,
         custom_func: "_CustomFunc",
         rnd: t.Optional[Random],
         context: FromExampleContext,
@@ -117,26 +160,20 @@ def from_example(
     if isinstance(example, Factory):
         return example
     if context is None:
-        context = FromExampleContext.root()
+        context = FromExampleContext.root(
+            custom_func=custom_func,
+            rnd=rnd,
+        )
 
     def _recursive(child: t.Any) -> Factory:
         return from_example(child, custom_func=custom_func, rnd=rnd, context=context)
 
-    def _recursive_child(child: t.Any, key: t.Any) -> Factory:
-        new_context = context.child(
-            key=key,
-        )
-        return from_example(
-            child, custom_func=custom_func, rnd=rnd, context=new_context
-        )
-
-    if custom_func is not None:
+    if not context.example_is_customized and custom_func is not None:
         custom_result = custom_func(
             example,
             custom_func=custom_func,
             rnd=rnd,
-            context=context,
-            recursive=_recursive_child,
+            context=context.customized(),
         )
         if isinstance(custom_result, Factory):
             return custom_result
@@ -157,7 +194,7 @@ def from_example(
     elif isinstance(example, t.Mapping):
         return randdict(
             {
-                k: _dict_item(v, _recursive=lambda exm: _recursive_child(exm, k))
+                k: _dict_item(v, _recursive=lambda exm: context.recursive(exm, k))
                 for k, v in example.items()
             }
         )
@@ -168,7 +205,7 @@ def from_example(
             _type = None
         return randlist(
             *map(
-                lambda exm: _list_item(exm, _recursive_child=_recursive_child),
+                lambda exm: _list_item(exm, _recursive_child=context.recursive),
                 enumerate(example),
             ),
             type=_type,

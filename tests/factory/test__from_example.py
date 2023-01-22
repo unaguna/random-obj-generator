@@ -284,7 +284,6 @@ def test__from_example__custom_func__recursive():
         rnd,
         custom_func,
         context: ranog.factory.FromExampleContext,
-        recursive: ranog.factory.FromExampleRecursiveFunc,
         **kwargs,
     ):
         if len(context.path) <= 0:
@@ -294,14 +293,13 @@ def test__from_example__custom_func__recursive():
         parent_key = context.path[-2] if len(context.path) >= 2 else None
 
         if key == "dict":
-            return ranog.factory.from_example(
-                {"dict_a": 1, "dict_b": 2, "dict_c": recursive(3, "dict_c")},
-                rnd=rnd,
-                context=context,
-                custom_func=custom_func,
+            return context.from_example(
+                {"dict_a": 1, "dict_b": 2, "dict_c": context.recursive(3, "dict_c")},
             )
-        if parent_key == "dict" and key == "dict_c":
+        if parent_key == "dict" and key == "dict_c" and not isinstance(example, type):
             return "c"
+
+        return example
 
     factory = ranog.factory.from_example(
         {"a": 1, "b": 2, "dict": 3},

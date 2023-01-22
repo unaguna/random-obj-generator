@@ -176,9 +176,10 @@ def from_example(
         return from_example(child, context=context)
 
     if not context.example_is_customized and context.custom_func is not None:
+        context = context.customized()
         custom_result = context.custom_func(
             example,
-            context=context.customized(),
+            context=context,
         )
         if isinstance(custom_result, Factory):
             return custom_result

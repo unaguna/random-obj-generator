@@ -292,7 +292,7 @@ def test__from_example__custom_func__recursive():
             return context.from_example(
                 {"dict_a": 1, "dict_b": 2, "dict_c": context.recursive(3, "dict_c")},
             )
-        if parent_key == "dict" and key == "dict_c" and not isinstance(example, type):
+        if parent_key == "dict" and key == "dict_c":
             return "c"
 
         return example

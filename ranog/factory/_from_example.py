@@ -29,11 +29,26 @@ _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = 
 }
 
 
-def _dict_item(obj, *, _recursive) -> DictItem:
-    if isinstance(obj, ranog.DictItemExample):
-        return DictItem(_recursive(obj.example), obj.prop_exists)
-    else:
-        return DictItem(_recursive(obj))
+class FromExampleContext:
+    _path: t.Tuple[t.Any, ...]
+
+    def __init__(self, path: t.Tuple[t.Any, ...]):
+        self._path = path
+
+    @property
+    def path(self) -> t.Sequence[t.Any]:
+        return self._path
+
+    @classmethod
+    def root(cls) -> "FromExampleContext":
+        return FromExampleContext(
+            path=tuple(),
+        )
+
+    def child(self, key: t.Any) -> "FromExampleContext":
+        return FromExampleContext(
+            path=(*self._path, key),
+        )
 
 
 class _CustomFunc(t.Protocol):
@@ -43,8 +58,21 @@ class _CustomFunc(t.Protocol):
         *,
         custom_func: "_CustomFunc",
         rnd: t.Optional[Random],
+        context: FromExampleContext,
     ) -> t.Any:
         ...
+
+
+def _dict_item(obj, *, _recursive) -> DictItem:
+    if isinstance(obj, ranog.DictItemExample):
+        return DictItem(_recursive(obj.example), obj.prop_exists)
+    else:
+        return DictItem(_recursive(obj))
+
+
+def _list_item(item: t.Tuple[int, t.Any], *, _recursive_child) -> Factory:
+    index, obj = item
+    return _recursive_child(obj, index)
 
 
 def from_example(
@@ -52,6 +80,7 @@ def from_example(
     *,
     custom_func: t.Optional[_CustomFunc] = None,
     rnd: t.Optional[Random] = None,
+    context: t.Optional[FromExampleContext] = None,
 ) -> Factory:
     """Returns a factory generating value like specified example or type.
 
@@ -67,18 +96,32 @@ def from_example(
         This process is also used to create factories for child elements of dict and list.
     rnd : Random, optional
         random number generator to be used
+    context : FromExampleContext, optional
+        the context of generation. Normally, you should not specify it.
 
     Raises
     ------
     FactoryConstructionError
         When the specified example or type is not supported.
     """
+    if context is None:
+        context = FromExampleContext.root()
 
     def _recursive(child: t.Any) -> Factory:
-        return from_example(child, custom_func=custom_func, rnd=rnd)
+        return from_example(child, custom_func=custom_func, rnd=rnd, context=context)
+
+    def _recursive_child(child: t.Any, key: t.Any) -> Factory:
+        new_context = context.child(
+            key=key,
+        )
+        return from_example(
+            child, custom_func=custom_func, rnd=rnd, context=new_context
+        )
 
     if custom_func is not None:
-        custom_result = custom_func(example, custom_func=custom_func, rnd=rnd)
+        custom_result = custom_func(
+            example, custom_func=custom_func, rnd=rnd, context=context
+        )
         if custom_result is not NotImplemented:
             example = custom_result
 
@@ -97,14 +140,24 @@ def from_example(
         return _from_decimal(example, rnd=rnd)
     elif isinstance(example, t.Mapping):
         return randdict(
-            {k: _dict_item(v, _recursive=_recursive) for k, v in example.items()}
+            {
+                k: _dict_item(v, _recursive=lambda exm: _recursive_child(exm, k))
+                for k, v in example.items()
+            }
         )
     elif isinstance(example, t.Sequence) and not isinstance(example, str):
         if isinstance(example, (tuple, list)):
             _type = type(example)
         else:
             _type = None
-        return randlist(*map(_recursive, example), type=_type, rnd=rnd)
+        return randlist(
+            *map(
+                lambda exm: _list_item(exm, _recursive_child=_recursive_child),
+                enumerate(example),
+            ),
+            type=_type,
+            rnd=rnd,
+        )
     else:
         return _recursive(type(example))
 

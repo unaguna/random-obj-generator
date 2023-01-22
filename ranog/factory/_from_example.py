@@ -51,11 +51,21 @@ class FromExampleContext:
         )
 
 
+class FromExampleRecursiveFunc(t.Protocol):
+    def __call__(
+        self,
+        example: t.Any,
+        key: t.Any,
+    ) -> Factory:
+        ...
+
+
 class _CustomFunc(t.Protocol):
     def __call__(
         self,
         example: t.Any,
         *,
+        recursive: FromExampleRecursiveFunc,
         custom_func: "_CustomFunc",
         rnd: t.Optional[Random],
         context: FromExampleContext,
@@ -104,6 +114,8 @@ def from_example(
     FactoryConstructionError
         When the specified example or type is not supported.
     """
+    if isinstance(example, Factory):
+        return example
     if context is None:
         context = FromExampleContext.root()
 
@@ -120,15 +132,19 @@ def from_example(
 
     if custom_func is not None:
         custom_result = custom_func(
-            example, custom_func=custom_func, rnd=rnd, context=context
+            example,
+            custom_func=custom_func,
+            rnd=rnd,
+            context=context,
+            recursive=_recursive_child,
         )
+        if isinstance(custom_result, Factory):
+            return custom_result
         if custom_result is not NotImplemented:
             example = custom_result
 
     if isinstance(example, ranog.Example):
         return union(*map(_recursive, example), rnd=rnd)
-    elif isinstance(example, Factory):
-        return example
     elif isinstance(example, type):
         if example in _FACTORY_CONSTRUCTOR:
             return _FACTORY_CONSTRUCTOR[example](rnd)

@@ -172,9 +172,6 @@ def from_example(
             rnd=rnd,
         )
 
-    def _recursive(child: t.Any) -> Factory:
-        return from_example(child, context=context)
-
     if not context.example_is_customized and context.custom_func is not None:
         context = context.customized()
         custom_result = context.custom_func(
@@ -187,7 +184,7 @@ def from_example(
             example = custom_result
 
     if isinstance(example, ranog.Example):
-        return union(*map(_recursive, example), rnd=context.rnd)
+        return union(*map(context.from_example, example), rnd=context.rnd)
     elif isinstance(example, type):
         if example in _FACTORY_CONSTRUCTOR:
             return _FACTORY_CONSTRUCTOR[example](context.rnd)
@@ -210,7 +207,7 @@ def from_example(
             items_list=tuple(_list_item(exm, context) for exm in enumerate(example)),
         )
     else:
-        return _recursive(type(example))
+        return context.from_example(type(example))
 
 
 def _from_decimal(example: Decimal, *, rnd: t.Optional[Random]) -> Factory[Decimal]:

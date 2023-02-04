@@ -210,3 +210,103 @@ def test__from_example__union_type():
     values = set(map(lambda x: factory.next(), range(200)))
     value_types = set(map(type, values))
     assert value_types == {int, str}
+
+
+def test__from_example__custom_func():
+    def _custom_func(example, *, context, **kwargs):
+        if example == 2:
+            return "2"
+        elif example == 3:
+            return ranog.factory.const(True)
+        else:
+            return example
+
+    factory = ranog.factory.from_example(
+        {"a": 1, "b": 2, "c": 3},
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, dict)
+    assert isinstance(value.get("a"), int)
+    assert isinstance(value.get("b"), str)
+    assert value.get("c") is True
+
+
+def test__from_example__custom_func__context_key():
+    def _custom_func(
+        example,
+        *,
+        context: ranog.factory.FromExampleContext,
+        **kwargs,
+    ):
+        if len(context.path) <= 0:
+            return example
+
+        key = context.path[-1]
+        parent_key = context.path[-2] if len(context.path) >= 2 else None
+        if key == "c":
+            return ranog.factory.const(True)
+        if parent_key == "dict" and key == "B":
+            return ranog.factory.const(False)
+        if parent_key == "list" and key == 0:
+            return ranog.factory.const(True)
+        if parent_key == "list" and key == 1:
+            return ranog.factory.const(False)
+
+        return example
+
+    factory = ranog.factory.from_example(
+        {"a": 1, "b": 2, "c": 3, "dict": {"A": 1, "B": 2}, "list": [1, 2]},
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, dict)
+    assert isinstance(value.get("a"), int)
+    assert isinstance(value.get("b"), int)
+    assert value.get("c") is True
+    assert isinstance(value.get("dict"), dict)
+    assert isinstance(value.get("dict", {}).get("A"), int)
+    assert value.get("dict", {}).get("B") is False
+    assert isinstance(value.get("list"), list)
+    assert len(value.get("list")) == 2
+    assert value.get("list", [None, None])[0] is True
+    assert value.get("list", [None, None])[1] is False
+
+
+def test__from_example__custom_func__recursive():
+    def _custom_func(
+        example,
+        *,
+        context: ranog.factory.FromExampleContext,
+        **kwargs,
+    ):
+        if len(context.path) <= 0:
+            return example
+
+        key = context.path[-1]
+        parent_key = context.path[-2] if len(context.path) >= 2 else None
+
+        if key == "dict":
+            return context.from_example(
+                {"dict_a": 1, "dict_b": 2, "dict_c": context.recursive(3, "dict_c")},
+            )
+        if parent_key == "dict" and key == "dict_c":
+            return "c"
+
+        return example
+
+    factory = ranog.factory.from_example(
+        {"a": 1, "b": 2, "dict": 3},
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, dict)
+    assert isinstance(value.get("a"), int)
+    assert isinstance(value.get("b"), int)
+    assert isinstance(value.get("dict"), dict)
+    assert isinstance(value.get("dict", {}).get("dict_a"), int)
+    assert isinstance(value.get("dict", {}).get("dict_b"), int)
+    assert isinstance(value.get("dict", {}).get("dict_c"), str)

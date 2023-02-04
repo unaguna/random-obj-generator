@@ -8,8 +8,8 @@ from ..exceptions import FactoryConstructionError
 
 
 def randdatetime(
-    a: t.Optional[dt.datetime] = None,
-    b: t.Optional[dt.datetime] = None,
+    a: t.Union[dt.datetime, dt.date, None] = None,
+    b: t.Union[dt.datetime, dt.date, None] = None,
     *,
     tzinfo: t.Union[t.Literal[False], None, dt.tzinfo] = False,
     rnd: t.Optional[Random] = None,
@@ -18,9 +18,9 @@ def randdatetime(
 
     Parameters
     ----------
-    a : datetime, optional
+    a : datetime | date, optional
         the minimum
-    b : datetime, optional
+    b : datetime | date, optional
         the maximum
     tzinfo : tzinfo | None, optional
         If specified, the tzinfo of result will be fixed to this value (False means no specification).
@@ -54,8 +54,8 @@ class DatetimeRandomFactory(Factory[dt.datetime]):
 
     def __init__(
         self,
-        minimum: t.Optional[dt.datetime] = None,
-        maximum: t.Optional[dt.datetime] = None,
+        minimum: t.Union[dt.datetime, dt.date, None] = None,
+        maximum: t.Union[dt.datetime, dt.date, None] = None,
         *,
         fix_timezone: bool = False,
         fixed_timezone: t.Optional[dt.tzinfo] = None,
@@ -65,9 +65,9 @@ class DatetimeRandomFactory(Factory[dt.datetime]):
 
         Parameters
         ----------
-        minimum : datetime, optional
+        minimum : datetime | date, optional
             the minimum
-        maximum : datetime, optional
+        maximum : datetime | date, optional
             the maximum
         fix_timezone : bool, default=False
             If it is True, the tzinfo of result is fixed to `fixed_timezone`.
@@ -110,9 +110,16 @@ class DatetimeRandomFactory(Factory[dt.datetime]):
     @classmethod
     def _normalize(
         cls,
-        minimum: t.Optional[dt.datetime],
-        maximum: t.Optional[dt.datetime],
+        minimum: t.Union[dt.datetime, dt.date, None],
+        maximum: t.Union[dt.datetime, dt.date, None],
     ) -> t.Tuple[dt.datetime, dt.datetime]:
+        if isinstance(minimum, dt.date) and not isinstance(minimum, dt.datetime):
+            minimum = dt.datetime.combine(minimum, dt.time(0))
+        if isinstance(maximum, dt.date) and not isinstance(maximum, dt.datetime):
+            maximum = dt.datetime.combine(
+                maximum + dt.timedelta(days=1), dt.time(0)
+            ) - dt.timedelta(microseconds=1)
+
         if minimum is not None and maximum is not None:
             return minimum, maximum
         elif minimum is not None:

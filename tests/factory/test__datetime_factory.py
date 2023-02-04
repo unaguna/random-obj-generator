@@ -32,6 +32,23 @@ def test__random_datetime__by_datetime(expected_value):
     assert value.tzinfo == expected_value.tzinfo
 
 
+@pytest.mark.parametrize(
+    ("condition", "expected_min", "expected_max"),
+    (
+        (dt.date(2021, 1, 2), dt.datetime(2021, 1, 2), dt.datetime(2021, 1, 3)),
+        (dt.date(2021, 1, 5), dt.datetime(2021, 1, 5), dt.datetime(2021, 1, 6)),
+    ),
+)
+def test__random_datetime__by_date(condition, expected_min, expected_max):
+    factory = ranog.factory.randdatetime(condition, condition)
+
+    for _ in range(200):
+        value = factory.next()
+
+        assert isinstance(value, dt.datetime)
+        assert expected_min <= value < expected_max
+
+
 def test__random_datetime__by_different_tz_datetime():
     minimum = dt.datetime(2021, 1, 2, 11, 22, 33, 444_555, tzinfo=dt.timezone.utc)
     maximum = dt.datetime(

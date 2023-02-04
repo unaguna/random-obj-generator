@@ -65,10 +65,15 @@ class DatetimeRandomFactory(Factory[dt.datetime]):
         """
         self._random = dfor(rnd, Random())
         self._min, self._max = self._normalize(minimum, maximum)
-        self._range = self._max - self._min
 
+        if (self._min.tzinfo is None and self._max.tzinfo is not None) or (
+            self._min.tzinfo is not None and self._max.tzinfo is None
+        ):
+            raise FactoryConstructionError("the generating conditions are inconsistent")
         if self._min > self._max:
             raise FactoryConstructionError("the generating conditions are inconsistent")
+
+        self._range = self._max - self._min
 
     def next(self) -> dt.datetime:
         weight = self._random.random()

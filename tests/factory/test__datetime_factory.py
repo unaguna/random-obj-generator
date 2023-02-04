@@ -29,6 +29,7 @@ def test__random_datetime__by_datetime(expected_value):
 
     assert isinstance(value, dt.datetime)
     assert value == expected_value
+    assert value.tzinfo == expected_value.tzinfo
 
 
 def test__random_datetime__by_different_tz_datetime():
@@ -44,6 +45,88 @@ def test__random_datetime__by_different_tz_datetime():
 
     assert isinstance(value, dt.datetime)
     assert value == minimum
+    assert value.tzinfo == minimum.tzinfo
+
+
+@pytest.mark.parametrize(
+    ("condition", "tzinfo", "expected_value"),
+    (
+        # naive to UTC
+        (
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555),
+            dt.timezone.utc,
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555, tzinfo=dt.timezone.utc),
+        ),
+        # naive to UTC
+        (
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555, tzinfo=None),
+            dt.timezone.utc,
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555, tzinfo=dt.timezone.utc),
+        ),
+        # naive to +01:00
+        (
+            dt.datetime(2021, 1, 2, 11, 22),
+            dt.timezone(dt.timedelta(hours=1)),
+            dt.datetime(2021, 1, 2, 11, 22, tzinfo=dt.timezone(dt.timedelta(hours=1))),
+        ),
+        # UTC to UTC
+        (
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555, tzinfo=dt.timezone.utc),
+            dt.timezone.utc,
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555, tzinfo=dt.timezone.utc),
+        ),
+        # UTC to +01:00
+        (
+            dt.datetime(2021, 1, 2, 11, 22, tzinfo=dt.timezone.utc),
+            dt.timezone(dt.timedelta(hours=1)),
+            dt.datetime(2021, 1, 2, 12, 22, tzinfo=dt.timezone(dt.timedelta(hours=1))),
+        ),
+        # +01:00 to UTC
+        (
+            dt.datetime(2021, 1, 2, 12, 22, tzinfo=dt.timezone(dt.timedelta(hours=1))),
+            dt.timezone.utc,
+            dt.datetime(2021, 1, 2, 11, 22, tzinfo=dt.timezone.utc),
+        ),
+        # +01:00 to +01:00
+        (
+            dt.datetime(2021, 1, 2, 12, 22, tzinfo=dt.timezone(dt.timedelta(hours=1))),
+            dt.timezone(dt.timedelta(hours=1)),
+            dt.datetime(2021, 1, 2, 12, 22, tzinfo=dt.timezone(dt.timedelta(hours=1))),
+        ),
+        # +01:00 to +02:00
+        (
+            dt.datetime(2021, 1, 2, 12, 22, tzinfo=dt.timezone(dt.timedelta(hours=1))),
+            dt.timezone(dt.timedelta(hours=2)),
+            dt.datetime(2021, 1, 2, 13, 22, tzinfo=dt.timezone(dt.timedelta(hours=2))),
+        ),
+        # UTC to naive
+        (
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555, tzinfo=dt.timezone.utc),
+            None,
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555),
+        ),
+        # +01:00 to naive
+        (
+            dt.datetime(2021, 1, 2, 11, 22, tzinfo=dt.timezone(dt.timedelta(hours=1))),
+            None,
+            dt.datetime(2021, 1, 2, 11, 22),
+        ),
+        # naive to naive
+        (
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555),
+            None,
+            dt.datetime(2021, 1, 2, 11, 22, 33, 444_555),
+        ),
+    ),
+)
+def test__random_datetime__by_datetime_and_tzinfo(condition, tzinfo, expected_value):
+    factory = ranog.factory.randdatetime(condition, condition, tzinfo=tzinfo)
+
+    value = factory.next()
+
+    assert isinstance(value, dt.datetime)
+    assert value == expected_value
+    assert value.tzinfo == expected_value.tzinfo
 
 
 def test__random_datetime__or_none():

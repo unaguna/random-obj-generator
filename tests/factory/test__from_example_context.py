@@ -19,6 +19,7 @@ def test__from_example_context():
     assert context.example_is_customized is False
     assert len(context.path) == 0
     assert context.examples == ("example",)
+    assert context.current_example == "example"
 
 
 def test__from_example_context__child():
@@ -38,6 +39,7 @@ def test__from_example_context__child():
     assert len(context.path) == 1
     assert context.path[0] == "key"
     assert context.examples == ("example", "child_example")
+    assert context.current_example == "child_example"
 
 
 def test__from_example_context__customized():
@@ -61,6 +63,7 @@ def test__from_example_context__customized():
     assert len(context.path) == 1
     assert context.path[0] == "key"
     assert context.examples == ("example", "child_example")
+    assert context.current_example == "child_example"
 
 
 def test__from_example_context__from_example():
@@ -85,6 +88,7 @@ def test__from_example_context__from_example():
         "example",
         "child_example",
     )
+    assert custom_func.call_args.kwargs["context"].current_example == "child_example"
 
 
 def test__from_example_context__recursive():
@@ -110,3 +114,4 @@ def test__from_example_context__recursive():
         "child_example",
         expected_example,
     )
+    assert custom_func.call_args.kwargs["context"].current_example == expected_example

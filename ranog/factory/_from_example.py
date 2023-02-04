@@ -70,6 +70,13 @@ class FromExampleContext:
     def examples(self) -> t.Tuple[t.Any, ...]:
         return self._example_stacks
 
+    @property
+    def current_example(self) -> t.Any:
+        if len(self._example_stacks) <= 0:
+            return None
+        else:
+            return self._example_stacks[-1]
+
     @classmethod
     def root(
         cls,

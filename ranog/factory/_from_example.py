@@ -34,6 +34,7 @@ class FromExampleContext:
     _custom_func: t.Optional["_CustomFunc"]
     _rnd: t.Optional[Random]
     _example_is_customized: bool
+    _examples_stack: t.Tuple[t.Any, ...]
 
     def __init__(
         self,
@@ -41,11 +42,13 @@ class FromExampleContext:
         custom_func: t.Optional["_CustomFunc"],
         rnd: t.Optional[Random],
         example_is_customized: bool,
+        examples_stack: t.Tuple[t.Any, ...],
     ):
         self._path = path
         self._custom_func = custom_func
         self._rnd = rnd
         self._example_is_customized = example_is_customized
+        self._example_stacks = examples_stack
 
     @property
     def path(self) -> t.Sequence[t.Any]:
@@ -63,25 +66,36 @@ class FromExampleContext:
     def custom_func(self) -> t.Optional["_CustomFunc"]:
         return self._custom_func
 
+    @property
+    def examples(self) -> t.Tuple[t.Any, ...]:
+        return self._example_stacks
+
     @classmethod
     def root(
         cls,
         custom_func: t.Optional["_CustomFunc"],
         rnd: t.Optional[Random],
+        example: t.Any,
     ) -> "FromExampleContext":
         return FromExampleContext(
             path=tuple(),
             custom_func=custom_func,
             rnd=rnd,
             example_is_customized=False,
+            examples_stack=(example,),
         )
 
-    def child(self, key: t.Any) -> "FromExampleContext":
+    def child(
+        self,
+        key: t.Any,
+        example: t.Any,
+    ) -> "FromExampleContext":
         return FromExampleContext(
             path=(*self._path, key),
             custom_func=self._custom_func,
             rnd=self._rnd,
             example_is_customized=False,
+            examples_stack=(*self._example_stacks, example),
         )
 
     def customized(self) -> "FromExampleContext":
@@ -90,6 +104,7 @@ class FromExampleContext:
             custom_func=self._custom_func,
             rnd=self._rnd,
             example_is_customized=True,
+            examples_stack=self._example_stacks,
         )
 
     def from_example(self, example: t.Any) -> Factory:
@@ -103,6 +118,7 @@ class FromExampleContext:
     def recursive(self, child: t.Any, key: t.Any) -> Factory:
         new_context = self.child(
             key=key,
+            example=child,
         )
         return from_example(
             child,
@@ -170,6 +186,7 @@ def from_example(
         context = FromExampleContext.root(
             custom_func=custom_func,
             rnd=rnd,
+            example=example,
         )
 
     if not context.example_is_customized and context.custom_func is not None:

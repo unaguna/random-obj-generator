@@ -1,3 +1,4 @@
+import datetime as dt
 from decimal import Decimal
 import typing as t
 from random import Random
@@ -5,6 +6,7 @@ from random import Random
 from . import (
     DictItem,
     Factory,
+    randdatetime,
     randdecimal,
     randdict,
     randfloat,
@@ -23,6 +25,7 @@ _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = 
     float: lambda rnd: randfloat(0, 1.0, rnd=rnd),
     Decimal: lambda rnd: randdecimal(0, 1.0, rnd=rnd),
     str: lambda rnd: randstr(rnd=rnd),
+    dt.datetime: lambda rnd: randdatetime(rnd=rnd),
     list: lambda rnd: randlist(randstr(), rnd=rnd),
     tuple: lambda rnd: randlist(randstr(), type=tuple, rnd=rnd),
     dict: lambda rnd: randdict({"key": randint(0, 100, rnd=rnd)}, rnd=rnd),

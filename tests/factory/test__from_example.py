@@ -1,3 +1,4 @@
+import datetime as dt
 import math
 from decimal import Decimal
 
@@ -74,6 +75,19 @@ def test__from_example__decimal_nan_value():
     value = factory.next()
     assert isinstance(value, Decimal)
     assert math.isnan(value)
+
+
+def test__from_example__datetime_type():
+    factory = ranog.factory.from_example(dt.datetime)
+    value = factory.next()
+    assert isinstance(value, dt.datetime)
+
+
+@pytest.mark.parametrize("obj", (dt.datetime.now(), dt.datetime.utcnow()))
+def test__from_example__datetime_value(obj):
+    factory = ranog.factory.from_example(obj)
+    value = factory.next()
+    assert isinstance(value, dt.datetime)
 
 
 def test__from_example__list_type():

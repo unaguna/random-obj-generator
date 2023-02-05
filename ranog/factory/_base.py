@@ -51,6 +51,54 @@ class Factory(ABC, t.Generic[T]):
         """
         return PostFactory(self, post_process)
 
+    def iter(self, size: int) -> t.Iterator[T]:
+        """Returns an iterator which serves result randomly `size` times.
+
+        Examples
+        --------
+        >>> import ranog
+        >>> factory = ranog.factory.randstr(length=5)
+        >>>
+        >>> for result in factory.iter(10):
+        ...     assert isinstance(result, str)
+        >>>
+        >>> results = list(factory.iter(5))
+        >>> assert len(results) == 5
+
+        Parameters
+        ----------
+        size
+            the number of the iterator
+
+        Returns
+        -------
+        An iterator
+        """
+        for _ in range(size):
+            yield self.next()
+
+    def infinity_iter(self) -> t.Iterator[T]:
+        """Returns an infinity iterator which serves result randomly.
+
+        The result is INFINITY so do NOT use it directly with `for`, `list`, and so on.
+
+        Examples
+        --------
+        >>> import ranog
+        >>> factory = ranog.factory.randstr(length=5)
+        >>>
+        >>> keys = ["foo", "bar"]
+        >>> for k, v in zip(keys, factory.infinity_iter()):
+        ...     assert k in keys
+        ...     assert isinstance(v, str)
+
+        Returns
+        -------
+        An infinity iterator
+        """
+        while True:
+            yield self.next()
+
 
 class PostFactory(Factory[R], t.Generic[T, R]):
     _base_factory: Factory[T]

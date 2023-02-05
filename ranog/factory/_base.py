@@ -33,12 +33,16 @@ class Factory(ABC, t.Generic[T]):
         --------
         >>> import ranog
         >>>
-        >>> factory = ranog.factory.randstr(length=9).post_process(lambda v: v + v[0])
+        >>> # use post_process to format the random decimal value
+        >>> factory = (
+        ...     ranog.factory.randdecimal(0, 50000, decimal_len=2)
+        ...                  .post_process(lambda x: f"${x:,}")
+        ... )
         >>>
+        >>> # examples: '$12,345.67', '$3,153.21', '$12.90', etc.
         >>> generated = factory.next()
-        >>>
-        >>> assert len(generated) == 10
-        >>> assert generated[0] == generated[-1]
+        >>> assert isinstance(generated, str)
+        >>> assert generated[0] == "$"
 
         Parameters
         ----------

@@ -6,6 +6,7 @@ from random import Random
 from . import (
     DictItem,
     Factory,
+    randbool,
     randdatetime,
     randdecimal,
     randdict,
@@ -21,6 +22,7 @@ import ranog
 
 
 _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = {
+    bool: lambda rnd: randbool(rnd=rnd),
     int: lambda rnd: randint(0, 100, rnd=rnd),
     float: lambda rnd: randfloat(0, 1.0, rnd=rnd),
     Decimal: lambda rnd: randdecimal(0, 1.0, rnd=rnd),

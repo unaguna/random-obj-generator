@@ -9,6 +9,19 @@ import ranog.factory
 from ranog.exceptions import FactoryConstructionError
 
 
+def test__from_example__bool_type():
+    factory = ranog.factory.from_example(bool)
+    values = set(map(lambda x: factory.next(), range(200)))
+    assert values == {True, False}
+
+
+@pytest.mark.parametrize("obj", (True, False))
+def test__from_example__bool_value(obj):
+    factory = ranog.factory.from_example(obj)
+    values = set(map(lambda x: factory.next(), range(200)))
+    assert values == {True, False}
+
+
 def test__from_example__int_type():
     factory = ranog.factory.from_example(int)
     value = factory.next()

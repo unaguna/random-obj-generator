@@ -1,6 +1,7 @@
 from ._base import Factory
 from ._choice import ChoiceRandomFactory, randchoice
 from ._const import const
+from ._bool import BoolRandomFactory, randbool
 from ._int import IntRandomFactory, randint
 from ._float import FloatRandomFactory, randfloat
 from ._decimal import DecimalRandomFactory, randdecimal

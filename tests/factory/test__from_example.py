@@ -9,6 +9,12 @@ import ranog.factory
 from ranog.exceptions import FactoryConstructionError
 
 
+def test__from_example__none():
+    factory = ranog.factory.from_example(None)
+    values = set(map(lambda x: factory.next(), range(200)))
+    assert values == {None}
+
+
 def test__from_example__bool_type():
     factory = ranog.factory.from_example(bool)
     values = set(map(lambda x: factory.next(), range(200)))

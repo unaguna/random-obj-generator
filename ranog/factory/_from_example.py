@@ -15,6 +15,7 @@ from . import (
     randint,
     randstr,
     union,
+    const,
 )
 from ..exceptions import FactoryConstructionError
 
@@ -221,6 +222,8 @@ def from_example(
             raise FactoryConstructionError(
                 f"cannot construct factory for unsupported type: {example}"
             )
+    elif example is None:
+        return const(None, rnd=context.rnd)
     elif isinstance(example, Decimal):
         return _from_decimal(example, rnd=context.rnd)
     elif isinstance(example, t.Mapping):

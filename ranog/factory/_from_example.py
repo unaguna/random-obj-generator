@@ -4,6 +4,7 @@ import typing as t
 from random import Random
 
 from . import (
+    by_callable,
     DictItem,
     Factory,
     randbool,
@@ -238,6 +239,8 @@ def from_example(
             rnd=context.rnd,
             items_list=tuple(_list_item(exm, context) for exm in enumerate(example)),
         )
+    elif isinstance(example, t.Callable):
+        return by_callable(example)
     else:
         return context.from_example(type(example))
 

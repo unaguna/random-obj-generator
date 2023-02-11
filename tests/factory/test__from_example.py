@@ -229,6 +229,15 @@ def test__from_example__factory(input_factory):
     assert factory is input_factory
 
 
+@pytest.mark.parametrize("result", ("dummy", 1))
+def test__from_example__callable(result):
+    def func():
+        return result
+
+    factory = ranog.factory.from_example(func)
+    assert factory.next() is result
+
+
 @pytest.mark.parametrize("obj", (type, pytest.mark))
 def test__from_example__error_when_unsupported_obj(obj):
     with pytest.raises(FactoryConstructionError) as e_ctx:

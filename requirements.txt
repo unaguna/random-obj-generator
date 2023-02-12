@@ -1,2 +1,3 @@
-###### dependent for tests ######
+###### dependent for publish ######
 setuptools
+twine

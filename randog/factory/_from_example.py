@@ -20,7 +20,7 @@ from . import (
 )
 from ..exceptions import FactoryConstructionError
 
-import ranog
+import randog
 
 
 _FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = {
@@ -153,7 +153,7 @@ class _CustomFunc(t.Protocol):
 
 
 def _dict_item(obj, key, context: FromExampleContext) -> DictItem:
-    if isinstance(obj, ranog.DictItemExample):
+    if isinstance(obj, randog.DictItemExample):
         return DictItem(context.recursive(obj.example, key), obj.prop_exists)
     else:
         return DictItem(context.recursive(obj, key))
@@ -214,7 +214,7 @@ def from_example(
         if custom_result is not NotImplemented:
             example = custom_result
 
-    if isinstance(example, ranog.Example):
+    if isinstance(example, randog.Example):
         return union(*map(context.from_example, example), rnd=context.rnd)
     elif isinstance(example, type):
         if example in _FACTORY_CONSTRUCTOR:

@@ -4,12 +4,12 @@ from fractions import Fraction
 
 import pytest
 
-import ranog.factory
-from ranog.exceptions import FactoryConstructionError
+import randog.factory
+from randog.exceptions import FactoryConstructionError
 
 
 def test__random_float():
-    factory = ranog.factory.randfloat()
+    factory = randog.factory.randfloat()
 
     value = factory.next()
 
@@ -18,7 +18,7 @@ def test__random_float():
 
 @pytest.mark.parametrize("expected_value", (-1.0, 0.0, 1.0))
 def test__random_float__by_float(expected_value):
-    factory = ranog.factory.randfloat(expected_value, expected_value)
+    factory = randog.factory.randfloat(expected_value, expected_value)
 
     value = factory.next()
 
@@ -34,7 +34,7 @@ def test__random_float__by_float(expected_value):
     ),
 )
 def test__random_float__by_int(condition, expected_value):
-    factory = ranog.factory.randfloat(condition, condition)
+    factory = randog.factory.randfloat(condition, condition)
 
     value = factory.next()
 
@@ -50,7 +50,7 @@ def test__random_float__by_int(condition, expected_value):
     ),
 )
 def test__random_float__by_decimal(condition, expected_value):
-    factory = ranog.factory.randfloat(condition, condition)
+    factory = randog.factory.randfloat(condition, condition)
 
     value = factory.next()
 
@@ -66,7 +66,7 @@ def test__random_float__by_decimal(condition, expected_value):
     ),
 )
 def test__random_float__by_fraction(condition, expected_value):
-    factory = ranog.factory.randfloat(condition, condition)
+    factory = randog.factory.randfloat(condition, condition)
 
     value = factory.next()
 
@@ -82,7 +82,7 @@ def test__random_float__by_fraction(condition, expected_value):
     ),
 )
 def test__random_float__inf(p_inf, n_inf, expected_value):
-    factory = ranog.factory.randfloat(p_inf=p_inf, n_inf=n_inf)
+    factory = randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf)
 
     value = factory.next()
 
@@ -91,7 +91,7 @@ def test__random_float__inf(p_inf, n_inf, expected_value):
 
 
 def test__random_float__nan():
-    factory = ranog.factory.randfloat(nan=1.0)
+    factory = randog.factory.randfloat(nan=1.0)
 
     value = factory.next()
 
@@ -109,7 +109,7 @@ def test__random_float__nan():
     ),
 )
 def test__random_float__inf_zero(p_inf, n_inf):
-    factory = ranog.factory.randfloat(p_inf=p_inf, n_inf=n_inf)
+    factory = randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf)
 
     value = factory.next()
 
@@ -118,7 +118,7 @@ def test__random_float__inf_zero(p_inf, n_inf):
 
 
 def test__random_float__or_none():
-    factory = ranog.factory.randfloat(1, 1).or_none(0.5)
+    factory = randog.factory.randfloat(1, 1).or_none(0.5)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -126,7 +126,7 @@ def test__random_float__or_none():
 
 
 def test__random_float__or_none_0():
-    factory = ranog.factory.randfloat(1, 1).or_none(0)
+    factory = randog.factory.randfloat(1, 1).or_none(0)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -135,7 +135,7 @@ def test__random_float__or_none_0():
 
 def test__random_float_error_when_edges_inverse():
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randfloat(2, 1)
+        randog.factory.randfloat(2, 1)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"
@@ -143,7 +143,7 @@ def test__random_float_error_when_edges_inverse():
 
 def test__random_float_error_when_probability_gt_1():
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randfloat(p_inf=0.625, n_inf=0.5)
+        randog.factory.randfloat(p_inf=0.625, n_inf=0.5)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"
@@ -163,7 +163,7 @@ def test__random_float_error_when_probability_gt_1():
 )
 def test__random_float__error_when_negative_probability(p_inf, n_inf, nan):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, nan=nan)
+        randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, nan=nan)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

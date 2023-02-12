@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-import ranog
+import randog
 
 
 def load_readme() -> str:
@@ -9,8 +9,8 @@ def load_readme() -> str:
 
 
 setup(
-    name="ranog",
-    version=ranog.__version__,
+    name="randog",
+    version=randog.__version__,
     project_urls={
         "Bug Tracker": "https://github.com/unaguna/random-obj-generator/issues",
         # "Documentation": "https://unaguna.github.io/random-obj-generator/",

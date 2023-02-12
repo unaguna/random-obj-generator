@@ -1,14 +1,14 @@
 from random import Random
 from unittest.mock import MagicMock
 
-import ranog.factory
+import randog.factory
 
 
 def test__from_example_context():
-    custom_func = lambda *args, **kwargs: ranog.factory.const(0)
+    custom_func = lambda *args, **kwargs: randog.factory.const(0)
     rnd = Random()
 
-    context = ranog.factory.FromExampleContext.root(
+    context = randog.factory.FromExampleContext.root(
         custom_func=custom_func,
         rnd=rnd,
         example="example",
@@ -23,10 +23,10 @@ def test__from_example_context():
 
 
 def test__from_example_context__child():
-    custom_func = lambda *args, **kwargs: ranog.factory.const(0)
+    custom_func = lambda *args, **kwargs: randog.factory.const(0)
     rnd = Random()
 
-    root_context = ranog.factory.FromExampleContext.root(
+    root_context = randog.factory.FromExampleContext.root(
         custom_func=custom_func,
         rnd=rnd,
         example="example",
@@ -43,10 +43,10 @@ def test__from_example_context__child():
 
 
 def test__from_example_context__customized():
-    custom_func = lambda *args, **kwargs: ranog.factory.const(0)
+    custom_func = lambda *args, **kwargs: randog.factory.const(0)
     rnd = Random()
 
-    root_context = ranog.factory.FromExampleContext.root(
+    root_context = randog.factory.FromExampleContext.root(
         custom_func=custom_func,
         rnd=rnd,
         example="example",
@@ -68,11 +68,11 @@ def test__from_example_context__customized():
 
 def test__from_example_context__from_example():
     expected_example = 1
-    expected_factory = ranog.factory.ChoiceRandomFactory([2])
+    expected_factory = randog.factory.ChoiceRandomFactory([2])
     custom_func = MagicMock(return_value=expected_factory)
     rnd = Random()
 
-    root_context = ranog.factory.FromExampleContext.root(
+    root_context = randog.factory.FromExampleContext.root(
         custom_func=custom_func,
         rnd=rnd,
         example="example",
@@ -93,11 +93,11 @@ def test__from_example_context__from_example():
 
 def test__from_example_context__recursive():
     expected_example = 1
-    expected_factory = ranog.factory.ChoiceRandomFactory([2])
+    expected_factory = randog.factory.ChoiceRandomFactory([2])
     custom_func = MagicMock(return_value=expected_factory)
     rnd = Random()
 
-    root_context = ranog.factory.FromExampleContext.root(
+    root_context = randog.factory.FromExampleContext.root(
         custom_func=custom_func,
         rnd=rnd,
         example="example",

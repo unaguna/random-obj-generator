@@ -4,12 +4,12 @@ from fractions import Fraction
 
 import pytest
 
-import ranog.factory
-from ranog.exceptions import FactoryConstructionError
+import randog.factory
+from randog.exceptions import FactoryConstructionError
 
 
 def test__random_decimal():
-    factory = ranog.factory.randdecimal()
+    factory = randog.factory.randdecimal()
 
     value = factory.next()
 
@@ -24,7 +24,7 @@ def test__random_decimal():
     ),
 )
 def test__random_decimal__by_decimal(expected_value):
-    factory = ranog.factory.randdecimal(expected_value, expected_value)
+    factory = randog.factory.randdecimal(expected_value, expected_value)
 
     value = factory.next()
 
@@ -41,7 +41,7 @@ def test__random_decimal__by_decimal(expected_value):
     ),
 )
 def test__random_decimal__by_float(condition, expected_value):
-    factory = ranog.factory.randdecimal(condition, condition)
+    factory = randog.factory.randdecimal(condition, condition)
 
     value = factory.next()
 
@@ -57,7 +57,7 @@ def test__random_decimal__by_float(condition, expected_value):
     ),
 )
 def test__random_decimal__by_int(condition, expected_value):
-    factory = ranog.factory.randdecimal(condition, condition)
+    factory = randog.factory.randdecimal(condition, condition)
 
     value = factory.next()
 
@@ -73,7 +73,7 @@ def test__random_decimal__by_int(condition, expected_value):
     ),
 )
 def test__random_decimal__by_fraction(condition, expected_value):
-    factory = ranog.factory.randdecimal(condition, condition)
+    factory = randog.factory.randdecimal(condition, condition)
 
     value = factory.next()
 
@@ -96,7 +96,7 @@ def test__random_decimal__by_fraction(condition, expected_value):
     ),
 )
 def test__random_decimal__decimal_len(condition, decimal_len, expected_value):
-    factory = ranog.factory.randdecimal(condition, condition, decimal_len=decimal_len)
+    factory = randog.factory.randdecimal(condition, condition, decimal_len=decimal_len)
 
     value = factory.next()
 
@@ -113,7 +113,7 @@ def test__random_decimal__decimal_len(condition, decimal_len, expected_value):
     ),
 )
 def test__random_decimal__inf(p_inf, n_inf, expected_value):
-    factory = ranog.factory.randdecimal(p_inf=p_inf, n_inf=n_inf)
+    factory = randog.factory.randdecimal(p_inf=p_inf, n_inf=n_inf)
 
     value = factory.next()
 
@@ -122,7 +122,7 @@ def test__random_decimal__inf(p_inf, n_inf, expected_value):
 
 
 def test__random_decimal__nan():
-    factory = ranog.factory.randdecimal(nan=1.0)
+    factory = randog.factory.randdecimal(nan=1.0)
 
     value = factory.next()
 
@@ -140,7 +140,7 @@ def test__random_decimal__nan():
     ),
 )
 def test__random_decimal__inf_zero(p_inf, n_inf):
-    factory = ranog.factory.randdecimal(p_inf=p_inf, n_inf=n_inf)
+    factory = randog.factory.randdecimal(p_inf=p_inf, n_inf=n_inf)
 
     value = factory.next()
 
@@ -149,7 +149,7 @@ def test__random_decimal__inf_zero(p_inf, n_inf):
 
 
 def test__random_decimal__or_none():
-    factory = ranog.factory.randdecimal(1, 1).or_none(0.5)
+    factory = randog.factory.randdecimal(1, 1).or_none(0.5)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -159,7 +159,7 @@ def test__random_decimal__or_none():
 
 
 def test__random_decimal__or_none_0():
-    factory = ranog.factory.randdecimal(1, 1).or_none(0)
+    factory = randog.factory.randdecimal(1, 1).or_none(0)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -170,7 +170,7 @@ def test__random_decimal__or_none_0():
 
 def test__random_decimal__error_when_edges_inverse():
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randdecimal(2, 1)
+        randog.factory.randdecimal(2, 1)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"
@@ -178,7 +178,7 @@ def test__random_decimal__error_when_edges_inverse():
 
 def test__random_decimal__error_when_probability_gt_1():
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randdecimal(p_inf=0.625, n_inf=0.5)
+        randog.factory.randdecimal(p_inf=0.625, n_inf=0.5)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"
@@ -198,7 +198,7 @@ def test__random_decimal__error_when_probability_gt_1():
 )
 def test__random_decimal__error_when_negative_probability(p_inf, n_inf, nan):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randdecimal(p_inf=p_inf, n_inf=n_inf, nan=nan)
+        randog.factory.randdecimal(p_inf=p_inf, n_inf=n_inf, nan=nan)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

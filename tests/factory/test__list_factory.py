@@ -1,13 +1,13 @@
 import pytest
 
-import ranog.factory
-from ranog.exceptions import FactoryConstructionError
+import randog.factory
+from randog.exceptions import FactoryConstructionError
 
 
 @pytest.mark.parametrize("length", (1, 2, 3))
 def test__random_list(length):
-    factory = ranog.factory.randlist(
-        ranog.factory.randint(1, 1), ranog.factory.randstr(length=0), length=length
+    factory = randog.factory.randlist(
+        randog.factory.randint(1, 1), randog.factory.randstr(length=0), length=length
     )
 
     # generator の実装の正しさの検証のため2回実行する
@@ -26,9 +26,9 @@ def test__random_list(length):
 
 @pytest.mark.parametrize("length", (1, 2, 3))
 def test__random_list__with_type(length):
-    factory = ranog.factory.randlist(
-        ranog.factory.randint(1, 1),
-        ranog.factory.randstr(length=0),
+    factory = randog.factory.randlist(
+        randog.factory.randint(1, 1),
+        randog.factory.randstr(length=0),
         length=length,
         type=tuple,
     )
@@ -48,8 +48,8 @@ def test__random_list__with_type(length):
 
 
 def test__random_list__without_length():
-    factory = ranog.factory.randlist(
-        ranog.factory.randint(1, 1), ranog.factory.randstr(length=0)
+    factory = randog.factory.randlist(
+        randog.factory.randint(1, 1), randog.factory.randstr(length=0)
     )
 
     for _ in range(100):
@@ -58,13 +58,13 @@ def test__random_list__without_length():
 
 
 def test__random_list__normal_with_no_factory_and_zero_length():
-    factory = ranog.factory.randlist(length=0)
+    factory = randog.factory.randlist(length=0)
     value = factory.next()
     assert value == []
 
 
 def test__random_list__or_none():
-    factory = ranog.factory.randlist(length=0).or_none(0.5)
+    factory = randog.factory.randlist(length=0).or_none(0.5)
 
     values = set(map(lambda x: type(factory.next()), range(200)))
 
@@ -72,7 +72,7 @@ def test__random_list__or_none():
 
 
 def test__random_list__or_none_0():
-    factory = ranog.factory.randlist(length=0).or_none(0)
+    factory = randog.factory.randlist(length=0).or_none(0)
 
     values = set(map(lambda x: type(factory.next()), range(200)))
 
@@ -82,7 +82,7 @@ def test__random_list__or_none_0():
 @pytest.mark.parametrize("length", (1, 2))
 def test__random_str__error_with_no_factory_and_nonzero_length(length):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randlist(length=length)
+        randog.factory.randlist(length=length)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

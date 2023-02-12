@@ -1,14 +1,14 @@
-**ranog 0.1.0.x — Randomly object generator**
+**randog 0.1.0.x — Randomly object generator**
 
-**ranog** is a package which helps to generate data randomly.
+**randog** is a package which helps to generate data randomly.
 
 For example:
 
 ```python
 import uuid
-import ranog.factory
+import randog.factory
 
-factory = ranog.factory.from_example({"uuid": uuid.uuid4, "name":"", "age": 20})
+factory = randog.factory.from_example({"uuid": uuid.uuid4, "name": "", "age": 20})
 generated = factory.next()
 
 assert isinstance(generated, dict)

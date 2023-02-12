@@ -17,11 +17,11 @@ class Factory(ABC, t.Generic[T]):
         *,
         rnd: t.Optional[Random] = None,
     ) -> "Factory[t.Union[T, None]]":
-        import ranog.factory
+        import randog.factory
 
-        return ranog.factory.union(
+        return randog.factory.union(
             self,
-            ranog.factory.const(None),
+            randog.factory.const(None),
             weights=[1 - prob, prob],
             rnd=rnd,
         )
@@ -31,11 +31,11 @@ class Factory(ABC, t.Generic[T]):
 
         Examples
         --------
-        >>> import ranog
+        >>> import randog
         >>>
         >>> # use post_process to format the random decimal value
         >>> factory = (
-        ...     ranog.factory.randdecimal(0, 50000, decimal_len=2)
+        ...     randog.factory.randdecimal(0, 50000, decimal_len=2)
         ...                  .post_process(lambda x: f"${x:,}")
         ... )
         >>>
@@ -60,8 +60,8 @@ class Factory(ABC, t.Generic[T]):
 
         Examples
         --------
-        >>> import ranog
-        >>> factory = ranog.factory.randstr(length=5)
+        >>> import randog
+        >>> factory = randog.factory.randstr(length=5)
         >>>
         >>> for result in factory.iter(10):
         ...     assert isinstance(result, str)
@@ -88,8 +88,8 @@ class Factory(ABC, t.Generic[T]):
 
         Examples
         --------
-        >>> import ranog
-        >>> factory = ranog.factory.randstr(length=5)
+        >>> import randog
+        >>> factory = randog.factory.randstr(length=5)
         >>>
         >>> keys = ["foo", "bar"]
         >>> for k, v in zip(keys, factory.infinity_iter()):

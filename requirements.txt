@@ -1,0 +1,3 @@
+###### dependent for publish ######
+setuptools
+twine

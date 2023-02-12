@@ -3,12 +3,12 @@ import datetime as dt
 
 import pytest
 
-import ranog.factory
-from ranog.exceptions import FactoryConstructionError
+import randog.factory
+from randog.exceptions import FactoryConstructionError
 
 
 def test__random_datetime():
-    factory = ranog.factory.randdatetime()
+    factory = randog.factory.randdatetime()
 
     value = factory.next()
 
@@ -23,7 +23,7 @@ def test__random_datetime():
     ),
 )
 def test__random_datetime__by_datetime(expected_value):
-    factory = ranog.factory.randdatetime(expected_value, expected_value)
+    factory = randog.factory.randdatetime(expected_value, expected_value)
 
     value = factory.next()
 
@@ -40,7 +40,7 @@ def test__random_datetime__by_datetime(expected_value):
     ),
 )
 def test__random_datetime__by_date(condition, expected_min, expected_max):
-    factory = ranog.factory.randdatetime(condition, condition)
+    factory = randog.factory.randdatetime(condition, condition)
 
     for _ in range(200):
         value = factory.next()
@@ -56,7 +56,7 @@ def test__random_datetime__by_different_tz_datetime():
     )
     assert minimum == maximum
 
-    factory = ranog.factory.randdatetime(minimum, maximum)
+    factory = randog.factory.randdatetime(minimum, maximum)
 
     value = factory.next()
 
@@ -137,7 +137,7 @@ def test__random_datetime__by_different_tz_datetime():
     ),
 )
 def test__random_datetime__by_datetime_and_tzinfo(condition, tzinfo, expected_value):
-    factory = ranog.factory.randdatetime(condition, condition, tzinfo=tzinfo)
+    factory = randog.factory.randdatetime(condition, condition, tzinfo=tzinfo)
 
     value = factory.next()
 
@@ -148,7 +148,7 @@ def test__random_datetime__by_datetime_and_tzinfo(condition, tzinfo, expected_va
 
 def test__random_datetime__or_none():
     expected_value = dt.datetime(2021, 1, 2, 11, 22, 33, 444_555)
-    factory = ranog.factory.randdatetime(expected_value, expected_value).or_none(0.5)
+    factory = randog.factory.randdatetime(expected_value, expected_value).or_none(0.5)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -157,7 +157,7 @@ def test__random_datetime__or_none():
 
 def test__random_datetime__or_none_0():
     expected_value = dt.datetime(2021, 1, 2, 11, 22, 33, 444_555)
-    factory = ranog.factory.randdatetime(expected_value, expected_value).or_none(0)
+    factory = randog.factory.randdatetime(expected_value, expected_value).or_none(0)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -166,7 +166,7 @@ def test__random_datetime__or_none_0():
 
 def test__random_datetime__error_when_edges_inverse():
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randdatetime(
+        randog.factory.randdatetime(
             dt.datetime(2021, 1, 2, 11, 22, 33, 444_555),
             dt.datetime(2021, 1, 2, 11, 22, 33, 444_554),
         )
@@ -190,7 +190,7 @@ def test__random_datetime__error_when_edges_inverse():
 )
 def test__random_datetime__error_when_naive_and_aware(minimum, maximum):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randdatetime(minimum, maximum)
+        randog.factory.randdatetime(minimum, maximum)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

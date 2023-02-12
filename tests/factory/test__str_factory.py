@@ -1,11 +1,11 @@
 import pytest
 
-import ranog.factory
-from ranog.exceptions import FactoryConstructionError
+import randog.factory
+from randog.exceptions import FactoryConstructionError
 
 
 def test__random_str__without_options():
-    factory = ranog.factory.randstr()
+    factory = randog.factory.randstr()
 
     value = factory.next()
 
@@ -14,7 +14,7 @@ def test__random_str__without_options():
 
 @pytest.mark.parametrize("length", (0, 1, 2, 3))
 def test__random_str__with_length(length):
-    factory = ranog.factory.randstr(length=length)
+    factory = randog.factory.randstr(length=length)
 
     value = factory.next()
 
@@ -31,7 +31,7 @@ def test__random_str__with_length(length):
     ),
 )
 def test__random_str__with_charset(charset):
-    factory = ranog.factory.randstr(charset=charset)
+    factory = randog.factory.randstr(charset=charset)
 
     value = factory.next()
 
@@ -48,7 +48,7 @@ def test__random_str__with_charset(charset):
     ),
 )
 def test__random_str__with_charset_and_length(charset, length):
-    factory = ranog.factory.randstr(length=length, charset=charset)
+    factory = randog.factory.randstr(length=length, charset=charset)
 
     value = factory.next()
 
@@ -58,7 +58,7 @@ def test__random_str__with_charset_and_length(charset, length):
 
 
 def test__random_str_normal_when_empty_charset_and_zero_length():
-    factory = ranog.factory.randstr(length=0, charset="")
+    factory = randog.factory.randstr(length=0, charset="")
 
     value = factory.next()
 
@@ -67,7 +67,7 @@ def test__random_str_normal_when_empty_charset_and_zero_length():
 
 
 def test__random_str__or_none():
-    factory = ranog.factory.randstr(length=0).or_none(0.5)
+    factory = randog.factory.randstr(length=0).or_none(0.5)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -75,7 +75,7 @@ def test__random_str__or_none():
 
 
 def test__random_str__or_none_0():
-    factory = ranog.factory.randstr(length=0).or_none(0)
+    factory = randog.factory.randstr(length=0).or_none(0)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -85,7 +85,7 @@ def test__random_str__or_none_0():
 @pytest.mark.parametrize("length", (1, 2))
 def test__random_str_error_when_empty_charset_and_nonzero_length(length):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.randstr(length=length, charset="")
+        randog.factory.randstr(length=length, charset="")
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

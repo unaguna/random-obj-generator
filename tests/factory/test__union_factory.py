@@ -1,13 +1,13 @@
 import pytest
 
-import ranog.factory
-from ranog.exceptions import FactoryConstructionError
+import randog.factory
+from randog.exceptions import FactoryConstructionError
 
 
 def test__random_union__uses_each_factory():
-    factory = ranog.factory.union(
-        ranog.factory.randstr(length=0),
-        ranog.factory.randint(1, 1),
+    factory = randog.factory.union(
+        randog.factory.randstr(length=0),
+        randog.factory.randint(1, 1),
     )
 
     values = set(map(lambda x: factory.next(), range(200)))
@@ -17,9 +17,9 @@ def test__random_union__uses_each_factory():
 
 @pytest.mark.parametrize("expected_value", (-1, 0, 1))
 def test__random_union__value(expected_value):
-    factory = ranog.factory.union(
-        ranog.factory.randint(expected_value, expected_value),
-        ranog.factory.randint(expected_value, expected_value),
+    factory = randog.factory.union(
+        randog.factory.randint(expected_value, expected_value),
+        randog.factory.randint(expected_value, expected_value),
     )
 
     value = factory.next()
@@ -31,10 +31,10 @@ def test__random_union__value(expected_value):
     "weights", ([0.8, 0.2, 0], (0.8, 0.2, 0), [0.8, 0.2, 0, 0][:2])
 )
 def test__random_union__weight(weights):
-    factory = ranog.factory.union(
-        ranog.factory.const(1),
-        ranog.factory.const(2),
-        ranog.factory.const(3),
+    factory = randog.factory.union(
+        randog.factory.const(1),
+        randog.factory.const(2),
+        randog.factory.const(3),
         weights=[0.8, 0.2, 0],
     )
 
@@ -44,10 +44,10 @@ def test__random_union__weight(weights):
 
 
 def test__random_union__or_none():
-    factory = ranog.factory.union(
-        ranog.factory.const(1),
-        ranog.factory.const(2),
-        ranog.factory.const(3),
+    factory = randog.factory.union(
+        randog.factory.const(1),
+        randog.factory.const(2),
+        randog.factory.const(3),
         weights=[0.5, 0.5, 0],
     ).or_none(0.5)
 
@@ -57,10 +57,10 @@ def test__random_union__or_none():
 
 
 def test__random_int__or_none_0():
-    factory = ranog.factory.union(
-        ranog.factory.const(1),
-        ranog.factory.const(2),
-        ranog.factory.const(3),
+    factory = randog.factory.union(
+        randog.factory.const(1),
+        randog.factory.const(2),
+        randog.factory.const(3),
         weights=[0.5, 0.5, 0],
     ).or_none(0)
 
@@ -71,7 +71,7 @@ def test__random_int__or_none_0():
 
 def test__random_union__error_when_no_factory_specified():
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.union()
+        randog.factory.union()
     e = e_ctx.value
 
     assert (
@@ -83,9 +83,9 @@ def test__random_union__error_when_no_factory_specified():
 @pytest.mark.parametrize("weights_len", (0, 1, 3))
 def test__random_union__error_when_weights_does_not_match(weights_len):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.union(
-            ranog.factory.const("1"),
-            ranog.factory.const("2"),
+        randog.factory.union(
+            randog.factory.const("1"),
+            randog.factory.const("2"),
             weights=[1, 1, 1, 1][:weights_len],
         )
     e = e_ctx.value

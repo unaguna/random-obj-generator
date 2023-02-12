@@ -4,78 +4,78 @@ from decimal import Decimal
 
 import pytest
 
-import ranog
-import ranog.factory
-from ranog.exceptions import FactoryConstructionError
+import randog
+import randog.factory
+from randog.exceptions import FactoryConstructionError
 
 
 def test__from_example__none():
-    factory = ranog.factory.from_example(None)
+    factory = randog.factory.from_example(None)
     values = set(map(lambda x: factory.next(), range(200)))
     assert values == {None}
 
 
 def test__from_example__bool_type():
-    factory = ranog.factory.from_example(bool)
+    factory = randog.factory.from_example(bool)
     values = set(map(lambda x: factory.next(), range(200)))
     assert values == {True, False}
 
 
 @pytest.mark.parametrize("obj", (True, False))
 def test__from_example__bool_value(obj):
-    factory = ranog.factory.from_example(obj)
+    factory = randog.factory.from_example(obj)
     values = set(map(lambda x: factory.next(), range(200)))
     assert values == {True, False}
 
 
 def test__from_example__int_type():
-    factory = ranog.factory.from_example(int)
+    factory = randog.factory.from_example(int)
     value = factory.next()
     assert isinstance(value, int)
 
 
 @pytest.mark.parametrize("obj", (-1, 0, 1))
 def test__from_example__int_value(obj):
-    factory = ranog.factory.from_example(obj)
+    factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, int)
 
 
 def test__from_example__float_type():
-    factory = ranog.factory.from_example(float)
+    factory = randog.factory.from_example(float)
     value = factory.next()
     assert isinstance(value, float)
 
 
 @pytest.mark.parametrize("obj", (-1.0, 0.0, 0.1))
 def test__from_example__float_value(obj):
-    factory = ranog.factory.from_example(obj)
+    factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, float)
 
 
 def test__from_example__str_type():
-    factory = ranog.factory.from_example(str)
+    factory = randog.factory.from_example(str)
     value = factory.next()
     assert isinstance(value, str)
 
 
 @pytest.mark.parametrize("obj", ("a", "bc", "xyz"))
 def test__from_example__str_value(obj):
-    factory = ranog.factory.from_example(obj)
+    factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, str)
 
 
 def test__from_example__decimal_type():
-    factory = ranog.factory.from_example(Decimal)
+    factory = randog.factory.from_example(Decimal)
     value = factory.next()
     assert isinstance(value, Decimal)
 
 
 @pytest.mark.parametrize("obj", (Decimal("1.2"), Decimal("2.35"), Decimal("2.35E+3")))
 def test__from_example__decimal_value(obj):
-    factory = ranog.factory.from_example(obj)
+    factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, Decimal)
     assert value.as_tuple()[2] == obj.as_tuple()[2]
@@ -83,34 +83,34 @@ def test__from_example__decimal_value(obj):
 
 @pytest.mark.parametrize("obj", (Decimal("inf"), Decimal("-inf")))
 def test__from_example__decimal_inf_value(obj):
-    factory = ranog.factory.from_example(obj)
+    factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, Decimal)
     assert value == obj
 
 
 def test__from_example__decimal_nan_value():
-    factory = ranog.factory.from_example(Decimal("nan"))
+    factory = randog.factory.from_example(Decimal("nan"))
     value = factory.next()
     assert isinstance(value, Decimal)
     assert math.isnan(value)
 
 
 def test__from_example__datetime_type():
-    factory = ranog.factory.from_example(dt.datetime)
+    factory = randog.factory.from_example(dt.datetime)
     value = factory.next()
     assert isinstance(value, dt.datetime)
 
 
 @pytest.mark.parametrize("obj", (dt.datetime.now(), dt.datetime.utcnow()))
 def test__from_example__datetime_value(obj):
-    factory = ranog.factory.from_example(obj)
+    factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, dt.datetime)
 
 
 def test__from_example__list_type():
-    factory = ranog.factory.from_example(list)
+    factory = randog.factory.from_example(list)
     value = factory.next()
     assert isinstance(value, list)
 
@@ -121,10 +121,10 @@ def test__from_example__list_value():
         -1000,
         {"cc": 1},
         [1, 2],
-        ranog.Example(1, str),
-        ranog.factory.randint(5, 5),
+        randog.Example(1, str),
+        randog.factory.randint(5, 5),
     ]
-    factory = ranog.factory.from_example(example)
+    factory = randog.factory.from_example(example)
     value = factory.next()
 
     assert isinstance(value, list)
@@ -141,7 +141,7 @@ def test__from_example__list_value():
 
 
 def test__from_example__tuple_type():
-    factory = ranog.factory.from_example(tuple)
+    factory = randog.factory.from_example(tuple)
     value = factory.next()
     assert isinstance(value, tuple)
 
@@ -152,10 +152,10 @@ def test__from_example__tuple_value():
         -1000,
         {"cc": 1},
         [1, 2],
-        ranog.Example(1, str),
-        ranog.factory.randint(5, 5),
+        randog.Example(1, str),
+        randog.factory.randint(5, 5),
     )
-    factory = ranog.factory.from_example(example)
+    factory = randog.factory.from_example(example)
     value = factory.next()
 
     assert isinstance(value, tuple)
@@ -172,7 +172,7 @@ def test__from_example__tuple_value():
 
 
 def test__from_example__dict_type():
-    factory = ranog.factory.from_example(dict)
+    factory = randog.factory.from_example(dict)
     value = factory.next()
     assert isinstance(value, dict)
 
@@ -182,17 +182,17 @@ def test__from_example__dict_value():
         "a": str,
         "b": -1000,
         "c": {"cc": 1},
-        "d": ranog.DictItemExample(str, 1.0),
-        "e": ranog.DictItemExample(int),
-        "f": ranog.Example(1, str),
-        "g": ranog.DictItemExample(ranog.Example(1, str)),
-        "h": ranog.factory.randint(5, 5),
-        "i": ranog.DictItemExample(ranog.factory.randint(5, 5)),
-        "j": [1, ranog.Example(str)],
+        "d": randog.DictItemExample(str, 1.0),
+        "e": randog.DictItemExample(int),
+        "f": randog.Example(1, str),
+        "g": randog.DictItemExample(randog.Example(1, str)),
+        "h": randog.factory.randint(5, 5),
+        "i": randog.DictItemExample(randog.factory.randint(5, 5)),
+        "j": [1, randog.Example(str)],
         "k": Decimal("1.00"),
-        "z": ranog.DictItemExample(int, 0.0),
+        "z": randog.DictItemExample(int, 0.0),
     }
-    factory = ranog.factory.from_example(example)
+    factory = randog.factory.from_example(example)
     value = factory.next()
 
     assert isinstance(value, dict)
@@ -220,12 +220,12 @@ def test__from_example__dict_value():
 @pytest.mark.parametrize(
     "input_factory",
     (
-        ranog.factory.randint(1, 1),
-        ranog.factory.randstr(),
+        randog.factory.randint(1, 1),
+        randog.factory.randstr(),
     ),
 )
 def test__from_example__factory(input_factory):
-    factory = ranog.factory.from_example(input_factory)
+    factory = randog.factory.from_example(input_factory)
     assert factory is input_factory
 
 
@@ -234,21 +234,21 @@ def test__from_example__callable(result):
     def func():
         return result
 
-    factory = ranog.factory.from_example(func)
+    factory = randog.factory.from_example(func)
     assert factory.next() is result
 
 
 @pytest.mark.parametrize("obj", (type, pytest.mark))
 def test__from_example__error_when_unsupported_obj(obj):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        ranog.factory.from_example(obj)
+        randog.factory.from_example(obj)
     e = e_ctx.value
 
     assert e.message.startswith("cannot construct factory for unsupported type: ")
 
 
 def test__from_example__union_type():
-    factory = ranog.factory.from_example(ranog.Example(int, str))
+    factory = randog.factory.from_example(randog.Example(int, str))
     values = set(map(lambda x: factory.next(), range(200)))
     value_types = set(map(type, values))
     assert value_types == {int, str}
@@ -259,11 +259,11 @@ def test__from_example__custom_func():
         if example == 2:
             return "2"
         elif example == 3:
-            return ranog.factory.const(True)
+            return randog.factory.const(True)
         else:
             return example
 
-    factory = ranog.factory.from_example(
+    factory = randog.factory.from_example(
         {"a": 1, "b": 2, "c": 3},
         custom_func=_custom_func,
     )
@@ -279,7 +279,7 @@ def test__from_example__custom_func__context_key():
     def _custom_func(
         example,
         *,
-        context: ranog.factory.FromExampleContext,
+        context: randog.factory.FromExampleContext,
         **kwargs,
     ):
         if len(context.path) <= 0:
@@ -288,17 +288,17 @@ def test__from_example__custom_func__context_key():
         key = context.path[-1]
         parent_key = context.path[-2] if len(context.path) >= 2 else None
         if key == "c":
-            return ranog.factory.const(True)
+            return randog.factory.const(True)
         if parent_key == "dict" and key == "B":
-            return ranog.factory.const(False)
+            return randog.factory.const(False)
         if parent_key == "list" and key == 0:
-            return ranog.factory.const(True)
+            return randog.factory.const(True)
         if parent_key == "list" and key == 1:
-            return ranog.factory.const(False)
+            return randog.factory.const(False)
 
         return example
 
-    factory = ranog.factory.from_example(
+    factory = randog.factory.from_example(
         {"a": 1, "b": 2, "c": 3, "dict": {"A": 1, "B": 2}, "list": [1, 2]},
         custom_func=_custom_func,
     )
@@ -321,7 +321,7 @@ def test__from_example__custom_func__recursive():
     def _custom_func(
         example,
         *,
-        context: ranog.factory.FromExampleContext,
+        context: randog.factory.FromExampleContext,
         **kwargs,
     ):
         if len(context.path) <= 0:
@@ -339,7 +339,7 @@ def test__from_example__custom_func__recursive():
 
         return example
 
-    factory = ranog.factory.from_example(
+    factory = randog.factory.from_example(
         {"a": 1, "b": 2, "dict": 3},
         custom_func=_custom_func,
     )

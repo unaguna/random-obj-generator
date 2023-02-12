@@ -8,8 +8,8 @@ from .._utils.nullsafe import dfor, dforc
 
 
 def randdecimal(
-    a: t.Optional[t.SupportsFloat] = None,
-    b: t.Optional[t.SupportsFloat] = None,
+    minimum: t.Optional[t.SupportsFloat] = None,
+    maximum: t.Optional[t.SupportsFloat] = None,
     *,
     decimal_len: t.Optional[int] = None,
     p_inf: t.SupportsFloat = 0.0,
@@ -21,9 +21,9 @@ def randdecimal(
 
     Parameters
     ----------
-    a : float, optional
+    minimum : float, optional
         the minimum
-    b : float, optional
+    maximum : float, optional
         the maximum
     decimal_len : int, optional
         the length of decimal part
@@ -42,7 +42,13 @@ def randdecimal(
         When the specified generating conditions are inconsistent.
     """
     return DecimalRandomFactory(
-        a, b, decimal_len=decimal_len, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=rnd
+        minimum,
+        maximum,
+        decimal_len=decimal_len,
+        p_inf=p_inf,
+        n_inf=n_inf,
+        nan=nan,
+        rnd=rnd,
     )
 
 

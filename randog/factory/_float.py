@@ -7,8 +7,8 @@ from ..exceptions import FactoryConstructionError
 
 
 def randfloat(
-    a: t.Optional[t.SupportsFloat] = None,
-    b: t.Optional[t.SupportsFloat] = None,
+    minimum: t.Optional[t.SupportsFloat] = None,
+    maximum: t.Optional[t.SupportsFloat] = None,
     *,
     p_inf: t.SupportsFloat = 0.0,
     n_inf: t.SupportsFloat = 0.0,
@@ -19,9 +19,9 @@ def randfloat(
 
     Parameters
     ----------
-    a : float, optional
+    minimum : float, optional
         the minimum
-    b : float, optional
+    maximum : float, optional
         the maximum
     p_inf : float, default=0
         the probability of positive infinity
@@ -37,7 +37,14 @@ def randfloat(
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    return FloatRandomFactory(a, b, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=rnd)
+    return FloatRandomFactory(
+        minimum,
+        maximum,
+        p_inf=p_inf,
+        n_inf=n_inf,
+        nan=nan,
+        rnd=rnd,
+    )
 
 
 class FloatRandomFactory(Factory[float]):

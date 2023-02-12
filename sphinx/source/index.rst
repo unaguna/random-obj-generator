@@ -8,6 +8,7 @@ random-obj-generator
    :caption: Contents:
 
    doc.quickstart
+   doc.construct_factories
 
    randog
 

@@ -192,3 +192,37 @@ The processing of factory output can be predefined. This can be used to change t
    >>> generated = factory.next()
    >>> assert isinstance(generated, str)
    >>> assert generated[0] == "$"
+
+
+Custom Factory
+--------------
+
+Values of type not provided by randog can also be generated in the context of randog by using generation functions or custom factories. Normally, you would think that you could just use that generation function directly, but this method is needed to generate elements when generating dict or list in randog.
+
+.. doctest::
+
+   >>> import random
+   >>> import uuid
+   >>> import randog.factory
+
+   >>> # define custom factory
+   >>> class MailAddressFactory(randog.factory.Factory[str]):
+   ...     def next(self):
+   ...         return random.randint(1, 10) * "a" + "@example.com"
+
+   >>> factory = randog.factory.from_example({
+   ...     # use generation function
+   ...     "uuid": uuid.uuid4,
+   ...     # use generation function
+   ...     "name": lambda: random.randint(1, 10) * "a",
+   ...     # use custom factory
+   ...     "mail": MailAddressFactory(),
+   ... })
+   >>> generated = factory.next()
+
+   >>> assert isinstance(generated, dict)
+   >>> assert isinstance(generated["uuid"], uuid.UUID)
+   >>> assert isinstance(generated["name"], str)
+   >>> assert set(generated["name"]) == {"a"}
+   >>> assert isinstance(generated["mail"], str)
+   >>> assert generated["mail"].endswith("@example.com")

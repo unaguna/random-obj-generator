@@ -1,5 +1,5 @@
-ranog package
-=============
+randog package
+==============
 
 Subpackages and submodules
 --------------------------
@@ -7,14 +7,14 @@ Subpackages and submodules
 .. toctree::
    :maxdepth: 1
 
-   ranog.exceptions
-   ranog.factory
+   randog.exceptions
+   randog.factory
 
 
 Module contents
 ---------------
 
-.. automodule:: ranog
+.. automodule:: randog
    :members:
    :undoc-members:
    :show-inheritance:

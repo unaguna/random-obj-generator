@@ -10,7 +10,7 @@ random-obj-generator
    :maxdepth: 2
    :caption: Contents:
 
-   ranog
+   randog
 
 
 Indices and tables

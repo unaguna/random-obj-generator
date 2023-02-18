@@ -24,6 +24,29 @@ def test__random_list(length):
             assert value[2] == ""
 
 
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_list__with_random_length(length):
+    length_factory = randog.factory.randint(length, length)
+    factory = randog.factory.randlist(
+        randog.factory.randint(1, 1),
+        randog.factory.randstr(length=0),
+        length=length_factory,
+    )
+
+    # generator の実装の正しさの検証のため2回実行する
+    for _ in range(2):
+        value = factory.next()
+
+        assert type(value) == list
+        assert len(value) == length
+        if length >= 1:
+            assert value[0] == 1
+        if length >= 2:
+            assert value[1] == ""
+        if length >= 3:
+            assert value[2] == ""
+
+
 @pytest.mark.parametrize("length", (1, 2, 3))
 def test__random_list__with_type(length):
     factory = randog.factory.randlist(
@@ -80,9 +103,19 @@ def test__random_list__or_none_0():
 
 
 @pytest.mark.parametrize("length", (1, 2))
-def test__random_str__error_with_no_factory_and_nonzero_length(length):
+def test__random_list__error_with_no_factory_and_nonzero_length(length):
     with pytest.raises(FactoryConstructionError) as e_ctx:
         randog.factory.randlist(length=length)
+    e = e_ctx.value
+
+    assert e.message == "the generating conditions are inconsistent"
+
+
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_list__error_when_no_factory_and_random_length(length):
+    length_factory = randog.factory.randint(length, length)
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.randlist(length=length_factory)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

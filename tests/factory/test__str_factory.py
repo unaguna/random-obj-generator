@@ -13,8 +13,19 @@ def test__random_str__without_options():
 
 
 @pytest.mark.parametrize("length", (0, 1, 2, 3))
-def test__random_str__with_length(length):
+def test__random_str__with_fix_length(length):
     factory = randog.factory.randstr(length=length)
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert len(value) == length
+
+
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_str__with_random_length(length):
+    length_factory = randog.factory.randint(length, length)
+    factory = randog.factory.randstr(length=length_factory)
 
     value = factory.next()
 
@@ -64,6 +75,16 @@ def test__random_str_normal_when_empty_charset_and_zero_length():
 
     assert isinstance(value, str)
     assert value == ""
+
+
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_str_error_when_empty_charset_and_random_length(length):
+    length_factory = randog.factory.randint(length, length)
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.randstr(length=length_factory, charset="")
+    e = e_ctx.value
+
+    assert e.message == "the generating conditions are inconsistent"
 
 
 def test__random_str__or_none():

@@ -9,6 +9,13 @@ R = t.TypeVar("R")
 class Factory(ABC, t.Generic[T]):
     @abstractmethod
     def next(self) -> T:
+        """Generate a value randomly according to the rules specified when assembling the factory.
+
+        Returns
+        -------
+        T
+            a value generated randomly
+        """
         pass
 
     def or_none(
@@ -17,6 +24,29 @@ class Factory(ABC, t.Generic[T]):
         *,
         rnd: t.Optional[Random] = None,
     ) -> "Factory[t.Union[T, None]]":
+        """Returns a factory whose result may be None with the specified probability.
+
+        Examples
+        --------
+        >>> import randog
+        >>>
+        >>> factory = randog.factory.randstr().or_none(0.2)
+        >>>
+        >>> generated = factory.next()
+        >>> assert generated is None or isinstance(generated, str)
+
+        Parameters
+        ----------
+        prob : float, default=0.1
+            Probability that the result is None
+        rnd : Random, optional
+            random number generator to be used
+
+        Returns
+        -------
+        Factory[T|None]
+            A factory whose result may be None with the specified probability.
+        """
         import randog.factory
 
         return randog.factory.union(
@@ -46,12 +76,13 @@ class Factory(ABC, t.Generic[T]):
 
         Parameters
         ----------
-        post_process
+        post_process : Callable[[T], R]
             the mapping to modify the result
 
         Returns
         -------
-        A factory whose result will be modified by `post_process`.
+        Factory[R]
+            A factory whose result will be modified by `post_process`.
         """
         return PostFactory(self, post_process)
 
@@ -71,12 +102,13 @@ class Factory(ABC, t.Generic[T]):
 
         Parameters
         ----------
-        size
+        size : int
             the number of the iterator
 
         Returns
         -------
-        An iterator
+        Iterator[T]
+            An iterator
         """
         for _ in range(size):
             yield self.next()
@@ -98,7 +130,8 @@ class Factory(ABC, t.Generic[T]):
 
         Returns
         -------
-        An infinity iterator
+        Iterator[T]
+            An infinity iterator
         """
         while True:
             yield self.next()

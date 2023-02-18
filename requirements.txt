@@ -1,3 +1,8 @@
 ###### dependent for publish ######
 setuptools
 twine
+
+
+###### dependent for document ######
+Sphinx
+sphinx_rtd_theme

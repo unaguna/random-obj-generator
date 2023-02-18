@@ -7,8 +7,8 @@ from ..exceptions import FactoryConstructionError
 
 
 def randint(
-    a: int,
-    b: int,
+    minimum: int,
+    maximum: int,
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory[int]:
@@ -16,9 +16,9 @@ def randint(
 
     Parameters
     ----------
-    a : int
+    minimum : int
         the minimum
-    b : int
+    maximum : int
         the maximum
     rnd : Random, optional
         random number generator to be used
@@ -28,7 +28,7 @@ def randint(
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    return IntRandomFactory(a, b, rnd=rnd)
+    return IntRandomFactory(minimum, maximum, rnd=rnd)
 
 
 class IntRandomFactory(Factory[int]):

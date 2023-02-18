@@ -76,10 +76,10 @@ class StrRandomFactory(Factory[str]):
             raise FactoryConstructionError("the generating conditions are inconsistent")
 
     def next(self) -> str:
-        length = self._get_length()
+        length = self._next_length()
         return "".join(self._random.choices(self._charset, k=length))
 
-    def _get_length(self) -> int:
+    def _next_length(self) -> int:
         if isinstance(self._length, Factory):
             return self._length.next()
         else:

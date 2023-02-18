@@ -82,6 +82,8 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
         self._factories = items
         self._type = type
 
+        if isinstance(self._length, Factory) and len(self._factories) == 0:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
         if (
             not isinstance(self._length, Factory)
             and self._length > 0

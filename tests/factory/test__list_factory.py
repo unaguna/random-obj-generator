@@ -103,9 +103,19 @@ def test__random_list__or_none_0():
 
 
 @pytest.mark.parametrize("length", (1, 2))
-def test__random_str__error_with_no_factory_and_nonzero_length(length):
+def test__random_list__error_with_no_factory_and_nonzero_length(length):
     with pytest.raises(FactoryConstructionError) as e_ctx:
         randog.factory.randlist(length=length)
+    e = e_ctx.value
+
+    assert e.message == "the generating conditions are inconsistent"
+
+
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_list__error_when_no_factory_and_random_length(length):
+    length_factory = randog.factory.randint(length, length)
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.randlist(length=length_factory)
     e = e_ctx.value
 
     assert e.message == "the generating conditions are inconsistent"

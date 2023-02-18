@@ -13,8 +13,19 @@ def test__random_str__without_options():
 
 
 @pytest.mark.parametrize("length", (0, 1, 2, 3))
-def test__random_str__with_length(length):
+def test__random_str__with_fix_length(length):
     factory = randog.factory.randstr(length=length)
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert len(value) == length
+
+
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_str__with_random_length(length):
+    length_factory = randog.factory.randint(length, length)
+    factory = randog.factory.randstr(length=length_factory)
 
     value = factory.next()
 

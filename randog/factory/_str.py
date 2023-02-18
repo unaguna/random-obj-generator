@@ -9,7 +9,7 @@ from ..exceptions import FactoryConstructionError
 
 def randstr(
     *,
-    length: int = 8,
+    length: t.Union[int, Factory[int]] = 8,
     charset: t.Optional[str] = None,
     rnd: t.Optional[Random] = None,
 ) -> Factory[str]:
@@ -17,7 +17,7 @@ def randstr(
 
     Parameters
     ----------
-    length : int, default=8
+    length : int|Factory[int], default=8
         length of generated string
     charset : str, optional
         characters to be used
@@ -36,13 +36,13 @@ class StrRandomFactory(Factory[str]):
     """factory generating random int values"""
 
     _random: Random
-    _length: int
+    _length: t.Union[int, Factory[int]]
     _charset: str
 
     def __init__(
         self,
         *,
-        length: int = 8,
+        length: t.Union[int, Factory[int]] = 8,
         charset: t.Optional[str] = None,
         rnd: t.Optional[Random] = None,
     ):
@@ -50,7 +50,7 @@ class StrRandomFactory(Factory[str]):
 
         Parameters
         ----------
-        length : int, default=8
+        length : int|Factory[int], default=8
             length of generated string
         charset : str, optional
             characters to be used
@@ -66,9 +66,19 @@ class StrRandomFactory(Factory[str]):
         self._length = length
         self._charset = dfor(charset, string.ascii_letters + string.digits)
 
-        if length > 0 and len(self._charset) == 0:
+        if (
+            not isinstance(self._length, Factory)
+            and self._length > 0
+            and len(self._charset) == 0
+        ):
             raise FactoryConstructionError("the generating conditions are inconsistent")
 
     def next(self) -> str:
-        length = self._length
+        length = self._get_length()
         return "".join(self._random.choices(self._charset, k=length))
+
+    def _get_length(self) -> int:
+        if isinstance(self._length, Factory):
+            return self._length.next()
+        else:
+            return self._length

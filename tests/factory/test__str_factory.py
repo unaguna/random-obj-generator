@@ -77,6 +77,16 @@ def test__random_str_normal_when_empty_charset_and_zero_length():
     assert value == ""
 
 
+@pytest.mark.parametrize("length", (0, 1, 2, 3))
+def test__random_str_error_when_empty_charset_and_random_length(length):
+    length_factory = randog.factory.randint(length, length)
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.randstr(length=length_factory, charset="")
+    e = e_ctx.value
+
+    assert e.message == "the generating conditions are inconsistent"
+
+
 def test__random_str__or_none():
     factory = randog.factory.randstr(length=0).or_none(0.5)
 

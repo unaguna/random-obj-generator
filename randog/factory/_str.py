@@ -66,6 +66,8 @@ class StrRandomFactory(Factory[str]):
         self._length = length
         self._charset = dfor(charset, string.ascii_letters + string.digits)
 
+        if isinstance(self._length, Factory) and len(self._charset) == 0:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
         if (
             not isinstance(self._length, Factory)
             and self._length > 0

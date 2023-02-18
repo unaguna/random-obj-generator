@@ -14,14 +14,16 @@ import sys
 
 sys.path.insert(0, os.path.abspath("../../"))
 
+import randog
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "random-obj-generator"
 copyright = "2023, k-izumi"
 author = "k-izumi"
-version = "0.1.0"
-release = "0.1.0"
+version = ".".join(randog.__version__.split(".")[:3])
+release = ".".join(randog.__version__.split(".")[:3])
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

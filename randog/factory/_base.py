@@ -9,6 +9,13 @@ R = t.TypeVar("R")
 class Factory(ABC, t.Generic[T]):
     @abstractmethod
     def next(self) -> T:
+        """Generate a value randomly according to the rules specified when assembling the factory.
+
+        Returns
+        -------
+        T
+            a value generated randomly
+        """
         pass
 
     def or_none(

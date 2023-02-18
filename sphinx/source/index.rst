@@ -9,6 +9,7 @@ random-obj-generator
 
    doc.quickstart
    doc.construct_factories
+   doc.use_factories
 
    randog
 

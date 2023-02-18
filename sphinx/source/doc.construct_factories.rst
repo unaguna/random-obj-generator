@@ -32,47 +32,58 @@ You can create a factory that generates values of the following types:
    * - value type
      - factory constructor
      - argument for `from_example <randog.factory.html#randog.factory.from_example>`_
+     - detail
 
    * - :code:`NoneType`
      - | (There is no dedicated function,
        | but `const <randog.factory.html#randog.factory.const>`_ can be used instead.)
      - :code:`None`
+     -
 
    * - :code:`bool`
      - `randbool <randog.factory.html#randog.factory.randbool>`_
      - :code:`True` or :code:`False`
+     -
 
    * - :code:`int`
      - `randint <randog.factory.html#randog.factory.randint>`_
      - a integer value
+     -
 
    * - :code:`float`
      - `randfloat <randog.factory.html#randog.factory.randfloat>`_
      - a float value
+     -
 
    * - :code:`str`
      - `randstr <randog.factory.html#randog.factory.randstr>`_
      - a string value
+     -
 
    * - :code:`list`
      - `randlist <randog.factory.html#randog.factory.randlist>`_
      - a list
+     -
 
    * - :code:`tuple`
      - `randlist <randog.factory.html#randog.factory.randlist>`_ (argument :code:`type=tuple`)
      - a tuple
+     -
 
    * - :code:`dict`
      - `randdict <randog.factory.html#randog.factory.randdict>`_
      - a dict
+     - :doc:`detail <doc.dict_factory>`
 
    * - `decimal.Decimal <https://docs.python.org/3/library/decimal.html#decimal.Decimal>`_
      - `randdecimal <randog.factory.html#randog.factory.randdecimal>`_
      - a Decimal value
+     -
 
    * - `datetime.datetime <https://docs.python.org/3/library/datetime.html#datetime.datetime>`_
      - `randdatetime <randog.factory.html#randog.factory.randdatetime>`_
      - a datetime value
+     -
 
 
 
@@ -226,3 +237,12 @@ Values of type not provided by randog can also be generated in the context of ra
    >>> assert set(generated["name"]) == {"a"}
    >>> assert isinstance(generated["mail"], str)
    >>> assert generated["mail"].endswith("@example.com")
+
+
+Details on how to build individual factories
+--------------------------------------------
+
+.. toctree::
+   :maxdepth: 1
+
+   doc.dict_factory

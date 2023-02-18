@@ -30,6 +30,17 @@ def test__random_choice__value(expected_value):
     assert value == expected_value
 
 
+@pytest.mark.parametrize(
+    "weights", ([0.8, 0.2, 0], (0.8, 0.2, 0), [0.8, 0.2, 0, 0][:3])
+)
+def test__random_choice__weights(weights):
+    factory = randog.factory.randchoice(1, 2, 3, weights=weights)
+
+    values = set(map(lambda x: factory.next(), range(200)))
+
+    assert values == {1, 2}
+
+
 def test__random_choice__or_none():
     factory = randog.factory.randchoice(0, 1).or_none(0.5)
 
@@ -54,4 +65,20 @@ def test__random_choice__error_when_no_value_specified():
     assert (
         e.message
         == "the generating conditions are inconsistent: specify at least one value"
+    )
+
+
+@pytest.mark.parametrize("weights_len", (0, 1, 3))
+def test__random_choice__error_when_weights_does_not_match(weights_len):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.randchoice(
+            1,
+            2,
+            weights=[1, 1, 1, 1][:weights_len],
+        )
+    e = e_ctx.value
+
+    assert (
+        e.message
+        == "the generating conditions are inconsistent: the number of weights does not match the values"
     )

@@ -13,7 +13,7 @@ setup(
     version=randog.__version__,
     project_urls={
         "Bug Tracker": "https://github.com/unaguna/random-obj-generator/issues",
-        # "Documentation": "https://unaguna.github.io/random-obj-generator/",
+        "Documentation": "https://unaguna.github.io/random-obj-generator/",
         "Source Code": "https://github.com/unaguna/random-obj-generator",
     },
     author="k-izumi",

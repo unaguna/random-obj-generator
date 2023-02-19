@@ -28,14 +28,14 @@ def test__random_union__value(expected_value):
 
 
 @pytest.mark.parametrize(
-    "weights", ([0.8, 0.2, 0], (0.8, 0.2, 0), [0.8, 0.2, 0, 0][:2])
+    "weights", ([0.8, 0.2, 0], (0.8, 0.2, 0), [0.8, 0.2, 0, 0][:3])
 )
 def test__random_union__weight(weights):
     factory = randog.factory.union(
         randog.factory.const(1),
         randog.factory.const(2),
         randog.factory.const(3),
-        weights=[0.8, 0.2, 0],
+        weights=weights,
     )
 
     values = set(map(lambda x: factory.next(), range(200)))

@@ -8,8 +8,8 @@ from ..exceptions import FactoryConstructionError
 
 
 def randdatetime(
-    a: t.Union[dt.datetime, dt.date, None] = None,
-    b: t.Union[dt.datetime, dt.date, None] = None,
+    minimum: t.Union[dt.datetime, dt.date, None] = None,
+    maximum: t.Union[dt.datetime, dt.date, None] = None,
     *,
     tzinfo: t.Union[t.Literal[False], None, dt.tzinfo] = False,
     rnd: t.Optional[Random] = None,
@@ -18,9 +18,9 @@ def randdatetime(
 
     Parameters
     ----------
-    a : datetime | date, optional
+    minimum : datetime | date, optional
         the minimum
-    b : datetime | date, optional
+    maximum : datetime | date, optional
         the maximum
     tzinfo : tzinfo | None, optional
         If specified, the tzinfo of result will be fixed to this value (False means no specification).
@@ -34,8 +34,8 @@ def randdatetime(
         When the specified generating conditions are inconsistent.
     """
     return DatetimeRandomFactory(
-        a,
-        b,
+        minimum,
+        maximum,
         fix_timezone=tzinfo is not False,
         fixed_timezone=tzinfo if tzinfo is not False else None,
         rnd=rnd,

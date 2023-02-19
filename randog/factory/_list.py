@@ -10,7 +10,7 @@ T = t.TypeVar("T", bound=t.Sequence)
 
 def randlist(
     *items: Factory,
-    length: t.Optional[int] = None,
+    length: t.Union[int, Factory[int], None] = None,
     type: t.Callable[[t.Iterator[t.Any]], T] = list,
     rnd: t.Optional[Random] = None,
     items_list: t.Optional[t.Sequence[Factory]] = None,
@@ -21,7 +21,7 @@ def randlist(
     ----------
     items : Factory
         the factories of each item. If `items_list` is specified, `items` will be ignored.
-    length : int, optional
+    length : int|Factory[int], optional
         length of generated list.
         If not specified, the length of generated list will be equals to the number of `items`.
     type : type, default=list
@@ -46,7 +46,7 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
     """factory generating random list values"""
 
     _random: Random
-    _length: int
+    _length: t.Union[int, Factory[int]]
     _factories: t.Sequence[Factory]
     _type: t.Callable[[t.Iterator[t.Any]], T]
 
@@ -54,7 +54,7 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
         self,
         items: t.Sequence[Factory],
         *,
-        length: t.Optional[int] = None,
+        length: t.Union[int, Factory[int], None] = None,
         type: t.Callable[[t.Iterator[t.Any]], T] = list,
         rnd: t.Optional[Random] = None,
     ):
@@ -64,7 +64,7 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
         ----------
         items : t.Sequence[Factory]
             the factories of each item
-        length : int, optional
+        length : int|Factory[int], optional
             length of generated list.
             If not specified, the length of generated list will be equals to the number of `items`.
         type : type, default=list
@@ -82,7 +82,13 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
         self._factories = items
         self._type = type
 
-        if self._length > 0 and len(self._factories) == 0:
+        if isinstance(self._length, Factory) and len(self._factories) == 0:
+            raise FactoryConstructionError("the generating conditions are inconsistent")
+        if (
+            not isinstance(self._length, Factory)
+            and self._length > 0
+            and len(self._factories) == 0
+        ):
             raise FactoryConstructionError("the generating conditions are inconsistent")
 
     def _factory_generator(self, length) -> t.Iterator[Factory]:
@@ -99,9 +105,15 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
             generated += 1
 
     def _next_generator(self) -> t.Iterator[t.Any]:
-        length = self._length
+        length = self._next_length()
         for factory in self._factory_generator(length):
             yield factory.next()
+
+    def _next_length(self) -> int:
+        if isinstance(self._length, Factory):
+            return self._length.next()
+        else:
+            return self._length
 
     def next(self) -> T:
         return self._type(self._next_generator())

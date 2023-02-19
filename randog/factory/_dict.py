@@ -11,8 +11,15 @@ _item_tuple = t.Tuple[Factory, float]
 
 @dataclass
 class DictItem:
+    """
+    A rule for generating values corresponding to a key in the random generation of dict.
+    """
+
     factory: Factory
+    """a factory to generate values"""
+
     prop_exists: float
+    """probability of key generation"""
 
     @t.overload
     def __init__(self, factory: Factory):

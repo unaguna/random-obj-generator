@@ -1,7 +1,7 @@
 ---
 name: Release
 about: package release operations
-title: ''
+title: Release vx.x.x.x
 labels: ''
 assignees: ''
 
@@ -9,6 +9,7 @@ assignees: ''
 
 - [ ] create branch `release` and checkout it
 - [ ] increment version number of `./randog/__init__.py`
+- [ ] increment version number of `./README.md`
 - [ ] build sphinx document
 - [ ] pull request `release` into `develop` branch
 - [ ] wait for merge

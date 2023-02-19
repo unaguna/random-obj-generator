@@ -1,4 +1,4 @@
-**randog 0.1.0.x — Randomly object generator**
+**randog 0.2.0.x — Randomly object generator**
 
 **randog** is a package which helps to generate data randomly.
 

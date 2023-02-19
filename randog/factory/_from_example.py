@@ -5,6 +5,7 @@ from random import Random
 
 from . import (
     by_callable,
+    by_iterator,
     DictItem,
     Factory,
     randbool,
@@ -239,6 +240,8 @@ def from_example(
             rnd=context.rnd,
             items_list=tuple(_list_item(exm, context) for exm in enumerate(example)),
         )
+    elif isinstance(example, t.Iterator):
+        return by_iterator(example)
     elif isinstance(example, t.Callable):
         return by_callable(example)
     else:

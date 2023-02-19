@@ -238,6 +238,28 @@ def test__from_example__callable(result):
     assert factory.next() is result
 
 
+def test__from_example__iterator():
+    factory = randog.factory.from_example(iter(range(3)))
+    assert factory.next() == 0
+    assert factory.next() == 1
+    assert factory.next() == 2
+    with pytest.raises(StopIteration):
+        factory.next()
+
+
+def test__from_example__generator():
+    def generator():
+        for i in range(3):
+            yield i
+
+    factory = randog.factory.from_example(generator())
+    assert factory.next() == 0
+    assert factory.next() == 1
+    assert factory.next() == 2
+    with pytest.raises(StopIteration):
+        factory.next()
+
+
 @pytest.mark.parametrize("obj", (type, pytest.mark))
 def test__from_example__error_when_unsupported_obj(obj):
     with pytest.raises(FactoryConstructionError) as e_ctx:

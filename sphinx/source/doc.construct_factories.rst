@@ -208,10 +208,11 @@ The processing of factory output can be predefined. This can be used to change t
 Custom Factory
 --------------
 
-Values of type not provided by randog can also be generated in the context of randog by using generation functions or custom factories. Normally, you would think that you could just use that generation function directly, but this method is needed to generate elements when generating dict or list in randog.
+Values of type not provided by randog can also be generated in the context of randog by using functions, iterators (include `generator iterators <https://docs.python.org/3/glossary.html#term-generator-iterator>`_), or custom factories. Normally, you would think that you could just use that function or iterator directly, but this method is needed to generate elements when generating dict or list in randog.
 
 .. doctest::
 
+   >>> import itertools
    >>> import random
    >>> import uuid
    >>> import randog.factory
@@ -222,9 +223,11 @@ Values of type not provided by randog can also be generated in the context of ra
    ...         return random.randint(1, 10) * "a" + "@example.com"
 
    >>> factory = randog.factory.from_example({
-   ...     # use generation function
+   ...     # use iterator (https://docs.python.org/3/library/itertools.html#itertools.count)
+   ...     "id": itertools.count(1),
+   ...     # use function
    ...     "uuid": uuid.uuid4,
-   ...     # use generation function
+   ...     # use function
    ...     "name": lambda: random.randint(1, 10) * "a",
    ...     # use custom factory
    ...     "mail": MailAddressFactory(),
@@ -232,11 +235,15 @@ Values of type not provided by randog can also be generated in the context of ra
    >>> generated = factory.next()
 
    >>> assert isinstance(generated, dict)
+   >>> assert generated["id"] == 1
    >>> assert isinstance(generated["uuid"], uuid.UUID)
    >>> assert isinstance(generated["name"], str)
    >>> assert set(generated["name"]) == {"a"}
    >>> assert isinstance(generated["mail"], str)
    >>> assert generated["mail"].endswith("@example.com")
+
+.. note::
+    You can also create a factory using the factory constructor: `by_callable <randog.factory.html#randog.factory.by_callable>`_, `by_iterator <randog.factory.html#randog.factory.by_iterator>`_
 
 
 Details on how to build individual factories

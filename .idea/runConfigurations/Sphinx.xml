@@ -10,7 +10,7 @@
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <option name="docutils_input_file" value="source" />
     <option name="docutils_output_file" value="build/html" />
-    <option name="docutils_params" value="-E" />
+    <option name="docutils_params" value="-nEaT" />
     <option name="docutils_task" value="html" />
     <option name="docutils_open_in_browser" value="false" />
     <method v="2" />

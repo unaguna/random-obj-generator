@@ -32,4 +32,4 @@ jobs:
     - name: Sphinx
       run: |
         cd sphinx
-        make html -nEaT
+        sphinx-build -b html -nEaT ./source/ ./build/html

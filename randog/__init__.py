@@ -1,6 +1,8 @@
 from ._examples import DictItemExample, Example
+from . import factory
 
 __all__ = [
+    "factory",
     "DictItemExample",
     "Example",
 ]

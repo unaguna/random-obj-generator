@@ -6,6 +6,7 @@ from ._int import IntRandomFactory, randint
 from ._float import FloatRandomFactory, randfloat
 from ._decimal import DecimalRandomFactory, randdecimal
 from ._str import StrRandomFactory, randstr
+from ._timedelta import TimedeltaRandomFactory, randtimedelta
 from ._datetime import DatetimeRandomFactory, randdatetime
 from ._list import randlist
 from ._dict import DictItem, DictRandomFactory, randdict
@@ -25,6 +26,7 @@ __all__ = [
     "randfloat",
     "randdecimal",
     "randstr",
+    "randtimedelta",
     "randdatetime",
     "randlist",
     "randdict",

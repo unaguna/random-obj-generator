@@ -96,6 +96,52 @@ def test__from_example__decimal_nan_value():
     assert math.isnan(value)
 
 
+def test__from_example__timedelta_type():
+    factory = randog.factory.from_example(dt.timedelta)
+    value = factory.next()
+    assert isinstance(value, dt.timedelta)
+
+
+@pytest.mark.parametrize(
+    ("example", "expected_min", "expected_max", "expected_unit"),
+    (
+        (
+            dt.timedelta(days=1),
+            dt.timedelta(0),
+            dt.timedelta(days=30),
+            dt.timedelta(days=1),
+        ),
+        (
+            dt.timedelta(days=-1),
+            dt.timedelta(days=-30),
+            dt.timedelta(0),
+            dt.timedelta(days=1),
+        ),
+        (
+            dt.timedelta(days=1, seconds=30),
+            dt.timedelta(0),
+            dt.timedelta(days=30),
+            dt.timedelta(seconds=1),
+        ),
+        (
+            dt.timedelta(days=-1, seconds=30),
+            dt.timedelta(days=-30),
+            dt.timedelta(0),
+            dt.timedelta(seconds=1),
+        ),
+    ),
+)
+def test__from_example__timedelta_value(
+    example, expected_min, expected_max, expected_unit
+):
+    factory = randog.factory.from_example(example)
+
+    for value in factory.iter(200):
+        assert isinstance(value, dt.timedelta)
+        assert expected_min <= value <= expected_max
+        assert (value / expected_unit).is_integer()
+
+
 def test__from_example__datetime_type():
     factory = randog.factory.from_example(dt.datetime)
     value = factory.next()

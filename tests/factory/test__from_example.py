@@ -96,6 +96,18 @@ def test__from_example__decimal_nan_value():
     assert math.isnan(value)
 
 
+def test__from_example__timedelta_type():
+    factory = randog.factory.from_example(dt.timedelta)
+    value = factory.next()
+    assert isinstance(value, dt.timedelta)
+
+
+def test__from_example__timedelta_value():
+    factory = randog.factory.from_example(dt.timedelta(seconds=123))
+    value = factory.next()
+    assert isinstance(value, dt.timedelta)
+
+
 def test__from_example__datetime_type():
     factory = randog.factory.from_example(dt.datetime)
     value = factory.next()

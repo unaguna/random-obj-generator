@@ -124,19 +124,19 @@ class TimedeltaRandomFactory(Factory[dt.timedelta]):
 
         if minimum is not None and maximum is not None:
             if unit is None:
-                unit = _calc_unit(minimum, maximum)
+                unit = calc_unit(minimum, maximum)
             return minimum, maximum, unit
 
         elif minimum is not None:
             if unit is None:
-                unit = _calc_unit(minimum, maximum)
+                unit = calc_unit(minimum, maximum)
                 return minimum, minimum + _NEXT[unit], unit
             else:
                 return minimum, minimum + 10 * unit, unit
 
         elif maximum is not None:
             if unit is None:
-                unit = _calc_unit(minimum, maximum)
+                unit = calc_unit(minimum, maximum)
                 return maximum - _NEXT[unit], maximum, unit
             else:
                 return maximum - 10 * unit, maximum, unit
@@ -148,7 +148,7 @@ class TimedeltaRandomFactory(Factory[dt.timedelta]):
                 return _ZERO, _NEXT[unit], unit
 
 
-def _calc_unit(
+def calc_unit(
     *timedelta_list: t.Optional[dt.timedelta], default: dt.timedelta = _DAY
 ) -> dt.timedelta:
     result = default

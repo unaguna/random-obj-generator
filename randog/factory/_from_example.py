@@ -20,6 +20,7 @@ from . import (
     union,
     const,
 )
+from ._timedelta import calc_unit
 from ..exceptions import FactoryConstructionError
 
 import randog
@@ -228,6 +229,8 @@ def from_example(
             )
     elif example is None:
         return const(None, rnd=context.rnd)
+    elif isinstance(example, dt.timedelta):
+        return _from_timedelta(example, rnd=context.rnd)
     elif isinstance(example, Decimal):
         return _from_decimal(example, rnd=context.rnd)
     elif isinstance(example, t.Mapping):
@@ -265,3 +268,16 @@ def _from_decimal(example: Decimal, *, rnd: t.Optional[Random]) -> Factory[Decim
     return randdecimal(
         p_inf=p_inf, n_inf=n_inf, nan=nan, decimal_len=decimal_len, rnd=rnd
     )
+
+
+def _from_timedelta(
+    example: dt.timedelta,
+    *,
+    rnd: t.Optional[Random],
+) -> Factory[dt.timedelta]:
+    unit = calc_unit(example)
+
+    if example < dt.timedelta(0):
+        return randtimedelta(None, dt.timedelta(0), unit=unit, rnd=rnd)
+    else:
+        return randtimedelta(dt.timedelta(0), None, unit=unit, rnd=rnd)

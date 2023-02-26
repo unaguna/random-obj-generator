@@ -7,3 +7,4 @@ Here are some specific examples of usage.
     :maxdepth: 1
 
     doc.tips_timeline
+    doc.tips_json

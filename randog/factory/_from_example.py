@@ -233,6 +233,10 @@ def from_example(
         return const(None, rnd=context.rnd)
     elif isinstance(example, dt.timedelta):
         return _from_timedelta(example, rnd=context.rnd)
+    elif isinstance(example, dt.datetime):
+        return _from_datetime(example, rnd=context.rnd)
+    elif isinstance(example, dt.time):
+        return _from_time(example, rnd=context.rnd)
     elif isinstance(example, Decimal):
         return _from_decimal(example, rnd=context.rnd)
     elif isinstance(example, t.Mapping):
@@ -283,3 +287,19 @@ def _from_timedelta(
         return randtimedelta(None, dt.timedelta(0), unit=unit, rnd=rnd)
     else:
         return randtimedelta(dt.timedelta(0), None, unit=unit, rnd=rnd)
+
+
+def _from_datetime(
+    example: dt.datetime,
+    *,
+    rnd: t.Optional[Random],
+) -> Factory[dt.datetime]:
+    return randdatetime(tzinfo=example.tzinfo, rnd=rnd)
+
+
+def _from_time(
+    example: dt.time,
+    *,
+    rnd: t.Optional[Random],
+) -> Factory[dt.time]:
+    return randtime(tzinfo=example.tzinfo, rnd=rnd)

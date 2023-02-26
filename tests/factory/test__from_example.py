@@ -149,11 +149,18 @@ def test__from_example__datetime_type():
     assert isinstance(value, dt.datetime)
 
 
-@pytest.mark.parametrize("obj", (dt.datetime.now(), dt.datetime.utcnow()))
+@pytest.mark.parametrize(
+    "obj",
+    (
+        dt.datetime.now(),
+        dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc),
+    ),
+)
 def test__from_example__datetime_value(obj):
     factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, dt.datetime)
+    assert value.tzinfo == obj.tzinfo
 
 
 def test__from_example__time_type():
@@ -175,6 +182,7 @@ def test__from_example__time_value(obj):
     factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, dt.time)
+    assert value.tzinfo == obj.tzinfo
 
 
 def test__from_example__list_type():

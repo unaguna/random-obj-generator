@@ -1,3 +1,4 @@
+import datetime
 import datetime as dt
 import math
 from decimal import Decimal
@@ -148,11 +149,40 @@ def test__from_example__datetime_type():
     assert isinstance(value, dt.datetime)
 
 
-@pytest.mark.parametrize("obj", (dt.datetime.now(), dt.datetime.utcnow()))
+@pytest.mark.parametrize(
+    "obj",
+    (
+        dt.datetime.now(),
+        dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc),
+    ),
+)
 def test__from_example__datetime_value(obj):
     factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, dt.datetime)
+    assert value.tzinfo == obj.tzinfo
+
+
+def test__from_example__time_type():
+    factory = randog.factory.from_example(dt.time)
+    value = factory.next()
+    assert isinstance(value, dt.time)
+
+
+@pytest.mark.parametrize(
+    "obj",
+    (
+        dt.datetime.now().time(),
+        dt.datetime.now()
+        .time()
+        .replace(tzinfo=datetime.timezone(dt.timedelta(hours=2))),
+    ),
+)
+def test__from_example__time_value(obj):
+    factory = randog.factory.from_example(obj)
+    value = factory.next()
+    assert isinstance(value, dt.time)
+    assert value.tzinfo == obj.tzinfo
 
 
 def test__from_example__list_type():

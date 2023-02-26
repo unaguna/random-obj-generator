@@ -19,6 +19,22 @@ In many cases, the factory is created with `randlist <randog.factory.html#randog
     >>> assert isinstance(generated[0], int)
     >>> assert isinstance(generated[1], str)
 
+.. note::
+
+    If you want to generate multiple records by a single factory, it may be appropriate to use :code:`iter` rather than :code:`randlist`.
+
+    .. doctest::
+
+        >>> import randog.factory
+
+        >>> factory = randog.factory.randdict(
+        ...     id=randog.factory.randint(0, 999_999),
+        ...     price=randog.factory.randdecimal(0, 1000, decimal_len=2),
+        ... )
+
+        >>> # generate 200 records
+        >>> record_list = list(factory.iter(200))
+
 
 Each elements
 -------------

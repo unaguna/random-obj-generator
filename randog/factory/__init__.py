@@ -7,6 +7,7 @@ from ._float import FloatRandomFactory, randfloat
 from ._decimal import DecimalRandomFactory, randdecimal
 from ._str import StrRandomFactory, randstr
 from ._time import TimeRandomFactory, randtime
+from ._date import DateRandomFactory, randdate
 from ._timedelta import TimedeltaRandomFactory, randtimedelta
 from ._datetime import DatetimeRandomFactory, randdatetime
 from ._list import randlist
@@ -28,6 +29,7 @@ __all__ = [
     "randdecimal",
     "randstr",
     "randtime",
+    "randdate",
     "randtimedelta",
     "randdatetime",
     "randlist",

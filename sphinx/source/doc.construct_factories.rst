@@ -63,12 +63,12 @@ You can create a factory that generates values of the following types:
    * - :code:`list`
      - `randlist <randog.factory.html#randog.factory.randlist>`_
      - a list
-     -
+     - :doc:`detail <doc.list_factory>`
 
    * - :code:`tuple`
      - `randlist <randog.factory.html#randog.factory.randlist>`_ (argument :code:`type=tuple`)
      - a tuple
-     -
+     - :doc:`detail <doc.list_factory>`
 
    * - :code:`dict`
      - `randdict <randog.factory.html#randog.factory.randdict>`_
@@ -267,3 +267,4 @@ Details on how to build individual factories
    :maxdepth: 1
 
    doc.dict_factory
+   doc.list_factory

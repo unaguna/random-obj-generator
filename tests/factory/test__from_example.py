@@ -163,6 +163,18 @@ def test__from_example__datetime_value(obj):
     assert value.tzinfo == obj.tzinfo
 
 
+def test__from_example__date_type():
+    factory = randog.factory.from_example(dt.date)
+    value = factory.next()
+    assert isinstance(value, dt.date)
+
+
+def test__from_example__date_value():
+    factory = randog.factory.from_example(dt.date(2021, 1, 2))
+    value = factory.next()
+    assert isinstance(value, dt.date)
+
+
 def test__from_example__time_type():
     factory = randog.factory.from_example(dt.time)
     value = factory.next()

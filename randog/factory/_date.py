@@ -42,6 +42,7 @@ class DateRandomFactory(Factory[dt.date]):
     _random: Random
     _min: dt.date
     _max: dt.date
+    _range: int
 
     def __init__(
         self,
@@ -72,10 +73,11 @@ class DateRandomFactory(Factory[dt.date]):
         if self._min > self._max:
             raise FactoryConstructionError("the generating conditions are inconsistent")
 
-        self._range = self._max - self._min
+        self._range = (self._max - self._min).days
 
-    def next(self) -> dt.datetime:
-        raise NotImplementedError()
+    def next(self) -> dt.date:
+        relative_days = self._random.randint(0, self._range)
+        return self._min + dt.timedelta(days=relative_days)
 
     @classmethod
     def _normalize(

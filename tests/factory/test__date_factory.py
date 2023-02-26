@@ -62,7 +62,7 @@ def test__random_date__or_none_0():
 
     values = set(factory.iter(200))
 
-    assert values == {expected_value, None}
+    assert values == {expected_value}
 
 
 def test__random_date__error_when_edges_inverse():

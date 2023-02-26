@@ -85,6 +85,20 @@ You can create a factory that generates values of the following types:
      - a datetime value
      -
 
+   * - `datetime.date <https://docs.python.org/3/library/datetime.html#datetime.date>`_
+     - `randdate <randog.factory.html#randog.factory.randdate>`_
+     - a date value
+     -
+
+   * - `datetime.time <https://docs.python.org/3/library/datetime.html#datetime.time>`_
+     - `randtime <randog.factory.html#randog.factory.randtime>`_
+     - a time value
+     -
+
+   * - `datetime.timedelta <https://docs.python.org/3/library/datetime.html#datetime.timedelta>`_
+     - `randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_
+     - a timedelta value
+     -
 
 
 .. _nullable:

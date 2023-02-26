@@ -3,6 +3,7 @@ import typing as t
 from random import Random
 
 from ._base import Factory
+from .._utils.nullsafe import dfor
 
 
 def randtime(
@@ -51,8 +52,19 @@ class TimeRandomFactory(Factory[dt.time]):
         rnd : Random, optional
             random number generator to be used
         """
-        self._random = rnd
+        self._random = dfor(rnd, Random())
         self._tzinfo = tzinfo
 
     def next(self) -> dt.time:
-        raise NotImplementedError()
+        hours = self._random.randint(0, 23)
+        minutes = self._random.randint(0, 59)
+        seconds = self._random.randint(0, 59)
+        microseconds = self._random.randint(0, 999_999)
+
+        return dt.time(
+            hours,
+            minutes,
+            seconds,
+            microseconds,
+            tzinfo=self._tzinfo,
+        )

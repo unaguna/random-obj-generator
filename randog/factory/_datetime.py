@@ -89,9 +89,11 @@ class DatetimeRandomFactory(Factory[dt.datetime]):
         if (self._min.tzinfo is None and self._max.tzinfo is not None) or (
             self._min.tzinfo is not None and self._max.tzinfo is None
         ):
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError(
+                "cannot define range for randdatetime with a naive datetime and an aware datetime"
+            )
         if self._min > self._max:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError("empty range for randdatetime")
 
         self._range = self._max - self._min
 

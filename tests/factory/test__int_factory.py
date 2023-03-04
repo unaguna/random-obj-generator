@@ -35,4 +35,4 @@ def test__random_int_error_when_edges_inverse():
         randog.factory.randint(2, 1)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert e.message == "empty range for randint"

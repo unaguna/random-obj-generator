@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="randog" pattern="file[random-obj-generator]:randog//*" />
+</component>

@@ -66,12 +66,10 @@ class UnionRandomFactory(Factory[t.Any]):
         self._factories = factories
 
         if len(factories) <= 0:
-            raise FactoryConstructionError(
-                "the generating conditions are inconsistent: specify at least one factory"
-            )
+            raise FactoryConstructionError("no factory is given to union()")
         if self._weights is not None and len(self._weights) != len(self._factories):
             raise FactoryConstructionError(
-                "the generating conditions are inconsistent: the number of weights does not match the values"
+                "the number of weights must match the factories"
             )
 
     def next(self) -> t.Any:

@@ -216,7 +216,7 @@ def test__random_timedelta__error_when_edges_inverse():
         )
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert e.message == "empty range for randtimedelta"
 
 
 @pytest.mark.parametrize(
@@ -239,4 +239,4 @@ def test__random_timedelta__error_when_too_tight_edges_for_unit(minimum, maximum
         randog.factory.randtimedelta(minimum, maximum, unit=unit)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert e.message == "empty range for randtimedelta"

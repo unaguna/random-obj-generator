@@ -138,7 +138,7 @@ def test__random_float_error_when_edges_inverse():
         randog.factory.randfloat(2, 1)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert e.message == "empty range for randfloat"
 
 
 def test__random_float_error_when_probability_gt_1():
@@ -146,7 +146,10 @@ def test__random_float_error_when_probability_gt_1():
         randog.factory.randfloat(p_inf=0.625, n_inf=0.5)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert (
+        e.message
+        == "the sum of probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
+    )
 
 
 @pytest.mark.parametrize(
@@ -166,4 +169,7 @@ def test__random_float__error_when_negative_probability(p_inf, n_inf, nan):
         randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, nan=nan)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert (
+        e.message
+        == "the probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
+    )

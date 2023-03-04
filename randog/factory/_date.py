@@ -71,7 +71,7 @@ class DateRandomFactory(Factory[dt.date]):
         self._min, self._max = self._normalize(minimum, maximum)
 
         if self._min > self._max:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError("empty range for randdate")
 
         self._range = (self._max - self._min).days
 

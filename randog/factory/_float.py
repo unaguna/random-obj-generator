@@ -96,15 +96,15 @@ class FloatRandomFactory(Factory[float]):
         self._nan = float(nan)
 
         if self._min > self._max:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
-        if self._p_inf < 0.0:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
-        if self._n_inf < 0.0:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
-        if self._nan < 0.0:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError("empty range for randfloat")
+        if self._p_inf < 0.0 or self._n_inf < 0.0 or self._nan < 0.0:
+            raise FactoryConstructionError(
+                "the probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
+            )
         if self._p_inf + self._n_inf + self._nan > 1.0:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError(
+                "the sum of probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
+            )
 
     def next(self) -> float:
         pre_weight = self._random.random()

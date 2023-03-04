@@ -105,10 +105,12 @@ class TimedeltaRandomFactory(Factory[dt.timedelta]):
         self._min, self._max, self._unit = self._normalize(minimum, maximum, unit)
 
         if self._min > self._max:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError("empty range for randtimedelta")
 
         self._min_by_unit = math.ceil(self._min / self._unit)
         self._max_by_unit = math.floor(self._max / self._unit)
+        if self._min_by_unit > self._max_by_unit:
+            raise FactoryConstructionError("empty range for randtimedelta")
         self._inner_factory = randint(self._min_by_unit, self._max_by_unit, rnd=rnd)
 
     def next(self) -> dt.timedelta:

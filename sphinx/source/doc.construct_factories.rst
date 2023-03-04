@@ -259,6 +259,9 @@ Values of type not provided by randog can also be generated in the context of ra
 .. note::
     You can also create a factory using the factory constructor: `by_callable <randog.factory.html#randog.factory.by_callable>`_, `by_iterator <randog.factory.html#randog.factory.by_iterator>`_
 
+.. warning::
+    A finite iterator can be used as an example, but once the iterator terminates, the factory cannot generate any more values.
+
 
 Details on how to build individual factories
 --------------------------------------------

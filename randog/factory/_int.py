@@ -66,7 +66,7 @@ class IntRandomFactory(Factory[int]):
         self._max = maximum
 
         if minimum > maximum:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError("empty range for randint")
 
     def next(self) -> int:
         return self._random.randint(self._min, self._max)

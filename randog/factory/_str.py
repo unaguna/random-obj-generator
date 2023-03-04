@@ -67,13 +67,17 @@ class StrRandomFactory(Factory[str]):
         self._charset = dfor(charset, string.ascii_letters + string.digits)
 
         if isinstance(self._length, Factory) and len(self._charset) == 0:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError(
+                "the charset for randstr() must not be empty if length is at random"
+            )
         if (
             not isinstance(self._length, Factory)
             and self._length > 0
             and len(self._charset) == 0
         ):
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError(
+                "the charset for randstr() must not be empty if length is positive"
+            )
 
     def next(self) -> str:
         length = self._next_length()

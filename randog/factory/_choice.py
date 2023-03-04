@@ -66,12 +66,10 @@ class ChoiceRandomFactory(Factory[t.Any]):
         self._values = values
 
         if len(values) <= 0:
-            raise FactoryConstructionError(
-                "the generating conditions are inconsistent: specify at least one value"
-            )
+            raise FactoryConstructionError("empty candidate for randchoice")
         if self._weights is not None and len(self._weights) != len(self._values):
             raise FactoryConstructionError(
-                "the generating conditions are inconsistent: the number of weights does not match the values"
+                "the number of weights must match the candidates"
             )
 
     def next(self) -> t.Any:

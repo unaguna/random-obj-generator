@@ -73,4 +73,4 @@ def test__random_date__error_when_edges_inverse():
         )
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert e.message == "empty range for randdate"

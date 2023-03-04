@@ -58,7 +58,9 @@ class BoolRandomFactory(Factory[bool]):
         self._prop_true = prop_true
 
         if self._prop_true < 0.0 or 1.0 < self._prop_true:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError(
+                "the probability `prob_true` must range from 0 to 1"
+            )
 
     def next(self) -> int:
         return self._random.random() < self._prop_true

@@ -62,10 +62,7 @@ def test__random_choice__error_when_no_value_specified():
         randog.factory.randchoice()
     e = e_ctx.value
 
-    assert (
-        e.message
-        == "the generating conditions are inconsistent: specify at least one value"
-    )
+    assert e.message == "empty candidate for randchoice"
 
 
 @pytest.mark.parametrize("weights_len", (0, 1, 3))
@@ -78,7 +75,4 @@ def test__random_choice__error_when_weights_does_not_match(weights_len):
         )
     e = e_ctx.value
 
-    assert (
-        e.message
-        == "the generating conditions are inconsistent: the number of weights does not match the values"
-    )
+    assert e.message == "the number of weights must match the candidates"

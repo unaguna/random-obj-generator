@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-11 16:20+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.tips_timeline.rst:2
+msgid "Random timeline data -- depends on previous data"
+msgstr ""
+
+#: ../../source/doc.tips_timeline.rst:4
+msgid ""
+"Non-random pseudo-factories such as iterator can be used to generate time"
+" series data as follows:"
+msgstr ""
+
+#: ../../source/doc.tips_timeline.rst:32
+msgid ""
+"The timeline that can be generated in this example, for example, would "
+"look like this:"
+msgstr ""
+
+#: ../../source/doc.tips_timeline.rst:45
+msgid ""
+"As can be seen from the definition of :code:`iter_datetime`, the value of"
+" :code:`smpl_datetime` is not random, but increases by exactly one hour. "
+"Also, the value of :code:`location` is random but the difference from the"
+" previous value is 1; it is `randomwalk "
+"<https://en.wikipedia.org/wiki/Random_walk>`_. Thus, the iterator can be "
+"used to create a factory that generates values dependent on the previous "
+"value."
+msgstr ""
+
+#: ../../source/doc.tips_timeline.rst:49
+msgid "Change the type of :code:`smpl_datetime` to :code:`str`"
+msgstr ""
+
+#: ../../source/doc.tips_timeline.rst:51
+msgid ""
+"In the above case, a dict with the element example as it is was given to "
+":code:`from_example` as an example to create a factory. If you want to "
+"use methods of factories of elements, use :code:`by_iterable` to create "
+"the elements' factory. The following example uses :code:`post_process` to"
+" make :code:`smpl_datetime` a string."
+msgstr ""
+

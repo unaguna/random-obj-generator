@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-11 16:20+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.list_factory.rst:2
+msgid "List factory"
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:4
+msgid ""
+"You can create a factory that generates :code:`list` (or :code:`tuple`). "
+"The elements of the list are always randomly generated each time."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:6
+msgid ""
+"In many cases, the factory is created with `randlist "
+"<randog.factory.html#randog.factory.randlist>`_ instead of `from_example "
+"<randog.factory.html#randog.factory.from_example>`_ because the "
+"generation of the list needs to be tailored to the application."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:24
+msgid ""
+"If you want to generate multiple records by a single factory, it may be "
+"appropriate to use :code:`iter` rather than :code:`randlist`."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:40
+msgid "Each elements"
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:41
+msgid ""
+"You can specify a factory for each element. Normally, the i-th factory is"
+" used to generate the i-th element, but if you are generating a list "
+"longer than the number of factories, repeat the last factory."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:65
+msgid ""
+"Therefore, if you want to generate a typical list where each element has "
+"no specific meaning, specify only one element factory."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:84
+msgid "Length"
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:86
+msgid "The length of the list can also be randomized."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:101
+msgid ""
+"If no length is specified, the length will be the same as the number of "
+"pieces in the factory."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:122
+msgid "Generate tuple"
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:124
+msgid ""
+"The attribute :code:`type` can be used to generate a tuple instead of a "
+"list."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:140
+msgid ""
+"The length attribute is not necessary when generating a typical tuple in "
+"which each element has a separate schema, since omitting length will "
+"generate tuples with a length equal to the number of factories."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:143
+msgid ""
+"Other types that accept iterators can be specified as :code:`type`, but "
+"if :code:`set` is used, the number of elements is not guaranteed."
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:147
+msgid "Factory by :code:`from_example`"
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:149
+msgid ""
+"If you use `from_example "
+"<randog.factory.html#randog.factory.from_example>`_, for example, the "
+"code would look like this:"
+msgstr ""
+
+#: ../../source/doc.list_factory.rst:162
+msgid ""
+"Each element of the list given as an example is used as an example for "
+"each element of the generated list."
+msgstr ""
+

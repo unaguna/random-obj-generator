@@ -1,0 +1,88 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-11 16:20+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.dict_factory.rst:2
+msgid "Dict factory"
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:4
+msgid ""
+"You can create a factory that generates :code:`dict`. The elements of the"
+" dict are always randomly generated each time."
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:6
+msgid ""
+"Like any other factory, a dict factory can be built in two ways: "
+"`randdict <randog.factory.html#randog.factory.randdict>`_, `from_example "
+"<randog.factory.html#randog.factory.from_example>`_."
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:10
+msgid "Factory by :code:`randdict`"
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:12
+msgid ""
+"If you use `randdict <randog.factory.html#randog.factory.randdict>`_, for"
+" example, the code would look like this:"
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:35
+msgid ""
+"As in this example, by passing value factories as keyword arguments to "
+":code:`randdict`, you can create a dict factory that randomly generates "
+"each element. By passing a `DictItem "
+"<randog.factory.html#randog.factory.DictItem>`_ as an argument instead of"
+" a factory, it is also possible to randomize whether the key is generated"
+" in the generated dictionary; like :code:`age` in the example above."
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:39
+msgid ""
+"See also :doc:`here <doc.construct_factories>` for how to build each "
+"factory."
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:43
+msgid "Factory by :code:`from_example`"
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:45
+msgid ""
+"If you use `from_example "
+"<randog.factory.html#randog.factory.from_example>`_, for example, the "
+"code would look like this:"
+msgstr ""
+
+#: ../../source/doc.dict_factory.rst:65
+msgid ""
+"Not limited to dictionaries, :code:`from_example` is a function that, "
+"given an object that is an example output, returns a factory that "
+"generates an object similar to that example. If a dict is given to "
+":code:`from_example`, each of its values can be either an example value "
+"or a factory that generates values. Or, if you pass an example wrapped in"
+" `DictItemExample <randog.html#randog.DictItemExample>`_, you can also "
+"randomize whether or not a key is generated; like :code:`age` in the "
+"example above."
+msgstr ""
+

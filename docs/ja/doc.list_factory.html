@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="next" title="Use Factories" href="doc.use_factories.html" />
+    <link rel="next" title="Factory を使用する" href="doc.use_factories.html" />
     <link rel="prev" title="Dict factory" href="doc.dict_factory.html" /> 
 </head>
 
@@ -47,30 +47,30 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#elemental-types">Elemental types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#elemental-types">基本的な型</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#nullable">Nullable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#union-type">Union type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#randomly-choice">Randomly choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#constance">Constance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#processing-output">Processing output</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#custom-factory">Custom Factory</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#details-on-how-to-build-individual-factories">Details on how to build individual factories</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#union-type">合成型 (Union type)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#randomly-choice">ランダムな選択 (Randomly choice)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#constance">定数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#processing-output">結果の加工</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#custom-factory">カスタム Factory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#details-on-how-to-build-individual-factories">各 factory の詳細な生成方法</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">List factory</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#each-elements">Each elements</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#length">Length</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#generate-tuple">Generate tuple</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#factory-by-from-example">Factory by <code class="code docutils literal notranslate"><span class="pre">from_example</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#each-elements">それぞれの要素の生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#length">長さ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generate-tuple">tuple の生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#factory-by-from-example"><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
 
@@ -109,8 +109,8 @@
              
   <section id="list-factory">
 <h1>List factory<a class="headerlink" href="#list-factory" title="この見出しへのパーマリンク"></a></h1>
-<p>You can create a factory that generates <code class="code docutils literal notranslate"><span class="pre">list</span></code> (or <code class="code docutils literal notranslate"><span class="pre">tuple</span></code>). The elements of the list are always randomly generated each time.</p>
-<p>In many cases, the factory is created with <a class="reference external" href="randog.factory.html#randog.factory.randlist">randlist</a> instead of <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> because the generation of the list needs to be tailored to the application.</p>
+<p>list 型のオブジェクトを生成する factory を作成することができます。この factory では list の各要素も毎回ランダムに生成します。</p>
+<p>多くのケースでは、用途に応じた調整が必要となるため <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> よりも <a class="reference external" href="randog.factory.html#randog.factory.randlist">randlist</a> を使用します。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
@@ -126,7 +126,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>If you want to generate multiple records by a single factory, it may be appropriate to use <code class="code docutils literal notranslate"><span class="pre">iter</span></code> rather than <code class="code docutils literal notranslate"><span class="pre">randlist</span></code>.</p>
+<p>もし1つの factory から複数のレコードを作成したい場合、<code class="code docutils literal notranslate"><span class="pre">randlist</span></code> よりも <code class="code docutils literal notranslate"><span class="pre">iter</span></code> を使うべきかもしれません。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
@@ -140,8 +140,8 @@
 </div>
 </div>
 <section id="each-elements">
-<h2>Each elements<a class="headerlink" href="#each-elements" title="この見出しへのパーマリンク"></a></h2>
-<p>You can specify a factory for each element. Normally, the i-th factory is used to generate the i-th element, but if you are generating a list longer than the number of factories, repeat the last factory.</p>
+<h2>それぞれの要素の生成<a class="headerlink" href="#each-elements" title="この見出しへのパーマリンク"></a></h2>
+<p>それぞれの要素の factory を指定することができます。通常、i番目の要素の生成にはi番目に指定した factory が使用されますが、指定した factory の数よりも長い list を生成する場合、最後の factory が繰り返し使用されます。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">el_factories</span> <span class="o">=</span> <span class="p">[</span>
@@ -163,7 +163,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nb">bool</span><span class="p">)</span>   <span class="c1"># by el_factories[2]</span>
 </pre></div>
 </div>
-<p>Therefore, if you want to generate a typical list where each element has no specific meaning, specify only one element factory.</p>
+<p>したがって、それぞれの要素が特別な意味を持たない典型的なリストを生成したい場合は、要素の factory を1つだけ指定してください。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
@@ -180,8 +180,8 @@
 </div>
 </section>
 <section id="length">
-<h2>Length<a class="headerlink" href="#length" title="この見出しへのパーマリンク"></a></h2>
-<p>The length of the list can also be randomized.</p>
+<h2>長さ<a class="headerlink" href="#length" title="この見出しへのパーマリンク"></a></h2>
+<p>生成されるリストの長さをランダムにすることもできます。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
@@ -194,7 +194,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lengths</span> <span class="o">==</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>If no length is specified, the length will be the same as the number of pieces in the factory.</p>
+<p>もし長さを指定しない場合、factory の数と同じ長さのリストが生成されます。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">el_factories</span> <span class="o">=</span> <span class="p">[</span>
@@ -213,8 +213,8 @@
 </div>
 </section>
 <section id="generate-tuple">
-<h2>Generate tuple<a class="headerlink" href="#generate-tuple" title="この見出しへのパーマリンク"></a></h2>
-<p>The attribute <code class="code docutils literal notranslate"><span class="pre">type</span></code> can be used to generate a tuple instead of a list.</p>
+<h2>tuple の生成<a class="headerlink" href="#generate-tuple" title="この見出しへのパーマリンク"></a></h2>
+<p>引数 <code class="code docutils literal notranslate"><span class="pre">type</span></code> を使うことで、list ではなく tuple を生成することもできます。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
@@ -229,16 +229,16 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>The length attribute is not necessary when generating a typical tuple in which each element has a separate schema, since omitting length will generate tuples with a length equal to the number of factories.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">randlist</span></code> に渡す <code class="code docutils literal notranslate"><span class="pre">length</span></code> を省略すると factory の個数と同じ長さとなるため、各要素が個別のスキーマを持つような典型的な tuple を生成する場合は <code class="code docutils literal notranslate"><span class="pre">length</span></code> を指定する必要がありません。</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p>Other types that accept iterators can be specified as <code class="code docutils literal notranslate"><span class="pre">type</span></code>, but if <code class="code docutils literal notranslate"><span class="pre">set</span></code> is used, the number of elements is not guaranteed.</p>
+<p>引数としてイテレーターを受け入れるような型であれば <code class="code docutils literal notranslate"><span class="pre">type</span></code> に指定することができますが、<code class="code docutils literal notranslate"><span class="pre">set</span></code> を指定すると要素の個数が保証されません。</p>
 </div>
 </section>
 <section id="factory-by-from-example">
-<h2>Factory by <code class="code docutils literal notranslate"><span class="pre">from_example</span></code><a class="headerlink" href="#factory-by-from-example" title="この見出しへのパーマリンク"></a></h2>
-<p>If you use <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>, for example, the code would look like this:</p>
+<h2><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成<a class="headerlink" href="#factory-by-from-example" title="この見出しへのパーマリンク"></a></h2>
+<p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> を使用する場合、以下の例のようになります。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">])</span>
@@ -249,7 +249,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Each element of the list given as an example is used as an example for each element of the generated list.</p>
+<p>例として与えたリストの各要素は、生成するリストの各要素の例として使用されます。</p>
 </section>
 </section>
 
@@ -258,7 +258,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="doc.dict_factory.html" class="btn btn-neutral float-left" title="Dict factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="doc.use_factories.html" class="btn btn-neutral float-right" title="Use Factories" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.use_factories.html" class="btn btn-neutral float-right" title="Factory を使用する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

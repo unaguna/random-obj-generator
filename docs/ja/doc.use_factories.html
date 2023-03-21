@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Use Factories &mdash; random-obj-generator 0.2.0 ドキュメント</title>
+  <title>Factory を使用する &mdash; random-obj-generator 0.2.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="next" title="Tips (Usage)" href="doc.tips.html" />
+    <link rel="next" title="Tips (使い方)" href="doc.tips.html" />
     <link rel="prev" title="List factory" href="doc.list_factory.html" /> 
 </head>
 
@@ -47,13 +47,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Use Factories</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#as-iterator">As iterator</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Factory を使用する</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#as-iterator">イテレータとして</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
 
@@ -71,7 +71,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Use Factories</li>
+      <li class="breadcrumb-item active">Factory を使用する</li>
     <li class="spacer"></li>
     <li class="wy-breadcrumbs-aside">
         <select name="lang" onchange="location.href=value;">
@@ -90,8 +90,8 @@
            <div itemprop="articleBody">
              
   <section id="use-factories">
-<h1>Use Factories<a class="headerlink" href="#use-factories" title="この見出しへのパーマリンク"></a></h1>
-<p>Once a factory is created, its <a class="reference external" href="randog.factory.html#randog.factory.Factory.next">next</a> method can be used to generate random values. Generate a value for each use.</p>
+<h1>Factory を使用する<a class="headerlink" href="#use-factories" title="この見出しへのパーマリンク"></a></h1>
+<p>一度 factory を作ると、<a class="reference external" href="randog.factory.html#randog.factory.Factory.next">next</a> メソッドを使用して何回でもランダムに値を生成できます。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
@@ -105,10 +105,10 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated1</span> <span class="o">!=</span> <span class="n">generated2</span>
 </pre></div>
 </div>
-<p>Usually used in this way, the following sugar-coated syntax can also be used.</p>
+<p>通常はこのように使用しますが、次のような糖衣構文も使うことができます。</p>
 <section id="as-iterator">
-<h2>As iterator<a class="headerlink" href="#as-iterator" title="この見出しへのパーマリンク"></a></h2>
-<p>Although a factory itself is not an iterator, <a class="reference external" href="randog.factory.html#randog.factory.Factory.iter">iter</a> method can be used to create an iterator.</p>
+<h2>イテレータとして<a class="headerlink" href="#as-iterator" title="この見出しへのパーマリンク"></a></h2>
+<p>factory 自身はイテレータではありませんが、<a class="reference external" href="randog.factory.html#randog.factory.Factory.iter">iter</a> を使用してイテレータを作ることができます。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -126,9 +126,9 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>The return value of <code class="code docutils literal notranslate"><span class="pre">iter</span></code> is not just an Iterable, but also an Iterator. Iterators are disposable and must be regenerated each time they are used.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">iter</span></code> の戻り値は単なる Iterable ではなく Iterator です。イテレータは使い捨てなので使用するたびに作り直す必要があります。</p>
 </div>
-<p><a class="reference external" href="randog.factory.html#randog.factory.Factory.infinity_iter">infinity_iter</a> also returns an iterator, but this iterator will be not terminated.</p>
+<p><a class="reference external" href="randog.factory.html#randog.factory.Factory.infinity_iter">infinity_iter</a> もイテレータを返しますが、このイテレータは尽きることがありません。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -144,11 +144,11 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p><code class="code docutils literal notranslate"><span class="pre">infinity_iter</span></code> causes an infinite loop. Handle it with care.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">infinity_iter</span></code> は無限ループの原因となります。取り扱いに注意してください。</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>The return value of <code class="code docutils literal notranslate"><span class="pre">infinity_iter</span></code> is not just an Iterable, but also an Iterator. Iterators are disposable and must be regenerated each time they are used.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">infinity_iter</span></code> の戻り値は単なる Iterable ではなく Iterator です。イテレータは使い捨てなので使用するたびに作り直す必要があります。</p>
 </div>
 </section>
 </section>
@@ -158,7 +158,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="doc.list_factory.html" class="btn btn-neutral float-left" title="List factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="doc.tips.html" class="btn btn-neutral float-right" title="Tips (Usage)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.tips.html" class="btn btn-neutral float-right" title="Tips (使い方)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

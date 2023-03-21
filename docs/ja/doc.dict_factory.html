@@ -47,19 +47,19 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#elemental-types">Elemental types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#elemental-types">基本的な型</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#nullable">Nullable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#union-type">Union type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#randomly-choice">Randomly choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#constance">Constance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#processing-output">Processing output</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#custom-factory">Custom Factory</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#details-on-how-to-build-individual-factories">Details on how to build individual factories</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#union-type">合成型 (Union type)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#randomly-choice">ランダムな選択 (Randomly choice)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#constance">定数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#processing-output">結果の加工</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#custom-factory">カスタム Factory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#details-on-how-to-build-individual-factories">各 factory の詳細な生成方法</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Dict factory</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#factory-by-randdict">Factory by <code class="code docutils literal notranslate"><span class="pre">randdict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#factory-by-from-example">Factory by <code class="code docutils literal notranslate"><span class="pre">from_example</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#factory-by-randdict"><code class="code docutils literal notranslate"><span class="pre">randdict</span></code> を使用して作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#factory-by-from-example"><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
@@ -67,8 +67,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
 
@@ -107,11 +107,11 @@
              
   <section id="dict-factory">
 <h1>Dict factory<a class="headerlink" href="#dict-factory" title="この見出しへのパーマリンク"></a></h1>
-<p>You can create a factory that generates <code class="code docutils literal notranslate"><span class="pre">dict</span></code>. The elements of the dict are always randomly generated each time.</p>
-<p>Like any other factory, a dict factory can be built in two ways: <a class="reference external" href="randog.factory.html#randog.factory.randdict">randdict</a>, <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>.</p>
+<p>dict 型のオブジェクトを生成する factory を作成することができます。この factory では dict の各要素も毎回ランダムに生成します。</p>
+<p>他の factory と同様に、dict factory も2つの方法 (<a class="reference external" href="randog.factory.html#randog.factory.randdict">randdict</a>, <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>) で作成することができます。</p>
 <section id="factory-by-randdict">
-<h2>Factory by <code class="code docutils literal notranslate"><span class="pre">randdict</span></code><a class="headerlink" href="#factory-by-randdict" title="この見出しへのパーマリンク"></a></h2>
-<p>If you use <a class="reference external" href="randog.factory.html#randog.factory.randdict">randdict</a>, for example, the code would look like this:</p>
+<h2><code class="code docutils literal notranslate"><span class="pre">randdict</span></code> を使用して作成<a class="headerlink" href="#factory-by-randdict" title="この見出しへのパーマリンク"></a></h2>
+<p><a class="reference external" href="randog.factory.html#randog.factory.randdict">randdict</a> を使用する場合、以下の例のようになります。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">randog.factory</span> <span class="kn">import</span> <span class="n">DictItem</span>
 
@@ -132,15 +132,15 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s2">&quot;age&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generated</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>As in this example, by passing value factories as keyword arguments to <code class="code docutils literal notranslate"><span class="pre">randdict</span></code>, you can create a dict factory that randomly generates each element. By passing a <a class="reference external" href="randog.factory.html#randog.factory.DictItem">DictItem</a> as an argument instead of a factory, it is also possible to randomize whether the key is generated in the generated dictionary; like <code class="code docutils literal notranslate"><span class="pre">age</span></code> in the example above.</p>
+<p>この例のように <code class="code docutils literal notranslate"><span class="pre">randdict</span></code> にキーワード引数として factory を渡すことで、各要素をランダムに生成する dict factory を作成することができます。代わりに <a class="reference external" href="randog.factory.html#randog.factory.DictItem">DictItem</a> を渡すと、キーが存在するかどうかもランダムにすることができます (上記の例の <code class="code docutils literal notranslate"><span class="pre">age</span></code> のように)。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>See also <a class="reference internal" href="doc.construct_factories.html"><span class="doc">here</span></a> for how to build each factory.</p>
+<p>引数として使用する各 factory の生成方法は <a class="reference internal" href="doc.construct_factories.html"><span class="doc">こちら</span></a> に記載しています。</p>
 </div>
 </section>
 <section id="factory-by-from-example">
-<h2>Factory by <code class="code docutils literal notranslate"><span class="pre">from_example</span></code><a class="headerlink" href="#factory-by-from-example" title="この見出しへのパーマリンク"></a></h2>
-<p>If you use <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>, for example, the code would look like this:</p>
+<h2><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成<a class="headerlink" href="#factory-by-from-example" title="この見出しへのパーマリンク"></a></h2>
+<p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> を使用する場合、以下の例のようになります。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">randog</span> <span class="kn">import</span> <span class="n">DictItemExample</span>
 
@@ -158,7 +158,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s2">&quot;age&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">generated</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Not limited to dictionaries, <code class="code docutils literal notranslate"><span class="pre">from_example</span></code> is a function that, given an object that is an example output, returns a factory that generates an object similar to that example. If a dict is given to <code class="code docutils literal notranslate"><span class="pre">from_example</span></code>, each of its values can be either an example value or a factory that generates values. Or, if you pass an example wrapped in <a class="reference external" href="randog.html#randog.DictItemExample">DictItemExample</a>, you can also randomize whether or not a key is generated; like <code class="code docutils literal notranslate"><span class="pre">age</span></code> in the example above.</p>
+<p>dict オブジェクトに限らず、<code class="code docutils literal notranslate"><span class="pre">from_example</span></code> は出力例として与えられたオブジェクトと似たオブジェクトをランダムに生成する factory を作成します。dict オブジェクトを <code class="code docutils literal notranslate"><span class="pre">from_example</span></code> に例として与える場合、その要素として、ランダム生成される要素の例か、要素を生成する factory を使用することができます。また、<a class="reference external" href="randog.html#randog.DictItemExample">DictItemExample</a> でラップされた例を要素にすると、キーが存在するかどうかもランダムにすることができます (上記の例の <code class="code docutils literal notranslate"><span class="pre">age</span></code> のように)。</p>
 </section>
 </section>
 

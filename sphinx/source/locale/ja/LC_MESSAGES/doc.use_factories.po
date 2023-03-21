@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../source/doc.use_factories.rst:2
 msgid "Use Factories"
-msgstr ""
+msgstr "Factory を使用する"
 
 #: ../../source/doc.use_factories.rst:4
 msgid ""
@@ -30,16 +30,19 @@ msgid ""
 "<randog.factory.html#randog.factory.Factory.next>`_ method can be used to"
 " generate random values. Generate a value for each use."
 msgstr ""
+"一度 factory を作ると、`next "
+"<randog.factory.html#randog.factory.Factory.next>`_ メソッドを使用して何回でもランダムに値を生成できます。"
 
 #: ../../source/doc.use_factories.rst:20
 msgid ""
 "Usually used in this way, the following sugar-coated syntax can also be "
 "used."
 msgstr ""
+"通常はこのように使用しますが、次のような糖衣構文も使うことができます。"
 
 #: ../../source/doc.use_factories.rst:24
 msgid "As iterator"
-msgstr ""
+msgstr "イテレータとして"
 
 #: ../../source/doc.use_factories.rst:26
 msgid ""
@@ -47,6 +50,8 @@ msgid ""
 "<randog.factory.html#randog.factory.Factory.iter>`_ method can be used to"
 " create an iterator."
 msgstr ""
+"factory 自身はイテレータではありませんが、`iter "
+"<randog.factory.html#randog.factory.Factory.iter>`_ を使用してイテレータを作ることができます。"
 
 #: ../../source/doc.use_factories.rst:45
 msgid ""
@@ -54,6 +59,8 @@ msgid ""
 "Iterator. Iterators are disposable and must be regenerated each time they"
 " are used."
 msgstr ""
+":code:`iter` の戻り値は単なる Iterable ではなく Iterator です。"
+"イテレータは使い捨てなので使用するたびに作り直す必要があります。"
 
 #: ../../source/doc.use_factories.rst:47
 msgid ""
@@ -61,10 +68,13 @@ msgid ""
 "<randog.factory.html#randog.factory.Factory.infinity_iter>`_ also returns"
 " an iterator, but this iterator will be not terminated."
 msgstr ""
+"`infinity_iter "
+"<randog.factory.html#randog.factory.Factory.infinity_iter>`_ もイテレータを返しますが、"
+"このイテレータは尽きることがありません。"
 
 #: ../../source/doc.use_factories.rst:64
 msgid ":code:`infinity_iter` causes an infinite loop. Handle it with care."
-msgstr ""
+msgstr ":code:`infinity_iter` は無限ループの原因となります。取り扱いに注意してください。"
 
 #: ../../source/doc.use_factories.rst:67
 msgid ""
@@ -72,4 +82,6 @@ msgid ""
 "also an Iterator. Iterators are disposable and must be regenerated each "
 "time they are used."
 msgstr ""
+":code:`infinity_iter` の戻り値は単なる Iterable ではなく Iterator です。"
+"イテレータは使い捨てなので使用するたびに作り直す必要があります。"
 

@@ -29,6 +29,8 @@ msgid ""
 "You can create a factory that generates :code:`dict`. The elements of the"
 " dict are always randomly generated each time."
 msgstr ""
+"dict 型のオブジェクトを生成する factory を作成することができます。"
+"この factory では dict の各要素も毎回ランダムに生成します。"
 
 #: ../../source/doc.dict_factory.rst:6
 msgid ""
@@ -36,16 +38,21 @@ msgid ""
 "`randdict <randog.factory.html#randog.factory.randdict>`_, `from_example "
 "<randog.factory.html#randog.factory.from_example>`_."
 msgstr ""
+"他の factory と同様に、dict factory も2つの方法 "
+"(`randdict <randog.factory.html#randog.factory.randdict>`_, "
+"`from_example <randog.factory.html#randog.factory.from_example>`_) "
+"で作成することができます。"
 
 #: ../../source/doc.dict_factory.rst:10
 msgid "Factory by :code:`randdict`"
-msgstr ""
+msgstr ":code:`randdict` を使用して作成"
 
 #: ../../source/doc.dict_factory.rst:12
 msgid ""
 "If you use `randdict <randog.factory.html#randog.factory.randdict>`_, for"
 " example, the code would look like this:"
 msgstr ""
+"`randdict <randog.factory.html#randog.factory.randdict>`_ を使用する場合、以下の例のようになります。"
 
 #: ../../source/doc.dict_factory.rst:35
 msgid ""
@@ -56,16 +63,22 @@ msgid ""
 " a factory, it is also possible to randomize whether the key is generated"
 " in the generated dictionary; like :code:`age` in the example above."
 msgstr ""
+"この例のように :code:`randdict` にキーワード引数として factory を渡すことで、"
+"各要素をランダムに生成する dict factory を作成することができます。"
+"代わりに `DictItem "
+"<randog.factory.html#randog.factory.DictItem>`_ を渡すと、キーが存在するかどうかも"
+"ランダムにすることができます (上記の例の :code:`age` のように)。"
 
 #: ../../source/doc.dict_factory.rst:39
 msgid ""
 "See also :doc:`here <doc.construct_factories>` for how to build each "
 "factory."
 msgstr ""
+"引数として使用する各 factory の生成方法は :doc:`こちら <doc.construct_factories>` に記載しています。"
 
 #: ../../source/doc.dict_factory.rst:43
 msgid "Factory by :code:`from_example`"
-msgstr ""
+msgstr ":code:`from_example` を使用して作成"
 
 #: ../../source/doc.dict_factory.rst:45
 msgid ""
@@ -73,6 +86,8 @@ msgid ""
 "<randog.factory.html#randog.factory.from_example>`_, for example, the "
 "code would look like this:"
 msgstr ""
+"`from_example <randog.factory.html#randog.factory.from_example>`_ を使用する場合、"
+"以下の例のようになります。"
 
 #: ../../source/doc.dict_factory.rst:65
 msgid ""
@@ -85,4 +100,10 @@ msgid ""
 "randomize whether or not a key is generated; like :code:`age` in the "
 "example above."
 msgstr ""
+"dict オブジェクトに限らず、:code:`from_example` は出力例として与えられた"
+"オブジェクトと似たオブジェクトをランダムに生成する factory を作成します。"
+"dict オブジェクトを :code:`from_example` に例として与える場合、"
+"その要素として、ランダム生成される要素の例か、要素を生成する factory を使用することができます。"
+"また、`DictItemExample <randog.html#randog.DictItemExample>`_ でラップされた例を要素にすると、"
+"キーが存在するかどうかもランダムにすることができます (上記の例の :code:`age` のように)。"
 

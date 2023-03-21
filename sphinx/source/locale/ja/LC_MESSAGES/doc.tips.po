@@ -22,9 +22,9 @@ msgstr ""
 
 #: ../../source/doc.tips.rst:2
 msgid "Tips (Usage)"
-msgstr ""
+msgstr "Tips (使い方)"
 
 #: ../../source/doc.tips.rst:4
 msgid "Here are some specific examples of usage."
-msgstr ""
+msgstr "具体的な使用例を紹介します。"
 

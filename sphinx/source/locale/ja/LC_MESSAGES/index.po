@@ -33,6 +33,7 @@ msgid ""
 "**randog** (random-obj-generator) is a package which helps to generate "
 "data randomly."
 msgstr ""
+"**randog** (random-obj-generator) はランダムにデータを生成するライブラリです。"
 
 #: ../../source/index.rst:19
 msgid "Indices and tables"

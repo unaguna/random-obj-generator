@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../source/doc.tips_json.rst:2
 msgid "Create JSON randomly"
-msgstr ""
+msgstr "JSON をランダムに生成する"
 
 #: ../../source/doc.tips_json.rst:4
 msgid ""
@@ -30,24 +30,29 @@ msgid ""
 "<https://docs.python.org/3/library/json.html>`_ module, objects generated"
 " by randog can also be in JSON format."
 msgstr ""
+"python では `json "
+"<https://docs.python.org/3/library/json.html>`_ モジュールを使えばオブジェクトをJSON形式にできるため、"
+"randog で生成したオブジェクトもJSON形式にできます。"
 
 #: ../../source/doc.tips_json.rst:19 ../../source/doc.tips_json.rst:45
 msgid "In this case, for example, we get the following string:"
-msgstr ""
+msgstr "このケースでは、例えば以下のような文字列を得られます。"
 
 #: ../../source/doc.tips_json.rst:27
 msgid "Decimal e.t.c."
-msgstr ""
+msgstr "Decimal 等"
 
 #: ../../source/doc.tips_json.rst:29
 msgid ""
 "Types such as Decimal cannot be converted to JSON by default, but can be "
 "converted to JSON by specifying the :code:`default` function."
 msgstr ""
+"Decimal のような型はデフォルトでは JSON 形式に変換できませんが、"
+":code:`default` 関数を指定することで JSON 形式に変換することができます。"
 
 #: ../../source/doc.tips_json.rst:53
 msgid "Factory of JSON string"
-msgstr ""
+msgstr "JSON 文字列の Factory"
 
 #: ../../source/doc.tips_json.rst:55
 msgid ""
@@ -56,4 +61,6 @@ msgid ""
 "outputs values in JSON format from the beginning by using "
 ":code:`post_process`."
 msgstr ""
+"上の例では factory が生成した値を JSON に変換していますが、"
+":code:`post_process` を使うことであらかじめJSON形式に変換された値を生成する factory を作ることもできます。"
 

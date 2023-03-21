@@ -46,10 +46,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="randog.html">randog package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="randog.html#subpackages-and-submodules">Subpackages and submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="randog.exceptions.html">randog.exceptions package</a></li>
@@ -126,17 +126,17 @@
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">DictItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A rule for generating values corresponding to a key in the random generation of dict.</p>
+<p>dict のランダム生成において、キーに対応する値を生成する際のルール。</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="randog.factory.DictItem.factory">
 <span class="sig-name descname"><span class="pre">factory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></em><a class="headerlink" href="#randog.factory.DictItem.factory" title="この定義へのパーマリンク"></a></dt>
-<dd><p>a factory to generate values</p>
+<dd><p>値を生成する factory</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="randog.factory.DictItem.prop_exists">
 <span class="sig-name descname"><span class="pre">prop_exists</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#randog.factory.DictItem.prop_exists" title="この定義へのパーマリンク"></a></dt>
-<dd><p>probability of key generation</p>
+<dd><p>キーを生成する確率</p>
 </dd></dl>
 
 </dd></dl>
@@ -148,8 +148,8 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="randog.factory.Factory.infinity_iter">
 <span class="sig-name descname"><span class="pre">infinity_iter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.Factory.infinity_iter" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Returns an infinity iterator which serves result randomly.</p>
-<p>The result is INFINITY so do NOT use it directly with <cite>for</cite>, <cite>list</cite>, and so on.</p>
+<dd><p>ランダムに値を生成する無限イテレータを返す。</p>
+<p>このイテレータは無限です。for, list などで直接使用しないでください。</p>
 <p class="rubric">サンプル</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -162,7 +162,7 @@
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">戻り値<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An infinity iterator</p>
+<dd class="field-odd"><p>無限イテレータ</p>
 </dd>
 <dt class="field-even">戻り値の型<span class="colon">:</span></dt>
 <dd class="field-even"><p>Iterator[T]</p>
@@ -173,7 +173,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="randog.factory.Factory.iter">
 <span class="sig-name descname"><span class="pre">iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.Factory.iter" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Returns an iterator which serves result randomly <cite>size</cite> times.</p>
+<dd><p><cite>size</cite> 回だけランダムに値を生成するイテレータを返す。</p>
 <p class="rubric">サンプル</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -187,10 +187,10 @@
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>size</strong> (<em>int</em>) -- the number of the iterator</p>
+<dd class="field-odd"><p><strong>size</strong> (<em>int</em>) -- イテレータが値を返す回数</p>
 </dd>
 <dt class="field-even">戻り値<span class="colon">:</span></dt>
-<dd class="field-even"><p>An iterator</p>
+<dd class="field-even"><p>イテレータ</p>
 </dd>
 <dt class="field-odd">戻り値の型<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Iterator[T]</p>
@@ -201,10 +201,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="randog.factory.Factory.next">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="headerlink" href="#randog.factory.Factory.next" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Generate a value randomly according to the rules specified when assembling the factory.</p>
+<dd><p>Factory の作成時に指定したルールに沿ってランダムに値を生成する。</p>
 <dl class="field-list simple">
 <dt class="field-odd">戻り値<span class="colon">:</span></dt>
-<dd class="field-odd"><p>a value generated randomly</p>
+<dd class="field-odd"><p>ランダムに生成された値</p>
 </dd>
 <dt class="field-even">戻り値の型<span class="colon">:</span></dt>
 <dd class="field-even"><p>T</p>
@@ -215,7 +215,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="randog.factory.Factory.or_none">
 <span class="sig-name descname"><span class="pre">or_none</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.Factory.or_none" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Returns a factory whose result may be None with the specified probability.</p>
+<dd><p>指定した確率で None を生成する factory を返す。</p>
 <p class="rubric">サンプル</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -228,12 +228,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>prob</strong> (<em>float</em><em>, </em><em>default=0.1</em>) -- Probability that the result is None</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>prob</strong> (<em>float</em><em>, </em><em>default=0.1</em>) -- None を生成する確率</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">戻り値<span class="colon">:</span></dt>
-<dd class="field-even"><p>A factory whose result may be None with the specified probability.</p>
+<dd class="field-even"><p>指定した確率で None を生成する factory</p>
 </dd>
 <dt class="field-odd">戻り値の型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory">Factory</a>[T|None]</p>
@@ -244,7 +244,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="randog.factory.Factory.post_process">
 <span class="sig-name descname"><span class="pre">post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">post_process</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">R</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">R</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.Factory.post_process" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Returns a factory whose result will be modified by <cite>post_process</cite></p>
+<dd><p>生成した値を <cite>post_process</cite> で加工してから返す factory を返す。</p>
 <p class="rubric">サンプル</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -262,10 +262,10 @@
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>post_process</strong> (<em>Callable</em><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><em>R</em><em>]</em>) -- the mapping to modify the result</p>
+<dd class="field-odd"><p><strong>post_process</strong> (<em>Callable</em><em>[</em><em>[</em><em>T</em><em>]</em><em>, </em><em>R</em><em>]</em>) -- 結果を加工する関数</p>
 </dd>
 <dt class="field-even">戻り値<span class="colon">:</span></dt>
-<dd class="field-even"><p>A factory whose result will be modified by <cite>post_process</cite>.</p>
+<dd class="field-even"><p>生成した値を <cite>post_process</cite> で加工してから返す factory</p>
 </dd>
 <dt class="field-odd">戻り値の型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory">Factory</a>[R]</p>
@@ -339,10 +339,10 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.by_callable">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">by_callable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.by_callable" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating values by specified callable.</p>
+<dd><p>指定した関数で値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>) </em><em>-&gt; T</em>) -- the function generating value</p>
+<dd class="field-odd"><p><strong>func</strong> (<em>(</em><em>) </em><em>-&gt; T</em>) -- 値を生成する関数</p>
 </dd>
 </dl>
 </dd></dl>
@@ -350,10 +350,10 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.by_iterator">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">by_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.by_iterator" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating values by specified iterator.</p>
+<dd><p>指定したイテレータで値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>iterator</strong> (<em>Iterator</em><em>[</em><em>T</em><em>]</em>) -- the iterator generating value</p>
+<dd class="field-odd"><p><strong>iterator</strong> (<em>Iterator</em><em>[</em><em>T</em><em>]</em>) -- 値を生成するイテレータ</p>
 </dd>
 </dl>
 </dd></dl>
@@ -361,12 +361,12 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.const">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">const</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.const" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory which returns the specified value.</p>
+<dd><p>指定した値を生成した値として返す factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> (<em>Any</em>) -- the value</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- It is not normally used, but it can be accepted as an argument to match other Factory construction functions.</p></li>
+<li><p><strong>value</strong> (<em>Any</em>) -- 値</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 通常は使用しませんが、他の factory 作成関数と同様に引数として受け取ることができます。</p></li>
 </ul>
 </dd>
 </dl>
@@ -375,23 +375,18 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.from_example">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">from_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">example</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_CustomFunc</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#randog.factory.FromExampleContext" title="randog.factory._from_example.FromExampleContext"><span class="pre">FromExampleContext</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></span></span><a class="headerlink" href="#randog.factory.from_example" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Returns a factory generating value like specified example or type.</p>
+<dd><p>指定された例に似た値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>example</strong> (<em>Any</em>) -- the type or the example</p></li>
-<li><p><strong>custom_func</strong> (<em>Callable</em>) -- If specified, this function is executed first and its return value is used as a new example.
-If it returns a factory, it is used as is.
-The context is passed to this function.
-It is recommended that <cite>custom_func</cite> receives <cite>**kwargs</cite> to allow for more keyword arguments in future updates.
-This process is also used to create factories for child elements of dict and list.</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
-<li><p><strong>context</strong> (<a class="reference internal" href="#randog.factory.FromExampleContext" title="randog.factory.FromExampleContext"><em>FromExampleContext</em></a><em>, </em><em>optional</em>) -- the context of generation. Normally, you should not specify it.
-If specified, the context property takes precedence over other arguments.</p></li>
+<li><p><strong>example</strong> (<em>Any</em>) -- 生成する値の型、もしくは例</p></li>
+<li><p><strong>custom_func</strong> (<em>Callable</em>) -- 指定された場合、渡された例はまずこの関数に通され、その戻り値が代わりに例として使用されます。戻り値が factory である場合はそのまま使用されます。context は、この関数にも渡されます。この処理は、dict や list の子要素の factory を作成する際にも実施されます。将来のアップデートでキーワード引数を増やせるように、<cite>custom_func</cite> は <cite>**kwargs</cite> を受け取ることが推奨されています。</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
+<li><p><strong>context</strong> (<a class="reference internal" href="#randog.factory.FromExampleContext" title="randog.factory.FromExampleContext"><em>FromExampleContext</em></a><em>, </em><em>optional</em>) -- factory 作成のコンテキスト。通常、指定するべきではありません。もし指定した場合、他の引数よりも優先されます。</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified example or type is not supported.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定された例や型をサポートしていない場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -399,16 +394,16 @@ If specified, the context property takes precedence over other arguments.</p></l
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randbool">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randbool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prop_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randbool" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random bool values.</p>
+<dd><p>bool 値をランダムに生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>prop_true</strong> (<em>float</em>) -- the probability of True</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>prop_true</strong> (<em>float</em>) -- True を生成する確率</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -416,18 +411,17 @@ If specified, the context property takes precedence over other arguments.</p></l
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randchoice">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randchoice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randchoice" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory choosing one of values.</p>
+<dd><p>values のうちの1つをランダムに選ぶ factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>values</strong> (<em>Any</em>) -- the values</p></li>
-<li><p><strong>weights</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) -- the probabilities that each value is chose.
-The length must equal to the number of factories.</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>values</strong> (<em>Any</em>) -- 値</p></li>
+<li><p><strong>weights</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) -- それぞれの値が選ばれる確率。長さは factory の数に一致しなければならない。</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- No values are specified.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 値が一つも指定されていない。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -435,17 +429,17 @@ The length must equal to the number of factories.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randdate">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randdate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">date</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randdate" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random date values.</p>
+<dd><p>ランダムに date 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>minimum</strong> (<em>date</em><em> | </em><em>datetime</em><em>, </em><em>optional</em>) -- the minimum</p></li>
-<li><p><strong>maximum</strong> (<em>date</em><em> | </em><em>datetime</em><em>, </em><em>optional</em>) -- the maximum</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>minimum</strong> (<em>date</em><em> | </em><em>datetime</em><em>, </em><em>optional</em>) -- 最小値</p></li>
+<li><p><strong>maximum</strong> (<em>date</em><em> | </em><em>datetime</em><em>, </em><em>optional</em>) -- 最大値</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -453,19 +447,18 @@ The length must equal to the number of factories.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randdatetime">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randdatetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tzinfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">False</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tzinfo</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randdatetime" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random datetime values.</p>
+<dd><p>ランダムに datetime 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>minimum</strong> (<em>datetime</em><em> | </em><em>date</em><em>, </em><em>optional</em>) -- the minimum</p></li>
-<li><p><strong>maximum</strong> (<em>datetime</em><em> | </em><em>date</em><em>, </em><em>optional</em>) -- the maximum</p></li>
-<li><p><strong>tzinfo</strong> (<em>tzinfo</em><em> | </em><em>None</em><em>, </em><em>optional</em>) -- If specified, the tzinfo of result will be fixed to this value (False means no specification).
-When it fixes aware datetime to aware, the time is corrected. Otherwise, only the tzinfo is changed.</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>minimum</strong> (<em>datetime</em><em> | </em><em>date</em><em>, </em><em>optional</em>) -- 最小値</p></li>
+<li><p><strong>maximum</strong> (<em>datetime</em><em> | </em><em>date</em><em>, </em><em>optional</em>) -- 最大値</p></li>
+<li><p><strong>tzinfo</strong> (<em>tzinfo</em><em> | </em><em>None</em><em>, </em><em>optional</em>) -- 指定した場合、生成される値の tzinfo がこの値に矯正される (False は指定しないことを意味する)。aware な日時を別のタイムゾーンの aware な日時に矯正する場合、時刻は時差に応じて変更される。それ以外の場合、tzinfo のみが変更される。</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -473,21 +466,21 @@ When it fixes aware datetime to aware, the time is corrected. Otherwise, only th
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randdecimal">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randdecimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_len</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_inf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_inf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nan</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Decimal</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randdecimal" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random Decimal values.</p>
+<dd><p>ランダムに Decimal 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>minimum</strong> (<em>float</em><em>, </em><em>optional</em>) -- the minimum</p></li>
-<li><p><strong>maximum</strong> (<em>float</em><em>, </em><em>optional</em>) -- the maximum</p></li>
-<li><p><strong>decimal_len</strong> (<em>int</em><em>, </em><em>optional</em>) -- the length of decimal part</p></li>
-<li><p><strong>p_inf</strong> (<em>float</em><em>, </em><em>default=0</em>) -- the probability of positive infinity</p></li>
-<li><p><strong>n_inf</strong> (<em>float</em><em>, </em><em>default=0</em>) -- the probability of negative infinity</p></li>
-<li><p><strong>nan</strong> (<em>float</em><em>, </em><em>default=0</em>) -- the probability of NaN</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>minimum</strong> (<em>float</em><em>, </em><em>optional</em>) -- 最小値</p></li>
+<li><p><strong>maximum</strong> (<em>float</em><em>, </em><em>optional</em>) -- 最大値</p></li>
+<li><p><strong>decimal_len</strong> (<em>int</em><em>, </em><em>optional</em>) -- 小数部分の桁数</p></li>
+<li><p><strong>p_inf</strong> (<em>float</em><em>, </em><em>default=0</em>) -- 正の無限を生成する確率</p></li>
+<li><p><strong>n_inf</strong> (<em>float</em><em>, </em><em>default=0</em>) -- 負の無限を生成する確率</p></li>
+<li><p><strong>nan</strong> (<em>float</em><em>, </em><em>default=0</em>) -- NaN を生成する確率</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -495,13 +488,13 @@ When it fixes aware datetime to aware, the time is corrected. Otherwise, only th
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randdict">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randdict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.DictItem" title="randog.factory._dict.DictItem"><span class="pre">DictItem</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.DictItem" title="randog.factory._dict.DictItem"><span class="pre">DictItem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randdict" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random dict.</p>
+<dd><p>ランダムに dict 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>items</strong> (<em>Mapping</em>) -- the factories of each key. If <cite>items_dict</cite> is specified, <cite>items</cite> will be ignored.</p></li>
-<li><p><strong>items_dict</strong> (<em>Mapping</em>) -- the factories of each key. Use when keyword arguments cannot be specified.</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>items</strong> (<em>Mapping</em>) -- 各キーの値を生成する factory。<cite>items_dict</cite> が指定された場合、<cite>items</cite> は無視される。</p></li>
+<li><p><strong>items_dict</strong> (<em>Mapping</em>) -- 各キーの値を生成する factory。キーワード引数を指定できない場合に使用する。</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 </dl>
@@ -510,20 +503,20 @@ When it fixes aware datetime to aware, the time is corrected. Otherwise, only th
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randfloat">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randfloat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_inf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_inf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nan</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randfloat" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random float values.</p>
+<dd><p>ランダムに float 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>minimum</strong> (<em>float</em><em>, </em><em>optional</em>) -- the minimum</p></li>
-<li><p><strong>maximum</strong> (<em>float</em><em>, </em><em>optional</em>) -- the maximum</p></li>
-<li><p><strong>p_inf</strong> (<em>float</em><em>, </em><em>default=0</em>) -- the probability of positive infinity</p></li>
-<li><p><strong>n_inf</strong> (<em>float</em><em>, </em><em>default=0</em>) -- the probability of negative infinity</p></li>
-<li><p><strong>nan</strong> (<em>float</em><em>, </em><em>default=0</em>) -- the probability of NaN</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>minimum</strong> (<em>float</em><em>, </em><em>optional</em>) -- 最小値</p></li>
+<li><p><strong>maximum</strong> (<em>float</em><em>, </em><em>optional</em>) -- 最大値</p></li>
+<li><p><strong>p_inf</strong> (<em>float</em><em>, </em><em>default=0</em>) -- 正の無限を生成する確率</p></li>
+<li><p><strong>n_inf</strong> (<em>float</em><em>, </em><em>default=0</em>) -- 負の無限を生成する確率</p></li>
+<li><p><strong>nan</strong> (<em>float</em><em>, </em><em>default=0</em>) -- NaN を生成する確率</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -531,17 +524,17 @@ When it fixes aware datetime to aware, the time is corrected. Otherwise, only th
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randint">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randint" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random int values.</p>
+<dd><p>ランダムに int 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>minimum</strong> (<em>int</em>) -- the minimum</p></li>
-<li><p><strong>maximum</strong> (<em>int</em>) -- the maximum</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>minimum</strong> (<em>int</em>) -- 最小値</p></li>
+<li><p><strong>maximum</strong> (<em>int</em>) -- 最大値</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -549,20 +542,19 @@ When it fixes aware datetime to aware, the time is corrected. Otherwise, only th
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randlist">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randlist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*items:</span> <span class="pre">~randog.factory._base.Factory,</span> <span class="pre">length:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">~randog.factory._base.Factory[int]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">type:</span> <span class="pre">~typing.Callable[[~typing.Iterator[~typing.Any]],</span> <span class="pre">~randog.factory._list.T]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">rnd:</span> <span class="pre">~random.Random</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">items_list:</span> <span class="pre">~typing.Sequence[~randog.factory._base.Factory]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randlist" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random list.</p>
+<dd><p>ランダムに list 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>items</strong> (<a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a>) -- the factories of each item. If <cite>items_list</cite> is specified, <cite>items</cite> will be ignored.</p></li>
-<li><p><strong>length</strong> (<em>int</em><em>|</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) -- length of generated list.
-If not specified, the length of generated list will be equals to the number of <cite>items</cite>.</p></li>
-<li><p><strong>type</strong> (<em>type</em><em>, </em><em>default=list</em>) -- the type of generated object</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
-<li><p><strong>items_list</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>]</em><em>, </em><em>optional</em>) -- the factories of each item. Use when positional arguments cannot be specified.</p></li>
+<li><p><strong>items</strong> (<a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a>) -- 各要素を生成する factory。<cite>items_list</cite> が指定された場合、<cite>items</cite> は無視される。</p></li>
+<li><p><strong>length</strong> (<em>int</em><em>|</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) -- 生成されるリストの長さ。指定されなかった場合、生成されるリストの長さは <cite>items</cite> の長さに等しくなる。</p></li>
+<li><p><strong>type</strong> (<em>type</em><em>, </em><em>default=list</em>) -- 生成されるオブジェクトの型</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
+<li><p><strong>items_list</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>]</em><em>, </em><em>optional</em>) -- 各要素を生成する factory。位置引数を指定できない場合に使用する。</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -570,17 +562,17 @@ If not specified, the length of generated list will be equals to the number of <
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randstr">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randstr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randstr" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random str values.</p>
+<dd><p>ランダムに str 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>length</strong> (<em>int</em><em>|</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>[</em><em>int</em><em>]</em><em>, </em><em>default=8</em>) -- length of generated string</p></li>
-<li><p><strong>charset</strong> (<em>str</em><em>, </em><em>optional</em>) -- characters to be used</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>length</strong> (<em>int</em><em>|</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>[</em><em>int</em><em>]</em><em>, </em><em>default=8</em>) -- 生成される文字列の長さ</p></li>
+<li><p><strong>charset</strong> (<em>str</em><em>, </em><em>optional</em>) -- 文字列の生成に使用する文字</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -588,16 +580,16 @@ If not specified, the length of generated list will be equals to the number of <
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randtime">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tzinfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tzinfo</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">time</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randtime" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random time values.</p>
+<dd><p>ランダムに time 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tzinfo</strong> (<em>tzinfo</em><em>, </em><em>optional</em>) -- the timezone information</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>tzinfo</strong> (<em>tzinfo</em><em>, </em><em>optional</em>) -- 生成する時刻のタイムゾーン情報</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -605,18 +597,18 @@ If not specified, the length of generated list will be equals to the number of <
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.randtimedelta">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randtimedelta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timedelta</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timedelta</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timedelta</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">timedelta</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randtimedelta" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating random timedelta values.</p>
+<dd><p>ランダムに timedelta 型の値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>minimum</strong> (<em>timedelta</em><em>, </em><em>optional</em>) -- the minimum</p></li>
-<li><p><strong>maximum</strong> (<em>timedelta</em><em>, </em><em>optional</em>) -- the maximum</p></li>
-<li><p><strong>unit</strong> (<em>timedelta</em><em>, </em><em>optional</em>) -- the atomic unit</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>minimum</strong> (<em>timedelta</em><em>, </em><em>optional</em>) -- 最小値</p></li>
+<li><p><strong>maximum</strong> (<em>timedelta</em><em>, </em><em>optional</em>) -- 最大値</p></li>
+<li><p><strong>unit</strong> (<em>timedelta</em><em>, </em><em>optional</em>) -- 値の生成の最小単位</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- When the specified generating conditions are inconsistent.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -624,18 +616,17 @@ If not specified, the length of generated list will be equals to the number of <
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.union">
 <span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">factories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.union" title="この定義へのパーマリンク"></a></dt>
-<dd><p>Return a factory generating value by one of specified factories.</p>
+<dd><p>指定した factory のうちの一つをランダムに選んで値を生成する factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>factories</strong> (<a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a>) -- the factories</p></li>
-<li><p><strong>weights</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) -- the probabilities that each value is chose.
-The length must equal to the number of factories.</p></li>
-<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- random number generator to be used</p></li>
+<li><p><strong>factories</strong> (<a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a>) -- factory</p></li>
+<li><p><strong>weights</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) -- それぞれの値が選ばれる確率。長さは factory の数に一致しなければならない。</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- No factories are specified.</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- factory が一つも指定されていない。</p>
 </dd>
 </dl>
 </dd></dl>

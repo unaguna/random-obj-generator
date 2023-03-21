@@ -34,14 +34,15 @@ msgid ""
 "A rule for generating values corresponding to a key in the random "
 "generation of dict."
 msgstr ""
+"dict のランダム生成において、キーに対応する値を生成する際のルール。"
 
 #: ../../docstring of randog.factory.DictItem.factory:1
 msgid "a factory to generate values"
-msgstr ""
+msgstr "値を生成する factory"
 
 #: ../../docstring of randog.factory.DictItem.prop_exists:1
 msgid "probability of key generation"
-msgstr ""
+msgstr "キーを生成する確率"
 
 #: of randog.factory._base.Factory:1
 msgid ""
@@ -51,13 +52,14 @@ msgstr ""
 
 #: of randog.factory._base.Factory.infinity_iter:1
 msgid "Returns an infinity iterator which serves result randomly."
-msgstr ""
+msgstr "ランダムに値を生成する無限イテレータを返す。"
 
 #: of randog.factory._base.Factory.infinity_iter:3
 msgid ""
 "The result is INFINITY so do NOT use it directly with `for`, `list`, and "
 "so on."
 msgstr ""
+"このイテレータは無限です。for, list などで直接使用しないでください。"
 
 #: of randog.factory._base.Factory.infinity_iter:6
 #: randog.factory._base.Factory.iter:4 randog.factory._base.Factory.or_none:4
@@ -74,7 +76,7 @@ msgstr ""
 
 #: of randog.factory._base.Factory.infinity_iter:15
 msgid "An infinity iterator"
-msgstr ""
+msgstr "無限イテレータ"
 
 #: of randog.factory._base.Factory.infinity_iter
 #: randog.factory._base.Factory.iter randog.factory._base.Factory.next
@@ -85,7 +87,7 @@ msgstr ""
 
 #: of randog.factory._base.Factory.iter:1
 msgid "Returns an iterator which serves result randomly `size` times."
-msgstr ""
+msgstr "`size` 回だけランダムに値を生成するイテレータを返す。"
 
 #: of randog.factory._base.Factory.iter randog.factory._base.Factory.or_none
 #: randog.factory._base.Factory.post_process randog.factory._bool.randbool
@@ -103,29 +105,30 @@ msgstr ""
 
 #: of randog.factory._base.Factory.iter:14
 msgid "the number of the iterator"
-msgstr ""
+msgstr "イテレータが値を返す回数"
 
 #: of randog.factory._base.Factory.iter:17
 msgid "An iterator"
-msgstr ""
+msgstr "イテレータ"
 
 #: of randog.factory._base.Factory.next:1
 msgid ""
 "Generate a value randomly according to the rules specified when "
 "assembling the factory."
 msgstr ""
+"Factory の作成時に指定したルールに沿ってランダムに値を生成する。"
 
 #: of randog.factory._base.Factory.next:3
 msgid "a value generated randomly"
-msgstr ""
+msgstr "ランダムに生成された値"
 
 #: of randog.factory._base.Factory.or_none:1
 msgid "Returns a factory whose result may be None with the specified probability."
-msgstr ""
+msgstr "指定した確率で None を生成する factory を返す。"
 
 #: of randog.factory._base.Factory.or_none:12
 msgid "Probability that the result is None"
-msgstr ""
+msgstr "None を生成する確率"
 
 #: of randog.factory._base.Factory.or_none:14 randog.factory._bool.randbool:5
 #: randog.factory._choice.randchoice:8 randog.factory._date.randdate:7
@@ -137,61 +140,62 @@ msgstr ""
 #: randog.factory._time.randtime:5 randog.factory._timedelta.randtimedelta:9
 #: randog.factory._union.union:8
 msgid "random number generator to be used"
-msgstr ""
+msgstr "乱数生成に使用するインスタンス"
 
 #: of randog.factory._base.Factory.or_none:17
 msgid "A factory whose result may be None with the specified probability."
-msgstr ""
+msgstr "指定した確率で None を生成する factory"
 
 #: of randog.factory._base.Factory.post_process:1
 msgid "Returns a factory whose result will be modified by `post_process`"
-msgstr ""
+msgstr "生成した値を `post_process` で加工してから返す factory を返す。"
 
 #: of randog.factory._base.Factory.post_process:18
 msgid "the mapping to modify the result"
-msgstr ""
+msgstr "結果を加工する関数"
 
 #: of randog.factory._base.Factory.post_process:21
 msgid "A factory whose result will be modified by `post_process`."
-msgstr ""
+msgstr "生成した値を `post_process` で加工してから返す factory"
 
 #: of randog.factory._by_callable.by_callable:1
 msgid "Return a factory generating values by specified callable."
-msgstr ""
+msgstr "指定した関数で値を生成する factory を返す。"
 
 #: of randog.factory._by_callable.by_callable:3
 msgid "the function generating value"
-msgstr ""
+msgstr "値を生成する関数"
 
 #: of randog.factory._by_iterator.by_iterator:1
 msgid "Return a factory generating values by specified iterator."
-msgstr ""
+msgstr "指定したイテレータで値を生成する factory を返す。"
 
 #: of randog.factory._by_iterator.by_iterator:3
 msgid "the iterator generating value"
-msgstr ""
+msgstr "値を生成するイテレータ"
 
 #: of randog.factory._const.const:1
 msgid "Return a factory which returns the specified value."
-msgstr ""
+msgstr "指定した値を生成した値として返す factory を返す。"
 
 #: of randog.factory._const.const:3
 msgid "the value"
-msgstr ""
+msgstr "値"
 
 #: of randog.factory._const.const:5
 msgid ""
 "It is not normally used, but it can be accepted as an argument to match "
 "other Factory construction functions."
 msgstr ""
+"通常は使用しませんが、他の factory 作成関数と同様に引数として受け取ることができます。"
 
 #: of randog.factory._from_example.from_example:1
 msgid "Returns a factory generating value like specified example or type."
-msgstr ""
+msgstr "指定された例に似た値を生成する factory を返す。"
 
 #: of randog.factory._from_example.from_example:3
 msgid "the type or the example"
-msgstr ""
+msgstr "生成する値の型、もしくは例"
 
 #: of randog.factory._from_example.from_example:5
 msgid ""
@@ -202,12 +206,18 @@ msgid ""
 "updates. This process is also used to create factories for child elements"
 " of dict and list."
 msgstr ""
+"指定された場合、渡された例はまずこの関数に通され、その戻り値が代わりに例として使用されます。"
+"戻り値が factory である場合はそのまま使用されます。context は、この関数にも渡されます。"
+"この処理は、dict や list の子要素の factory を作成する際にも実施されます。"
+"将来のアップデートでキーワード引数を増やせるように、`custom_func` は `**kwargs` を受け取ることが推奨されています。"
 
 #: of randog.factory._from_example.from_example:13
 msgid ""
 "the context of generation. Normally, you should not specify it. If "
 "specified, the context property takes precedence over other arguments."
 msgstr ""
+"factory 作成のコンテキスト。通常、指定するべきではありません。"
+"もし指定した場合、他の引数よりも優先されます。"
 
 #: of randog.factory._bool.randbool randog.factory._choice.randchoice
 #: randog.factory._date.randdate randog.factory._datetime.randdatetime
@@ -221,15 +231,15 @@ msgstr ""
 
 #: of randog.factory._from_example.from_example:17
 msgid "When the specified example or type is not supported."
-msgstr ""
+msgstr "指定された例や型をサポートしていない場合。"
 
 #: of randog.factory._bool.randbool:1
 msgid "Return a factory generating random bool values."
-msgstr ""
+msgstr "bool 値をランダムに生成する factory を返す。"
 
 #: of randog.factory._bool.randbool:3
 msgid "the probability of True"
-msgstr ""
+msgstr "True を生成する確率"
 
 #: of randog.factory._bool.randbool:8 randog.factory._date.randdate:10
 #: randog.factory._datetime.randdatetime:13
@@ -238,45 +248,46 @@ msgstr ""
 #: randog.factory._str.randstr:10 randog.factory._time.randtime:8
 #: randog.factory._timedelta.randtimedelta:12
 msgid "When the specified generating conditions are inconsistent."
-msgstr ""
+msgstr "指定した生成条件に矛盾がある場合。"
 
 #: of randog.factory._choice.randchoice:1
 msgid "Return a factory choosing one of values."
-msgstr ""
+msgstr "values のうちの1つをランダムに選ぶ factory を返す。"
 
 #: of randog.factory._choice.randchoice:3
 msgid "the values"
-msgstr ""
+msgstr "値"
 
 #: of randog.factory._choice.randchoice:5 randog.factory._union.union:5
 msgid ""
 "the probabilities that each value is chose. The length must equal to the "
 "number of factories."
 msgstr ""
+"それぞれの値が選ばれる確率。長さは factory の数に一致しなければならない。"
 
 #: of randog.factory._choice.randchoice:11
 msgid "No values are specified."
-msgstr ""
+msgstr "値が一つも指定されていない。"
 
 #: of randog.factory._date.randdate:1
 msgid "Return a factory generating random date values."
-msgstr ""
+msgstr "ランダムに date 型の値を生成する factory を返す。"
 
 #: of randog.factory._date.randdate:3 randog.factory._datetime.randdatetime:3
 #: randog.factory._decimal.randdecimal:3 randog.factory._float.randfloat:3
 #: randog.factory._int.randint:3 randog.factory._timedelta.randtimedelta:3
 msgid "the minimum"
-msgstr ""
+msgstr "最小値"
 
 #: of randog.factory._date.randdate:5 randog.factory._datetime.randdatetime:5
 #: randog.factory._decimal.randdecimal:5 randog.factory._float.randfloat:5
 #: randog.factory._int.randint:5 randog.factory._timedelta.randtimedelta:5
 msgid "the maximum"
-msgstr ""
+msgstr "最大値"
 
 #: of randog.factory._datetime.randdatetime:1
 msgid "Return a factory generating random datetime values."
-msgstr ""
+msgstr "ランダムに datetime 型の値を生成する factory を返す。"
 
 #: of randog.factory._datetime.randdatetime:7
 msgid ""
@@ -284,112 +295,119 @@ msgid ""
 "means no specification). When it fixes aware datetime to aware, the time "
 "is corrected. Otherwise, only the tzinfo is changed."
 msgstr ""
+"指定した場合、生成される値の tzinfo がこの値に矯正される (False は指定しないことを意味する)。"
+"aware な日時を別のタイムゾーンの aware な日時に矯正する場合、時刻は時差に応じて変更される。"
+"それ以外の場合、tzinfo のみが変更される。"
 
 #: of randog.factory._decimal.randdecimal:1
 msgid "Return a factory generating random Decimal values."
-msgstr ""
+msgstr "ランダムに Decimal 型の値を生成する factory を返す。"
 
 #: of randog.factory._decimal.randdecimal:7
 msgid "the length of decimal part"
-msgstr ""
+msgstr "小数部分の桁数"
 
 #: of randog.factory._decimal.randdecimal:9 randog.factory._float.randfloat:7
 msgid "the probability of positive infinity"
-msgstr ""
+msgstr "正の無限を生成する確率"
 
 #: of randog.factory._decimal.randdecimal:11 randog.factory._float.randfloat:9
 msgid "the probability of negative infinity"
-msgstr ""
+msgstr "負の無限を生成する確率"
 
 #: of randog.factory._decimal.randdecimal:13 randog.factory._float.randfloat:11
 msgid "the probability of NaN"
-msgstr ""
+msgstr "NaN を生成する確率"
 
 #: of randog.factory._dict.randdict:1
 msgid "Return a factory generating random dict."
-msgstr ""
+msgstr "ランダムに dict 型の値を生成する factory を返す。"
 
 #: of randog.factory._dict.randdict:3
 msgid ""
 "the factories of each key. If `items_dict` is specified, `items` will be "
 "ignored."
 msgstr ""
+"各キーの値を生成する factory。`items_dict` が指定された場合、`items` は無視される。"
 
 #: of randog.factory._dict.randdict:5
 msgid "the factories of each key. Use when keyword arguments cannot be specified."
-msgstr ""
+msgstr "各キーの値を生成する factory。キーワード引数を指定できない場合に使用する。"
 
 #: of randog.factory._float.randfloat:1
 msgid "Return a factory generating random float values."
-msgstr ""
+msgstr "ランダムに float 型の値を生成する factory を返す。"
 
 #: of randog.factory._int.randint:1
 msgid "Return a factory generating random int values."
-msgstr ""
+msgstr "ランダムに int 型の値を生成する factory を返す。"
 
 #: of randog.factory._list.randlist:1
 msgid "Return a factory generating random list."
-msgstr ""
+msgstr "ランダムに list 型の値を生成する factory を返す。"
 
 #: of randog.factory._list.randlist:3
 msgid ""
 "the factories of each item. If `items_list` is specified, `items` will be"
 " ignored."
 msgstr ""
+"各要素を生成する factory。`items_list` が指定された場合、`items` は無視される。"
 
 #: of randog.factory._list.randlist:5
 msgid ""
 "length of generated list. If not specified, the length of generated list "
 "will be equals to the number of `items`."
 msgstr ""
+"生成されるリストの長さ。指定されなかった場合、生成されるリストの長さは `items` の長さに等しくなる。"
 
 #: of randog.factory._list.randlist:8
 msgid "the type of generated object"
-msgstr ""
+msgstr "生成されるオブジェクトの型"
 
 #: of randog.factory._list.randlist:12
 msgid ""
 "the factories of each item. Use when positional arguments cannot be "
 "specified."
 msgstr ""
+"各要素を生成する factory。位置引数を指定できない場合に使用する。"
 
 #: of randog.factory._str.randstr:1
 msgid "Return a factory generating random str values."
-msgstr ""
+msgstr "ランダムに str 型の値を生成する factory を返す。"
 
 #: of randog.factory._str.randstr:3
 msgid "length of generated string"
-msgstr ""
+msgstr "生成される文字列の長さ"
 
 #: of randog.factory._str.randstr:5
 msgid "characters to be used"
-msgstr ""
+msgstr "文字列の生成に使用する文字"
 
 #: of randog.factory._time.randtime:1
 msgid "Return a factory generating random time values."
-msgstr ""
+msgstr "ランダムに time 型の値を生成する factory を返す。"
 
 #: of randog.factory._time.randtime:3
 msgid "the timezone information"
-msgstr ""
+msgstr "生成する時刻のタイムゾーン情報"
 
 #: of randog.factory._timedelta.randtimedelta:1
 msgid "Return a factory generating random timedelta values."
-msgstr ""
+msgstr "ランダムに timedelta 型の値を生成する factory を返す。"
 
 #: of randog.factory._timedelta.randtimedelta:7
 msgid "the atomic unit"
-msgstr ""
+msgstr "値の生成の最小単位"
 
 #: of randog.factory._union.union:1
 msgid "Return a factory generating value by one of specified factories."
-msgstr ""
+msgstr "指定した factory のうちの一つをランダムに選んで値を生成する factory を返す。"
 
 #: of randog.factory._union.union:3
 msgid "the factories"
-msgstr ""
+msgstr "factory"
 
 #: of randog.factory._union.union:11
 msgid "No factories are specified."
-msgstr ""
+msgstr "factory が一つも指定されていない。"
 

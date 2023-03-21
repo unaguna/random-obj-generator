@@ -18,8 +18,8 @@ def randchoice(
     values : Any
         the values
     weights : Sequence[float], optional
-        the probabilities that each value is chose.
-        The length must equal to the number of factories.
+        the probabilities that each value is chosen.
+        The length must equal to the number of values.
     rnd : Random, optional
         random number generator to be used
 
@@ -51,8 +51,8 @@ class ChoiceRandomFactory(Factory[t.Any]):
         values : Any
             the values
         weights : Sequence[float], optional
-            the probabilities that each value is chose.
-            The length must equal to the number of factories.
+            the probabilities that each value is chosen.
+            The length must equal to the number of values.
         rnd : Random, optional
             random number generator to be used
 

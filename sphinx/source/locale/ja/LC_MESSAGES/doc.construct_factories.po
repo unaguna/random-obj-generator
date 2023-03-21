@@ -1,0 +1,399 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-11 16:20+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.construct_factories.rst:2
+msgid "Construct Factories (generator of random values)"
+msgstr "Factory の生成"
+
+#: ../../source/doc.construct_factories.rst:4
+msgid ""
+"In randog, factory is an object that generates values at random. The "
+"rules for generation are specified when the factory is created."
+msgstr ""
+"randog ではランダムに値を生成するために factory オブジェクトを使用します。"
+"生成のルールは factory を作る際に指定します。"
+
+#: ../../source/doc.construct_factories.rst:6
+msgid ""
+"If you do not care about conditions other than type, you can create a "
+"factory by simply supplying an example value to `from_example "
+"<randog.factory.html#randog.factory.from_example>`_. If you want to "
+"specify the conditions in detail, create a factory using the factory "
+"constructor corresponding to the type."
+msgstr ""
+"もし型以外の生成条件にこだわらないのであれば、単に値の例を `from_example "
+"<randog.factory.html#randog.factory.from_example>`_ に渡すだけで factory を作ることができます。"
+"他の条件も指定したい場合は、生成する値の型に応じた factory のコンストラクタを使用してください。"
+
+#: ../../source/doc.construct_factories.rst:25
+msgid "Elemental types"
+msgstr "基本的な型"
+
+#: ../../source/doc.construct_factories.rst:27
+msgid "You can create a factory that generates values of the following types:"
+msgstr "以下の型の値を生成する factory を使用できます。"
+
+#: ../../source/doc.construct_factories.rst:32
+msgid "value type"
+msgstr "生成する値の型"
+
+#: ../../source/doc.construct_factories.rst:33
+msgid "factory constructor"
+msgstr "factory のコンストラクタ"
+
+#: ../../source/doc.construct_factories.rst:34
+msgid ""
+"argument for `from_example "
+"<randog.factory.html#randog.factory.from_example>`_"
+msgstr ""
+"`from_example "
+"<randog.factory.html#randog.factory.from_example>`_ への引数"
+
+#: ../../source/doc.construct_factories.rst:35
+msgid "detail"
+msgstr "詳細"
+
+#: ../../source/doc.construct_factories.rst:37
+msgid ":code:`NoneType`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst
+msgid "(There is no dedicated function,"
+msgstr "(専用の関数はありませんが、"
+
+#: ../../source/doc.construct_factories.rst
+msgid ""
+"but `const <randog.factory.html#randog.factory.const>`_ can be used "
+"instead.)"
+msgstr ""
+"代わりに `const <randog.factory.html#randog.factory.const>`_ を使用できます。)"
+
+#: ../../source/doc.construct_factories.rst:40
+msgid ":code:`None`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:43
+msgid ":code:`bool`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:44
+msgid "`randbool <randog.factory.html#randog.factory.randbool>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:45
+msgid ":code:`True` or :code:`False`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:48
+msgid ":code:`int`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:49
+msgid "`randint <randog.factory.html#randog.factory.randint>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:50
+msgid "a integer value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:53
+msgid ":code:`float`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:54
+msgid "`randfloat <randog.factory.html#randog.factory.randfloat>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:55
+msgid "a float value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:58
+msgid ":code:`str`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:59
+msgid "`randstr <randog.factory.html#randog.factory.randstr>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:60
+msgid "a string value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:63
+msgid ":code:`list`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:64
+msgid "`randlist <randog.factory.html#randog.factory.randlist>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:65
+msgid "a list"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:66
+#: ../../source/doc.construct_factories.rst:71
+msgid ":doc:`detail <doc.list_factory>`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:68
+msgid ":code:`tuple`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:69
+msgid ""
+"`randlist <randog.factory.html#randog.factory.randlist>`_ (argument "
+":code:`type=tuple`)"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:70
+msgid "a tuple"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:73
+msgid ":code:`dict`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:74
+msgid "`randdict <randog.factory.html#randog.factory.randdict>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:75
+msgid "a dict"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:76
+msgid ":doc:`detail <doc.dict_factory>`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:78
+msgid ""
+"`decimal.Decimal "
+"<https://docs.python.org/3/library/decimal.html#decimal.Decimal>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:79
+msgid "`randdecimal <randog.factory.html#randog.factory.randdecimal>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:80
+msgid "a Decimal value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:83
+msgid ""
+"`datetime.datetime "
+"<https://docs.python.org/3/library/datetime.html#datetime.datetime>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:84
+msgid "`randdatetime <randog.factory.html#randog.factory.randdatetime>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:85
+msgid "a datetime value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:88
+msgid ""
+"`datetime.date "
+"<https://docs.python.org/3/library/datetime.html#datetime.date>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:89
+msgid "`randdate <randog.factory.html#randog.factory.randdate>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:90
+msgid "a date value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:93
+msgid ""
+"`datetime.time "
+"<https://docs.python.org/3/library/datetime.html#datetime.time>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:94
+msgid "`randtime <randog.factory.html#randog.factory.randtime>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:95
+msgid "a time value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:98
+msgid ""
+"`datetime.timedelta "
+"<https://docs.python.org/3/library/datetime.html#datetime.timedelta>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:99
+msgid "`randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:100
+msgid "a timedelta value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:107
+msgid "Nullable"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:109
+msgid ""
+"If you want None to be a candidate for generation, use `or_none "
+"<randog.factory.html#randog.factory.Factory.or_none>`_."
+msgstr ""
+"None も生成されることがある factory を作りたい場合は `or_none "
+"<randog.factory.html#randog.factory.Factory.or_none>`_ メソッドを使用します。"
+
+#: ../../source/doc.construct_factories.rst:125
+msgid ""
+"If you want to get a factory that always returns None, use :ref:`const "
+"<constance>` instead."
+msgstr "常に None を返す factory を作りたい場合は :ref:`const "
+"<constance>` を使用してください。"
+
+#: ../../source/doc.construct_factories.rst:129
+msgid "Union type"
+msgstr "合成型 (Union type)"
+
+#: ../../source/doc.construct_factories.rst:131
+msgid ""
+"Several methods can be used to determine randomly generated values from "
+"multiple types."
+msgstr ""
+"複数の型のうちのいずれかの値をランダムに生成する factory をいくつかの方法で作ることができます。"
+
+#: ../../source/doc.construct_factories.rst:135
+msgid ""
+"If you want to make it nullable, i.e., union type with None, use "
+":ref:`or_none <nullable>` instead."
+msgstr ""
+"factory を nullable にしたい場合、つまり None との合成型にしたい場合、"
+"代わりに :ref:`or_none <nullable>` を使用してください。"
+
+#: ../../source/doc.construct_factories.rst:137
+msgid ""
+"If you use `from_example "
+"<randog.factory.html#randog.factory.from_example>`_, you can use "
+":code:`Example` as the argument. The following example uses :code:`-1`, "
+":code:`\"\"`, and :code:`True` as examples, so generated values will be "
+"integer, string, or boolean values."
+msgstr ""
+"`from_example <randog.factory.html#randog.factory.from_example>`_ "
+"を使用する場合、引数に :code:`Example` を使用してください。"
+"以下の例では :code:`-1`, :code:`\"\"`, and :code:`True` を例として使用しているため、"
+"factory は整数値、文字列、真偽値のいずれかを生成します。"
+
+#: ../../source/doc.construct_factories.rst:150
+msgid ""
+"If you create candidate factories, you can use `union "
+"<randog.factory.html#randog.factory.union>`_. The following example "
+"creates a factory, which chooses either randint or randbool each time "
+"randomly and returns the result of the chosen factory."
+msgstr ""
+"候補となる factory を用意する場合、`union "
+"<randog.factory.html#randog.factory.union>`_ を使用します。"
+"以下の例の factory は、値の生成のたびに、2つの factory (randint と randbool) から"
+"ランダムに選び、それが生成した値を結果として返します。"
+
+#: ../../source/doc.construct_factories.rst:167
+msgid "Randomly choice"
+msgstr "ランダムな選択 (Randomly choice)"
+
+#: ../../source/doc.construct_factories.rst:169
+msgid ""
+"If you want a factory to randomly return one of specific values, you can "
+"use `randchoice <randog.factory.html#randog.factory.randchoice>`_."
+msgstr ""
+"指定した値のうちのいずれかをランダムに返す factory を作る場合は "
+"`randchoice <randog.factory.html#randog.factory.randchoice>`_ を使用します。"
+
+#: ../../source/doc.construct_factories.rst:185
+msgid "Constance"
+msgstr "定数"
+
+#: ../../source/doc.construct_factories.rst:187
+msgid ""
+"If you want a factory that always returns the same value, you can use "
+"`const <randog.factory.html#randog.factory.const>`_."
+msgstr ""
+"常に同じ値を返す factory を作る場合は "
+"`const <randog.factory.html#randog.factory.const>`_ を使用します。"
+
+#: ../../source/doc.construct_factories.rst:202
+msgid "Processing output"
+msgstr "結果の加工"
+
+#: ../../source/doc.construct_factories.rst:204
+msgid ""
+"The processing of factory output can be predefined. This can be used to "
+"change the type of output."
+msgstr ""
+"factory の生成値に対する加工をあらかじめ定義することができます。"
+"この加工で生成値の型を変更することもできます。"
+
+#: ../../source/doc.construct_factories.rst:223
+msgid "Custom Factory"
+msgstr "カスタム Factory"
+
+#: ../../source/doc.construct_factories.rst:225
+msgid ""
+"Values of type not provided by randog can also be generated in the "
+"context of randog by using functions, iterators (include `generator "
+"iterators <https://docs.python.org/3/glossary.html#term-generator-"
+"iterator>`_), or custom factories. Normally, you would think that you "
+"could just use that function or iterator directly, but this method is "
+"needed to generate elements when generating dict or list in randog."
+msgstr ""
+"randog が提供していない型の値も、randog の文脈でランダムに生成することができます。"
+"そのためには、関数やイテレータ (`ジェネレータイテレータ "
+"<https://docs.python.org/ja/3/glossary.html#term-generator-"
+"iterator>`_ も含む) やカスタム factory を使用します。"
+"通常、わざわざ randog を通さずとも関数やイテレータをそのまま使えばよいのですが、"
+"dict や list の要素を生成するためにはこの方法が必要になります。"
+
+#: ../../source/doc.construct_factories.rst:260
+msgid ""
+"You can also create a factory using the factory constructor: `by_callable"
+" <randog.factory.html#randog.factory.by_callable>`_, `by_iterator "
+"<randog.factory.html#randog.factory.by_iterator>`_"
+msgstr ""
+"factory のコンストラクタである `by_callable"
+" <randog.factory.html#randog.factory.by_callable>`_, `by_iterator "
+"<randog.factory.html#randog.factory.by_iterator>`_ を使用して factory を作ることもできます。"
+
+#: ../../source/doc.construct_factories.rst:263
+msgid ""
+"A finite iterator can be used as an example, but once the iterator "
+"terminates, the factory cannot generate any more values."
+msgstr ""
+"有限のイテレータを使用することもできますが、一度そのイテレータが使い切られると"
+"その factory は値を生成することができなくなります。"
+
+#: ../../source/doc.construct_factories.rst:267
+msgid "Details on how to build individual factories"
+msgstr "各 factory の詳細な生成方法"
+

@@ -1,0 +1,18 @@
+{% extends "!breadcrumbs.html" %}
+
+{% block breadcrumbs_aside %}
+    <li class="spacer"></li>
+    {%- if languages %}
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            {%- for lang, lang_name in languages.items() %}
+            <option value="{{ pathto('../' + lang + '/', 1) }}{{ pathto(pagename, 0, '.') }}"
+                {%- if lang == language %}
+                selected
+                {%- endif %}
+            >{{ lang_name }}</option>
+            {%- endfor %}
+        </select>
+    </li>
+    {%- endif %}
+{% endblock %}

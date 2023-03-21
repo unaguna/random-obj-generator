@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-11 16:20+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.tips_timeline.rst:2
+msgid "Random timeline data -- depends on previous data"
+msgstr "ランダムな時系列データ -- 前のデータに依存するデータ生成"
+
+#: ../../source/doc.tips_timeline.rst:4
+msgid ""
+"Non-random pseudo-factories such as iterator can be used to generate time"
+" series data as follows:"
+msgstr ""
+"イテレータのようなランダムでない疑似 factory を用いて、以下のように時系列データを生成することができます。"
+
+#: ../../source/doc.tips_timeline.rst:32
+msgid ""
+"The timeline that can be generated in this example, for example, would "
+"look like this:"
+msgstr ""
+"この例では、たとえば次のような時系列データを生成します。"
+
+#: ../../source/doc.tips_timeline.rst:45
+msgid ""
+"As can be seen from the definition of :code:`iter_datetime`, the value of"
+" :code:`smpl_datetime` is not random, but increases by exactly one hour. "
+"Also, the value of :code:`location` is random but the difference from the"
+" previous value is 1; it is `randomwalk "
+"<https://en.wikipedia.org/wiki/Random_walk>`_. Thus, the iterator can be "
+"used to create a factory that generates values dependent on the previous "
+"value."
+msgstr ""
+":code:`iter_datetime` の定義を見てわかる通り、:code:`smpl_datetime` はランダムではなく"
+"ちょうど1時間ずつ増加します。また、:code:`location` はランダムですが1つ前のデータとの差はちょうど1になります"
+" (`ランダムウォーク <https://ja.wikipedia.org/wiki/%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF>`_)。"
+"このようにイテレータを使うことで、前のデータに依存するデータを生成する factory を作ることができます。"
+
+#: ../../source/doc.tips_timeline.rst:49
+msgid "Change the type of :code:`smpl_datetime` to :code:`str`"
+msgstr ":code:`smpl_datetime` の型を :code:`str` に変更する"
+
+#: ../../source/doc.tips_timeline.rst:51
+msgid ""
+"In the above case, a dict with the element example as it is was given to "
+":code:`from_example` as an example to create a factory. If you want to "
+"use methods of factories of elements, use :code:`by_iterable` to create "
+"the elements' factory. The following example uses :code:`post_process` to"
+" make :code:`smpl_datetime` a string."
+msgstr ""
+"上述のケースでは要素の例をそのまま要素として持つ dict を :code:`from_example` に渡していますが、"
+"もし要素の factory のメソッドを使いたい場合、要素の factory を :code:`by_iterable` で生成して dict の要素にします。"
+"次の例では :code:`post_process` メソッドを使用して :code:`smpl_datetime` を文字列型にしています。"
+

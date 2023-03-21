@@ -18,7 +18,7 @@ def union(
     factories : Factory
         the factories
     weights : Sequence[float], optional
-        the probabilities that each value is chose.
+        the probabilities that each factory is chosen.
         The length must equal to the number of factories.
     rnd : Random, optional
         random number generator to be used
@@ -51,7 +51,7 @@ class UnionRandomFactory(Factory[t.Any]):
         factories : Factory
             the factories
         weights : Sequence[float], optional
-            the probabilities that each value is chose.
+            the probabilities that each factory is chosen.
             The length must equal to the number of factories.
         rnd : Random, optional
             random number generator to be used

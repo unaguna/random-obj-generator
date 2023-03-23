@@ -1,7 +1,16 @@
-**randog 0.2.0.x — Randomly object generator**
+**randog 0.3.0.x — Randomly object generator**
 
 **randog** is a package which helps to generate data randomly.
 
+## Install
+
+You can install from PyPI.
+
+```shell
+pip install -U randog
+```
+
+## Usage
 For example:
 
 ```python

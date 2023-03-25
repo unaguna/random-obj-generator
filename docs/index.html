@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>randog</title>
+    <script>
+        function redirectToLang() {
+            // 言語を取得できなければデフォルト
+            if (!window.navigator.languages) {
+                window.location.href = "./en/";
+                return;
+            }
+
+            const langs = ["en", "ja"];
+
+            for (let lang of window.navigator.languages) {
+                const langShort = lang.substring(0, 2);
+
+                // 当該言語の docs があればリダイレクト
+                if (langs.includes(langShort)) {
+                    window.location.href = `./${langShort}/`;
+                    return;
+                }
+            }
+            window.location.href = "./en/";
+            return;
+        }
+        redirectToLang();
+    </script>
+</head>
+<body>
+Redirect. If it does not automatically redirect you, <a href="./en/">click here</a>.
+</body>
+</html>

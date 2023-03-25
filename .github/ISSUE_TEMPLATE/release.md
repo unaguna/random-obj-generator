@@ -13,9 +13,8 @@ assignees: ''
 - [ ] build sphinx document
 - [ ] pull request `release` into `develop` branch
 - [ ] wait for merge
-- [ ] checkout `develop` and build package
-- [ ] publish to test.pypi
-- [ ] publish to pypi
+- [ ] publish to test.pypi by GitHub Action
 - [ ] pull request `develop` into `main` branch
 - [ ] wait for merge
 - [ ] create release
+- [ ] inspect content published by GitHub Action

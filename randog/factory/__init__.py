@@ -16,10 +16,12 @@ from ._by_callable import ByCallableFactory, by_callable
 from ._by_iterator import ByIteratorFactory, by_iterator
 from ._union import UnionRandomFactory, union
 from ._from_example import from_example, FromExampleContext
+from ._from_pyfile import from_pyfile
 
 __all__ = [
     "from_example",
     "FromExampleContext",
+    "from_pyfile",
     "Factory",
     "randchoice",
     "const",

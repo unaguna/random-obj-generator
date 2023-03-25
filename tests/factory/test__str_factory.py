@@ -84,7 +84,10 @@ def test__random_str_error_when_empty_charset_and_random_length(length):
         randog.factory.randstr(length=length_factory, charset="")
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert (
+        e.message
+        == "the charset for randstr() must not be empty if length is at random"
+    )
 
 
 def test__random_str__or_none():
@@ -109,4 +112,6 @@ def test__random_str_error_when_empty_charset_and_nonzero_length(length):
         randog.factory.randstr(length=length, charset="")
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert (
+        e.message == "the charset for randstr() must not be empty if length is positive"
+    )

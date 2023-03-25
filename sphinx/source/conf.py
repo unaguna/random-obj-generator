@@ -37,9 +37,19 @@ extensions = [
 templates_path = ["_templates"]
 exclude_patterns = []
 
+gettext_compact = False
+locale_dirs = ["locale/"]
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_rtd_theme"
+html_style = "css/my_theme.css"
 html_static_path = ["_static"]
+html_context = {
+    "languages": {
+        "en": "English",
+        "ja": "日本語",
+    }
+}

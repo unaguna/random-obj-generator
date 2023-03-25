@@ -18,7 +18,7 @@ def union(
     factories : Factory
         the factories
     weights : Sequence[float], optional
-        the probabilities that each value is chose.
+        the probabilities that each factory is chosen.
         The length must equal to the number of factories.
     rnd : Random, optional
         random number generator to be used
@@ -51,7 +51,7 @@ class UnionRandomFactory(Factory[t.Any]):
         factories : Factory
             the factories
         weights : Sequence[float], optional
-            the probabilities that each value is chose.
+            the probabilities that each factory is chosen.
             The length must equal to the number of factories.
         rnd : Random, optional
             random number generator to be used
@@ -66,12 +66,10 @@ class UnionRandomFactory(Factory[t.Any]):
         self._factories = factories
 
         if len(factories) <= 0:
-            raise FactoryConstructionError(
-                "the generating conditions are inconsistent: specify at least one factory"
-            )
+            raise FactoryConstructionError("no factory is given to union()")
         if self._weights is not None and len(self._weights) != len(self._factories):
             raise FactoryConstructionError(
-                "the generating conditions are inconsistent: the number of weights does not match the values"
+                "the number of weights must match the factories"
             )
 
     def next(self) -> t.Any:

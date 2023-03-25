@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-11 16:20+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.quickstart.rst:2
+msgid "Quick start"
+msgstr "クイックスタート"
+
+#: ../../source/doc.quickstart.rst:4
+msgid "You can try randog by following these steps."
+msgstr "以下の手順で randog を試すことができます。"
+
+#: ../../source/doc.quickstart.rst:8
+msgid "Installation"
+msgstr "インストール"
+
+#: ../../source/doc.quickstart.rst:10
+msgid ""
+"Prepare python 3.8 or newer and install randog using the pip command as "
+"follows:"
+msgstr ""
+"Python 3.8 以上を用意し、以下の pip コマンドで randog をインストールします。"
+
+#: ../../source/doc.quickstart.rst:18
+msgid "Minimal use"
+msgstr "最小構成での利用"
+
+#: ../../source/doc.quickstart.rst:20
+msgid ""
+"By passing an example of the object you want to generate to the "
+":code:`from_example` function, you can create a factory that randomly "
+"generates objects."
+msgstr ""
+"生成したいオブジェクトの例を :code:`from_example` 関数に渡すことで、"
+"オブジェクトをランダムに生成する factory を作ることができます。"
+
+#: ../../source/doc.quickstart.rst:36
+msgid ""
+"This example generates a dict object, but it can also generate a list, "
+"just str, etc."
+msgstr ""
+"この例では dict オブジェクトを生成していますが、リストや単なる文字列等を生成することもできます。"
+

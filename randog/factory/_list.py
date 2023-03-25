@@ -83,13 +83,17 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
         self._type = type
 
         if isinstance(self._length, Factory) and len(self._factories) == 0:
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError(
+                "the factory of element must be given to randlist() if length is at random"
+            )
         if (
             not isinstance(self._length, Factory)
             and self._length > 0
             and len(self._factories) == 0
         ):
-            raise FactoryConstructionError("the generating conditions are inconsistent")
+            raise FactoryConstructionError(
+                "the factory of element must be given to randlist() if length is positive"
+            )
 
     def _factory_generator(self, length) -> t.Iterator[Factory]:
         generated = 0

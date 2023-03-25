@@ -1,3 +1,4 @@
+import datetime
 import datetime as dt
 import math
 from decimal import Decimal
@@ -96,17 +97,104 @@ def test__from_example__decimal_nan_value():
     assert math.isnan(value)
 
 
+def test__from_example__timedelta_type():
+    factory = randog.factory.from_example(dt.timedelta)
+    value = factory.next()
+    assert isinstance(value, dt.timedelta)
+
+
+@pytest.mark.parametrize(
+    ("example", "expected_min", "expected_max", "expected_unit"),
+    (
+        (
+            dt.timedelta(days=1),
+            dt.timedelta(0),
+            dt.timedelta(days=30),
+            dt.timedelta(days=1),
+        ),
+        (
+            dt.timedelta(days=-1),
+            dt.timedelta(days=-30),
+            dt.timedelta(0),
+            dt.timedelta(days=1),
+        ),
+        (
+            dt.timedelta(days=1, seconds=30),
+            dt.timedelta(0),
+            dt.timedelta(days=30),
+            dt.timedelta(seconds=1),
+        ),
+        (
+            dt.timedelta(days=-1, seconds=30),
+            dt.timedelta(days=-30),
+            dt.timedelta(0),
+            dt.timedelta(seconds=1),
+        ),
+    ),
+)
+def test__from_example__timedelta_value(
+    example, expected_min, expected_max, expected_unit
+):
+    factory = randog.factory.from_example(example)
+
+    for value in factory.iter(200):
+        assert isinstance(value, dt.timedelta)
+        assert expected_min <= value <= expected_max
+        assert (value / expected_unit).is_integer()
+
+
 def test__from_example__datetime_type():
     factory = randog.factory.from_example(dt.datetime)
     value = factory.next()
     assert isinstance(value, dt.datetime)
 
 
-@pytest.mark.parametrize("obj", (dt.datetime.now(), dt.datetime.utcnow()))
+@pytest.mark.parametrize(
+    "obj",
+    (
+        dt.datetime.now(),
+        dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc),
+    ),
+)
 def test__from_example__datetime_value(obj):
     factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, dt.datetime)
+    assert value.tzinfo == obj.tzinfo
+
+
+def test__from_example__date_type():
+    factory = randog.factory.from_example(dt.date)
+    value = factory.next()
+    assert isinstance(value, dt.date)
+
+
+def test__from_example__date_value():
+    factory = randog.factory.from_example(dt.date(2021, 1, 2))
+    value = factory.next()
+    assert isinstance(value, dt.date)
+
+
+def test__from_example__time_type():
+    factory = randog.factory.from_example(dt.time)
+    value = factory.next()
+    assert isinstance(value, dt.time)
+
+
+@pytest.mark.parametrize(
+    "obj",
+    (
+        dt.datetime.now().time(),
+        dt.datetime.now()
+        .time()
+        .replace(tzinfo=datetime.timezone(dt.timedelta(hours=2))),
+    ),
+)
+def test__from_example__time_value(obj):
+    factory = randog.factory.from_example(obj)
+    value = factory.next()
+    assert isinstance(value, dt.time)
+    assert value.tzinfo == obj.tzinfo
 
 
 def test__from_example__list_type():

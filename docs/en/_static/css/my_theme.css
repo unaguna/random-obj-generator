@@ -1,0 +1,9 @@
+@import url("theme.css");
+
+
+ul.wy-breadcrumbs { display: flex;
+    align-items: baseline;}
+
+ul.wy-breadcrumbs > li.spacer {
+    flex: 1;
+}

@@ -26,4 +26,4 @@ def test__random_int_error_when_illegal_probability(prop_true):
         randog.factory.randbool(prop_true)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert e.message == "the probability `prob_true` must range from 0 to 1"

@@ -108,7 +108,10 @@ def test__random_list__error_with_no_factory_and_nonzero_length(length):
         randog.factory.randlist(length=length)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert (
+        e.message
+        == "the factory of element must be given to randlist() if length is positive"
+    )
 
 
 @pytest.mark.parametrize("length", (0, 1, 2, 3))
@@ -118,4 +121,7 @@ def test__random_list__error_when_no_factory_and_random_length(length):
         randog.factory.randlist(length=length_factory)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert (
+        e.message
+        == "the factory of element must be given to randlist() if length is at random"
+    )

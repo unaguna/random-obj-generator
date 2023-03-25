@@ -9,7 +9,10 @@ from . import (
     DictItem,
     Factory,
     randbool,
+    randtimedelta,
     randdatetime,
+    randdate,
+    randtime,
     randdecimal,
     randdict,
     randfloat,
@@ -19,21 +22,82 @@ from . import (
     union,
     const,
 )
+from ._timedelta import calc_unit
 from ..exceptions import FactoryConstructionError
 
 import randog
 
 
-_FACTORY_CONSTRUCTOR: t.Dict[type, t.Callable[[t.Optional[Random]], Factory]] = {
+def _from_decimal(
+    example: Decimal,
+    rnd: t.Optional[Random],
+) -> Factory[Decimal]:
+    p_inf, n_inf, nan = 0.0, 0.0, 0.0
+    decimal_len = None
+    if example.is_infinite():
+        if example > 0:
+            p_inf = 1.0
+        else:
+            n_inf = 1.0
+    elif example.is_nan():
+        nan = 1.0
+    else:
+        decimal_len = -example.as_tuple()[2]
+    return randdecimal(
+        p_inf=p_inf, n_inf=n_inf, nan=nan, decimal_len=decimal_len, rnd=rnd
+    )
+
+
+def _from_timedelta(
+    example: dt.timedelta,
+    rnd: t.Optional[Random],
+) -> Factory[dt.timedelta]:
+    unit = calc_unit(example)
+
+    if example < dt.timedelta(0):
+        return randtimedelta(None, dt.timedelta(0), unit=unit, rnd=rnd)
+    else:
+        return randtimedelta(dt.timedelta(0), None, unit=unit, rnd=rnd)
+
+
+def _from_datetime(
+    example: dt.datetime,
+    rnd: t.Optional[Random],
+) -> Factory[dt.datetime]:
+    return randdatetime(tzinfo=example.tzinfo, rnd=rnd)
+
+
+def _from_time(
+    example: dt.time,
+    rnd: t.Optional[Random],
+) -> Factory[dt.time]:
+    return randtime(tzinfo=example.tzinfo, rnd=rnd)
+
+
+_FACTORY_CONSTRUCTOR_BY_TYPE: t.Dict[
+    type, t.Callable[[t.Optional[Random]], Factory]
+] = {
     bool: lambda rnd: randbool(rnd=rnd),
     int: lambda rnd: randint(0, 100, rnd=rnd),
     float: lambda rnd: randfloat(0, 1.0, rnd=rnd),
     Decimal: lambda rnd: randdecimal(0, 1.0, rnd=rnd),
     str: lambda rnd: randstr(rnd=rnd),
+    dt.timedelta: lambda rnd: randtimedelta(rnd=rnd),
     dt.datetime: lambda rnd: randdatetime(rnd=rnd),
+    dt.date: lambda rnd: randdate(rnd=rnd),
+    dt.time: lambda rnd: randtime(rnd=rnd),
     list: lambda rnd: randlist(randstr(), rnd=rnd),
     tuple: lambda rnd: randlist(randstr(), type=tuple, rnd=rnd),
     dict: lambda rnd: randdict({"key": randint(0, 100, rnd=rnd)}, rnd=rnd),
+}
+
+_FACTORY_CONSTRUCTOR_BY_EXAMPLE: t.Dict[
+    type, t.Callable[[t.Any, t.Optional[Random]], Factory]
+] = {
+    Decimal: _from_decimal,
+    dt.timedelta: _from_timedelta,
+    dt.datetime: _from_datetime,
+    dt.time: _from_time,
 }
 
 
@@ -217,20 +281,22 @@ def from_example(
 
     if isinstance(example, randog.Example):
         return union(*map(context.from_example, example), rnd=context.rnd)
-    elif isinstance(example, type):
-        if example in _FACTORY_CONSTRUCTOR:
-            return _FACTORY_CONSTRUCTOR[example](context.rnd)
+    if isinstance(example, type):
+        if example in _FACTORY_CONSTRUCTOR_BY_TYPE:
+            return _FACTORY_CONSTRUCTOR_BY_TYPE[example](context.rnd)
         else:
             raise FactoryConstructionError(
                 f"cannot construct factory for unsupported type: {example}"
             )
-    elif example is None:
+
+    if example is None:
         return const(None, rnd=context.rnd)
-    elif isinstance(example, Decimal):
-        return _from_decimal(example, rnd=context.rnd)
-    elif isinstance(example, t.Mapping):
+    for type_, construct in _FACTORY_CONSTRUCTOR_BY_EXAMPLE.items():
+        if isinstance(example, type_):
+            return construct(example, rnd)
+    if isinstance(example, t.Mapping):
         return randdict({k: _dict_item(v, k, context) for k, v in example.items()})
-    elif isinstance(example, t.Sequence) and not isinstance(example, str):
+    if isinstance(example, t.Sequence) and not isinstance(example, str):
         if isinstance(example, (tuple, list)):
             _type = type(example)
         else:
@@ -240,26 +306,9 @@ def from_example(
             rnd=context.rnd,
             items_list=tuple(_list_item(exm, context) for exm in enumerate(example)),
         )
-    elif isinstance(example, t.Iterator):
+    if isinstance(example, t.Iterator):
         return by_iterator(example)
-    elif isinstance(example, t.Callable):
+    if isinstance(example, t.Callable):
         return by_callable(example)
-    else:
-        return context.from_example(type(example))
 
-
-def _from_decimal(example: Decimal, *, rnd: t.Optional[Random]) -> Factory[Decimal]:
-    p_inf, n_inf, nan = 0.0, 0.0, 0.0
-    decimal_len = None
-    if example.is_infinite():
-        if example > 0:
-            p_inf = 1.0
-        else:
-            n_inf = 1.0
-    elif example.is_nan():
-        nan = 1.0
-    else:
-        decimal_len = -example.as_tuple()[2]
-    return randdecimal(
-        p_inf=p_inf, n_inf=n_inf, nan=nan, decimal_len=decimal_len, rnd=rnd
-    )
+    return context.from_example(type(example))

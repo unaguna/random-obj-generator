@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-11 16:20+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.use_factories.rst:2
+msgid "Use Factories"
+msgstr "Factory を使用する"
+
+#: ../../source/doc.use_factories.rst:4
+msgid ""
+"Once a factory is created, its `next "
+"<randog.factory.html#randog.factory.Factory.next>`_ method can be used to"
+" generate random values. Generate a value for each use."
+msgstr ""
+"一度 factory を作ると、`next "
+"<randog.factory.html#randog.factory.Factory.next>`_ メソッドを使用して何回でもランダムに値を生成できます。"
+
+#: ../../source/doc.use_factories.rst:20
+msgid ""
+"Usually used in this way, the following sugar-coated syntax can also be "
+"used."
+msgstr ""
+"通常はこのように使用しますが、次のような糖衣構文も使うことができます。"
+
+#: ../../source/doc.use_factories.rst:24
+msgid "As iterator"
+msgstr "イテレータとして"
+
+#: ../../source/doc.use_factories.rst:26
+msgid ""
+"Although a factory itself is not an iterator, `iter "
+"<randog.factory.html#randog.factory.Factory.iter>`_ method can be used to"
+" create an iterator."
+msgstr ""
+"factory 自身はイテレータではありませんが、`iter "
+"<randog.factory.html#randog.factory.Factory.iter>`_ を使用してイテレータを作ることができます。"
+
+#: ../../source/doc.use_factories.rst:45
+msgid ""
+"The return value of :code:`iter` is not just an Iterable, but also an "
+"Iterator. Iterators are disposable and must be regenerated each time they"
+" are used."
+msgstr ""
+":code:`iter` の戻り値は単なる Iterable ではなく Iterator です。"
+"イテレータは使い捨てなので使用するたびに作り直す必要があります。"
+
+#: ../../source/doc.use_factories.rst:47
+msgid ""
+"`infinity_iter "
+"<randog.factory.html#randog.factory.Factory.infinity_iter>`_ also returns"
+" an iterator, but this iterator will be not terminated."
+msgstr ""
+"`infinity_iter "
+"<randog.factory.html#randog.factory.Factory.infinity_iter>`_ もイテレータを返しますが、"
+"このイテレータは尽きることがありません。"
+
+#: ../../source/doc.use_factories.rst:64
+msgid ":code:`infinity_iter` causes an infinite loop. Handle it with care."
+msgstr ":code:`infinity_iter` は無限ループの原因となります。取り扱いに注意してください。"
+
+#: ../../source/doc.use_factories.rst:67
+msgid ""
+"The return value of :code:`infinity_iter` is not just an Iterable, but "
+"also an Iterator. Iterators are disposable and must be regenerated each "
+"time they are used."
+msgstr ""
+":code:`infinity_iter` の戻り値は単なる Iterable ではなく Iterator です。"
+"イテレータは使い捨てなので使用するたびに作り直す必要があります。"
+

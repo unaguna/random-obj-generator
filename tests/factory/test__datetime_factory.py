@@ -172,7 +172,7 @@ def test__random_datetime__error_when_edges_inverse():
         )
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert e.message == "empty range for randdatetime"
 
 
 @pytest.mark.parametrize(
@@ -193,4 +193,7 @@ def test__random_datetime__error_when_naive_and_aware(minimum, maximum):
         randog.factory.randdatetime(minimum, maximum)
     e = e_ctx.value
 
-    assert e.message == "the generating conditions are inconsistent"
+    assert (
+        e.message
+        == "cannot define range for randdatetime with a naive datetime and an aware datetime"
+    )

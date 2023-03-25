@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="randog - all" pattern="(file[random-obj-generator]:randog//*||file[random-obj-generator]:sphinx//*||file[random-obj-generator]:tests//*)&amp;&amp;!file[random-obj-generator]:*/.pytest_cache//*" />
+</component>

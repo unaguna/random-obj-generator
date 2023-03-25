@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>List factory &mdash; random-obj-generator 0.3.0 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Factory を使用する" href="doc.use_factories.html" />
+    <link rel="prev" title="Dict factory" href="doc.dict_factory.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+              <div class="version">
+                0.3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#elemental-types">基本的な型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#nullable">Nullable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#union-type">合成型 (Union type)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#randomly-choice">ランダムな選択 (Randomly choice)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#constance">定数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#processing-output">結果の加工</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#custom-factory">カスタム Factory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#details-on-how-to-build-individual-factories">各 factory の詳細な生成方法</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">List factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#each-elements">それぞれの要素の生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#length">長さ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generate-tuple">tuple の生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#factory-by-from-example"><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="doc.construct_factories.html">Factory の生成</a></li>
+      <li class="breadcrumb-item active">List factory</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.list_factory.html"
+            >English</option>
+            <option value="../ja/doc.list_factory.html"
+                selected
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="list-factory">
+<h1>List factory<a class="headerlink" href="#list-factory" title="この見出しへのパーマリンク"></a></h1>
+<p>list 型のオブジェクトを生成する factory を作成することができます。この factory では list の各要素も毎回ランダムに生成します。</p>
+<p>多くのケースでは、用途に応じた調整が必要となるため <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> よりも <a class="reference external" href="randog.factory.html#randog.factory.randlist">randlist</a> を使用します。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>もし1つの factory から複数のレコードを作成したい場合、<code class="code docutils literal notranslate"><span class="pre">randlist</span></code> よりも <code class="code docutils literal notranslate"><span class="pre">iter</span></code> を使うべきかもしれません。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="nb">id</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">999_999</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">price</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdecimal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">decimal_len</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># generate 200 records</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">record_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<section id="each-elements">
+<h2>それぞれの要素の生成<a class="headerlink" href="#each-elements" title="この見出しへのパーマリンク"></a></h2>
+<p>それぞれの要素の factory を指定することができます。通常、i番目の要素の生成にはi番目に指定した factory が使用されますが、指定した factory の数よりも長い list を生成する場合、最後の factory が繰り返し使用されます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">el_factories</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randbool</span><span class="p">(),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="o">*</span><span class="n">el_factories</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>    <span class="c1"># by el_factories[0]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>    <span class="c1"># by el_factories[1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">bool</span><span class="p">)</span>   <span class="c1"># by el_factories[2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nb">bool</span><span class="p">)</span>   <span class="c1"># by el_factories[2]</span>
+</pre></div>
+</div>
+<p>したがって、それぞれの要素が特別な意味を持たない典型的なリストを生成したい場合は、要素の factory を1つだけ指定してください。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">generated</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="length">
+<h2>長さ<a class="headerlink" href="#length" title="この見出しへのパーマリンク"></a></h2>
+<p>生成されるリストの長さをランダムにすることもできます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">length</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Repeat generation to make sure length is at random</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lengths</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">factory</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="mi">1000</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lengths</span> <span class="o">==</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>もし長さを指定しない場合、factory の数と同じ長さのリストが生成されます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">el_factories</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randbool</span><span class="p">(),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="o">*</span><span class="n">el_factories</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">el_factories</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="generate-tuple">
+<h2>tuple の生成<a class="headerlink" href="#generate-tuple" title="この見出しへのパーマリンク"></a></h2>
+<p>引数 <code class="code docutils literal notranslate"><span class="pre">type</span></code> を使うことで、list ではなく tuple を生成することもできます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="nb">type</span><span class="o">=</span><span class="nb">tuple</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="code docutils literal notranslate"><span class="pre">randlist</span></code> に渡す <code class="code docutils literal notranslate"><span class="pre">length</span></code> を省略すると factory の個数と同じ長さとなるため、各要素が個別のスキーマを持つような典型的な tuple を生成する場合は <code class="code docutils literal notranslate"><span class="pre">length</span></code> を指定する必要がありません。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>引数としてイテレーターを受け入れるような型であれば <code class="code docutils literal notranslate"><span class="pre">type</span></code> に指定することができますが、<code class="code docutils literal notranslate"><span class="pre">set</span></code> を指定すると要素の個数が保証されません。</p>
+</div>
+</section>
+<section id="factory-by-from-example">
+<h2><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成<a class="headerlink" href="#factory-by-from-example" title="この見出しへのパーマリンク"></a></h2>
+<p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> を使用する場合、以下の例のようになります。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>例として与えたリストの各要素は、生成するリストの各要素の例として使用されます。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.dict_factory.html" class="btn btn-neutral float-left" title="Dict factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.use_factories.html" class="btn btn-neutral float-right" title="Factory を使用する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

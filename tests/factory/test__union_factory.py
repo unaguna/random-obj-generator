@@ -74,10 +74,7 @@ def test__random_union__error_when_no_factory_specified():
         randog.factory.union()
     e = e_ctx.value
 
-    assert (
-        e.message
-        == "the generating conditions are inconsistent: specify at least one factory"
-    )
+    assert e.message == "no factory is given to union()"
 
 
 @pytest.mark.parametrize("weights_len", (0, 1, 3))
@@ -90,7 +87,4 @@ def test__random_union__error_when_weights_does_not_match(weights_len):
         )
     e = e_ctx.value
 
-    assert (
-        e.message
-        == "the generating conditions are inconsistent: the number of weights does not match the values"
-    )
+    assert e.message == "the number of weights must match the factories"

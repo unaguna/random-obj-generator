@@ -9,6 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=source
 set BUILDDIR=build
+set DOCTREESDIR=%BUILDDIR%\.doctrees
 
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
@@ -24,8 +25,16 @@ if errorlevel 9009 (
 )
 
 if "%1" == "" goto help
+if "%1" == "doc" goto doc
 
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+goto end
+
+:doc
+set SPHINXOPTS=-D language=en
+%SPHINXBUILD% -M html -d %DOCTREESDIR% %SOURCEDIR% "../docs/en" %SPHINXOPTS% %O%
+set SPHINXOPTS=-D language=ja
+%SPHINXBUILD% -M html -d %DOCTREESDIR% %SOURCEDIR% "../docs/ja" %SPHINXOPTS% %O%
 goto end
 
 :help

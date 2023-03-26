@@ -4,18 +4,8 @@ from unittest.mock import patch
 import randog.__main__
 
 
-def test__main__option_f(capfd, resources):
-    args = ["prog", "-f", str(resources.joinpath("factory_def.py"))]
-    with patch.object(sys, "argv", args):
-        randog.__main__.main()
-
-        out, err = capfd.readouterr()
-        assert out == "aaa\n"
-        assert err == ""
-
-
-def test__main__option_factory(capfd, resources):
-    args = ["prog", "--factory", str(resources.joinpath("factory_def.py"))]
+def test__main(capfd, resources):
+    args = ["randog", str(resources.joinpath("factory_def.py"))]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
@@ -25,7 +15,7 @@ def test__main__option_factory(capfd, resources):
 
 
 def test__main__option_repr(capfd, resources):
-    args = ["prog", "--repr", "-f", str(resources.joinpath("factory_def.py"))]
+    args = ["randog", "--repr", str(resources.joinpath("factory_def.py"))]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 

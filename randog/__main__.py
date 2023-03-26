@@ -11,11 +11,10 @@ class Args:
     def __init__(self, argv: t.Sequence[str]):
         parser = argparse.ArgumentParser(description="Create object at random.")
         parser.add_argument(
-            "--factory",
-            "-f",
-            metavar="FILEPATH",
-            required=True,
-            help="path of a factory definition file",
+            "factories",
+            nargs="+",
+            metavar="FACTORY_PATH",
+            help="path of factory definition files",
         )
         parser.add_argument(
             "--repr",
@@ -25,29 +24,29 @@ class Args:
         self._args = parser.parse_args(argv[1:])
 
     @property
-    def factory(self) -> str:
-        return self._args.factory
+    def factories(self) -> t.Sequence[str]:
+        return self._args.factories
 
     @property
     def output_repr(self) -> bool:
         return self._args.repr
 
 
-def _build_factory(args: Args):
-    return randog.factory.from_pyfile(args.factory)
+def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
+    for filepath in args.factories:
+        yield randog.factory.from_pyfile(filepath)
 
 
 def main():
     args = Args(sys.argv)
 
-    factory = _build_factory(args)
+    for factory in _build_factories(args):
+        generated = factory.next()
 
-    generated = factory.next()
-
-    if args.output_repr:
-        print(repr(generated))
-    else:
-        print(generated)
+        if args.output_repr:
+            print(repr(generated))
+        else:
+            print(generated)
 
 
 if __name__ == "__main__":

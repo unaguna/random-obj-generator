@@ -22,3 +22,13 @@ def test__main__option_factory(capfd, resources):
         out, err = capfd.readouterr()
         assert out == "aaa\n"
         assert err == ""
+
+
+def test__main__option_repr(capfd, resources):
+    args = ["prog", "--repr", "-f", str(resources.joinpath("factory_def.py"))]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == "'aaa'\n"
+        assert err == ""

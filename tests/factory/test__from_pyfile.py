@@ -7,4 +7,4 @@ def test__from_pyfile(resources):
 
     value = factory.next()
 
-    assert value == 2
+    assert value == "aaa"

@@ -10,7 +10,7 @@ def test__main__option_f(capfd, resources):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == "2\n"
+        assert out == "aaa\n"
         assert err == ""
 
 
@@ -20,5 +20,5 @@ def test__main__option_factory(capfd, resources):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == "2\n"
+        assert out == "aaa\n"
         assert err == ""

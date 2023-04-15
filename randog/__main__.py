@@ -44,6 +44,19 @@ class Args:
     def output_path(self) -> t.Optional[str]:
         return self._args.output
 
+    @property
+    def multiple_output_path(self) -> bool:
+        if self._args.output is None:
+            return False
+        else:
+            return self.output_path_for(1) != self.output_path_for(2)
+
+    def output_path_for(self, number: int) -> t.Optional[str]:
+        if self._args.output is None:
+            return None
+        else:
+            return self._args.output.format(number)
+
 
 def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
     for filepath in args.factories:
@@ -63,6 +76,14 @@ def _open_output_fp(args: Args) -> t.Union[_DummyIO, t.TextIO]:
         return _DummyIO()
     else:
         return open(args.output_path, mode="wt")
+        pass
+
+
+def _open_output_fp_numbered(args: Args, number: int) -> t.Union[_DummyIO, t.TextIO]:
+    if args.output_path is None:
+        return _DummyIO()
+    else:
+        return open(args.output_path_for(number), mode="wt")
 
 
 def _output_generated(generated: t.Any, fp: t.Union[_DummyIO, t.TextIO], args: Args):
@@ -78,11 +99,11 @@ def _output_generated(generated: t.Any, fp: t.Union[_DummyIO, t.TextIO], args: A
 def main():
     args = Args(sys.argv)
 
-    for factory in _build_factories(args):
+    for index, factory in enumerate(_build_factories(args)):
         generated = factory.next()
 
-        with _open_output_fp(args) as fp:
-            _output_generated(generated, fp, args=args)
+        with _open_output_fp_numbered(args, index) as fp_numbered:
+            _output_generated(generated, fp_numbered, args=args)
 
 
 if __name__ == "__main__":

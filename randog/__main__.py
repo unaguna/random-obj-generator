@@ -71,25 +71,21 @@ class _DummyIO:
         pass
 
 
-def _open_output_fp(args: Args) -> t.Union[_DummyIO, t.TextIO]:
-    if args.output_path is None:
+def _open_output_fp_only(args: Args) -> t.Union[_DummyIO, t.TextIO]:
+    if args.output_path is None or args.multiple_output_path:
         return _DummyIO()
     else:
         return open(args.output_path, mode="wt")
-        pass
 
 
 def _open_output_fp_numbered(args: Args, number: int) -> t.Union[_DummyIO, t.TextIO]:
-    if args.output_path is None:
+    if args.output_path is None or not args.multiple_output_path:
         return _DummyIO()
     else:
         return open(args.output_path_for(number), mode="wt")
 
 
-def _output_generated(generated: t.Any, fp: t.Union[_DummyIO, t.TextIO], args: Args):
-    if isinstance(fp, _DummyIO):
-        fp = sys.stdout
-
+def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
     if args.output_repr:
         print(repr(generated), file=fp)
     else:
@@ -99,11 +95,19 @@ def _output_generated(generated: t.Any, fp: t.Union[_DummyIO, t.TextIO], args: A
 def main():
     args = Args(sys.argv)
 
-    for index, factory in enumerate(_build_factories(args)):
-        generated = factory.next()
+    with _open_output_fp_only(args) as fp_only:
+        for index, factory in enumerate(_build_factories(args)):
+            generated = factory.next()
 
-        with _open_output_fp_numbered(args, index) as fp_numbered:
-            _output_generated(generated, fp_numbered, args=args)
+            with _open_output_fp_numbered(args, index) as fp_numbered:
+                if not isinstance(fp_numbered, _DummyIO):
+                    fp = fp_numbered
+                elif not isinstance(fp_only, _DummyIO):
+                    fp = fp_only
+                else:
+                    fp = sys.stdout
+
+                _output_generated(generated, fp, args=args)
 
 
 if __name__ == "__main__":

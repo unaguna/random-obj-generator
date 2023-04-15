@@ -1,3 +1,1 @@
-import randog.factory
-
-FACTORY = randog.factory.randint(2, 2)
+FACTORY = randog.factory.randstr(length=3, charset="a")

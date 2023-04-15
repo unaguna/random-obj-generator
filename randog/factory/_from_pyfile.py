@@ -5,19 +5,29 @@ import typing as t
 from randog.factory import Factory
 
 
-def from_pyfile(filename: t.Union[str, PathLike]) -> Factory:
+def from_pyfile(file: t.Union[str, PathLike, t.IO]) -> Factory:
     """Returns a factory defined in the specified file.
 
     Parameters
     ----------
-    filename : str | PathLike
+    file : str | PathLike | IO
         the filename of the factory definition
     """
+    if isinstance(file, (str, PathLike)):
+        with open(file, mode="rb") as fp:
+            return _from_pyfile(fp, file)
+    else:
+        return _from_pyfile(file, "<io>")
+
+
+def _from_pyfile(fp: t.IO, filename: t.Union[str, PathLike]) -> Factory:
+    import randog
+
     d = types.ModuleType("factory")
+    d.randog = randog
     d.__file__ = filename
     try:
-        with open(filename, mode="rb") as config_file:
-            exec(compile(config_file.read(), filename, "exec"), d.__dict__)
+        exec(compile(fp.read(), filename, "exec"), d.__dict__)
     except OSError as e:
         e.strerror = f"Unable to load factory file ({e.strerror})"
         raise

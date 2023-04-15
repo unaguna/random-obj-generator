@@ -9,7 +9,10 @@ class Args:
     _args: argparse.Namespace
 
     def __init__(self, argv: t.Sequence[str]):
-        parser = argparse.ArgumentParser(description="Create object at random.")
+        parser = argparse.ArgumentParser(
+            usage="python -m randog [options] FACTORY_PATH [FACTORY_PATH ...]",
+            description="Create object at random.",
+        )
         parser.add_argument(
             "factories",
             nargs="+",

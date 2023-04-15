@@ -6,13 +6,20 @@ import pytest
 import randog.__main__
 
 
-def test__main(capfd, resources):
-    args = ["randog", str(resources.joinpath("factory_def.py"))]
+@pytest.mark.parametrize(
+    ("def_file", "expected"),
+    [
+        ("factory_def.py", "aaa\n"),
+        ("factory_def_bbb.py", "bbb\n"),
+    ],
+)
+def test__main(capfd, resources, def_file, expected):
+    args = ["randog", str(resources.joinpath(def_file))]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == "aaa\n"
+        assert out == expected
         assert err == ""
 
 

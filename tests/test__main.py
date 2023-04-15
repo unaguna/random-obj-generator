@@ -80,3 +80,20 @@ def test__main__option_repeat__multiple_factories(
         out, err = capfd.readouterr()
         assert out == "aaa\n" * (r_count * (f_count - 1)) + "bbb\n" * r_count
         assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("length",),
+    [
+        (1,),
+        (2,),
+    ],
+)
+def test__main__option_list(capfd, resources, length):
+    args = ["randog", str(resources.joinpath("factory_def.py")), "--list", str(length)]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == str(["aaa"] * length) + "\n"
+        assert err == ""

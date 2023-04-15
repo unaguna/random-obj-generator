@@ -25,7 +25,19 @@ class Args:
             metavar="COUNT",
             default=1,
             type=int,
-            help="repeat generation a specified number of times",
+            help=(
+                "repeat generation a specified number of times. "
+                "The results are output one by one; if you want them as a single list, use --list instead."
+            ),
+        )
+        parser.add_argument(
+            "--list",
+            metavar="LENGTH",
+            type=int,
+            help=(
+                "if specified, repeats the specified numerical generation "
+                "and returns a list consisting of the results."
+            ),
         )
         parser.add_argument(
             "--repr",
@@ -47,6 +59,10 @@ class Args:
     @property
     def repeat(self) -> int:
         return self._args.repeat
+
+    @property
+    def list(self) -> t.Optional[int]:
+        return self._args.list
 
     @property
     def output_repr(self) -> bool:
@@ -111,7 +127,10 @@ def main():
         index = 0
         for factory in _build_factories(args):
             for r_index in range(args.repeat):
-                generated = factory.next()
+                if args.list is None:
+                    generated = factory.next()
+                else:
+                    generated = list(factory.iter(args.list))
 
                 with _open_output_fp_numbered(args, index) as fp_numbered:
                     if not isinstance(fp_numbered, _DummyIO):

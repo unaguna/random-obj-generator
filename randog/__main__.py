@@ -24,6 +24,12 @@ class Args:
             action="store_true",
             help="if specified, it outputs generated object by repr()",
         )
+        parser.add_argument(
+            "--output",
+            "-O",
+            metavar="DESC_PATH",
+            help="destination file path",
+        )
         self._args = parser.parse_args(argv[1:])
 
     @property
@@ -34,10 +40,39 @@ class Args:
     def output_repr(self) -> bool:
         return self._args.repr
 
+    @property
+    def output_path(self) -> t.Optional[str]:
+        return self._args.output
+
 
 def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
     for filepath in args.factories:
         yield randog.factory.from_pyfile(filepath)
+
+
+class _DummyIO:
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+
+def _open_output_fp(args: Args) -> t.Union[_DummyIO, t.TextIO]:
+    if args.output_path is None:
+        return _DummyIO()
+    else:
+        return open(args.output_path, mode="wt")
+
+
+def _output_generated(generated: t.Any, fp: t.Union[_DummyIO, t.TextIO], args: Args):
+    if isinstance(fp, _DummyIO):
+        fp = sys.stdout
+
+    if args.output_repr:
+        print(repr(generated), file=fp)
+    else:
+        print(generated, file=fp)
 
 
 def main():
@@ -46,10 +81,8 @@ def main():
     for factory in _build_factories(args):
         generated = factory.next()
 
-        if args.output_repr:
-            print(repr(generated))
-        else:
-            print(generated)
+        with _open_output_fp(args) as fp:
+            _output_generated(generated, fp, args=args)
 
 
 if __name__ == "__main__":

@@ -97,3 +97,72 @@ def test__main__option_list(capfd, resources, length):
         out, err = capfd.readouterr()
         assert out == str(["aaa"] * length) + "\n"
         assert err == ""
+
+
+def test__main__option_output(capfd, tmp_path, resources):
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        str(resources.joinpath("factory_def.py")),
+        "--output",
+        str(output_path),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_path, mode="r") as out_fp:
+            assert out_fp.readline() == "aaa\n"
+            assert out_fp.readline() == ""
+
+
+def test__main__option_output__option_repeat(capfd, tmp_path, resources):
+    output_path = tmp_path.joinpath("out.txt")
+    count = 3
+    args = [
+        "randog",
+        str(resources.joinpath("factory_def.py")),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(count),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_path, mode="r") as out_fp:
+            for _ in range(count):
+                assert out_fp.readline() == "aaa\n"
+            assert out_fp.readline() == ""
+
+
+def test__main__option_output__option_repeat__separate(capfd, tmp_path, resources):
+    output_fmt_path = tmp_path.joinpath("out_{}.txt")
+    output_paths = [tmp_path.joinpath("out_0.txt"), tmp_path.joinpath("out_1.txt")]
+    count = len(output_paths)
+    args = [
+        "randog",
+        str(resources.joinpath("factory_def.py")),
+        "--output",
+        str(output_fmt_path),
+        "--repeat",
+        str(count),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        for i in range(count):
+            with open(output_paths[i], mode="r") as out_fp:
+                assert out_fp.readline() == "aaa\n"
+                assert out_fp.readline() == ""

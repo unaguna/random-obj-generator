@@ -32,7 +32,7 @@ def test__main__option_json(capfd, resources):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == '"aaa"'
+        assert out == '"aaa"\n'
         assert err == ""
 
 

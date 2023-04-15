@@ -133,6 +133,7 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
         print(repr(generated), file=fp)
     elif args.output_fmt == "json":
         json.dump(generated, fp, default=str)
+        fp.write("\n")
     else:
         print(generated, file=fp)
 

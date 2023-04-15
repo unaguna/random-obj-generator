@@ -100,7 +100,10 @@ class Args:
 
 def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
     for filepath in args.factories:
-        yield randog.factory.from_pyfile(filepath)
+        if filepath == "-":
+            yield randog.factory.from_pyfile(sys.stdin)
+        else:
+            yield randog.factory.from_pyfile(filepath)
 
 
 class _DummyIO:

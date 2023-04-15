@@ -21,7 +21,10 @@ def from_pyfile(file: t.Union[str, PathLike, t.IO]) -> Factory:
 
 
 def _from_pyfile(fp: t.IO, filename: t.Union[str, PathLike]) -> Factory:
+    import randog
+
     d = types.ModuleType("factory")
+    d.randog = randog
     d.__file__ = filename
     try:
         exec(compile(fp.read(), filename, "exec"), d.__dict__)

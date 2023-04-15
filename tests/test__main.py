@@ -83,14 +83,14 @@ def test__main__option_repeat__multiple_factories(
 
 
 @pytest.mark.parametrize(
-    ("length",),
+    ("option", "length"),
     [
-        (1,),
-        (2,),
+        ("--list", 1),
+        ("-L", 2),
     ],
 )
-def test__main__option_list(capfd, resources, length):
-    args = ["randog", str(resources.joinpath("factory_def.py")), "--list", str(length)]
+def test__main__option_list(capfd, resources, option, length):
+    args = ["randog", str(resources.joinpath("factory_def.py")), option, str(length)]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 

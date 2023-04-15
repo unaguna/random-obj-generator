@@ -32,6 +32,7 @@ class Args:
         )
         parser.add_argument(
             "--list",
+            "-L",
             metavar="LENGTH",
             type=int,
             help=(

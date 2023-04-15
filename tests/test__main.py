@@ -183,3 +183,21 @@ def test__main__option_output__option_repeat__separate(capfd, tmp_path, resource
             with open(output_paths[i], mode="r") as out_fp:
                 assert out_fp.readline() == "aaa\n"
                 assert out_fp.readline() == ""
+
+
+@pytest.mark.parametrize(
+    ("options",),
+    [
+        (["--json", "--repr"],),
+    ],
+)
+def test__main__error_duplicate_format(capfd, resources, options):
+    args = ["randog", *options, str(resources.joinpath("factory_def.py"))]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "not allowed with argument" in err

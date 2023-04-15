@@ -1,4 +1,5 @@
 import argparse
+import json
 import sys
 import typing as t
 
@@ -13,6 +14,7 @@ class Args:
             usage="python -m randog [options] FACTORY_PATH [FACTORY_PATH ...]",
             description="Create object at random.",
         )
+        group_output_fmt = parser.add_mutually_exclusive_group()
         parser.add_argument(
             "factories",
             nargs="+",
@@ -40,10 +42,19 @@ class Args:
                 "and returns a list consisting of the results."
             ),
         )
-        parser.add_argument(
+        group_output_fmt.add_argument(
             "--repr",
-            action="store_true",
+            dest="output_fmt",
+            action="store_const",
+            const="repr",
             help="if specified, it outputs generated object by repr()",
+        )
+        group_output_fmt.add_argument(
+            "--json",
+            dest="output_fmt",
+            action="store_const",
+            const="json",
+            help="if specified, it outputs generated object by json format",
         )
         parser.add_argument(
             "--output",
@@ -66,8 +77,8 @@ class Args:
         return self._args.list
 
     @property
-    def output_repr(self) -> bool:
-        return self._args.repr
+    def output_fmt(self) -> t.Optional[str]:
+        return self._args.output_fmt
 
     @property
     def output_path(self) -> t.Optional[str]:
@@ -115,8 +126,10 @@ def _open_output_fp_numbered(args: Args, number: int) -> t.Union[_DummyIO, t.Tex
 
 
 def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
-    if args.output_repr:
+    if args.output_fmt == "repr":
         print(repr(generated), file=fp)
+    elif args.output_fmt == "json":
+        json.dump(generated, fp)
     else:
         print(generated, file=fp)
 

@@ -26,6 +26,16 @@ def test__main__option_repr(capfd, resources):
         assert err == ""
 
 
+def test__main__option_json(capfd, resources):
+    args = ["randog", "--json", str(resources.joinpath("factory_def.py"))]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == '"aaa"'
+        assert err == ""
+
+
 @pytest.mark.parametrize(
     ("option", "count"),
     [

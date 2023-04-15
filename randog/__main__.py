@@ -20,6 +20,14 @@ class Args:
             help="path of factory definition files",
         )
         parser.add_argument(
+            "--repeat",
+            "-r",
+            metavar="COUNT",
+            default=1,
+            type=int,
+            help="repeat generation a specified number of times",
+        )
+        parser.add_argument(
             "--repr",
             action="store_true",
             help="if specified, it outputs generated object by repr()",
@@ -35,6 +43,10 @@ class Args:
     @property
     def factories(self) -> t.Sequence[str]:
         return self._args.factories
+
+    @property
+    def repeat(self) -> int:
+        return self._args.repeat
 
     @property
     def output_repr(self) -> bool:
@@ -96,18 +108,22 @@ def main():
     args = Args(sys.argv)
 
     with _open_output_fp_only(args) as fp_only:
-        for index, factory in enumerate(_build_factories(args)):
-            generated = factory.next()
+        index = 0
+        for factory in _build_factories(args):
+            for r_index in range(args.repeat):
+                generated = factory.next()
 
-            with _open_output_fp_numbered(args, index) as fp_numbered:
-                if not isinstance(fp_numbered, _DummyIO):
-                    fp = fp_numbered
-                elif not isinstance(fp_only, _DummyIO):
-                    fp = fp_only
-                else:
-                    fp = sys.stdout
+                with _open_output_fp_numbered(args, index) as fp_numbered:
+                    if not isinstance(fp_numbered, _DummyIO):
+                        fp = fp_numbered
+                    elif not isinstance(fp_only, _DummyIO):
+                        fp = fp_only
+                    else:
+                        fp = sys.stdout
 
-                _output_generated(generated, fp, args=args)
+                    _output_generated(generated, fp, args=args)
+
+                index += 1
 
 
 if __name__ == "__main__":

@@ -60,6 +60,28 @@ def test__main__option_repeat(capfd, resources, option, count):
         assert err == ""
 
 
+@pytest.mark.parametrize(
+    ("option", "length"),
+    [
+        ("--repeat", -1),
+        ("-r", 0),
+    ],
+)
+def test__main__error_with_negative_repeat(capfd, resources, option, length):
+    args = ["randog", option, str(length), str(resources.joinpath("factory_def.py"))]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            f"randog: error: argument --repeat/-r: invalid positive_int value: '{length}'"
+            in err
+        )
+
+
 def test__main__multiple_factories(capfd, resources):
     args = [
         "randog",
@@ -114,6 +136,28 @@ def test__main__option_list(capfd, resources, option, length):
         out, err = capfd.readouterr()
         assert out == str(["aaa"] * length) + "\n"
         assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("option", "length"),
+    [
+        ("--list", -1),
+        ("-L", 0),
+    ],
+)
+def test__main__error_with_negative_list(capfd, resources, option, length):
+    args = ["randog", option, str(length), str(resources.joinpath("factory_def.py"))]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            f"randog: error: argument --list/-L: invalid positive_int value: '{length}'"
+            in err
+        )
 
 
 def test__main__option_output(capfd, tmp_path, resources):

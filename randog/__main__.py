@@ -5,12 +5,15 @@ import typing as t
 
 import randog.factory
 
+from ._utils.type import positive_int
+
 
 class Args:
     _args: argparse.Namespace
 
     def __init__(self, argv: t.Sequence[str]):
         parser = argparse.ArgumentParser(
+            prog="randog",
             usage="python -m randog [options] FACTORY_PATH [FACTORY_PATH ...]",
             description="Create object at random.",
         )
@@ -26,7 +29,7 @@ class Args:
             "-r",
             metavar="COUNT",
             default=1,
-            type=int,
+            type=positive_int,
             help=(
                 "repeat generation a specified number of times. "
                 "The results are output one by one; if you want them as a single list, use --list instead."
@@ -36,7 +39,7 @@ class Args:
             "--list",
             "-L",
             metavar="LENGTH",
-            type=int,
+            type=positive_int,
             help=(
                 "if specified, repeats the specified numerical generation "
                 "and returns a list consisting of the results."

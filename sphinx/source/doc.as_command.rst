@@ -7,7 +7,7 @@ randog can be used as a command. The simplest way to execute the command is as f
 
     python -m randog <factory_definition_file>
 
-The argument is a filename of a factory definition and must be python code that creates an instance of factory in the variable FACTORY as in the following example:
+The argument is :doc:`a filename of a factory definition <doc.external_def>`. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:
 
 .. code-block:: python
 

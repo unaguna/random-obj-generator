@@ -11,6 +11,8 @@ The argument is :doc:`a filename of a factory definition <doc.external_def>`. It
 
 .. code-block:: python
 
+    import uuid
+
     FACTORY = randog.factory.from_example({
         "uuid": uuid.uuid4,
         "name": "",

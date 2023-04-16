@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-11 16:20+0900\n"
+"POT-Creation-Date: 2023-04-16 14:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -29,8 +29,8 @@ msgid ""
 "You can create a factory that generates :code:`list` (or :code:`tuple`). "
 "The elements of the list are always randomly generated each time."
 msgstr ""
-"list 型のオブジェクトを生成する factory を作成することができます。"
-"この factory では list の各要素も毎回ランダムに生成します。"
+"list 型のオブジェクトを生成する factory を作成することができます。この factory では list "
+"の各要素も毎回ランダムに生成します。"
 
 #: ../../source/doc.list_factory.rst:6
 msgid ""
@@ -40,96 +40,102 @@ msgid ""
 "generation of the list needs to be tailored to the application."
 msgstr ""
 "多くのケースでは、用途に応じた調整が必要となるため `from_example "
-"<randog.factory.html#randog.factory.from_example>`_ よりも "
-"`randlist <randog.factory.html#randog.factory.randlist>`_ を使用します。"
+"<randog.factory.html#randog.factory.from_example>`_ よりも `randlist "
+"<randog.factory.html#randog.factory.randlist>`_ を使用します。"
 
 #: ../../source/doc.list_factory.rst:24
 msgid ""
 "If you want to generate multiple records by a single factory, it may be "
 "appropriate to use :code:`iter` rather than :code:`randlist`."
 msgstr ""
-"もし1つの factory から複数のレコードを作成したい場合、:code:`randlist` よりも :code:`iter` を使うべきかもしれません。"
+"もし1つの factory から複数のレコードを作成したい場合、:code:`randlist` よりも :code:`iter` "
+"を使うべきかもしれません。"
 
-#: ../../source/doc.list_factory.rst:40
+#: ../../source/doc.list_factory.rst:38
+msgid ""
+"The same can be done for :doc:`command execution <doc.as_command>` by "
+"using :code:`--list` or :code:`--repeat` option."
+msgstr ""
+":doc:`コマンド実行 <doc.as_command>` の場合も :code:`--list` "
+"オプションや :code:`--repeat` オプションを使用することで同様のことができます。"
+
+#: ../../source/doc.list_factory.rst:42
 msgid "Each elements"
 msgstr "それぞれの要素の生成"
 
-#: ../../source/doc.list_factory.rst:41
+#: ../../source/doc.list_factory.rst:43
 msgid ""
 "You can specify a factory for each element. Normally, the i-th factory is"
 " used to generate the i-th element, but if you are generating a list "
 "longer than the number of factories, repeat the last factory."
 msgstr ""
-"それぞれの要素の factory を指定することができます。通常、i番目の要素の生成にはi番目に指定した factory が使用されますが、"
-"指定した factory の数よりも長い list を生成する場合、最後の factory が繰り返し使用されます。"
+"それぞれの要素の factory を指定することができます。通常、i番目の要素の生成にはi番目に指定した factory "
+"が使用されますが、指定した factory の数よりも長い list を生成する場合、最後の factory が繰り返し使用されます。"
 
-#: ../../source/doc.list_factory.rst:65
+#: ../../source/doc.list_factory.rst:67
 msgid ""
 "Therefore, if you want to generate a typical list where each element has "
 "no specific meaning, specify only one element factory."
-msgstr ""
-"したがって、それぞれの要素が特別な意味を持たない典型的なリストを生成したい場合は、要素の factory を1つだけ指定してください。"
+msgstr "したがって、それぞれの要素が特別な意味を持たない典型的なリストを生成したい場合は、要素の factory を1つだけ指定してください。"
 
-#: ../../source/doc.list_factory.rst:84
+#: ../../source/doc.list_factory.rst:86
 msgid "Length"
 msgstr "長さ"
 
-#: ../../source/doc.list_factory.rst:86
+#: ../../source/doc.list_factory.rst:88
 msgid "The length of the list can also be randomized."
 msgstr "生成されるリストの長さをランダムにすることもできます。"
 
-#: ../../source/doc.list_factory.rst:101
+#: ../../source/doc.list_factory.rst:103
 msgid ""
 "If no length is specified, the length will be the same as the number of "
 "pieces in the factory."
-msgstr ""
-"もし長さを指定しない場合、factory の数と同じ長さのリストが生成されます。"
+msgstr "もし長さを指定しない場合、factory の数と同じ長さのリストが生成されます。"
 
-#: ../../source/doc.list_factory.rst:122
+#: ../../source/doc.list_factory.rst:124
 msgid "Generate tuple"
 msgstr "tuple の生成"
 
-#: ../../source/doc.list_factory.rst:124
+#: ../../source/doc.list_factory.rst:126
 msgid ""
 "The attribute :code:`type` can be used to generate a tuple instead of a "
 "list."
-msgstr ""
-"引数 :code:`type` を使うことで、list ではなく tuple を生成することもできます。"
+msgstr "引数 :code:`type` を使うことで、list ではなく tuple を生成することもできます。"
 
-#: ../../source/doc.list_factory.rst:140
+#: ../../source/doc.list_factory.rst:142
 msgid ""
 "The length attribute is not necessary when generating a typical tuple in "
 "which each element has a separate schema, since omitting length will "
 "generate tuples with a length equal to the number of factories."
 msgstr ""
-":code:`randlist` に渡す :code:`length` を省略すると factory の個数と同じ長さとなるため、"
-"各要素が個別のスキーマを持つような典型的な tuple を生成する場合は :code:`length` を指定する必要がありません。"
+":code:`randlist` に渡す :code:`length` を省略すると factory "
+"の個数と同じ長さとなるため、各要素が個別のスキーマを持つような典型的な tuple を生成する場合は :code:`length` "
+"を指定する必要がありません。"
 
-#: ../../source/doc.list_factory.rst:143
+#: ../../source/doc.list_factory.rst:145
 msgid ""
 "Other types that accept iterators can be specified as :code:`type`, but "
 "if :code:`set` is used, the number of elements is not guaranteed."
 msgstr ""
-"引数としてイテレーターを受け入れるような型であれば :code:`type` に指定することができますが、"
-":code:`set` を指定すると要素の個数が保証されません。"
+"引数としてイテレーターを受け入れるような型であれば :code:`type` に指定することができますが、:code:`set` "
+"を指定すると要素の個数が保証されません。"
 
-#: ../../source/doc.list_factory.rst:147
+#: ../../source/doc.list_factory.rst:149
 msgid "Factory by :code:`from_example`"
 msgstr ":code:`from_example` を使用して作成"
 
-#: ../../source/doc.list_factory.rst:149
+#: ../../source/doc.list_factory.rst:151
 msgid ""
 "If you use `from_example "
 "<randog.factory.html#randog.factory.from_example>`_, for example, the "
 "code would look like this:"
 msgstr ""
-"`from_example <randog.factory.html#randog.factory.from_example>`_ を使用する場合、"
-"以下の例のようになります。"
+"`from_example <randog.factory.html#randog.factory.from_example>`_ "
+"を使用する場合、以下の例のようになります。"
 
-#: ../../source/doc.list_factory.rst:162
+#: ../../source/doc.list_factory.rst:164
 msgid ""
 "Each element of the list given as an example is used as an example for "
 "each element of the generated list."
-msgstr ""
-"例として与えたリストの各要素は、生成するリストの各要素の例として使用されます。"
+msgstr "例として与えたリストの各要素は、生成するリストの各要素の例として使用されます。"
 

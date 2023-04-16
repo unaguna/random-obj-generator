@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>List factory &mdash; random-obj-generator 0.3.0 documentation</title>
+  <title>List factory &mdash; random-obj-generator 0.4.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -15,6 +16,8 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -34,7 +37,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.3.0
+                0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -69,6 +72,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">External File Definition of Factory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">Run as Command</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
@@ -137,6 +142,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">record_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
 </pre></div>
 </div>
+<p>The same can be done for <a class="reference internal" href="doc.as_command.html"><span class="doc">command execution</span></a> by using <code class="code docutils literal notranslate"><span class="pre">--list</span></code> or <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> option.</p>
 </div>
 <section id="each-elements">
 <h2>Each elements<a class="headerlink" href="#each-elements" title="Permalink to this heading"></a></h2>

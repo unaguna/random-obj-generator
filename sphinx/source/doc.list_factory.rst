@@ -35,6 +35,8 @@ In many cases, the factory is created with `randlist <randog.factory.html#randog
         >>> # generate 200 records
         >>> record_list = list(factory.iter(200))
 
+    The same can be done for :doc:`command execution <doc.as_command>` by using :code:`--list` or :code:`--repeat` option.
+
 
 Each elements
 -------------

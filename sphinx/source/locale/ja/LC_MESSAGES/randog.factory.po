@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-21 21:02+0900\n"
+"POT-Creation-Date: 2023-04-16 13:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -94,7 +94,8 @@ msgstr "`size` 回だけランダムに値を生成するイテレータを返�
 #: randog.factory._const.const randog.factory._date.randdate
 #: randog.factory._datetime.randdatetime randog.factory._decimal.randdecimal
 #: randog.factory._dict.randdict randog.factory._float.randfloat
-#: randog.factory._from_example.from_example randog.factory._int.randint
+#: randog.factory._from_example.from_example
+#: randog.factory._from_pyfile.from_pyfile randog.factory._int.randint
 #: randog.factory._list.randlist randog.factory._str.randstr
 #: randog.factory._time.randtime randog.factory._timedelta.randtimedelta
 #: randog.factory._union.union
@@ -226,6 +227,14 @@ msgstr ""
 #: of randog.factory._from_example.from_example:17
 msgid "When the specified example or type is not supported."
 msgstr "指定された例や型をサポートしていない場合。"
+
+#: of randog.factory._from_pyfile.from_pyfile:1
+msgid "Returns a factory defined in the specified file."
+msgstr "指定したファイルで定義される factory を返す。"
+
+#: of randog.factory._from_pyfile.from_pyfile:3
+msgid "the filename of the factory definition"
+msgstr "factory 定義ファイルのパス"
 
 #: of randog.factory._bool.randbool:1
 msgid "Return a factory generating random bool values."

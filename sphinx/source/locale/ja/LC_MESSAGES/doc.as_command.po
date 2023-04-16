@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-16 13:12+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.as_command.rst:2
+msgid "Run as Command"
+msgstr "コマンドとして実行"
+
+#: ../../source/doc.as_command.rst:4
+msgid ""
+"randog can be used as a command. The simplest way to execute the command "
+"is as follows:"
+msgstr ""
+"randog はコマンドとして実行することもできます。最も簡素な実行コマンドは次の通りです。"
+
+#: ../../source/doc.as_command.rst:10
+msgid ""
+"The argument is :doc:`a filename of a factory definition "
+"<doc.external_def>`. It must be python code that creates an instance of "
+"factory in the variable FACTORY as in the following example:"
+msgstr ""
+"引数は :doc:`factory の外部定義ファイル <doc.external_def>` のファイル名です。"
+"このファイルは python プログラムであり、以下のように factory を作成して変数 FACTORY に"
+"バインドするプログラムである必要があります。"
+
+#: ../../source/doc.as_command.rst:21
+msgid "In factory definition file, :code:`import randog` can be omitted."
+msgstr "factory定義ファイルでは、:code:`import randog` を省略できます。"
+
+#: ../../source/doc.as_command.rst:25
+msgid "Output format"
+msgstr "出力形式の変更"
+
+#: ../../source/doc.as_command.rst:27
+msgid ""
+"Normally, the generated objects are output as is with :code:`print()`, "
+"but the output format can be changed by using the following options."
+msgstr ""
+"通常、生成されたオブジェクトはそのまま :code:`print()` 関数で出力されますが、"
+"以下のオプションを使用することで出力形式を変更することができます。"
+
+#: ../../source/doc.as_command.rst:29
+msgid ""
+":code:`--repr`: The generated object is converted by using :code:`repr()`"
+" before output."
+msgstr ""
+":code:`--repr`: 生成されたオブジェクトを :code:`repr()` 関数で変換して出力します。"
+
+#: ../../source/doc.as_command.rst:30
+msgid ""
+":code:`--json`: Outputs the generated object in JSON format. Objects for "
+"which no standard JSON format is defined are converted to JSON after "
+"being converted to strings with :code:`str()`."
+msgstr ""
+":code:`--json`: 生成されたオブジェクトをJSON形式で出力します。"
+"標準的なJSON形式が定められていないオブジェクトは :code:`str()` 関数で文字列に変換してから"
+"JSON化されます。"
+
+#: ../../source/doc.as_command.rst:32
+msgid "For example:"
+msgstr "例:"
+
+#: ../../source/doc.as_command.rst:41
+msgid "Output to file"
+msgstr "ファイル出力"
+
+#: ../../source/doc.as_command.rst:43
+msgid ""
+":code:`--output` option can be used to output to a file, as in the "
+"following example."
+msgstr ""
+"以下の例のように :code:`--output` オプションを使用することで、結果をファイル出力することができます。"
+
+#: ../../source/doc.as_command.rst:50
+msgid ""
+"The above example is not very practical, since the same thing can be done"
+" using the standard redirection feature of shell. This option exists to "
+"be combined with the other options described below. Details will be "
+"included when describing them."
+msgstr ""
+"シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。"
+"このオプションは他のオプションと組み合わせて使用するために存在します。"
+"詳細はそれらの説明に併記します。"
+
+#: ../../source/doc.as_command.rst:54
+msgid "Iteration"
+msgstr "繰り返し"
+
+#: ../../source/doc.as_command.rst:56
+msgid ""
+"There are two types of repeat generation options: :code:`--list` "
+"(:code:`-L`) and :code:`--repeat` (:code:`-r`)."
+msgstr ""
+"繰り返し値を生成するオプションには、 :code:`--list` (:code:`-L`) と :code:`--repeat` (:code:`-r`) があります。"
+
+#: ../../source/doc.as_command.rst:58
+msgid ""
+"If you want to output repeatedly generated objects in a single list, use "
+":code:`--list` as follows:"
+msgstr ""
+"繰り返し生成した値を1つのリストにまとめて出力したい場合は、以下のように :code:`--list` オプションを使用します。"
+
+#: ../../source/doc.as_command.rst:65
+msgid ""
+"On the other hand, if you want to output each repeatedly generated object"
+" separately, use :code:`--repeat` as follows:"
+msgstr ""
+"一方で、繰り返し生成した値を1つずつ個別に出力したい場合、以下のように :code:`--repeat` オプションを使用します。"
+
+#: ../../source/doc.as_command.rst:73
+msgid ""
+"If you want to output to different files one at a time using "
+":code:`--repeat`, use :code:`--output` with a placeholder as follows:"
+msgstr ""
+":code:`--repeat` を使用して生成した値を別々のファイルへ1つずつ出力したい場合、"
+"以下のようにプレースホルダーとともに :code:`--output` オプションを使用します。"
+
+#: ../../source/doc.as_command.rst:83
+msgid ""
+"The rules for placeholders are the same as `the standard python format "
+"<https://docs.python.org/3/library/string.html#format-string-syntax>`_."
+msgstr ""
+"プレースホルダーのルールは `標準的な python のフォーマット "
+"<https://docs.python.org/ja/3/library/string.html#format-string-syntax>`_ と同一です。"
+

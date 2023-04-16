@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Run as Command &mdash; random-obj-generator 0.4.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tips (Usage)" href="doc.tips.html" />
+    <link rel="prev" title="External File Definition of Factory" href="doc.external_def.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+              <div class="version">
+                0.4.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Construct Factories (generator of random values)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">External File Definition of Factory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Run as Command</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#output-format">Output format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-to-file">Output to file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#iteration">Iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Run as Command</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.as_command.html"
+                selected
+            >English</option>
+            <option value="../ja/doc.as_command.html"
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="run-as-command">
+<h1>Run as Command<a class="headerlink" href="#run-as-command" title="Permalink to this heading"></a></h1>
+<p>randog can be used as a command. The simplest way to execute the command is as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>&lt;factory_definition_file&gt;
+</pre></div>
+</div>
+<p>The argument is <a class="reference internal" href="doc.external_def.html"><span class="doc">a filename of a factory definition</span></a>. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
+    <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In factory definition file, <code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> can be omitted.</p>
+</div>
+<section id="output-format">
+<h2>Output format<a class="headerlink" href="#output-format" title="Permalink to this heading"></a></h2>
+<p>Normally, the generated objects are output as is with <code class="code docutils literal notranslate"><span class="pre">print()</span></code>, but the output format can be changed by using the following options.</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: The generated object is converted by using <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> before output.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--json</span></code>: Outputs the generated object in JSON format. Objects for which no standard JSON format is defined are converted to JSON after being converted to strings with <code class="code docutils literal notranslate"><span class="pre">str()</span></code>.</p></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--json
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repr
+</pre></div>
+</div>
+</section>
+<section id="output-to-file">
+<h2>Output to file<a class="headerlink" href="#output-to-file" title="Permalink to this heading"></a></h2>
+<p><code class="code docutils literal notranslate"><span class="pre">--output</span></code> option can be used to output to a file, as in the following example.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--output<span class="w"> </span>./out.txt
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option exists to be combined with the other options described below. Details will be included when describing them.</p>
+</div>
+</section>
+<section id="iteration">
+<h2>Iteration<a class="headerlink" href="#iteration" title="Permalink to this heading"></a></h2>
+<p>There are two types of repeat generation options: <code class="code docutils literal notranslate"><span class="pre">--list</span></code> (<code class="code docutils literal notranslate"><span class="pre">-L</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>).</p>
+<p>If you want to output repeatedly generated objects in a single list, use <code class="code docutils literal notranslate"><span class="pre">--list</span></code> as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate ONE list which contains 3 objects; each element conforms to factory_def.py.</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--list<span class="w"> </span><span class="m">3</span>
+</pre></div>
+</div>
+<p>On the other hand, if you want to output each repeatedly generated object separately, use <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate and output 3 times</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to output to different files one at a time using <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code>, use <code class="code docutils literal notranslate"><span class="pre">--output</span></code> with a placeholder as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to &#39;out_1.txt&#39;, &#39;out_2.txt&#39;, and &#39;out_3.txt&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{}.txt&#39;</span>
+
+<span class="c1"># output to &#39;out_0001.txt&#39;, &#39;out_0002.txt&#39;, and &#39;out_0003.txt&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{:04}.txt&#39;</span>
+</pre></div>
+</div>
+<p>The rules for placeholders are the same as <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">the standard python format</a>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.external_def.html" class="btn btn-neutral float-left" title="External File Definition of Factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.tips.html" class="btn btn-neutral float-right" title="Tips (Usage)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

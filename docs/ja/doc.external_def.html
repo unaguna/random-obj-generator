@@ -95,7 +95,9 @@
 <h1>Factory の外部定義ファイル<a class="headerlink" href="#external-file-definition-of-factory" title="この見出しへのパーマリンク"></a></h1>
 <p>これまでに示したほとんどの factory 作成では実行する python ファイルに直接 factory の定義を記載していましたが、外部ファイルに factory の定義を記載してそれをロードすることでも factory を作ることができます。</p>
 <p>外部定義ファイルは以下のように、factory を作成して変数 <code class="code docutils literal notranslate"><span class="pre">FACTORY</span></code> にバインドする python コードとして記載します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
     <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>

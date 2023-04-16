@@ -7,6 +7,8 @@ The external definition file is written as follows, in python code, so that the 
 
 .. code-block:: python
 
+    import uuid
+
     FACTORY = randog.factory.from_example({
         "uuid": uuid.uuid4,
         "name": "",

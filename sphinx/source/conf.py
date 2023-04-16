@@ -32,6 +32,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.doctest",
     "sphinx.ext.napoleon",
+    "sphinx_copybutton",
 ]
 
 templates_path = ["_templates"]
@@ -39,6 +40,12 @@ exclude_patterns = []
 
 gettext_compact = False
 locale_dirs = ["locale/"]
+
+
+# -- Options for sphinx_copybutton -------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+copybutton_prompt_text = r">>> |\.\.\. "
+copybutton_prompt_is_regexp = True
 
 
 # -- Options for HTML output -------------------------------------------------

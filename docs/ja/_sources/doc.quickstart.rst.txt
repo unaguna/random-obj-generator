@@ -23,10 +23,10 @@ By passing an example of the object you want to generate to the :code:`from_exam
 
    >>> import uuid
    >>> import randog.factory
-   >>>
+
    >>> factory = randog.factory.from_example({"uuid": uuid.uuid4, "name": "", "age": 20})
    >>> generated = factory.next()
-   >>>
+
    >>> assert isinstance(generated, dict)
    >>> assert isinstance(generated["uuid"], uuid.UUID)
    >>> assert isinstance(generated["name"], str)

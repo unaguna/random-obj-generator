@@ -7,6 +7,7 @@
   <title>randog.factory package &mdash; random-obj-generator 0.3.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -15,6 +16,8 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,6 +51,8 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Construct Factories (generator of random values)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">External File Definition of Factory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">Run as Command</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="randog.html">randog package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="randog.html#subpackages-and-submodules">Subpackages and submodules</a><ul class="current">
@@ -60,6 +65,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.by_iterator"><code class="docutils literal notranslate"><span class="pre">by_iterator()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.const"><code class="docutils literal notranslate"><span class="pre">const()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.from_example"><code class="docutils literal notranslate"><span class="pre">from_example()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#randog.factory.from_pyfile"><code class="docutils literal notranslate"><span class="pre">from_pyfile()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.randbool"><code class="docutils literal notranslate"><span class="pre">randbool()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.randchoice"><code class="docutils literal notranslate"><span class="pre">randchoice()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.randdate"><code class="docutils literal notranslate"><span class="pre">randdate()</span></code></a></li>
@@ -391,6 +397,17 @@ If specified, the context property takes precedence over other arguments.</p></l
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> – When the specified example or type is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="randog.factory.from_pyfile">
+<span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">from_pyfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PathLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></span></span><a class="headerlink" href="#randog.factory.from_pyfile" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a factory defined in the specified file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em><em> | </em><em>PathLike</em><em> | </em><em>IO</em>) – the filename of the factory definition</p>
 </dd>
 </dl>
 </dd></dl>

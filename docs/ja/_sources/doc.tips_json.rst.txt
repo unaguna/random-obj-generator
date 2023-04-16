@@ -22,6 +22,10 @@ In this case, for example, we get the following string:
 
     {"name": "Wosar5aJMwhngJ72", "age": 51}
 
+.. note::
+
+    The same can be done for :doc:`command execution <doc.as_command>` by using :code:`--json` option.
+
 
 Decimal e.t.c.
 --------------

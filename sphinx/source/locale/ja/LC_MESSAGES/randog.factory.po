@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 13:12+0900\n"
+"POT-Creation-Date: 2023-05-28 16:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -133,7 +133,7 @@ msgstr "None を生成する確率"
 #: randog.factory._datetime.randdatetime:10
 #: randog.factory._decimal.randdecimal:15 randog.factory._dict.randdict:7
 #: randog.factory._float.randfloat:13
-#: randog.factory._from_example.from_example:11 randog.factory._int.randint:7
+#: randog.factory._from_example.from_example:14 randog.factory._int.randint:7
 #: randog.factory._list.randlist:10 randog.factory._str.randstr:7
 #: randog.factory._time.randtime:5 randog.factory._timedelta.randtimedelta:9
 #: randog.factory._union.union:8
@@ -197,18 +197,25 @@ msgstr "生成する値の型、もしくは例"
 #: of randog.factory._from_example.from_example:5
 msgid ""
 "If specified, this function is executed first and its return value is "
-"used as a new example. If it returns a factory, it is used as is. The "
-"context is passed to this function. It is recommended that `custom_func` "
-"receives `**kwargs` to allow for more keyword arguments in future "
-"updates. This process is also used to create factories for child elements"
-" of dict and list."
+"used as a new example. If it returns a factory, it is used as is. If it "
+"returns `NotImplemented`, `from_example` behaves as if `custom_func` was "
+"not specified. The context is passed to this function. Multiple functions"
+" may be specified for `custom_func`, and if multiple functions are "
+"specified, they are executed in sequence until a value other than "
+"NotImplemented is returned. This sequence of processing is also used to "
+"create factories for child elements of dict and list. It is recommended "
+"that `custom_func` receives `**kwargs` to allow for more keyword "
+"arguments in future updates."
 msgstr ""
-"指定された場合、渡された例はまずこの関数に通され、その戻り値が代わりに例として使用されます。戻り値が factory "
-"である場合はそのまま使用されます。context は、この関数にも渡されます。この処理は、dict や list の子要素の factory "
+"指定された場合、渡された例はまずこの関数に通され、その戻り値が代わりに例として使用されます。ただし、戻り値が factory "
+"である場合はそのまま使用され、戻り値が `NotImplemented` "
+"である場合は、その関数がそもそも指定されなかった場合と同じように動作します。context "
+"は、この関数にも渡されます。複数の関数を指定した場合、`NotImplemented` "
+"以外の値が返されるまで、順にそれらを実行します。この一連の処理は、dict や list の子要素の factory "
 "を作成する際にも実施されます。将来のアップデートでキーワード引数を増やせるように、`custom_func` は `**kwargs` "
 "を受け取ることが推奨されています。"
 
-#: of randog.factory._from_example.from_example:13
+#: of randog.factory._from_example.from_example:16
 msgid ""
 "the context of generation. Normally, you should not specify it. If "
 "specified, the context property takes precedence over other arguments."
@@ -224,7 +231,7 @@ msgstr "factory 作成のコンテキスト。通常、指定するべきでは�
 msgid "Raises"
 msgstr ""
 
-#: of randog.factory._from_example.from_example:17
+#: of randog.factory._from_example.from_example:20
 msgid "When the specified example or type is not supported."
 msgstr "指定された例や型をサポートしていない場合。"
 
@@ -413,4 +420,23 @@ msgstr "それぞれの factory が選ばれる確率。長さは factory の数
 #: of randog.factory._union.union:11
 msgid "No factories are specified."
 msgstr "factory が一つも指定されていない。"
+
+#~ msgid ""
+#~ "If specified, this function is executed"
+#~ " first and its return value is "
+#~ "used as a new example. If it "
+#~ "returns a factory, it is used as"
+#~ " is. The context is passed to "
+#~ "this function. It is recommended that"
+#~ " `custom_funcs` receives `**kwargs` to "
+#~ "allow for more keyword arguments in "
+#~ "future updates. This process is also "
+#~ "used to create factories for child "
+#~ "elements of dict and list."
+#~ msgstr ""
+#~ "指定された場合、渡された例はまずこの関数に通され、その戻り値が代わりに例として使用されます。戻り値が factory "
+#~ "である場合はそのまま使用されます。context は、この関数にも渡されます。この処理は、dict や "
+#~ "list の子要素の factory "
+#~ "を作成する際にも実施されます。将来のアップデートでキーワード引数を増やせるように、`custom_funcs` は "
+#~ "`**kwargs` を受け取ることが推奨されています。"
 

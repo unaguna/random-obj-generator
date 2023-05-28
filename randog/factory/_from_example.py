@@ -103,7 +103,7 @@ _FACTORY_CONSTRUCTOR_BY_EXAMPLE: t.Dict[
 
 class FromExampleContext:
     _path: t.Tuple[t.Any, ...]
-    _custom_func: t.Optional["_CustomFunc"]
+    _custom_funcs: t.Sequence["_CustomFunc"]
     _rnd: t.Optional[Random]
     _example_is_customized: bool
     _examples_stack: t.Tuple[t.Any, ...]
@@ -111,13 +111,18 @@ class FromExampleContext:
     def __init__(
         self,
         path: t.Tuple[t.Any, ...],
-        custom_func: t.Optional["_CustomFunc"],
+        custom_func: t.Union["_CustomFunc", t.Sequence["_CustomFunc"], None],
         rnd: t.Optional[Random],
         example_is_customized: bool,
         examples_stack: t.Tuple[t.Any, ...],
     ):
         self._path = path
-        self._custom_func = custom_func
+        if custom_func is None:
+            self._custom_funcs = []
+        elif isinstance(custom_func, t.Sequence):
+            self._custom_funcs = custom_func
+        else:
+            self._custom_funcs = [custom_func]
         self._rnd = rnd
         self._example_is_customized = example_is_customized
         self._example_stacks = examples_stack
@@ -135,8 +140,8 @@ class FromExampleContext:
         return self._rnd
 
     @property
-    def custom_func(self) -> t.Optional["_CustomFunc"]:
-        return self._custom_func
+    def custom_funcs(self) -> t.Sequence["_CustomFunc"]:
+        return self._custom_funcs
 
     @property
     def examples(self) -> t.Tuple[t.Any, ...]:
@@ -152,7 +157,7 @@ class FromExampleContext:
     @classmethod
     def root(
         cls,
-        custom_func: t.Optional["_CustomFunc"],
+        custom_func: t.Union["_CustomFunc", t.Sequence["_CustomFunc"], None],
         rnd: t.Optional[Random],
         example: t.Any,
     ) -> "FromExampleContext":
@@ -171,7 +176,7 @@ class FromExampleContext:
     ) -> "FromExampleContext":
         return FromExampleContext(
             path=(*self._path, key),
-            custom_func=self._custom_func,
+            custom_func=self._custom_funcs,
             rnd=self._rnd,
             example_is_customized=False,
             examples_stack=(*self._example_stacks, example),
@@ -180,7 +185,7 @@ class FromExampleContext:
     def customized(self) -> "FromExampleContext":
         return FromExampleContext(
             path=self._path,
-            custom_func=self._custom_func,
+            custom_func=self._custom_funcs,
             rnd=self._rnd,
             example_is_customized=True,
             examples_stack=self._example_stacks,
@@ -189,7 +194,7 @@ class FromExampleContext:
     def from_example(self, example: t.Any) -> Factory:
         return from_example(
             example,
-            custom_func=self._custom_func,
+            custom_func=self._custom_funcs,
             rnd=self._rnd,
             context=self,
         )
@@ -201,7 +206,7 @@ class FromExampleContext:
         )
         return from_example(
             child,
-            custom_func=self._custom_func,
+            custom_func=self._custom_funcs,
             rnd=self._rnd,
             context=new_context,
         )
@@ -232,7 +237,7 @@ def _list_item(item: t.Tuple[int, t.Any], context: FromExampleContext) -> Factor
 def from_example(
     example: t.Any,
     *,
-    custom_func: t.Optional[_CustomFunc] = None,
+    custom_func: t.Union[_CustomFunc, t.Sequence[_CustomFunc], None] = None,
     rnd: t.Optional[Random] = None,
     context: t.Optional[FromExampleContext] = None,
 ) -> Factory:
@@ -242,12 +247,15 @@ def from_example(
     ----------
     example : Any
         the type or the example
-    custom_func : Callable
+    custom_func : Callable | Sequence[Callable]
         If specified, this function is executed first and its return value is used as a new example.
         If it returns a factory, it is used as is.
+        If it returns `NotImplemented`, `from_example` behaves as if `custom_func` was not specified.
         The context is passed to this function.
+        Multiple functions may be specified for `custom_func`, and if multiple functions are specified,
+        they are executed in sequence until a value other than NotImplemented is returned.
+        This sequence of processing is also used to create factories for child elements of dict and list.
         It is recommended that `custom_func` receives `**kwargs` to allow for more keyword arguments in future updates.
-        This process is also used to create factories for child elements of dict and list.
     rnd : Random, optional
         random number generator to be used
     context : FromExampleContext, optional
@@ -268,16 +276,18 @@ def from_example(
             example=example,
         )
 
-    if not context.example_is_customized and context.custom_func is not None:
+    if not context.example_is_customized:
         context = context.customized()
-        custom_result = context.custom_func(
-            example,
-            context=context,
-        )
-        if isinstance(custom_result, Factory):
-            return custom_result
-        if custom_result is not NotImplemented:
-            example = custom_result
+        for custom_func in context.custom_funcs:
+            custom_result = custom_func(
+                example,
+                context=context,
+            )
+            if isinstance(custom_result, Factory):
+                return custom_result
+            if custom_result is not NotImplemented:
+                example = custom_result
+                break
 
     if isinstance(example, randog.Example):
         return union(*map(context.from_example, example), rnd=context.rnd)

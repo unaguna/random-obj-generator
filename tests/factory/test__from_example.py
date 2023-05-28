@@ -375,7 +375,7 @@ def test__from_example__custom_func():
 
     factory = randog.factory.from_example(
         {"a": 1, "b": 2, "c": 3},
-        custom_funcs=_custom_func,
+        custom_func=_custom_func,
     )
     value = factory.next()
 
@@ -410,7 +410,7 @@ def test__from_example__custom_func__context_key():
 
     factory = randog.factory.from_example(
         {"a": 1, "b": 2, "c": 3, "dict": {"A": 1, "B": 2}, "list": [1, 2]},
-        custom_funcs=_custom_func,
+        custom_func=_custom_func,
     )
     value = factory.next()
 
@@ -451,7 +451,7 @@ def test__from_example__custom_func__recursive_dict():
 
     factory = randog.factory.from_example(
         {"a": 1, "b": 2, "dict": 3},
-        custom_funcs=_custom_func,
+        custom_func=_custom_func,
     )
     value = factory.next()
 
@@ -488,7 +488,7 @@ def test__from_example__custom_func__recursive_list():
 
     factory = randog.factory.from_example(
         [1, 2, 3],
-        custom_funcs=_custom_func,
+        custom_func=_custom_func,
     )
     value = factory.next()
 

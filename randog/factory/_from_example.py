@@ -194,7 +194,7 @@ class FromExampleContext:
     def from_example(self, example: t.Any) -> Factory:
         return from_example(
             example,
-            custom_funcs=self._custom_funcs,
+            custom_func=self._custom_funcs,
             rnd=self._rnd,
             context=self,
         )
@@ -206,7 +206,7 @@ class FromExampleContext:
         )
         return from_example(
             child,
-            custom_funcs=self._custom_funcs,
+            custom_func=self._custom_funcs,
             rnd=self._rnd,
             context=new_context,
         )
@@ -237,7 +237,7 @@ def _list_item(item: t.Tuple[int, t.Any], context: FromExampleContext) -> Factor
 def from_example(
     example: t.Any,
     *,
-    custom_funcs: t.Union[_CustomFunc, t.Sequence[_CustomFunc], None] = None,
+    custom_func: t.Union[_CustomFunc, t.Sequence[_CustomFunc], None] = None,
     rnd: t.Optional[Random] = None,
     context: t.Optional[FromExampleContext] = None,
 ) -> Factory:
@@ -268,7 +268,7 @@ def from_example(
         return example
     if context is None:
         context = FromExampleContext.root(
-            custom_func=custom_funcs,
+            custom_func=custom_func,
             rnd=rnd,
             example=example,
         )

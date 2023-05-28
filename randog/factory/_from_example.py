@@ -247,12 +247,15 @@ def from_example(
     ----------
     example : Any
         the type or the example
-    custom_funcs : Callable | Sequence[Callable]
+    custom_func : Callable | Sequence[Callable]
         If specified, this function is executed first and its return value is used as a new example.
         If it returns a factory, it is used as is.
+        If it returns `NotImplemented`, `from_example` behaves as if `custom_func` was not specified.
         The context is passed to this function.
-        It is recommended that `custom_funcs` receives `**kwargs` to allow for more keyword arguments in future updates.
-        This process is also used to create factories for child elements of dict and list.
+        Multiple functions may be specified for `custom_func`, and if multiple functions are specified,
+        they are executed in sequence until a value other than NotImplemented is returned.
+        This sequence of processing is also used to create factories for child elements of dict and list.
+        It is recommended that `custom_func` receives `**kwargs` to allow for more keyword arguments in future updates.
     rnd : Random, optional
         random number generator to be used
     context : FromExampleContext, optional

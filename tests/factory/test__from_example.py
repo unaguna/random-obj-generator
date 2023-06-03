@@ -445,6 +445,7 @@ def test__from_example__custom_func__recursive_dict():
                 {"dict_a": 1, "dict_b": 2, "dict_c": context.recursive(3, "dict_c")},
             )
         if parent_key == "dict" and key == "dict_c":
+            context.terminate_custom_chain()
             return "c"
 
         return NotImplemented
@@ -501,3 +502,46 @@ def test__from_example__custom_func__recursive_list():
     assert isinstance(value[0][2], float)
     assert isinstance(value[1], str)
     assert isinstance(value[2], int)
+
+
+def test__from_example__custom_func__chain():
+    def _custom_func(example, *, context, **kwargs):
+        if example == 1:
+            return 2
+        elif example == 2:
+            return randog.factory.const(True)
+        else:
+            return example
+
+    factory = randog.factory.from_example(
+        {"a": 1, "b": 2, "c": 3},
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, dict)
+    assert value.get("a") is True
+    assert value.get("b") is True
+    assert isinstance(value.get("c"), int)
+
+
+def test__from_example__custom_func__terminate_chain():
+    def _custom_func(example, *, context, **kwargs):
+        if example == 1:
+            context.terminate_custom_chain()
+            return 2
+        elif example == 2:
+            return randog.factory.const(True)
+        else:
+            return example
+
+    factory = randog.factory.from_example(
+        {"a": 1, "b": 2, "c": 3},
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, dict)
+    assert isinstance(value.get("a"), int)
+    assert value.get("b") is True
+    assert isinstance(value.get("c"), int)

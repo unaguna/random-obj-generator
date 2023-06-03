@@ -3,11 +3,6 @@ import typing as t
 import randog.factory
 from randog.exceptions import FactoryConstructionError
 
-__EXAMPLE_FOR_PYTHON_TYPE: t.Mapping[t.Type, t.Any] = {
-    int: 0,
-    bool: bool,
-}
-
 
 def custom(example, **kwargs):
     if type(example).__module__.startswith("sqlalchemy."):
@@ -25,8 +20,8 @@ def _custom_func_for_column(
     # type checks of `column`
     column_type, column_python_type = _get_column_types(column)
 
-    if column_python_type in __EXAMPLE_FOR_PYTHON_TYPE:
-        customized_example = __EXAMPLE_FOR_PYTHON_TYPE[column_python_type]
+    if isinstance(column_python_type, type):
+        customized_example = column_python_type
     else:
         raise FactoryConstructionError(
             f"cannot create factory from sqlalchemy.Column type of {column_type}: not implemented"

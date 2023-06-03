@@ -21,8 +21,11 @@ def my_base():
 
 @pytest.mark.require_sqlalchemy(1, 2)
 @pytest.mark.parametrize("nullable", (True, False))
-def test__sqlalchemy_custom__integer(nullable):
-    example = sqlalchemy.Column("col", sqlalchemy.Integer, nullable=nullable)
+@pytest.mark.parametrize(
+    "type_pos", (lambda: sqlalchemy.Integer, lambda: sqlalchemy.Integer())
+)
+def test__sqlalchemy_custom__integer(nullable, type_pos):
+    example = sqlalchemy.Column("col", type_pos(), nullable=nullable)
     factory = randog.factory.from_example(example, custom_func=sqlalchemy_custom)
 
     value_types = set(map(lambda _: type(factory.next()), range(200)))

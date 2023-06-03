@@ -5,6 +5,7 @@ from randog.exceptions import FactoryConstructionError
 
 __EXAMPLE_FOR_PYTHON_TYPE: t.Mapping[t.Type, t.Any] = {
     int: 0,
+    bool: bool,
 }
 
 

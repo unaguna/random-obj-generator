@@ -128,7 +128,7 @@ class FromExampleContext:
         self._example_stacks = examples_stack
 
     @property
-    def path(self) -> t.Sequence[t.Any]:
+    def path(self) -> t.Tuple[t.Any, ...]:
         return self._path
 
     @property
@@ -154,43 +154,6 @@ class FromExampleContext:
         else:
             return self._example_stacks[-1]
 
-    @classmethod
-    def root(
-        cls,
-        custom_func: t.Union["_CustomFunc", t.Sequence["_CustomFunc"], None],
-        rnd: t.Optional[Random],
-        example: t.Any,
-    ) -> "FromExampleContext":
-        return FromExampleContext(
-            path=tuple(),
-            custom_func=custom_func,
-            rnd=rnd,
-            example_is_customized=False,
-            examples_stack=(example,),
-        )
-
-    def child(
-        self,
-        key: t.Any,
-        example: t.Any,
-    ) -> "FromExampleContext":
-        return FromExampleContext(
-            path=(*self._path, key),
-            custom_func=self._custom_funcs,
-            rnd=self._rnd,
-            example_is_customized=False,
-            examples_stack=(*self._example_stacks, example),
-        )
-
-    def customized(self) -> "FromExampleContext":
-        return FromExampleContext(
-            path=self._path,
-            custom_func=self._custom_funcs,
-            rnd=self._rnd,
-            example_is_customized=True,
-            examples_stack=self._example_stacks,
-        )
-
     def from_example(self, example: t.Any) -> Factory:
         return from_example(
             example,
@@ -200,7 +163,8 @@ class FromExampleContext:
         )
 
     def recursive(self, child: t.Any, key: t.Any) -> Factory:
-        new_context = self.child(
+        new_context = ContextFactory.child_of(
+            self,
             key=key,
             example=child,
         )
@@ -220,6 +184,52 @@ class _CustomFunc(t.Protocol):
         context: FromExampleContext,
     ) -> t.Any:
         ...
+
+
+class ContextFactory:
+    @classmethod
+    def root(
+        cls,
+        custom_func: t.Union[_CustomFunc, t.Sequence[_CustomFunc], None],
+        rnd: t.Optional[Random],
+        example: t.Any,
+    ) -> FromExampleContext:
+        return FromExampleContext(
+            path=tuple(),
+            custom_func=custom_func,
+            rnd=rnd,
+            example_is_customized=False,
+            examples_stack=(example,),
+        )
+
+    @classmethod
+    def child_of(
+        cls,
+        context: FromExampleContext,
+        *,
+        key: t.Any,
+        example: t.Any,
+    ) -> FromExampleContext:
+        return FromExampleContext(
+            path=(*context.path, key),
+            custom_func=context.custom_funcs,
+            rnd=context.rnd,
+            example_is_customized=False,
+            examples_stack=(*context.examples, example),
+        )
+
+    @classmethod
+    def customized(
+        cls,
+        context: FromExampleContext,
+    ) -> "FromExampleContext":
+        return FromExampleContext(
+            path=context.path,
+            custom_func=context.custom_funcs,
+            rnd=context.rnd,
+            example_is_customized=True,
+            examples_stack=context.examples,
+        )
 
 
 def _dict_item(obj, key, context: FromExampleContext) -> DictItem:
@@ -270,14 +280,14 @@ def from_example(
     if isinstance(example, Factory):
         return example
     if context is None:
-        context = FromExampleContext.root(
+        context = ContextFactory.root(
             custom_func=custom_func,
             rnd=rnd,
             example=example,
         )
 
     if not context.example_is_customized:
-        context = context.customized()
+        context = ContextFactory.customized(context)
         for custom_func in context.custom_funcs:
             custom_result = custom_func(
                 example,

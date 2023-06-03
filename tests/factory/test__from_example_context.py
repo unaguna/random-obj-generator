@@ -1,5 +1,5 @@
 from random import Random
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, DEFAULT
 
 import randog.factory
 from randog.factory._from_example import ContextFactory
@@ -18,10 +18,11 @@ def test__from_example_context():
     assert len(context.custom_funcs) == 1
     assert context.custom_funcs[0] is custom_func
     assert context.rnd is rnd
-    assert context.example_is_customized is False
+    assert context.custom_chain_length == 0
     assert len(context.path) == 0
     assert context.examples == ("example",)
     assert context.current_example == "example"
+    assert context.signal_terminate_custom is False
 
 
 def test__from_example_context__child():
@@ -38,11 +39,12 @@ def test__from_example_context__child():
     assert len(context.custom_funcs) == 1
     assert context.custom_funcs[0] is custom_func
     assert context.rnd is rnd
-    assert context.example_is_customized is False
+    assert context.custom_chain_length == 0
     assert len(context.path) == 1
     assert context.path[0] == "key"
     assert context.examples == ("example", "child_example")
     assert context.current_example == "child_example"
+    assert context.signal_terminate_custom is False
 
 
 def test__from_example_context__customized():
@@ -56,14 +58,14 @@ def test__from_example_context__customized():
     )
     context = ContextFactory.child_of(root_context, key="key", example="child_example")
 
-    assert context.example_is_customized is False
+    assert context.custom_chain_length == 0
 
-    context = ContextFactory.customized(context)
+    context = ContextFactory.count_up_custom(context)
 
     assert len(context.custom_funcs) == 1
     assert context.custom_funcs[0] is custom_func
     assert context.rnd is rnd
-    assert context.example_is_customized is True
+    assert context.custom_chain_length == 1
     assert len(context.path) == 1
     assert context.path[0] == "key"
     assert context.examples == ("example", "child_example")
@@ -82,15 +84,15 @@ def test__from_example_context__customized_by_list():
     )
     context = ContextFactory.child_of(root_context, key="key", example="child_example")
 
-    assert context.example_is_customized is False
+    assert context.custom_chain_length == 0
 
-    context = ContextFactory.customized(context)
+    context = ContextFactory.count_up_custom(context)
 
     assert len(context.custom_funcs) == 2
     assert context.custom_funcs[0] is custom_func1
     assert context.custom_funcs[1] is custom_func2
     assert context.rnd is rnd
-    assert context.example_is_customized is True
+    assert context.custom_chain_length == 1
     assert len(context.path) == 1
     assert context.path[0] == "key"
     assert context.examples == ("example", "child_example")
@@ -151,7 +153,11 @@ def test__from_example_context__from_example__multi_custom_func__first_factory()
 
 def test__from_example_context__from_example__multi_custom_func__first_customized_example():
     expected_example = 1
-    custom_func1 = MagicMock(return_value="a")
+    custom_func1 = MagicMock(
+        side_effect=lambda _, *, context, **kwargs: context.terminate_custom_chain()
+        or DEFAULT,
+        return_value="a",
+    )
     custom_func2 = MagicMock(return_value=0)
     rnd = Random()
 
@@ -160,9 +166,9 @@ def test__from_example_context__from_example__multi_custom_func__first_customize
         rnd=rnd,
         example="example",
     )
-    context = ContextFactory.child_of(root_context, key="key", example="child_example")
+    ctx = ContextFactory.child_of(root_context, key="key", example="child_example")
 
-    result = context.from_example(expected_example)
+    result = ctx.from_example(expected_example)
 
     assert isinstance(result, randog.factory.StrRandomFactory)
     custom_func1.assert_called_once()
@@ -211,7 +217,11 @@ def test__from_example_context__from_example__multi_custom_func__second_factory(
 def test__from_example_context__from_example__multi_custom_func__second_customized_example():
     expected_example = 1
     custom_func1 = MagicMock(return_value=NotImplemented)
-    custom_func2 = MagicMock(return_value="a")
+    custom_func2 = MagicMock(
+        side_effect=lambda _, *, context, **kwargs: context.terminate_custom_chain()
+        or DEFAULT,
+        return_value="a",
+    )
     rnd = Random()
 
     root_context = ContextFactory.root(
@@ -219,9 +229,9 @@ def test__from_example_context__from_example__multi_custom_func__second_customiz
         rnd=rnd,
         example="example",
     )
-    context = ContextFactory.child_of(root_context, key="key", example="child_example")
+    ctx = ContextFactory.child_of(root_context, key="key", example="child_example")
 
-    result = context.from_example(expected_example)
+    result = ctx.from_example(expected_example)
 
     assert isinstance(result, randog.factory.StrRandomFactory)
     custom_func1.assert_called_once()
@@ -296,7 +306,11 @@ def test__from_example_context__recursive__multi_custom_func__first_factory():
 
 def test__from_example_context__recursive__multi_custom_func__first_customized_example():
     expected_example = 1
-    custom_func1 = MagicMock(return_value="a")
+    custom_func1 = MagicMock(
+        side_effect=lambda _, *, context, **kwargs: context.terminate_custom_chain()
+        or DEFAULT,
+        return_value="a",
+    )
     custom_func2 = MagicMock(return_value=0)
     rnd = Random()
 
@@ -305,9 +319,9 @@ def test__from_example_context__recursive__multi_custom_func__first_customized_e
         rnd=rnd,
         example="example",
     )
-    context = ContextFactory.child_of(root_context, key="key", example="child_example")
+    ctx = ContextFactory.child_of(root_context, key="key", example="child_example")
 
-    result = context.recursive(expected_example, "key2")
+    result = ctx.recursive(expected_example, "key2")
 
     assert isinstance(result, randog.factory.StrRandomFactory)
     custom_func1.assert_called_once()
@@ -359,7 +373,11 @@ def test__from_example_context__recursive__multi_custom_func__second_factory():
 def test__from_example_context__recursive__multi_custom_func__second_customized_example():
     expected_example = 1
     custom_func1 = MagicMock(return_value=NotImplemented)
-    custom_func2 = MagicMock(return_value="a")
+    custom_func2 = MagicMock(
+        side_effect=lambda _, *, context, **kwargs: context.terminate_custom_chain()
+        or DEFAULT,
+        return_value="a",
+    )
     rnd = Random()
 
     root_context = ContextFactory.root(
@@ -367,9 +385,9 @@ def test__from_example_context__recursive__multi_custom_func__second_customized_
         rnd=rnd,
         example="example",
     )
-    context = ContextFactory.child_of(root_context, key="key", example="child_example")
+    ctx = ContextFactory.child_of(root_context, key="key", example="child_example")
 
-    result = context.recursive(expected_example, "key2")
+    result = ctx.recursive(expected_example, "key2")
 
     assert isinstance(result, randog.factory.StrRandomFactory)
     custom_func1.assert_called_once()

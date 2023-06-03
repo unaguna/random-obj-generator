@@ -102,19 +102,21 @@ _FACTORY_CONSTRUCTOR_BY_EXAMPLE: t.Dict[
 
 
 class FromExampleContext:
+    _custom_chain_length: int
     _path: t.Tuple[t.Any, ...]
     _custom_funcs: t.Sequence["_CustomFunc"]
     _rnd: t.Optional[Random]
-    _example_is_customized: bool
     _examples_stack: t.Tuple[t.Any, ...]
+
+    _signal_terminate_custom: bool = False
 
     def __init__(
         self,
         path: t.Tuple[t.Any, ...],
         custom_func: t.Union["_CustomFunc", t.Sequence["_CustomFunc"], None],
         rnd: t.Optional[Random],
-        example_is_customized: bool,
         examples_stack: t.Tuple[t.Any, ...],
+        custom_chain_length: int = 0,
     ):
         self._path = path
         if custom_func is None:
@@ -124,16 +126,16 @@ class FromExampleContext:
         else:
             self._custom_funcs = [custom_func]
         self._rnd = rnd
-        self._example_is_customized = example_is_customized
         self._example_stacks = examples_stack
+        self._custom_chain_length = custom_chain_length
+
+    @property
+    def custom_chain_length(self) -> int:
+        return self._custom_chain_length
 
     @property
     def path(self) -> t.Tuple[t.Any, ...]:
         return self._path
-
-    @property
-    def example_is_customized(self) -> bool:
-        return self._example_is_customized
 
     @property
     def rnd(self) -> t.Optional[Random]:
@@ -153,6 +155,13 @@ class FromExampleContext:
             return None
         else:
             return self._example_stacks[-1]
+
+    def terminate_custom_chain(self):
+        self._signal_terminate_custom = True
+
+    @property
+    def signal_terminate_custom(self) -> bool:
+        return self._signal_terminate_custom
 
     def from_example(self, example: t.Any) -> Factory:
         return from_example(
@@ -198,7 +207,6 @@ class ContextFactory:
             path=tuple(),
             custom_func=custom_func,
             rnd=rnd,
-            example_is_customized=False,
             examples_stack=(example,),
         )
 
@@ -214,12 +222,11 @@ class ContextFactory:
             path=(*context.path, key),
             custom_func=context.custom_funcs,
             rnd=context.rnd,
-            example_is_customized=False,
             examples_stack=(*context.examples, example),
         )
 
     @classmethod
-    def customized(
+    def count_up_custom(
         cls,
         context: FromExampleContext,
     ) -> "FromExampleContext":
@@ -227,7 +234,20 @@ class ContextFactory:
             path=context.path,
             custom_func=context.custom_funcs,
             rnd=context.rnd,
-            example_is_customized=True,
+            custom_chain_length=context.custom_chain_length + 1,
+            examples_stack=context.examples,
+        )
+
+    @classmethod
+    def reset_signals(
+        cls,
+        context: FromExampleContext,
+    ) -> "FromExampleContext":
+        return FromExampleContext(
+            path=context.path,
+            custom_func=context.custom_funcs,
+            rnd=context.rnd,
+            custom_chain_length=context.custom_chain_length,
             examples_stack=context.examples,
         )
 
@@ -286,18 +306,39 @@ def from_example(
             example=example,
         )
 
-    if not context.example_is_customized:
-        context = ContextFactory.customized(context)
+    # print(example, context.custom_chain_length, "before while")
+    while True:
+        # print(example, context.custom_chain_length, "while")
+
+        # terminate custom chain if custom_func execs terminate_custom_chain()
+        if context.signal_terminate_custom:
+            break
+
+        # Limit the number of customizations to avoid infinite loops
+        if context.custom_chain_length >= 32:
+            # TODO: ログ出力
+            break
+
+        context = ContextFactory.count_up_custom(context)
+
         for custom_func in context.custom_funcs:
+            # print(example, context.custom_chain_length, "for")
             custom_result = custom_func(
                 example,
                 context=context,
             )
+            # print(example, custom_result, "for")
             if isinstance(custom_result, Factory):
                 return custom_result
-            if custom_result is not NotImplemented:
+            if custom_result is not NotImplemented and example != custom_result:
                 example = custom_result
                 break
+
+            # reset signals from custom_func if the example is not customized
+            context = ContextFactory.reset_signals(context)
+        else:
+            # If customization by custom_funcs is not performed, no further customization is chained.
+            break
 
     if isinstance(example, randog.Example):
         return union(*map(context.from_example, example), rnd=context.rnd)

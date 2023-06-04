@@ -1,3 +1,4 @@
+import datetime
 import typing as t
 
 import randog.factory
@@ -36,6 +37,10 @@ def _custom_func_for_column(
         customized_example = _custom_func_for_str_column(
             column_type, context=context, **kwargs
         )
+    elif column_python_type == datetime.datetime:
+        customized_example = _custom_func_for_datetime_column(
+            column_type, context=context, **kwargs
+        )
     elif isinstance(column_python_type, type):
         customized_example = column_python_type
     else:
@@ -61,6 +66,21 @@ def _custom_func_for_str_column(
         return randog.factory.randstr(length=length)
     else:
         return str
+
+
+def _custom_func_for_datetime_column(
+    column_type,
+    *,
+    context: randog.factory.FromExampleContext,
+    **kwargs,
+):
+    use_timezone = getattr(column_type, "timezone", None)
+
+    if use_timezone:
+        local_timezone = datetime.datetime.now().astimezone().tzinfo
+        return randog.factory.randdatetime(tzinfo=local_timezone)
+    else:
+        return randog.factory.randdatetime(tzinfo=None)
 
 
 def _get_column_types(column) -> t.Tuple[t.Any, t.Any]:

@@ -76,3 +76,27 @@ def test__sqlalchemy_custom__datetime2(my_base, nullable):
         assert value_types == {datetime.datetime, type(None)}
     else:
         assert value_types == {datetime.datetime}
+
+
+@pytest.mark.require_sqlalchemy(2)
+@pytest.mark.parametrize("timezone", (True, False))
+def test__sqlalchemy_custom__datetime2__timezone(my_base, timezone):
+    import sqlalchemy.orm
+
+    class MyModel(my_base):
+        __tablename__ = "my_table"
+
+        id: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column(primary_key=True)
+        field: sqlalchemy.orm.Mapped[datetime.datetime] = sqlalchemy.orm.mapped_column(
+            sqlalchemy.DateTime(timezone=timezone), nullable=False
+        )
+
+    example = MyModel.field
+    factory = randog.factory.from_example(example, custom_func=sqlalchemy_custom)
+
+    value_tzinfo = set(map(lambda _: factory.next().tzinfo, range(200)))
+
+    if timezone:
+        assert value_tzinfo == {datetime.timezone.utc}
+    else:
+        assert value_tzinfo == {None}

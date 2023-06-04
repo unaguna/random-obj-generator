@@ -6,9 +6,21 @@ from randog.exceptions import FactoryConstructionError
 
 def custom(example, **kwargs):
     if type(example).__module__.startswith("sqlalchemy."):
-        return _custom_func_for_column(example, **kwargs)
+        # example is Model
+        if hasattr(example, "_sa_class_manager"):
+            return _custom_func_for_model(example._sa_class_manager, **kwargs)
+        # example is Column or like it
+        else:
+            return _custom_func_for_column(example, **kwargs)
     else:
         return NotImplemented
+
+
+def _custom_func_for_model(
+    class_manager,
+    **kwargs,
+):
+    return dict(class_manager)
 
 
 def _custom_func_for_column(

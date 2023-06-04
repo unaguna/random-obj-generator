@@ -58,7 +58,7 @@ def test__sqlalchemy_custom__model(my_base1, get_example):
 @pytest.mark.parametrize(
     "get_example", (lambda model_cls: model_cls, lambda model_cls: model_cls())
 )
-def test__sqlalchemy_custom__boolean2(my_base, get_example):
+def test__sqlalchemy_custom__model2(my_base, get_example):
     import sqlalchemy.orm
 
     class MyModel(my_base):

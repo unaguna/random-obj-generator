@@ -20,7 +20,11 @@ def _custom_func_for_column(
     # type checks of `column`
     column_type, column_python_type = _get_column_types(column)
 
-    if isinstance(column_python_type, type):
+    if column_python_type == str:
+        customized_example = _custom_func_for_str_column(
+            column_type, context=context, **kwargs
+        )
+    elif isinstance(column_python_type, type):
         customized_example = column_python_type
     else:
         raise FactoryConstructionError(
@@ -32,6 +36,19 @@ def _custom_func_for_column(
         factory = factory.or_none(rnd=context.rnd)
 
     return factory
+
+
+def _custom_func_for_str_column(
+    column_type,
+    *,
+    context: randog.factory.FromExampleContext,
+    **kwargs,
+):
+    length = getattr(column_type, "length", None)
+    if length is not None:
+        return randog.factory.randstr(length=length)
+    else:
+        return str
 
 
 def _get_column_types(column) -> t.Tuple[t.Any, t.Any]:

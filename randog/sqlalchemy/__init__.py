@@ -1,8 +1,10 @@
 import datetime
+from decimal import Decimal
 import typing as t
 
 import randog.factory
 from randog.exceptions import FactoryConstructionError
+from .._utils.nullsafe import dfor
 
 
 def custom(example, **kwargs):
@@ -62,6 +64,27 @@ def _custom_func_for_str_column(
         return str
 
 
+def _custom_func_for_numeric_column(
+    column_type,
+    **kwargs,
+):
+    precision = getattr(column_type, "precision", None)
+    scale = getattr(column_type, "scale", None)
+
+    if precision is not None:
+        scale_n = dfor(scale, 0)
+
+        maximum = Decimal("1").scaleb(precision - scale_n) - Decimal("1").scaleb(
+            -scale_n
+        )
+        minimum = -maximum
+    else:
+        minimum = None
+        maximum = None
+
+    return randog.factory.randdecimal(minimum, maximum, decimal_len=scale)
+
+
 def _custom_func_for_datetime_column(
     column_type,
     **kwargs,
@@ -88,6 +111,7 @@ def _custom_func_for_time_column(
 
 __CUSTOM_FUNC_FOR_SPEC_TYPE = {
     str: _custom_func_for_str_column,
+    Decimal: _custom_func_for_numeric_column,
     datetime.datetime: _custom_func_for_datetime_column,
     datetime.time: _custom_func_for_time_column,
 }

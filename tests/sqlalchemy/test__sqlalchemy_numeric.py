@@ -51,8 +51,8 @@ def test__sqlalchemy_custom__numeric__digits(precision, scale):
     value_precisions = set(map(lambda v: len(v.as_tuple()[1]), values))
     value_scales = set(map(lambda v: -v.as_tuple()[2], values))
 
-    assert value_precisions == {precision}
-    assert value_scales == {scale}
+    assert value_precisions <= set(range(precision + 1))
+    assert value_scales <= set(range(scale + 1))
 
 
 @pytest.mark.require_sqlalchemy(1, 2)
@@ -115,8 +115,8 @@ def test__sqlalchemy_custom__numeric2__digits(my_base, precision, scale):
     value_precisions = set(map(lambda v: len(v.as_tuple()[1]), values))
     value_scales = set(map(lambda v: -v.as_tuple()[2], values))
 
-    assert value_precisions == {precision}
-    assert value_scales == {scale}
+    assert value_precisions <= set(range(precision + 1))
+    assert value_scales <= set(range(scale + 1))
 
 
 @pytest.mark.require_sqlalchemy(2)

@@ -74,9 +74,22 @@ def _custom_func_for_datetime_column(
         return randog.factory.randdatetime(tzinfo=None)
 
 
+def _custom_func_for_time_column(
+    column_type,
+    **kwargs,
+):
+    use_timezone = getattr(column_type, "timezone", None)
+
+    if use_timezone:
+        return randog.factory.randtime(tzinfo=datetime.timezone.utc)
+    else:
+        return randog.factory.randtime(tzinfo=None)
+
+
 __CUSTOM_FUNC_FOR_SPEC_TYPE = {
     str: _custom_func_for_str_column,
     datetime.datetime: _custom_func_for_datetime_column,
+    datetime.time: _custom_func_for_time_column,
 }
 
 

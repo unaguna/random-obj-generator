@@ -65,7 +65,7 @@ def test__sqlalchemy_custom__string(nullable, type_pos):
     ),
 )
 def test__sqlalchemy_custom__string__with_length(length, type_pos):
-    example = sqlalchemy.Column("col", type_pos())
+    example = sqlalchemy.Column("col", type_pos(), nullable=False)
     factory = randog.factory.from_example(example, custom_func=sqlalchemy_custom)
 
     for _ in range(200):
@@ -128,7 +128,9 @@ def test__sqlalchemy_custom__string2__with_length(my_base, length, type_pos):
         __tablename__ = "my_table"
 
         id: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column(primary_key=True)
-        field: sqlalchemy.orm.Mapped[str] = sqlalchemy.orm.mapped_column(type_pos())
+        field: sqlalchemy.orm.Mapped[str] = sqlalchemy.orm.mapped_column(
+            type_pos(), nullable=False
+        )
 
     example = MyModel.field
     factory = randog.factory.from_example(example, custom_func=sqlalchemy_custom)

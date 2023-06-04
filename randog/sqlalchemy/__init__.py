@@ -69,8 +69,7 @@ def _custom_func_for_datetime_column(
     use_timezone = getattr(column_type, "timezone", None)
 
     if use_timezone:
-        local_timezone = datetime.datetime.now().astimezone().tzinfo
-        return randog.factory.randdatetime(tzinfo=local_timezone)
+        return randog.factory.randdatetime(tzinfo=datetime.timezone.utc)
     else:
         return randog.factory.randdatetime(tzinfo=None)
 

@@ -41,7 +41,6 @@ def test__sqlalchemy_custom__datetime(nullable, type_pos):
 @pytest.mark.require_sqlalchemy(1, 2)
 @pytest.mark.parametrize("timezone", (True, False))
 def test__sqlalchemy_custom__datetime__timezone(timezone):
-    local_timezone = datetime.datetime.now().astimezone().tzinfo
     example = sqlalchemy.Column(
         "col", sqlalchemy.DateTime(timezone=timezone), nullable=False
     )
@@ -50,7 +49,7 @@ def test__sqlalchemy_custom__datetime__timezone(timezone):
     value_tzinfo = set(map(lambda _: factory.next().tzinfo, range(200)))
 
     if timezone:
-        assert value_tzinfo == {local_timezone}
+        assert value_tzinfo == {datetime.timezone.utc}
     else:
         assert value_tzinfo == {None}
 

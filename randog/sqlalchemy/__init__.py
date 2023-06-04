@@ -1,3 +1,4 @@
+import datetime
 import typing as t
 
 import randog.factory
@@ -32,8 +33,8 @@ def _custom_func_for_column(
     # type checks of `column`
     column_type, column_python_type = _get_column_types(column)
 
-    if column_python_type == str:
-        customized_example = _custom_func_for_str_column(
+    if column_python_type in __CUSTOM_FUNC_FOR_SPEC_TYPE:
+        customized_example = __CUSTOM_FUNC_FOR_SPEC_TYPE[column_python_type](
             column_type, context=context, **kwargs
         )
     elif isinstance(column_python_type, type):
@@ -52,8 +53,6 @@ def _custom_func_for_column(
 
 def _custom_func_for_str_column(
     column_type,
-    *,
-    context: randog.factory.FromExampleContext,
     **kwargs,
 ):
     length = getattr(column_type, "length", None)
@@ -61,6 +60,37 @@ def _custom_func_for_str_column(
         return randog.factory.randstr(length=length)
     else:
         return str
+
+
+def _custom_func_for_datetime_column(
+    column_type,
+    **kwargs,
+):
+    use_timezone = getattr(column_type, "timezone", None)
+
+    if use_timezone:
+        return randog.factory.randdatetime(tzinfo=datetime.timezone.utc)
+    else:
+        return randog.factory.randdatetime(tzinfo=None)
+
+
+def _custom_func_for_time_column(
+    column_type,
+    **kwargs,
+):
+    use_timezone = getattr(column_type, "timezone", None)
+
+    if use_timezone:
+        return randog.factory.randtime(tzinfo=datetime.timezone.utc)
+    else:
+        return randog.factory.randtime(tzinfo=None)
+
+
+__CUSTOM_FUNC_FOR_SPEC_TYPE = {
+    str: _custom_func_for_str_column,
+    datetime.datetime: _custom_func_for_datetime_column,
+    datetime.time: _custom_func_for_time_column,
+}
 
 
 def _get_column_types(column) -> t.Tuple[t.Any, t.Any]:

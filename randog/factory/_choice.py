@@ -1,3 +1,4 @@
+import enum
 from random import Random
 import typing as t
 
@@ -29,6 +30,32 @@ def randchoice(
         No values are specified.
     """
     return ChoiceRandomFactory(values, weights=weights, rnd=rnd)
+
+
+def randenum(
+    enum_cls: t.Type[enum.Enum],
+    weights: t.Optional[t.Callable[[t.Any], float]] = None,
+    rnd: t.Optional[Random] = None,
+) -> Factory[t.Any]:
+    """Return a factory choosing one of specified enum.
+
+    Parameters
+    ----------
+    enum_cls : Type[Enum]
+        the enum class
+    weights : Callable[[Enum], float], optional
+        the probabilities that each value is chosen.
+    rnd : Random, optional
+        random number generator to be used
+
+    Raises
+    ------
+    FactoryConstructionError
+        No values are specified.
+    """
+    values = [*enum_cls]
+    weights_list = [weights(value) for value in values] if weights is not None else None
+    return ChoiceRandomFactory(values, weights=weights_list, rnd=rnd)
 
 
 class ChoiceRandomFactory(Factory[t.Any]):

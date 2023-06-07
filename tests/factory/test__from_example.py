@@ -1,5 +1,6 @@
 import datetime
 import datetime as dt
+import enum
 import math
 from decimal import Decimal
 
@@ -8,6 +9,12 @@ import pytest
 import randog
 import randog.factory
 from randog.exceptions import FactoryConstructionError
+
+
+class MyEnum(enum.Enum):
+    one = 1
+    two = 2
+    three = 3
 
 
 def test__from_example__none():
@@ -66,6 +73,18 @@ def test__from_example__str_value(obj):
     factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, str)
+
+
+def test__from_example__enum_type():
+    factory = randog.factory.from_example(MyEnum)
+    value = factory.next()
+    assert isinstance(value, MyEnum)
+
+
+def test__from_example__enum_value():
+    factory = randog.factory.from_example(MyEnum.one)
+    values = set(factory.iter(200))
+    assert values == {*MyEnum}
 
 
 def test__from_example__decimal_type():

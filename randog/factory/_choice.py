@@ -1,4 +1,5 @@
 import enum
+import numbers
 from random import Random
 import typing as t
 
@@ -55,6 +56,15 @@ def randenum(
     """
     values = [*enum_cls]
     weights_list = [weights(value) for value in values] if weights is not None else None
+
+    # validate weight_list
+    if weights_list is not None:
+        for weight in weights_list:
+            __validate_num(
+                weight,
+                err_msg="the weights must serve weight for each enum value",
+            )
+
     return ChoiceRandomFactory(values, weights=weights_list, rnd=rnd)
 
 
@@ -101,3 +111,10 @@ class ChoiceRandomFactory(Factory[t.Any]):
 
     def next(self) -> t.Any:
         return self._random.choices(self._values, self._weights)[0]
+
+
+def __validate_num(value, *, err_msg) -> numbers.Real:
+    if isinstance(value, numbers.Real) and not isinstance(value, bool):
+        return value
+    else:
+        raise FactoryConstructionError(err_msg)

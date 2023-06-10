@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-28 16:11+0900\n"
+"POT-Creation-Date: 2023-06-10 09:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -91,10 +91,10 @@ msgstr "`size` 回だけランダムに値を生成するイテレータを返�
 #: randog.factory._base.Factory.post_process randog.factory._bool.randbool
 #: randog.factory._by_callable.by_callable
 #: randog.factory._by_iterator.by_iterator randog.factory._choice.randchoice
-#: randog.factory._const.const randog.factory._date.randdate
-#: randog.factory._datetime.randdatetime randog.factory._decimal.randdecimal
-#: randog.factory._dict.randdict randog.factory._float.randfloat
-#: randog.factory._from_example.from_example
+#: randog.factory._choice.randenum randog.factory._const.const
+#: randog.factory._date.randdate randog.factory._datetime.randdatetime
+#: randog.factory._decimal.randdecimal randog.factory._dict.randdict
+#: randog.factory._float.randfloat randog.factory._from_example.from_example
 #: randog.factory._from_pyfile.from_pyfile randog.factory._int.randint
 #: randog.factory._list.randlist randog.factory._str.randstr
 #: randog.factory._time.randtime randog.factory._timedelta.randtimedelta
@@ -129,8 +129,8 @@ msgid "Probability that the result is None"
 msgstr "None を生成する確率"
 
 #: of randog.factory._base.Factory.or_none:14 randog.factory._bool.randbool:5
-#: randog.factory._choice.randchoice:8 randog.factory._date.randdate:7
-#: randog.factory._datetime.randdatetime:10
+#: randog.factory._choice.randchoice:8 randog.factory._choice.randenum:7
+#: randog.factory._date.randdate:7 randog.factory._datetime.randdatetime:10
 #: randog.factory._decimal.randdecimal:15 randog.factory._dict.randdict:7
 #: randog.factory._float.randfloat:13
 #: randog.factory._from_example.from_example:14 randog.factory._int.randint:7
@@ -222,12 +222,12 @@ msgid ""
 msgstr "factory 作成のコンテキスト。通常、指定するべきではありません。もし指定した場合、他の引数よりも優先されます。"
 
 #: of randog.factory._bool.randbool randog.factory._choice.randchoice
-#: randog.factory._date.randdate randog.factory._datetime.randdatetime
-#: randog.factory._decimal.randdecimal randog.factory._float.randfloat
-#: randog.factory._from_example.from_example randog.factory._int.randint
-#: randog.factory._list.randlist randog.factory._str.randstr
-#: randog.factory._time.randtime randog.factory._timedelta.randtimedelta
-#: randog.factory._union.union
+#: randog.factory._choice.randenum randog.factory._date.randdate
+#: randog.factory._datetime.randdatetime randog.factory._decimal.randdecimal
+#: randog.factory._float.randfloat randog.factory._from_example.from_example
+#: randog.factory._int.randint randog.factory._list.randlist
+#: randog.factory._str.randstr randog.factory._time.randtime
+#: randog.factory._timedelta.randtimedelta randog.factory._union.union
 msgid "Raises"
 msgstr ""
 
@@ -274,7 +274,7 @@ msgid ""
 " number of values."
 msgstr "それぞれの値が選ばれる確率。長さは値の数に一致しなければならない。"
 
-#: of randog.factory._choice.randchoice:11
+#: of randog.factory._choice.randchoice:11 randog.factory._choice.randenum:10
 msgid "No values are specified."
 msgstr "値が一つも指定されていない。"
 
@@ -340,6 +340,18 @@ msgstr "各キーの値を生成する factory。`items_dict` が指定された
 #: of randog.factory._dict.randdict:5
 msgid "the factories of each key. Use when keyword arguments cannot be specified."
 msgstr "各キーの値を生成する factory。キーワード引数を指定できない場合に使用する。"
+
+#: of randog.factory._choice.randenum:1
+msgid "Return a factory choosing one of specified enum."
+msgstr "指定された列挙子の値のうちの1つをランダムに選ぶ factory を返す。"
+
+#: of randog.factory._choice.randenum:3
+msgid "the enum class"
+msgstr "列挙型"
+
+#: of randog.factory._choice.randenum:5
+msgid "the probabilities that each value is chosen."
+msgstr "それぞれの値が選ばれる確率。"
 
 #: of randog.factory._float.randfloat:1
 msgid "Return a factory generating random float values."

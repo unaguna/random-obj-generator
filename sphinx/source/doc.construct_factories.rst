@@ -101,6 +101,12 @@ You can create a factory that generates values of the following types:
      -
 
 
+   * - An `enumeration <https://docs.python.org/3/library/enum.html>`_
+     - `randenum <randog.factory.html#randog.factory.randenum>`_
+     - a value of the enumeration
+     - :doc:`detail <doc.enum_factory>`
+
+
 .. _nullable:
 
 Nullable
@@ -177,6 +183,11 @@ If you want a factory to randomly return one of specific values, you can use `ra
    >>> for _ in range(10):
    ...     generated = factory.next()
    ...     assert generated in ["allow", "deny"]
+
+
+.. note::
+
+    If you want to randomly generate values of a particular enumeration type, you can also use `randenum <randog.factory.html#randog.factory.randenum>`_. See also: :doc:`doc.enum_factory`
 
 
 .. _constance:
@@ -271,3 +282,4 @@ Details on how to build individual factories
 
    doc.dict_factory
    doc.list_factory
+   doc.enum_factory

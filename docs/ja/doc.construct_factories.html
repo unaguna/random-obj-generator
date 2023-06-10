@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#details-on-how-to-build-individual-factories">各 factory の詳細な生成方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
 </ul>
 </li>
 </ul>
@@ -204,6 +205,11 @@
 <td><p>a timedelta value</p></td>
 <td></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.python.org/ja/3/library/enum.html">列挙型</a></p></td>
+<td><p><a class="reference external" href="randog.factory.html#randog.factory.randenum">randenum</a></p></td>
+<td><p>列挙子</p></td>
+<td><p><a class="reference internal" href="doc.enum_factory.html"><span class="doc">detail</span></a></p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -270,9 +276,13 @@
 <span class="gp">... </span>    <span class="k">assert</span> <span class="n">generated</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;allow&quot;</span><span class="p">,</span> <span class="s2">&quot;deny&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>特定の列挙型の値をランダムに生成する factory を作る場合は <a class="reference external" href="randog.factory.html#randog.factory.randenum">randenum</a> を使用します。こちらもご参照ください： <a class="reference internal" href="doc.enum_factory.html"><span class="doc">Enum factory</span></a></p>
+</div>
 </section>
 <section id="constance">
-<span id="id5"></span><h2>定数<a class="headerlink" href="#constance" title="この見出しへのパーマリンク"></a></h2>
+<span id="id6"></span><h2>定数<a class="headerlink" href="#constance" title="この見出しへのパーマリンク"></a></h2>
 <p>常に同じ値を返す factory を作る場合は <a class="reference external" href="randog.factory.html#randog.factory.const">const</a> を使用します。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
@@ -352,6 +362,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
 </ul>
 </div>
 </section>

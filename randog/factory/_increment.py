@@ -4,6 +4,7 @@ import typing as t
 
 from ._base import Factory
 from ._by_iterator import by_iterator
+from ..exceptions import FactoryConstructionError
 
 
 def increment(
@@ -27,12 +28,17 @@ def increment(
     Raises
     ------
     FactoryConstructionError
-        if `initial_value > maximum`
+        if it is not satisfied `1 <= initial_value <= maximum`
     """
     if initial_value is None:
         initial_value = 1
     if maximum is None:
         maximum = math.inf
+
+    if not (1 <= initial_value <= maximum):
+        raise FactoryConstructionError(
+            "arguments of increment(initial_value, maximum) must satisfy 1 <= initial_value <= maximum"
+        )
 
     return by_iterator(_increment(initial_value, maximum))
 

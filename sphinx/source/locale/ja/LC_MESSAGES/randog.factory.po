@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-10 09:37+0900\n"
+"POT-Creation-Date: 2023-06-10 17:14+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -95,10 +95,10 @@ msgstr "`size` 回だけランダムに値を生成するイテレータを返�
 #: randog.factory._date.randdate randog.factory._datetime.randdatetime
 #: randog.factory._decimal.randdecimal randog.factory._dict.randdict
 #: randog.factory._float.randfloat randog.factory._from_example.from_example
-#: randog.factory._from_pyfile.from_pyfile randog.factory._int.randint
-#: randog.factory._list.randlist randog.factory._str.randstr
-#: randog.factory._time.randtime randog.factory._timedelta.randtimedelta
-#: randog.factory._union.union
+#: randog.factory._from_pyfile.from_pyfile randog.factory._increment.increment
+#: randog.factory._int.randint randog.factory._list.randlist
+#: randog.factory._str.randstr randog.factory._time.randtime
+#: randog.factory._timedelta.randtimedelta randog.factory._union.union
 msgid "Parameters"
 msgstr ""
 
@@ -180,7 +180,7 @@ msgstr "指定した値を生成した値として返す factory を返す。"
 msgid "the value"
 msgstr "値"
 
-#: of randog.factory._const.const:5
+#: of randog.factory._const.const:5 randog.factory._increment.increment:8
 msgid ""
 "It is not normally used, but it can be accepted as an argument to match "
 "other Factory construction functions."
@@ -225,9 +225,10 @@ msgstr "factory 作成のコンテキスト。通常、指定するべきでは�
 #: randog.factory._choice.randenum randog.factory._date.randdate
 #: randog.factory._datetime.randdatetime randog.factory._decimal.randdecimal
 #: randog.factory._float.randfloat randog.factory._from_example.from_example
-#: randog.factory._int.randint randog.factory._list.randlist
-#: randog.factory._str.randstr randog.factory._time.randtime
-#: randog.factory._timedelta.randtimedelta randog.factory._union.union
+#: randog.factory._increment.increment randog.factory._int.randint
+#: randog.factory._list.randlist randog.factory._str.randstr
+#: randog.factory._time.randtime randog.factory._timedelta.randtimedelta
+#: randog.factory._union.union
 msgid "Raises"
 msgstr ""
 
@@ -242,6 +243,26 @@ msgstr "指定したファイルで定義される factory を返す。"
 #: of randog.factory._from_pyfile.from_pyfile:3
 msgid "the filename of the factory definition"
 msgstr "factory 定義ファイルのパス"
+
+#: of randog.factory._increment.increment:1
+msgid "Return a factory which returns sequential numbers."
+msgstr "連番を返す factory を返す。"
+
+#: of randog.factory._increment.increment:3
+msgid "the first value"
+msgstr "最初に返す値"
+
+#: of randog.factory._increment.increment:5
+msgid ""
+"the maximum value. If the generated value reaches the maximum value, 1 is"
+" generated next. If the maximum value is not specified, it is not reset "
+"to 1."
+msgstr ""
+"最大値。生成値がこの値に達した場合、次の生成値は1になる。最大値が指定されない場合、生成値は1に戻されない。"
+
+#: of randog.factory._increment.increment:11
+msgid "if it is not satisfied `1 <= initial_value <= maximum`"
+msgstr "引数が `1 <= initial_value <= maximum` を満たさない場合"
 
 #: of randog.factory._bool.randbool:1
 msgid "Return a factory generating random bool values."

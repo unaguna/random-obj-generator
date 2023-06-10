@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-10 09:37+0900\n"
+"POT-Creation-Date: 2023-06-10 10:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -34,7 +34,8 @@ msgid ""
 "`randenum <randog.factory.html#randog.factory.randenum>`_, `from_example "
 "<randog.factory.html#randog.factory.from_example>`_."
 msgstr ""
-"他の factory と同様に、dict factory も2つの方法 (`randenum <randog.factory.html#randog.factory.randenum>`_, `from_example "
+"他の factory と同様に、dict factory も2つの方法 (`randenum "
+"<randog.factory.html#randog.factory.randenum>`_, `from_example "
 "<randog.factory.html#randog.factory.from_example>`_) で作成することができます。"
 
 #: ../../source/doc.enum_factory.rst:10
@@ -46,7 +47,8 @@ msgid ""
 "If you use `randenum <randog.factory.html#randog.factory.randenum>`_, for"
 " example, the code would look like this:"
 msgstr ""
-"`randenum <randog.factory.html#randog.factory.randenum>`_ を使用する場合、以下の例のようになります。"
+"`randenum <randog.factory.html#randog.factory.randenum>`_ "
+"を使用する場合、以下の例のようになります。"
 
 #: ../../source/doc.enum_factory.rst:33
 msgid ""
@@ -54,17 +56,26 @@ msgid ""
 "<randog.factory.html#randog.factory.randchoice>`_: "
 ":code:`randog.factory.randchoice(*MyEnum)`"
 msgstr ""
-"`randchoice <randog.factory.html#randog.factory.randchoice>`_ を使用しても同様の factory を作成できます: "
-":code:`randog.factory.randchoice(*MyEnum)`"
+"`randchoice <randog.factory.html#randog.factory.randchoice>`_ を使用しても同様の "
+"factory を作成できます: :code:`randog.factory.randchoice(*MyEnum)`"
 
 #: ../../source/doc.enum_factory.rst:36
+msgid ""
+"By default, each value is generated with the same probability, but the "
+"probability can be biased by specifying the argument :code:`weights`."
+msgstr ""
+"デフォルトでは各列挙子が同じ確率で生成されますが、引数 :code:`weights` を指定することで確率を偏らせることもできます。"
+
+#: ../../source/doc.enum_factory.rst:63
 msgid "Factory by :code:`from_example`"
 msgstr ":code:`from_example` を使用して作成"
 
-#: ../../source/doc.enum_factory.rst:38
+#: ../../source/doc.enum_factory.rst:65
 msgid ""
 "If you use `from_example "
 "<randog.factory.html#randog.factory.from_example>`_, for example, the "
 "code would look like this:"
 msgstr ""
-"`from_example <randog.factory.html#randog.factory.from_example>`_ を使用する場合、以下の例のようになります。"
+"`from_example <randog.factory.html#randog.factory.from_example>`_ "
+"を使用する場合、以下の例のようになります。"
+

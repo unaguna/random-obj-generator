@@ -136,6 +136,29 @@
 <p class="admonition-title">Note</p>
 <p>The same can be done with <a class="reference external" href="randog.factory.html#randog.factory.randchoice">randchoice</a>: <code class="code docutils literal notranslate"><span class="pre">randog.factory.randchoice(*MyEnum)</span></code></p>
 </div>
+<p>By default, each value is generated with the same probability, but the probability can be biased by specifying the argument <code class="code docutils literal notranslate"><span class="pre">weights</span></code>.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">enum</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">randog.factory</span> <span class="kn">import</span> <span class="n">DictItem</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyEnum</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">one</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="n">two</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># a function which returns the probabilities of each value</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">weights</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">MyEnum</span><span class="o">.</span><span class="n">one</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="mf">0.8</span>
+<span class="gp">... </span>    <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="n">MyEnum</span><span class="o">.</span><span class="n">two</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="mf">0.2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randenum</span><span class="p">(</span><span class="n">MyEnum</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span> <span class="ow">in</span> <span class="n">MyEnum</span>
+</pre></div>
+</div>
 </section>
 <section id="factory-by-from-example">
 <h2>Factory by <code class="code docutils literal notranslate"><span class="pre">from_example</span></code><a class="headerlink" href="#factory-by-from-example" title="Permalink to this heading"></a></h2>

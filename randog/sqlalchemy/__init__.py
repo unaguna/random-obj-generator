@@ -34,8 +34,16 @@ def _custom_func_for_column(
 ):
     # type checks of `column`
     column_type, column_python_type = _get_column_types(column)
+    enums = getattr(column_type, "enums", None) if column_type is not None else None
 
-    if column_python_type in __CUSTOM_FUNC_FOR_SPEC_TYPE:
+    # normalize example for the function `from_example`.
+    # If this is difficult, create the factory directly.
+    factory = None
+    customized_example = None
+    if enums is not None and column_python_type == str:
+        # use randchoice instead from_example(str) if it is enumeration
+        factory = randog.factory.randchoice(*enums, rnd=context.rnd)
+    elif column_python_type in __CUSTOM_FUNC_FOR_SPEC_TYPE:
         customized_example = __CUSTOM_FUNC_FOR_SPEC_TYPE[column_python_type](
             column_type, context=context, **kwargs
         )
@@ -46,7 +54,11 @@ def _custom_func_for_column(
             f"cannot create factory from sqlalchemy.Column type of {column_type}: not implemented"
         )
 
-    factory = randog.factory.from_example(customized_example, context=context)
+    # Create a factory based on the normalized example.
+    # If a factory has already been created directly, it is used.
+    if factory is None:
+        factory = randog.factory.from_example(customized_example, context=context)
+    # make the factory nullable
     if hasattr(column, "nullable") and column.nullable:
         factory = factory.or_none(rnd=context.rnd)
 

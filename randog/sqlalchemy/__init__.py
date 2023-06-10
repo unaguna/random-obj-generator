@@ -35,6 +35,7 @@ def _custom_func_for_column(
     # type checks of `column`
     column_type, column_python_type = _get_column_types(column)
     enums = getattr(column_type, "enums", None) if column_type is not None else None
+    autoincrement = getattr(column, "autoincrement", False)
 
     # normalize example for the function `from_example`.
     # If this is difficult, create the factory directly.
@@ -43,6 +44,9 @@ def _custom_func_for_column(
     if enums is not None and column_python_type == str:
         # use randchoice instead from_example(str) if it is enumeration
         factory = randog.factory.randchoice(*enums, rnd=context.rnd)
+    elif autoincrement and column_python_type == int:
+        # use increment instead from_example(int) if it is auto incremental
+        factory = randog.factory.increment(maximum=2**31 - 1, rnd=context.rnd)
     elif column_python_type in __CUSTOM_FUNC_FOR_SPEC_TYPE:
         customized_example = __CUSTOM_FUNC_FOR_SPEC_TYPE[column_python_type](
             column_type, context=context, **kwargs

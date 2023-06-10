@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-10 09:37+0900\n"
+"POT-Creation-Date: 2023-06-10 17:14+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -346,8 +346,8 @@ msgid ""
 ":doc:`doc.enum_factory`"
 msgstr ""
 "特定の列挙型の値をランダムに生成する factory を作る場合は `randenum "
-"<randog.factory.html#randog.factory.randenum>`_ を使用します。"
-"こちらもご参照ください： :doc:`doc.enum_factory`"
+"<randog.factory.html#randog.factory.randenum>`_ を使用します。こちらもご参照ください： "
+":doc:`doc.enum_factory`"
 
 #: ../../source/doc.construct_factories.rst:196
 msgid "Constance"
@@ -371,11 +371,11 @@ msgid ""
 "change the type of output."
 msgstr "factory の生成値に対する加工をあらかじめ定義することができます。この加工で生成値の型を変更することもできます。"
 
-#: ../../source/doc.construct_factories.rst:234
+#: ../../source/doc.construct_factories.rst:236
 msgid "Custom Factory"
 msgstr "カスタム Factory"
 
-#: ../../source/doc.construct_factories.rst:236
+#: ../../source/doc.construct_factories.rst:238
 msgid ""
 "Values of type not provided by randog can also be generated in the "
 "context of randog by using functions, iterators (include `generator "
@@ -389,7 +389,7 @@ msgstr ""
 "iterator>`_ も含む) やカスタム factory を使用します。通常、わざわざ randog "
 "を通さずとも関数やイテレータをそのまま使えばよいのですが、dict や list の要素を生成するためにはこの方法が必要になります。"
 
-#: ../../source/doc.construct_factories.rst:271
+#: ../../source/doc.construct_factories.rst:273
 msgid ""
 "You can also create a factory using the factory constructor: `by_callable"
 " <randog.factory.html#randog.factory.by_callable>`_, `by_iterator "
@@ -400,13 +400,26 @@ msgstr ""
 "<randog.factory.html#randog.factory.by_iterator>`_ を使用して factory "
 "を作ることもできます。"
 
-#: ../../source/doc.construct_factories.rst:274
+#: ../../source/doc.construct_factories.rst:276
 msgid ""
 "A finite iterator can be used as an example, but once the iterator "
 "terminates, the factory cannot generate any more values."
 msgstr "有限のイテレータを使用することもできますが、一度そのイテレータが使い切られるとその factory は値を生成することができなくなります。"
 
-#: ../../source/doc.construct_factories.rst:278
+#: ../../source/doc.construct_factories.rst:280
 msgid "Details on how to build individual factories"
 msgstr "各 factory の詳細な生成方法"
+
+#: ../../source/doc.construct_factories.rst:293
+msgid "Special Factory"
+msgstr "特殊な Factory"
+
+#: ../../source/doc.construct_factories.rst:295
+msgid ""
+"Although any factory can be created with the :ref:`custom factory "
+"<custom_factory>`, some of the most commonly used factories are provided "
+"by randog."
+msgstr ""
+"あらゆる factory は :ref:`カスタム Factory <custom_factory>` で作成できますが、"
+"一般的によく使用されるものは randog によって提供されます。"
 

@@ -44,6 +44,10 @@ The timeline that can be generated in this example, for example, would look like
 
 As can be seen from the definition of :code:`iter_datetime`, the value of :code:`smpl_datetime` is not random, but increases by exactly one hour. Also, the value of :code:`location` is random but the difference from the previous value is 1; it is `randomwalk <https://en.wikipedia.org/wiki/Random_walk>`_. Thus, the iterator can be used to create a factory that generates values dependent on the previous value.
 
+.. note::
+
+    If you want to add an auto-incremental field, you can use `increment <randog.factory.html#randog.factory.increment>`_. See also: :doc:`doc.increment_factory`.
+
 
 Change the type of :code:`smpl_datetime` to :code:`str`
 -------------------------------------------------------

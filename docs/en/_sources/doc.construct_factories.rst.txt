@@ -230,6 +230,8 @@ The processing of factory output can be predefined. This can be used to change t
    >>> assert generated[0] == "$"
 
 
+.. _custom_factory:
+
 Custom Factory
 --------------
 
@@ -283,3 +285,16 @@ Details on how to build individual factories
    doc.dict_factory
    doc.list_factory
    doc.enum_factory
+
+
+.. _special_factory:
+
+Special Factory
+---------------
+
+Although any factory can be created with the :ref:`custom factory <custom_factory>`, some of the most commonly used factories are provided by randog.
+
+.. toctree::
+   :maxdepth: 1
+
+   doc.increment_factory

@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-10 17:14+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.increment_factory.rst:2
+msgid "Incremental integer factory"
+msgstr ""
+
+#: ../../source/doc.increment_factory.rst:4
+msgid "You can create a factory that generates incremental integers."
+msgstr "連番の整数を生成する factory を作成することができます。"
+
+#: ../../source/doc.increment_factory.rst:22
+msgid ""
+"If you wish to specify an initial value and a maximum value, such as when"
+" generating data to be added to an existing database, you can do so as "
+"follows:"
+msgstr ""
+"既存のデータベースに追加するデータを作成する場合など、初期値や最大値を指定したい場合は"
+"下記のように指定できます。"
+
+#: ../../source/doc.increment_factory.rst:39
+msgid ""
+"If a maximum value is specified, the next generated value for that value "
+"will be 1. In the example above, the next value after 2^31-1 would be 1, "
+"so the generated value is guaranteed to be a positive integer that fits "
+"into the signed 32-bit integer type."
+msgstr ""
+"最大値が指定された場合、生成値がその値に達した後の生成値は1になります。上の例では、2^31-1 の次は 1 が生成されるため、"
+"生成値が符号付き32bit整数型に収まる正整数であることが保証されます。"
+
+#: ../../source/doc.increment_factory.rst:45
+msgid "Only one of the initial and maximum values may be specified."
+msgstr "初期値と最大値のうち一方のみを指定することもできます。"
+

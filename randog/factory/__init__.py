@@ -1,5 +1,5 @@
 from ._base import Factory
-from ._choice import ChoiceRandomFactory, randchoice
+from ._choice import ChoiceRandomFactory, randchoice, randenum
 from ._const import const
 from ._bool import BoolRandomFactory, randbool
 from ._int import IntRandomFactory, randint
@@ -24,6 +24,7 @@ __all__ = [
     "from_pyfile",
     "Factory",
     "randchoice",
+    "randenum",
     "const",
     "randbool",
     "randint",

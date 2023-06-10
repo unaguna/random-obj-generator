@@ -1,4 +1,5 @@
 import datetime as dt
+import enum
 from decimal import Decimal
 import typing as t
 from random import Random
@@ -9,6 +10,7 @@ from . import (
     DictItem,
     Factory,
     randbool,
+    randenum,
     randtimedelta,
     randdatetime,
     randdate,
@@ -343,7 +345,9 @@ def from_example(
     if isinstance(example, randog.Example):
         return union(*map(context.from_example, example), rnd=context.rnd)
     if isinstance(example, type):
-        if example in _FACTORY_CONSTRUCTOR_BY_TYPE:
+        if issubclass(example, enum.Enum):
+            return randenum(example, rnd=context.rnd)
+        elif example in _FACTORY_CONSTRUCTOR_BY_TYPE:
             return _FACTORY_CONSTRUCTOR_BY_TYPE[example](context.rnd)
         else:
             raise FactoryConstructionError(

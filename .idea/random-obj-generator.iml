@@ -9,6 +9,8 @@
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/randog.egg-info" />
       <excludeFolder url="file://$MODULE_DIR$/sphinx/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.venv_sqlalchemy1.4" />
+      <excludeFolder url="file://$MODULE_DIR$/.venv_sqlalchemy2.0" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

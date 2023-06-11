@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Construct Factories (generator of random values) &mdash; random-obj-generator 0.4.0 documentation</title>
+  <title>Construct Factories (generator of random values) &mdash; random-obj-generator 0.5.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -12,7 +12,8 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
@@ -37,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.4.0
+                0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -61,6 +62,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#details-on-how-to-build-individual-factories">Details on how to build individual factories</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#special-factory">Special Factory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="doc.increment_factory.html">Incremental integer factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.sqlalchemy.html">Factory from sqlalchemy</a></li>
 </ul>
 </li>
 </ul>
@@ -203,6 +210,11 @@
 <td><p>a timedelta value</p></td>
 <td></td>
 </tr>
+<tr class="row-odd"><td><p>An <a class="reference external" href="https://docs.python.org/3/library/enum.html">enumeration</a></p></td>
+<td><p><a class="reference external" href="randog.factory.html#randog.factory.randenum">randenum</a></p></td>
+<td><p>a value of the enumeration</p></td>
+<td><p><a class="reference internal" href="doc.enum_factory.html"><span class="doc">detail</span></a></p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -269,9 +281,13 @@
 <span class="gp">... </span>    <span class="k">assert</span> <span class="n">generated</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;allow&quot;</span><span class="p">,</span> <span class="s2">&quot;deny&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to randomly generate values of a particular enumeration type, you can also use <a class="reference external" href="randog.factory.html#randog.factory.randenum">randenum</a>. See also: <a class="reference internal" href="doc.enum_factory.html"><span class="doc">Enum factory</span></a></p>
+</div>
 </section>
 <section id="constance">
-<span id="id5"></span><h2>Constance<a class="headerlink" href="#constance" title="Permalink to this heading"></a></h2>
+<span id="id6"></span><h2>Constance<a class="headerlink" href="#constance" title="Permalink to this heading"></a></h2>
 <p>If you want a factory that always returns the same value, you can use <a class="reference external" href="randog.factory.html#randog.factory.const">const</a>.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
 
@@ -303,7 +319,7 @@
 </div>
 </section>
 <section id="custom-factory">
-<h2>Custom Factory<a class="headerlink" href="#custom-factory" title="Permalink to this heading"></a></h2>
+<span id="id8"></span><h2>Custom Factory<a class="headerlink" href="#custom-factory" title="Permalink to this heading"></a></h2>
 <p>Values of type not provided by randog can also be generated in the context of randog by using functions, iterators (include <a class="reference external" href="https://docs.python.org/3/glossary.html#term-generator-iterator">generator iterators</a>), or custom factories. Normally, you would think that you could just use that function or iterator directly, but this method is needed to generate elements when generating dict or list in randog.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
@@ -351,6 +367,17 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
+</ul>
+</div>
+</section>
+<section id="special-factory">
+<span id="id9"></span><h2>Special Factory<a class="headerlink" href="#special-factory" title="Permalink to this heading"></a></h2>
+<p>Although any factory can be created with the <a class="reference internal" href="#custom-factory"><span class="std std-ref">custom factory</span></a>, some of the most commonly used factories are provided by randog.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="doc.increment_factory.html">Incremental integer factory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.sqlalchemy.html">Factory from sqlalchemy</a></li>
 </ul>
 </div>
 </section>

@@ -101,6 +101,12 @@ You can create a factory that generates values of the following types:
      -
 
 
+   * - An `enumeration <https://docs.python.org/3/library/enum.html>`_
+     - `randenum <randog.factory.html#randog.factory.randenum>`_
+     - a value of the enumeration
+     - :doc:`detail <doc.enum_factory>`
+
+
 .. _nullable:
 
 Nullable
@@ -179,6 +185,11 @@ If you want a factory to randomly return one of specific values, you can use `ra
    ...     assert generated in ["allow", "deny"]
 
 
+.. note::
+
+    If you want to randomly generate values of a particular enumeration type, you can also use `randenum <randog.factory.html#randog.factory.randenum>`_. See also: :doc:`doc.enum_factory`
+
+
 .. _constance:
 
 Constance
@@ -218,6 +229,8 @@ The processing of factory output can be predefined. This can be used to change t
    >>> assert isinstance(generated, str)
    >>> assert generated[0] == "$"
 
+
+.. _custom_factory:
 
 Custom Factory
 --------------
@@ -271,3 +284,18 @@ Details on how to build individual factories
 
    doc.dict_factory
    doc.list_factory
+   doc.enum_factory
+
+
+.. _special_factory:
+
+Special Factory
+---------------
+
+Although any factory can be created with the :ref:`custom factory <custom_factory>`, some of the most commonly used factories are provided by randog.
+
+.. toctree::
+   :maxdepth: 1
+
+   doc.increment_factory
+   doc.sqlalchemy

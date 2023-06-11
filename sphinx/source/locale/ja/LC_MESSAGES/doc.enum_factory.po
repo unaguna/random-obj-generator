@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-10 10:37+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/doc.enum_factory.rst:2
+msgid "Enum factory"
+msgstr ""
+
+#: ../../source/doc.enum_factory.rst:4
+msgid "You can create a factory that generates a value of the enumeration type."
+msgstr "列挙子を生成する factory を作成することができます。"
+
+#: ../../source/doc.enum_factory.rst:6
+msgid ""
+"Like any other factory, an enum factory can be built in two ways: "
+"`randenum <randog.factory.html#randog.factory.randenum>`_, `from_example "
+"<randog.factory.html#randog.factory.from_example>`_."
+msgstr ""
+"他の factory と同様に、dict factory も2つの方法 (`randenum "
+"<randog.factory.html#randog.factory.randenum>`_, `from_example "
+"<randog.factory.html#randog.factory.from_example>`_) で作成することができます。"
+
+#: ../../source/doc.enum_factory.rst:10
+msgid "Factory by :code:`randenum`"
+msgstr ":code:`randenum` を使用して作成"
+
+#: ../../source/doc.enum_factory.rst:12
+msgid ""
+"If you use `randenum <randog.factory.html#randog.factory.randenum>`_, for"
+" example, the code would look like this:"
+msgstr ""
+"`randenum <randog.factory.html#randog.factory.randenum>`_ "
+"を使用する場合、以下の例のようになります。"
+
+#: ../../source/doc.enum_factory.rst:33
+msgid ""
+"The same can be done with `randchoice "
+"<randog.factory.html#randog.factory.randchoice>`_: "
+":code:`randog.factory.randchoice(*MyEnum)`"
+msgstr ""
+"`randchoice <randog.factory.html#randog.factory.randchoice>`_ を使用しても同様の "
+"factory を作成できます: :code:`randog.factory.randchoice(*MyEnum)`"
+
+#: ../../source/doc.enum_factory.rst:36
+msgid ""
+"By default, each value is generated with the same probability, but the "
+"probability can be biased by specifying the argument :code:`weights`."
+msgstr ""
+"デフォルトでは各列挙子が同じ確率で生成されますが、引数 :code:`weights` を指定することで確率を偏らせることもできます。"
+
+#: ../../source/doc.enum_factory.rst:63
+msgid "Factory by :code:`from_example`"
+msgstr ":code:`from_example` を使用して作成"
+
+#: ../../source/doc.enum_factory.rst:65
+msgid ""
+"If you use `from_example "
+"<randog.factory.html#randog.factory.from_example>`_, for example, the "
+"code would look like this:"
+msgstr ""
+"`from_example <randog.factory.html#randog.factory.from_example>`_ "
+"を使用する場合、以下の例のようになります。"
+

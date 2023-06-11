@@ -1,5 +1,6 @@
 import datetime
 import datetime as dt
+import enum
 import math
 from decimal import Decimal
 
@@ -8,6 +9,12 @@ import pytest
 import randog
 import randog.factory
 from randog.exceptions import FactoryConstructionError
+
+
+class MyEnum(enum.Enum):
+    one = 1
+    two = 2
+    three = 3
 
 
 def test__from_example__none():
@@ -66,6 +73,18 @@ def test__from_example__str_value(obj):
     factory = randog.factory.from_example(obj)
     value = factory.next()
     assert isinstance(value, str)
+
+
+def test__from_example__enum_type():
+    factory = randog.factory.from_example(MyEnum)
+    value = factory.next()
+    assert isinstance(value, MyEnum)
+
+
+def test__from_example__enum_value():
+    factory = randog.factory.from_example(MyEnum.one)
+    values = set(factory.iter(200))
+    assert values == {*MyEnum}
 
 
 def test__from_example__decimal_type():
@@ -427,7 +446,7 @@ def test__from_example__custom_func__context_key():
     assert value.get("list", [None, None])[1] is False
 
 
-def test__from_example__custom_func__recursive():
+def test__from_example__custom_func__recursive_dict():
     def _custom_func(
         example,
         *,
@@ -445,9 +464,10 @@ def test__from_example__custom_func__recursive():
                 {"dict_a": 1, "dict_b": 2, "dict_c": context.recursive(3, "dict_c")},
             )
         if parent_key == "dict" and key == "dict_c":
+            context.terminate_custom_chain()
             return "c"
 
-        return example
+        return NotImplemented
 
     factory = randog.factory.from_example(
         {"a": 1, "b": 2, "dict": 3},
@@ -462,3 +482,85 @@ def test__from_example__custom_func__recursive():
     assert isinstance(value.get("dict", {}).get("dict_a"), int)
     assert isinstance(value.get("dict", {}).get("dict_b"), int)
     assert isinstance(value.get("dict", {}).get("dict_c"), str)
+
+
+def test__from_example__custom_func__recursive_list():
+    def _custom_func(
+        example,
+        *,
+        context: randog.factory.FromExampleContext,
+        **kwargs,
+    ):
+        if len(context.path) <= 0:
+            return example
+
+        key = context.path[-1]
+        parent_key = context.path[-2] if len(context.path) >= 2 else None
+
+        if key == 0 and parent_key is None:
+            return context.from_example(
+                [1.0, 2.0, 3.0],
+            )
+        if key == 1:
+            return "a"
+
+        return NotImplemented
+
+    factory = randog.factory.from_example(
+        [1, 2, 3],
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, list)
+    assert len(value) == 3
+    assert isinstance(value[0], list)
+    assert len(value[0]) == 3
+    assert isinstance(value[0][0], float)
+    assert isinstance(value[0][1], str)
+    assert isinstance(value[0][2], float)
+    assert isinstance(value[1], str)
+    assert isinstance(value[2], int)
+
+
+def test__from_example__custom_func__chain():
+    def _custom_func(example, *, context, **kwargs):
+        if example == 1:
+            return 2
+        elif example == 2:
+            return randog.factory.const(True)
+        else:
+            return example
+
+    factory = randog.factory.from_example(
+        {"a": 1, "b": 2, "c": 3},
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, dict)
+    assert value.get("a") is True
+    assert value.get("b") is True
+    assert isinstance(value.get("c"), int)
+
+
+def test__from_example__custom_func__terminate_chain():
+    def _custom_func(example, *, context, **kwargs):
+        if example == 1:
+            context.terminate_custom_chain()
+            return 2
+        elif example == 2:
+            return randog.factory.const(True)
+        else:
+            return example
+
+    factory = randog.factory.from_example(
+        {"a": 1, "b": 2, "c": 3},
+        custom_func=_custom_func,
+    )
+    value = factory.next()
+
+    assert isinstance(value, dict)
+    assert isinstance(value.get("a"), int)
+    assert value.get("b") is True
+    assert isinstance(value.get("c"), int)

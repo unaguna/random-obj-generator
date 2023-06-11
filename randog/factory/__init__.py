@@ -1,5 +1,5 @@
 from ._base import Factory
-from ._choice import ChoiceRandomFactory, randchoice
+from ._choice import ChoiceRandomFactory, randchoice, randenum
 from ._const import const
 from ._bool import BoolRandomFactory, randbool
 from ._int import IntRandomFactory, randint
@@ -14,6 +14,7 @@ from ._list import randlist
 from ._dict import DictItem, DictRandomFactory, randdict
 from ._by_callable import ByCallableFactory, by_callable
 from ._by_iterator import ByIteratorFactory, by_iterator
+from ._increment import increment
 from ._union import UnionRandomFactory, union
 from ._from_example import from_example, FromExampleContext
 from ._from_pyfile import from_pyfile
@@ -24,6 +25,7 @@ __all__ = [
     "from_pyfile",
     "Factory",
     "randchoice",
+    "randenum",
     "const",
     "randbool",
     "randint",
@@ -38,6 +40,7 @@ __all__ = [
     "randdict",
     "by_callable",
     "by_iterator",
+    "increment",
     "union",
     "DictItem",
 ]

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>索引 &mdash; random-obj-generator 0.4.0 ドキュメント</title>
+  <title>索引 &mdash; random-obj-generator 0.5.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -11,7 +11,8 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
@@ -35,7 +36,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.4.0
+                0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -103,6 +104,8 @@
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#モ"><strong>モ</strong></a>
  
@@ -122,17 +125,17 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="randog.factory.html#randog.factory.FromExampleContext.child">child() (randog.factory.FromExampleContext のメソッド)</a>
-</li>
       <li><a href="randog.factory.html#randog.factory.const">const() (randog.factory モジュール)</a>
+</li>
+      <li><a href="randog.factory.html#randog.factory.FromExampleContext.current_example">current_example (randog.factory.FromExampleContext のプロパティ)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="randog.factory.html#randog.factory.FromExampleContext.current_example">current_example (randog.factory.FromExampleContext のプロパティ)</a>
+      <li><a href="randog.sqlalchemy.html#randog.sqlalchemy.custom">custom() (randog.sqlalchemy モジュール)</a>
 </li>
-      <li><a href="randog.factory.html#randog.factory.FromExampleContext.custom_func">custom_func (randog.factory.FromExampleContext のプロパティ)</a>
+      <li><a href="randog.factory.html#randog.factory.FromExampleContext.custom_chain_length">custom_chain_length (randog.factory.FromExampleContext のプロパティ)</a>
 </li>
-      <li><a href="randog.factory.html#randog.factory.FromExampleContext.customized">customized() (randog.factory.FromExampleContext のメソッド)</a>
+      <li><a href="randog.factory.html#randog.factory.FromExampleContext.custom_funcs">custom_funcs (randog.factory.FromExampleContext のプロパティ)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -154,11 +157,9 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="randog.html#randog.Example">Example (randog のクラス)</a>
 </li>
-      <li><a href="randog.html#randog.DictItemExample.example">example (randog.DictItemExample の属性)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="randog.factory.html#randog.factory.FromExampleContext.example_is_customized">example_is_customized (randog.factory.FromExampleContext のプロパティ)</a>
+      <li><a href="randog.html#randog.DictItemExample.example">example (randog.DictItemExample の属性)</a>
 </li>
       <li><a href="randog.factory.html#randog.factory.FromExampleContext.examples">examples (randog.factory.FromExampleContext のプロパティ)</a>
 </li>
@@ -192,10 +193,12 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="randog.factory.html#randog.factory.Factory.infinity_iter">infinity_iter() (randog.factory.Factory のメソッド)</a>
+      <li><a href="randog.factory.html#randog.factory.increment">increment() (randog.factory モジュール)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="randog.factory.html#randog.factory.Factory.infinity_iter">infinity_iter() (randog.factory.Factory のメソッド)</a>
+</li>
       <li><a href="randog.factory.html#randog.factory.Factory.iter">iter() (randog.factory.Factory のメソッド)</a>
 </li>
   </ul></td>
@@ -258,6 +261,8 @@
 </li>
       <li><a href="randog.factory.html#randog.factory.randdict">randdict() (randog.factory モジュール)</a>
 </li>
+      <li><a href="randog.factory.html#randog.factory.randenum">randenum() (randog.factory モジュール)</a>
+</li>
       <li><a href="randog.factory.html#randog.factory.randfloat">randfloat() (randog.factory モジュール)</a>
 </li>
       <li><a href="randog.factory.html#randog.factory.randint">randint() (randog.factory モジュール)</a>
@@ -287,6 +292,13 @@
         <li><a href="randog.factory.html#module-randog.factory">モジュール</a>
 </li>
       </ul></li>
+      <li>
+    randog.sqlalchemy
+
+      <ul>
+        <li><a href="randog.sqlalchemy.html#module-randog.sqlalchemy">モジュール</a>
+</li>
+      </ul></li>
       <li><a href="randog.factory.html#randog.factory.randstr">randstr() (randog.factory モジュール)</a>
 </li>
       <li><a href="randog.factory.html#randog.factory.randtime">randtime() (randog.factory モジュール)</a>
@@ -297,7 +309,21 @@
 </li>
       <li><a href="randog.factory.html#randog.factory.FromExampleContext.rnd">rnd (randog.factory.FromExampleContext のプロパティ)</a>
 </li>
-      <li><a href="randog.factory.html#randog.factory.FromExampleContext.root">root() (randog.factory.FromExampleContext のクラスメソッド)</a>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="randog.factory.html#randog.factory.FromExampleContext.signal_terminate_custom">signal_terminate_custom (randog.factory.FromExampleContext のプロパティ)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="randog.factory.html#randog.factory.FromExampleContext.terminate_custom_chain">terminate_custom_chain() (randog.factory.FromExampleContext のメソッド)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -322,6 +348,8 @@
         <li><a href="randog.exceptions.html#module-randog.exceptions">randog.exceptions</a>
 </li>
         <li><a href="randog.factory.html#module-randog.factory">randog.factory</a>
+</li>
+        <li><a href="randog.sqlalchemy.html#module-randog.sqlalchemy">randog.sqlalchemy</a>
 </li>
       </ul></li>
   </ul></td>

@@ -9,6 +9,7 @@ Subpackages and submodules
 
    randog.exceptions
    randog.factory
+   randog.sqlalchemy
 
 
 Module contents

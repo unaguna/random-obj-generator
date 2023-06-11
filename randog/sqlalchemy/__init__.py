@@ -8,6 +8,32 @@ from .._utils.nullsafe import dfor
 
 
 def custom(example, **kwargs):
+    """custom_func for `randog.factory.from_example` to generate sqlalchemy-derived objects
+
+    This function is an add-on for `randog.factory.from_example`.
+
+    Specify this function as `custom_func` if you want to create a factory that generates sqlalchemy-derived objects in
+    `from_example`.
+
+    Examples
+    --------
+    >>> from sqlalchemy import Column, Integer, String
+    >>> from sqlalchemy.orm import declarative_base
+    >>> import randog.factory
+    >>> import randog.sqlalchemy
+    >>>
+    >>> Base = declarative_base()
+    >>>
+    >>> class User(Base):
+    ...     __tablename__ = "user"
+    ...
+    ...     id = Column(Integer, primary_key=True, autoincrement=True)
+    ...     name = Column(String)
+    >>>
+    >>> # specify `randog.sqlalchemy.custom` as `custom_func`
+    >>> factory = randog.factory.from_example(User, custom_func=randog.sqlalchemy.custom)
+    >>> generated = factory.next()
+    """
     if type(example).__module__.startswith("sqlalchemy."):
         # example is Model
         if hasattr(example, "_sa_class_manager"):

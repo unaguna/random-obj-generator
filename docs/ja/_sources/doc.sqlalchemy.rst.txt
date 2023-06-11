@@ -109,4 +109,4 @@ randog do not provide a feature to generate an instance of the model, but this c
     >>> assert isinstance(generated, User)
     >>> assert isinstance(generated.id, int)
     >>> assert isinstance(generated.type, str)
-    >>> assert isinstance(generated.name, str)
+    >>> assert isinstance(generated.name, str) or generated.name is None

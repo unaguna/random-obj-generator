@@ -195,3 +195,74 @@ def test__sqlalchemy_factory2__with_column_type(
         assert isinstance(value.id, int)
         if additional_assertion is not None:
             assert value.field is None or additional_assertion(value.field)
+
+
+@pytest.mark.require_sqlalchemy(1, 2)
+@pytest.mark.parametrize(
+    ("column_type", "expected_type", "additional_assertion"),
+    __TEST_PARAMS,
+)
+@pytest.mark.parametrize("nullable", (True, False))
+def test__sqlalchemy_factory__as_dict(
+    my_base1, column_type, expected_type, additional_assertion, nullable
+):
+    if nullable:
+        expected_field_types = {expected_type, type(None)}
+    else:
+        expected_field_types = {expected_type}
+
+    class MyModel(my_base1):
+        __tablename__ = "my_table"
+
+        id = sqlalchemy.Column(
+            "id", sqlalchemy.Integer, primary_key=True, autoincrement=True
+        )
+        field = sqlalchemy.Column("field", column_type(), nullable=nullable)
+
+    factory = randog.sqlalchemy.factory(MyModel, as_dict=True)
+    values = list(factory.iter(200))
+    field_types = set((type(value["field"]) for value in values))
+
+    assert field_types == expected_field_types
+    for value in values:
+        assert isinstance(value, dict)
+        assert isinstance(value["id"], int)
+        if additional_assertion is not None:
+            assert value["field"] is None or additional_assertion(value["field"])
+
+
+@pytest.mark.require_sqlalchemy(2)
+@pytest.mark.parametrize(
+    ("column_type", "expected_type", "additional_assertion"),
+    __TEST_PARAMS,
+)
+@pytest.mark.parametrize("nullable", (True, False))
+def test__sqlalchemy_factory2__as_dict(
+    my_base, column_type, expected_type, additional_assertion, nullable
+):
+    import sqlalchemy.orm
+
+    if nullable:
+        expected_field_types = {expected_type, type(None)}
+    else:
+        expected_field_types = {expected_type}
+
+    class MyModel(my_base):
+        __tablename__ = "my_table"
+
+        id: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column(primary_key=True)
+        field: sqlalchemy.orm.Mapped[expected_type] = sqlalchemy.orm.mapped_column(
+            column_type(),
+            nullable=nullable,
+        )
+
+    factory = randog.sqlalchemy.factory(MyModel, as_dict=True)
+    values = list(factory.iter(200))
+    field_types = set((type(value["field"]) for value in values))
+
+    assert field_types == expected_field_types
+    for value in values:
+        assert isinstance(value, dict)
+        assert isinstance(value["id"], int)
+        if additional_assertion is not None:
+            assert value["field"] is None or additional_assertion(value["field"])

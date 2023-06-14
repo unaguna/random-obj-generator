@@ -54,7 +54,7 @@ def randdict(
     *,
     rnd: t.Optional[Random] = None,
     **items: t.Union[Factory, _item_tuple, DictItem],
-) -> Factory[int]:
+) -> Factory[dict]:
     """Return a factory generating random dict.
 
     Parameters

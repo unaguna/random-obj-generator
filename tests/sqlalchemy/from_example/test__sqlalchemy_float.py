@@ -2,11 +2,11 @@ from decimal import Decimal
 
 import pytest
 import randog.factory
-from randog.sqlalchemy import custom as sqlalchemy_custom
 
 # run tests even if it failed to import
 try:
     import sqlalchemy
+    from randog.sqlalchemy import custom as sqlalchemy_custom
 except ModuleNotFoundError:
     pass
 

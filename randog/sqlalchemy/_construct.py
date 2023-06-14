@@ -70,14 +70,15 @@ def _by_dict(
 ) -> Factory[dict]:
     return randdict(
         {
-            key: _factory_for_column(column, rnd=rnd)
+            key: factory_from_column(column, rnd=rnd)
             for key, column in mapper.columns.items()
         }
     )
 
 
-def _factory_for_column(
+def factory_from_column(
     column: sqlalchemy.sql.schema.Column,
+    *,
     rnd: t.Optional[Random] = None,
 ) -> Factory:
 

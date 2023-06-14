@@ -47,11 +47,11 @@ def test__sqlalchemy_custom__model(my_base1, get_example):
     for _ in range(200):
         value = factory.next()
 
-        assert isinstance(value, dict)
-        assert isinstance(value.get("id"), int)
-        assert isinstance(value.get("name"), str)
-        assert isinstance(value.get("age"), int)
-        assert isinstance(value.get("email"), (str, type(None)))
+        assert isinstance(value, MyModel)
+        assert isinstance(value.id, int)
+        assert isinstance(value.name, str)
+        assert isinstance(value.age, int)
+        assert isinstance(value.email, (str, type(None)))
 
 
 @pytest.mark.require_sqlalchemy(2)
@@ -77,8 +77,8 @@ def test__sqlalchemy_custom__model2(my_base, get_example):
     for _ in range(200):
         value = factory.next()
 
-        assert isinstance(value, dict)
-        assert isinstance(value.get("id"), int)
-        assert isinstance(value.get("name"), str)
-        assert isinstance(value.get("age"), int)
-        assert isinstance(value.get("email"), (str, type(None)))
+        assert isinstance(value, MyModel)
+        assert isinstance(value.id, int)
+        assert isinstance(value.name, str)
+        assert isinstance(value.age, int)
+        assert isinstance(value.email, (str, type(None)))

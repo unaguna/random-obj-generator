@@ -81,6 +81,15 @@ def factory_from_column(
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory:
+    """Return a factory generating values that matches the column.
+
+    Parameters
+    ----------
+    column : Column
+        the column of sqlalchemy
+    rnd : Random, optional
+        random number generator to be used
+    """
 
     # type checks of `column`
     column_type, column_python_type = _get_column_types(column)

@@ -266,3 +266,97 @@ def test__sqlalchemy_factory2__as_dict(
         assert isinstance(value["id"], int)
         if additional_assertion is not None:
             assert value["field"] is None or additional_assertion(value["field"])
+
+
+@pytest.mark.require_sqlalchemy(1, 2)
+@pytest.mark.parametrize(
+    ("column_type", "expected_type", "additional_assertion"),
+    __TEST_PARAMS,
+)
+@pytest.mark.parametrize("nullable", (True, False))
+def test__sqlalchemy_factory_from_column(
+    column_type, expected_type, additional_assertion, nullable
+):
+    if nullable:
+        expected_field_types = {expected_type, type(None)}
+    else:
+        expected_field_types = {expected_type}
+
+    column = sqlalchemy.Column("field", column_type(), nullable=nullable)
+
+    factory = randog.sqlalchemy.factory_from_column(column)
+    values = list(factory.iter(200))
+    value_types = set((type(value) for value in values))
+
+    assert value_types == expected_field_types
+
+
+@pytest.mark.require_sqlalchemy(2)
+@pytest.mark.parametrize(
+    "expected_type",
+    (
+        int,
+        Decimal,
+        float,
+        str,
+        bool,
+        datetime.date,
+        datetime.datetime,
+        datetime.time,
+        datetime.timedelta,
+    ),
+)
+@pytest.mark.parametrize("nullable", (True, False))
+def test__sqlalchemy_factory_from_column2(my_base, expected_type, nullable):
+    import sqlalchemy.orm
+
+    if nullable:
+        expected_field_types = {expected_type, type(None)}
+    else:
+        expected_field_types = {expected_type}
+
+    class MyModel(my_base):
+        __tablename__ = "my_table"
+
+        id: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column(primary_key=True)
+        field: sqlalchemy.orm.Mapped[expected_type] = sqlalchemy.orm.mapped_column(
+            nullable=nullable
+        )
+
+    factory = randog.sqlalchemy.factory_from_column(MyModel.field)
+    values = list(factory.iter(200))
+    value_types = set((type(value) for value in values))
+
+    assert value_types == expected_field_types
+
+
+@pytest.mark.require_sqlalchemy(2)
+@pytest.mark.parametrize(
+    ("column_type", "expected_type", "additional_assertion"),
+    __TEST_PARAMS,
+)
+@pytest.mark.parametrize("nullable", (True, False))
+def test__sqlalchemy_factory_from_column2__with_column_type(
+    my_base, column_type, expected_type, additional_assertion, nullable
+):
+    import sqlalchemy.orm
+
+    if nullable:
+        expected_field_types = {expected_type, type(None)}
+    else:
+        expected_field_types = {expected_type}
+
+    class MyModel(my_base):
+        __tablename__ = "my_table"
+
+        id: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column(primary_key=True)
+        field: sqlalchemy.orm.Mapped[expected_type] = sqlalchemy.orm.mapped_column(
+            column_type(),
+            nullable=nullable,
+        )
+
+    factory = randog.sqlalchemy.factory_from_column(MyModel.field)
+    values = list(factory.iter(200))
+    value_types = set((type(value) for value in values))
+
+    assert value_types == expected_field_types

@@ -360,3 +360,196 @@ def test__sqlalchemy_factory_from_column2__with_column_type(
     value_types = set((type(value) for value in values))
 
     assert value_types == expected_field_types
+
+
+__TEST_PARAMS_FOR_OVERRIDE_COLUMN = (
+    (
+        lambda: sqlalchemy.String(3),
+        lambda: {"field": int},
+        int,
+        {int},
+        None,
+    ),
+    (
+        lambda: sqlalchemy.String(3),
+        lambda: {"field": int, "dummy": float},
+        int,
+        {int},
+        None,
+    ),
+    (
+        lambda: sqlalchemy.String(3),
+        lambda: {"field": 0},
+        int,
+        {int},
+        None,
+    ),
+    (
+        lambda: sqlalchemy.Integer(),
+        lambda: {
+            "field": randog.factory.randdate(
+                datetime.date(2020, 1, 1), datetime.date(2020, 12, 31)
+            )
+        },
+        datetime.date,
+        {datetime.date},
+        lambda x: x.year == 2020,
+    ),
+    (
+        lambda: sqlalchemy.Integer(),
+        lambda: {"field": sqlalchemy.Column("field", sqlalchemy.Interval)},
+        datetime.timedelta,
+        {datetime.timedelta, type(None)},
+        None,
+    ),
+    (
+        lambda: sqlalchemy.Integer(),
+        lambda: {"field": sqlalchemy.Column("field", sqlalchemy.String(3))},
+        str,
+        {str, type(None)},
+        lambda x: len(x) <= 3,
+    ),
+)
+
+
+@pytest.mark.require_sqlalchemy(1, 2)
+@pytest.mark.parametrize(
+    (
+        "column_type",
+        "override_columns",
+        "expected_type",
+        "expected_field_types",
+        "additional_assertion",
+    ),
+    __TEST_PARAMS_FOR_OVERRIDE_COLUMN,
+)
+@pytest.mark.parametrize("nullable", (True, False))
+def test__sqlalchemy_factory__with_override_columns(
+    my_base1,
+    column_type,
+    override_columns,
+    expected_type,
+    expected_field_types,
+    additional_assertion,
+    nullable,
+):
+    class MyModel(my_base1):
+        __tablename__ = "my_table"
+
+        id = sqlalchemy.Column(
+            "id", sqlalchemy.Integer, primary_key=True, autoincrement=True
+        )
+        field = sqlalchemy.Column("field", column_type(), nullable=nullable)
+
+    factory = randog.sqlalchemy.factory(
+        MyModel,
+        override_columns(),
+    )
+    values = list(factory.iter(200))
+    field_types = set((type(value.field) for value in values))
+
+    assert field_types == expected_field_types
+    for value in values:
+        assert not hasattr(value, "dummy")
+        assert isinstance(value, MyModel)
+        assert isinstance(value.id, int)
+        if additional_assertion is not None:
+            assert value.field is None or additional_assertion(value.field)
+
+
+@pytest.mark.require_sqlalchemy(1, 2)
+def test__sqlalchemy_factory__with_override_columns__auto_increment(
+    my_base1,
+):
+    class MyModel(my_base1):
+        __tablename__ = "my_table"
+
+        id = sqlalchemy.Column(
+            "id", sqlalchemy.Integer, primary_key=True, autoincrement=True
+        )
+        field = sqlalchemy.Column("field", sqlalchemy.String)
+
+    factory = randog.sqlalchemy.factory(
+        MyModel,
+        {
+            "field": sqlalchemy.Column(
+                "field", sqlalchemy.Integer, nullable=False, autoincrement=True
+            )
+        },
+    )
+    fields = list(map(lambda m: m.field, factory.iter(10)))
+
+    assert fields == list(range(11)[1:])
+
+
+@pytest.mark.require_sqlalchemy(2)
+@pytest.mark.parametrize(
+    (
+        "column_type",
+        "override_columns",
+        "expected_type",
+        "expected_field_types",
+        "additional_assertion",
+    ),
+    __TEST_PARAMS_FOR_OVERRIDE_COLUMN,
+)
+@pytest.mark.parametrize("nullable", (True, False))
+def test__sqlalchemy_factory2__with_override_column(
+    my_base,
+    column_type,
+    override_columns,
+    expected_type,
+    expected_field_types,
+    additional_assertion,
+    nullable,
+):
+    import sqlalchemy.orm
+
+    class MyModel(my_base):
+        __tablename__ = "my_table"
+
+        id: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column(primary_key=True)
+        field: sqlalchemy.orm.Mapped[expected_type] = sqlalchemy.orm.mapped_column(
+            column_type(),
+            nullable=nullable,
+        )
+
+    factory = randog.sqlalchemy.factory(
+        MyModel,
+        override_columns(),
+    )
+    values = list(factory.iter(200))
+    field_types = set((type(value.field) for value in values))
+
+    assert field_types == expected_field_types
+    for value in values:
+        assert not hasattr(value, "dummy")
+        assert isinstance(value, MyModel)
+        assert isinstance(value.id, int)
+        if additional_assertion is not None:
+            assert value.field is None or additional_assertion(value.field)
+
+
+@pytest.mark.require_sqlalchemy(2)
+def test__sqlalchemy_factory2__with_override_columns__auto_increment(
+    my_base,
+):
+    import sqlalchemy.orm
+
+    class MyModel(my_base):
+        __tablename__ = "my_table"
+
+        id: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column(primary_key=True)
+        field: sqlalchemy.orm.Mapped[str] = sqlalchemy.orm.mapped_column()
+
+    factory = randog.sqlalchemy.factory(
+        MyModel,
+        {
+            "field": sqlalchemy.Column(
+                "field", sqlalchemy.Integer, nullable=False, autoincrement=True
+            )
+        },
+    )
+    fields = list(map(lambda m: m.field, factory.iter(10)))
+
+    assert fields == list(range(11)[1:])

@@ -64,9 +64,11 @@
 <li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#special-factory">特殊な Factory</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="doc.increment_factory.html">Incremental integer factory</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Factory from sqlalchemy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#factory-by-randog-sqlalchemy-factory"><code class="code docutils literal notranslate"><span class="pre">randog.sqlalchemy.factory</span></code> を使用して作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#factory-by-from-example"><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#supported-column-type">対応しているカラムの型</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#limitations">制限事項</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#generate-a-model-instance">モデルインスタンスの生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generate-a-dict-instance">dict オブジェクトの生成</a></li>
 </ul>
 </li>
 </ul>
@@ -115,7 +117,8 @@
              
   <section id="factory-from-sqlalchemy">
 <h1>Factory from sqlalchemy<a class="headerlink" href="#factory-from-sqlalchemy" title="この見出しへのパーマリンク"></a></h1>
-<p>sqlalchemy の Model や Column から factory を作成することができます。この機能は <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> を使う際に引数 custom_func として <a class="reference external" href="randog.sqlalchemy.html#custom">randog.sqlalchemy.custom</a> を指定することで有効化できます。</p>
+<p>SQLAlchemy のモデルのインスタンスを生成する factory を作成することができます。この factory では各フィールドの値も毎回ランダムに生成します。</p>
+<p>他の factory と同様に、model factory も2つの方法 (<a class="reference external" href="randog.sqlalchemy.html#randog.sqlalchemy.factory">randog.sqlalchemy.factory</a>, <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>) で作成することができます。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
 <p>これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。</p>
@@ -128,6 +131,57 @@
 <p class="admonition-title">注釈</p>
 <p>以降の例では sqlalchemy 1.4 のモデルを使用していますが、<code class="code docutils literal notranslate"><span class="pre">mapped_column</span></code> を使う2.0のモデルにも対応しています。</p>
 </div>
+<section id="factory-by-randog-sqlalchemy-factory">
+<h2><code class="code docutils literal notranslate"><span class="pre">randog.sqlalchemy.factory</span></code> を使用して作成<a class="headerlink" href="#factory-by-randog-sqlalchemy-factory" title="この見出しへのパーマリンク"></a></h2>
+<p><a class="reference external" href="randog.sqlalchemy.html#randog.sqlalchemy.factory">randog.sqlalchemy.factory</a> を使用する場合、以下の例のようになります。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.sqlalchemy</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">type</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">age</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">User</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">)},</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">User</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># [id] incremental integer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># [type] string of length at least 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># [name] string (nullable)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">generated</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># [age] int (overridden)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">generated</span><span class="o">.</span><span class="n">age</span> <span class="o">&lt;=</span> <span class="mi">60</span>
+</pre></div>
+</div>
+<p>この例のようにSQLAlchemyのモデルクラスを <code class="code docutils literal notranslate"><span class="pre">randog.sqlalchemy.factory</span></code> の引数とすることで各フィールドをランダムに生成するモデルインスタンス factory を作成できます。また、第二引数としてフィールドの値の factory を指定することで、モデルクラスのカラム定義から作成されるデフォルトの factory の代わりに指定した factory が使用されます (上記の例の <code class="code docutils literal notranslate"><span class="pre">age</span></code> のように)。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>フィールドの値の factory として指定する factory の生成方法は <a class="reference internal" href="doc.construct_factories.html"><span class="doc">こちら</span></a> に記載しています。</p>
+</div>
+</section>
+<section id="factory-by-from-example">
+<h2><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成<a class="headerlink" href="#factory-by-from-example" title="この見出しへのパーマリンク"></a></h2>
+<p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> を使用する場合、以下の例のようになります。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
@@ -146,23 +200,24 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">custom_func</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">custom</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">User</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># [id] incremental integer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># [type] string of length at least 4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># [name] string (nullable)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">generated</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">generated</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>この例ではモデルクラスを <code class="code docutils literal notranslate"><span class="pre">from_example</span></code> に渡していますが、モデルインスタンスを渡しても同じように動作します。</p>
 </div>
+</section>
 <section id="supported-column-type">
 <h2>対応しているカラムの型<a class="headerlink" href="#supported-column-type" title="この見出しへのパーマリンク"></a></h2>
 <p>以下の型のカラムに対応しています。</p>
@@ -179,18 +234,27 @@
 </ul>
 </section>
 <section id="limitations">
-<span id="id1"></span><h2>制限事項<a class="headerlink" href="#limitations" title="この見出しへのパーマリンク"></a></h2>
+<span id="id3"></span><h2>制限事項<a class="headerlink" href="#limitations" title="この見出しへのパーマリンク"></a></h2>
 <p>randog は sqlalchemy や RDB の全ての機能には対応していません。とくに、下記の点に注意してください。</p>
 <ul class="simple">
 <li><p>モデルが relationship を含む場合、factory を作成できません。</p></li>
 <li><p>外部キー制約は無視されます。</p></li>
-<li><p>一意制約 (主キー制約を含む) があっても、それらは無視されるため、繰り返し生成する間にフィールドが重複する可能性があります。重複する確率は直感よりも大きいことが知られています (<a class="reference external" href="https://ja.wikipedia.org/wiki/%E8%AA%95%E7%94%9F%E6%97%A5%E3%81%AE%E3%83%91%E3%83%A9%E3%83%89%E3%83%83%E3%82%AF%E3%82%B9">誕生日のパラドックス</a>)。</p></li>
+<li><p>一意制約 (主キー制約を含む) があっても無視されるため、繰り返し生成する間にフィールドが重複する可能性があります。重複する確率は直感よりも大きいことが知られています (<a class="reference external" href="https://ja.wikipedia.org/wiki/%E8%AA%95%E7%94%9F%E6%97%A5%E3%81%AE%E3%83%91%E3%83%A9%E3%83%89%E3%83%83%E3%82%AF%E3%82%B9">誕生日のパラドックス</a>)。</p></li>
 <li><p>チェック制約は無視されます。</p></li>
 </ul>
 </section>
-<section id="generate-a-model-instance">
-<h2>モデルインスタンスの生成<a class="headerlink" href="#generate-a-model-instance" title="この見出しへのパーマリンク"></a></h2>
-<p>これまで示した例で作成した factory からはすべて辞書型の値が生成されます。randog ではモデルインスタンスを生成する機能を提供していませんが、<a class="reference external" href="doc.construct_factories.html#processing-output">post_process</a> を使うことで実現できます。</p>
+<section id="generate-a-dict-instance">
+<h2>dict オブジェクトの生成<a class="headerlink" href="#generate-a-dict-instance" title="この見出しへのパーマリンク"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>再掲：これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。様々な <a class="reference internal" href="#limitations"><span class="std std-ref">制限事項</span></a> があります。</p>
+</div>
+<p>これまで示した例で作成した factory からはすべてモデルのインスタンスが生成されますが、dict オブジェクトを生成する factory を作成する方法があります (<code class="code docutils literal notranslate"><span class="pre">randog.sqlalchemy.factory</span></code> を使用する場合も <code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用する場合も)。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>モデルクラスと無関係に単にdictオブジェクトを生成したい場合は、<a class="reference internal" href="doc.dict_factory.html"><span class="doc">randdict</span></a> を使用してください。</p>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">randog.sqlalchemy.factory</span></code> を使用する場合、次の例のように、引数に <code class="code docutils literal notranslate"><span class="pre">as_dict=True</span></code> を指定することでdict オブジェクトを生成する factory を作成することができます。</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
@@ -205,15 +269,45 @@
 <span class="gp">... </span>    <span class="nb">type</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># In post_process, convert a generated dict value into User instance.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">custom_func</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">custom</span><span class="p">)</span> \
-<span class="gp">... </span>    <span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">User</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">as_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">User</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">generated</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">generated</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">from_example</span></code>　を使用する場合、次の例のように、<a class="reference external" href="doc.construct_factories.html#processing-output">post_process</a> を使用することでdict オブジェクトを生成する factory を作成することができます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">inspect</span><span class="p">,</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.sqlalchemy</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">type</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># In post_process, convert a generated User instance into a dict object.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">custom_func</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">custom</span><span class="p">)</span> \
+<span class="gp">... </span>    <span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">inspect</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">generated</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </section>

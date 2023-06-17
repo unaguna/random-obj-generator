@@ -67,6 +67,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#factory-by-from-example">Factory by <code class="code docutils literal notranslate"><span class="pre">from_example</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#supported-column-type">Supported column type</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#limitations">Limitations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specify-factories-for-individual-fields">Specify factories for individual fields</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#generate-a-dict-instance">Generate a dict instance</a></li>
 </ul>
 </li>
@@ -242,6 +243,49 @@ but it works the same way if a model instance is given.</p>
 <li><p>Even with unique constraints (includes primary key constraint), they are ignored, so fields may be duplicated when values are generated repeatedly. The probability of duplication is known to be greater than intuition (<a class="reference external" href="https://en.wikipedia.org/wiki/Birthday_problem">birthday problem</a>).</p></li>
 <li><p>Check constraints are ignored.</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the constraints are known in advance, it may be possible to satisfy the constraint by specifying the factory of the field. See also: <a class="reference internal" href="#override-columns"><span class="std std-ref">Specify factories for individual fields</span></a></p>
+</div>
+</section>
+<section id="specify-factories-for-individual-fields">
+<span id="override-columns"></span><h2>Specify factories for individual fields<a class="headerlink" href="#specify-factories-for-individual-fields" title="Permalink to this heading"></a></h2>
+<p>The factory that generates each field is automatically created from the column definitions in the model class, but some or all of it can be specified manually. For example:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.sqlalchemy</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">type</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">group_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">User</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">{</span>
+<span class="gp">... </span>        <span class="c1"># Example of manually responding to check constraints</span>
+<span class="gp">... </span>        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randchoice</span><span class="p">(</span><span class="s2">&quot;regular&quot;</span><span class="p">,</span> <span class="s2">&quot;manager&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="c1"># Example of manually responding to foreign key constraints</span>
+<span class="gp">... </span>        <span class="s2">&quot;group_id&quot;</span><span class="p">:</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">User</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">generated</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;regular&quot;</span><span class="p">,</span> <span class="s2">&quot;manager&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="o">.</span><span class="n">group_id</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the above example, factories that generate <code class="code docutils literal notranslate"><span class="pre">type</span></code> and <code class="code docutils literal notranslate"><span class="pre">group_id</span></code> are specified in order to generate records that satisfy foreign key constraints and check constraints specified in the actual database. <code class="code docutils literal notranslate"><span class="pre">id</span></code> and <code class="code docutils literal notranslate"><span class="pre">name</span></code>, whose factories are not specified, are generated by the factories created from the column definitions as default.</p>
 </section>
 <section id="generate-a-dict-instance">
 <h2>Generate a dict instance<a class="headerlink" href="#generate-a-dict-instance" title="Permalink to this heading"></a></h2>

@@ -38,6 +38,10 @@ As in this example, by passing value factories as keyword arguments to :code:`ra
 
     See also :doc:`here <doc.construct_factories>` for how to build each factory.
 
+.. note::
+
+    If you want to generate a dict object corresponding to a model of SQLAlchemy, you can use `randog.sqlalchemy.factory(as_dict=True) <doc.sqlalchemy.html#generate-a-dict-instance>`_.
+
 
 Factory by :code:`from_example`
 -------------------------------

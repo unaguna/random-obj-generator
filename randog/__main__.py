@@ -14,12 +14,14 @@ class Args:
     def __init__(self, argv: t.Sequence[str]):
         parser = argparse.ArgumentParser(
             prog="randog",
-            usage="python -m randog [options] FACTORY_PATH [FACTORY_PATH ...]",
+            usage="python -m randog [options] -f FACTORY_PATH [FACTORY_PATH ...]",
             description="Create object at random.",
         )
         group_output_fmt = parser.add_mutually_exclusive_group()
         parser.add_argument(
-            "factories",
+            "--factory",
+            "-f",
+            dest="factories",
             nargs="+",
             metavar="FACTORY_PATH",
             help="path of factory definition files",

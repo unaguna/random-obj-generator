@@ -7,14 +7,14 @@ import randog.__main__
 
 
 @pytest.mark.parametrize(
-    ("def_file", "expected"),
+    ("option", "def_file", "expected"),
     [
-        ("factory_def.py", "aaa\n"),
-        ("factory_def_bbb.py", "bbb\n"),
+        ("-f", "factory_def.py", "aaa\n"),
+        ("--factory", "factory_def_bbb.py", "bbb\n"),
     ],
 )
-def test__main(capfd, resources, def_file, expected):
-    args = ["randog", str(resources.joinpath(def_file))]
+def test__main__spec_factory(capfd, resources, option, def_file, expected):
+    args = ["randog", option, str(resources.joinpath(def_file))]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
@@ -24,7 +24,7 @@ def test__main(capfd, resources, def_file, expected):
 
 
 def test__main__option_repr(capfd, resources):
-    args = ["randog", "--repr", str(resources.joinpath("factory_def.py"))]
+    args = ["randog", "--repr", "-f", str(resources.joinpath("factory_def.py"))]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
@@ -34,7 +34,7 @@ def test__main__option_repr(capfd, resources):
 
 
 def test__main__option_json(capfd, resources):
-    args = ["randog", "--json", str(resources.joinpath("factory_def.py"))]
+    args = ["randog", "--json", "-f", str(resources.joinpath("factory_def.py"))]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
@@ -51,7 +51,13 @@ def test__main__option_json(capfd, resources):
     ],
 )
 def test__main__option_repeat(capfd, resources, option, count):
-    args = ["randog", option, str(count), str(resources.joinpath("factory_def.py"))]
+    args = [
+        "randog",
+        option,
+        str(count),
+        "-f",
+        str(resources.joinpath("factory_def.py")),
+    ]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
@@ -68,7 +74,13 @@ def test__main__option_repeat(capfd, resources, option, count):
     ],
 )
 def test__main__error_with_negative_repeat(capfd, resources, option, length):
-    args = ["randog", option, str(length), str(resources.joinpath("factory_def.py"))]
+    args = [
+        "randog",
+        option,
+        str(length),
+        "-f",
+        str(resources.joinpath("factory_def.py")),
+    ]
     with patch.object(sys, "argv", args):
         with pytest.raises(SystemExit):
             randog.__main__.main()
@@ -85,6 +97,7 @@ def test__main__error_with_negative_repeat(capfd, resources, option, length):
 def test__main__multiple_factories(capfd, resources):
     args = [
         "randog",
+        "-f",
         str(resources.joinpath("factory_def.py")),
         str(resources.joinpath("factory_def_bbb.py")),
     ]
@@ -109,7 +122,7 @@ def test__main__option_repeat__multiple_factories(
     factory_path = str(resources.joinpath("factory_def.py"))
     factory_bbb_path = str(resources.joinpath("factory_def_bbb.py"))
     args = (
-        ["randog", option, str(r_count)]
+        ["randog", option, str(r_count), "-f"]
         + (f_count - 1) * [factory_path]
         + [factory_bbb_path]
     )
@@ -129,7 +142,13 @@ def test__main__option_repeat__multiple_factories(
     ],
 )
 def test__main__option_list(capfd, resources, option, length):
-    args = ["randog", str(resources.joinpath("factory_def.py")), option, str(length)]
+    args = [
+        "randog",
+        "-f",
+        str(resources.joinpath("factory_def.py")),
+        option,
+        str(length),
+    ]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
@@ -146,7 +165,13 @@ def test__main__option_list(capfd, resources, option, length):
     ],
 )
 def test__main__error_with_negative_list(capfd, resources, option, length):
-    args = ["randog", option, str(length), str(resources.joinpath("factory_def.py"))]
+    args = [
+        "randog",
+        option,
+        str(length),
+        "-f",
+        str(resources.joinpath("factory_def.py")),
+    ]
     with patch.object(sys, "argv", args):
         with pytest.raises(SystemExit):
             randog.__main__.main()
@@ -164,6 +189,7 @@ def test__main__option_output(capfd, tmp_path, resources):
     output_path = tmp_path.joinpath("out.txt")
     args = [
         "randog",
+        "-f",
         str(resources.joinpath("factory_def.py")),
         "--output",
         str(output_path),
@@ -185,6 +211,7 @@ def test__main__option_output__option_repeat(capfd, tmp_path, resources):
     count = 3
     args = [
         "randog",
+        "-f",
         str(resources.joinpath("factory_def.py")),
         "--output",
         str(output_path),
@@ -210,6 +237,7 @@ def test__main__option_output__option_repeat__separate(capfd, tmp_path, resource
     count = len(output_paths)
     args = [
         "randog",
+        "-f",
         str(resources.joinpath("factory_def.py")),
         "--output",
         str(output_fmt_path),
@@ -236,7 +264,7 @@ def test__main__option_output__option_repeat__separate(capfd, tmp_path, resource
     ],
 )
 def test__main__error_duplicate_format(capfd, resources, options):
-    args = ["randog", *options, str(resources.joinpath("factory_def.py"))]
+    args = ["randog", *options, "-f", str(resources.joinpath("factory_def.py"))]
     with patch.object(sys, "argv", args):
         with pytest.raises(SystemExit):
             randog.__main__.main()

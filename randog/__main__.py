@@ -13,6 +13,9 @@ def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
                 yield randog.factory.from_pyfile(sys.stdin)
             else:
                 yield randog.factory.from_pyfile(filepath)
+    elif args.sub_cmd == "bool":
+        iargs, kwargs = args.randbool_args()
+        yield randog.factory.randbool(*iargs, **kwargs)
     elif args.sub_cmd == "int":
         iargs, kwargs = args.randint_args()
         yield randog.factory.randint(*iargs, **kwargs)

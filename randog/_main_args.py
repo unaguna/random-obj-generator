@@ -5,7 +5,7 @@ the package contains the Args of module execution and its builder
 import argparse
 import typing as t
 
-from ._utils.type import positive_int
+from ._utils.type import positive_int, probability
 
 
 class Args:
@@ -67,6 +67,7 @@ class Args:
             help="",  # TODO: implement
         )
         _add_byfile_parser(subparsers, parent_parser=parent_parser)
+        _add_bool_parser(subparsers, parent_parser=parent_parser)
         _add_int_parser(subparsers, parent_parser=parent_parser)
 
         self._args = parser.parse_args(argv[1:])
@@ -108,6 +109,9 @@ class Args:
         else:
             return self._args.output.format(number)
 
+    def randbool_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        return (self._args.prop_true,), {}
+
     def randint_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
         return (self._args.minimum, self._args.maximum), {}
 
@@ -127,6 +131,25 @@ def _add_byfile_parser(subparsers, *, parent_parser):
     )
 
     return byfile_parser
+
+
+def _add_bool_parser(subparsers, *, parent_parser):
+    bool_parser = subparsers.add_parser(
+        "bool",
+        parents=[parent_parser],
+        usage="python -m randog int [PROP_TRUE] [options]",
+        description="",  # TODO: implement
+    )
+    bool_parser.add_argument(
+        "prop_true",
+        type=probability,
+        default=0.5,
+        nargs="?",
+        metavar="PROP_TRUE",
+        help="the probability of True",
+    )
+
+    return bool_parser
 
 
 def _add_int_parser(subparsers, *, parent_parser):

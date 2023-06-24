@@ -4,8 +4,15 @@ the package contains the Args of module execution and its builder
 
 import argparse
 import typing as t
+from enum import Enum
 
 from ._utils.type import positive_int, probability
+
+
+class Subcmd(Enum):
+    Byfile = "byfile"
+    Int = "int"
+    Bool = "bool"
 
 
 class Args:
@@ -68,13 +75,15 @@ class Args:
         )
         _add_byfile_parser(subparsers, parent_parser=parent_parser)
         _add_bool_parser(subparsers, parent_parser=parent_parser)
-        _add_int_parser(subparsers, parent_parser=parent_parser)
+        int_parser = _add_int_parser(subparsers, parent_parser=parent_parser)
 
         self._args = parser.parse_args(argv[1:])
 
+        _validate_int_parser(self, int_parser)
+
     @property
-    def sub_cmd(self) -> str:
-        return self._args.sub
+    def sub_cmd(self) -> Subcmd:
+        return Subcmd(self._args.sub)
 
     @property
     def factories(self) -> t.Sequence[str]:
@@ -118,7 +127,7 @@ class Args:
 
 def _add_byfile_parser(subparsers, *, parent_parser):
     byfile_parser = subparsers.add_parser(
-        "byfile",
+        Subcmd.Byfile.value,
         parents=[parent_parser],
         usage="python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [options]",
         description="",  # TODO: implement
@@ -135,7 +144,7 @@ def _add_byfile_parser(subparsers, *, parent_parser):
 
 def _add_bool_parser(subparsers, *, parent_parser):
     bool_parser = subparsers.add_parser(
-        "bool",
+        Subcmd.Bool.value,
         parents=[parent_parser],
         usage="python -m randog int [PROP_TRUE] [options]",
         description="",  # TODO: implement
@@ -154,7 +163,7 @@ def _add_bool_parser(subparsers, *, parent_parser):
 
 def _add_int_parser(subparsers, *, parent_parser):
     int_parser = subparsers.add_parser(
-        "int",
+        Subcmd.Int.value,
         parents=[parent_parser],
         usage="python -m randog int MINIMUM MAXIMUM [options]",
         description="",  # TODO: implement
@@ -173,3 +182,14 @@ def _add_int_parser(subparsers, *, parent_parser):
     )
 
     return int_parser
+
+
+def _validate_int_parser(args: Args, subparser: argparse.ArgumentParser):
+    if args.sub_cmd != Subcmd.Int:
+        return
+
+    iargs, kwargs = args.randint_args()
+    minimum, maximum = iargs
+
+    if minimum is not None and maximum is not None and minimum > maximum:
+        subparser.error("arguments must satisfy MINIMUM <= MAXIMUM")

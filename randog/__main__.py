@@ -3,20 +3,20 @@ import sys
 import typing as t
 
 import randog.factory
-from randog._main_args import Args
+from randog._main_args import Args, Subcmd
 
 
 def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
-    if args.sub_cmd == "byfile":
+    if args.sub_cmd == Subcmd.Byfile:
         for filepath in args.factories:
             if filepath == "-":
                 yield randog.factory.from_pyfile(sys.stdin)
             else:
                 yield randog.factory.from_pyfile(filepath)
-    elif args.sub_cmd == "bool":
+    elif args.sub_cmd == Subcmd.Bool:
         iargs, kwargs = args.randbool_args()
         yield randog.factory.randbool(*iargs, **kwargs)
-    elif args.sub_cmd == "int":
+    elif args.sub_cmd == Subcmd.Int:
         iargs, kwargs = args.randint_args()
         yield randog.factory.randint(*iargs, **kwargs)
 

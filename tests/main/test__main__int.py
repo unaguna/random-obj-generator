@@ -33,6 +33,50 @@ def test__main__int__min_max(capfd, expected):
 
 
 @pytest.mark.parametrize(
+    "minimum",
+    ["0.1", "a", "-"],
+)
+def test__main__int__error_when_illegal_min(capfd, minimum):
+    args = ["randog", "int", minimum, "1000"]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "int: error: argument MINIMUM: invalid int value: " in err
+
+
+@pytest.mark.parametrize(
+    "maximum",
+    ["0.1", "a", "-"],
+)
+def test__main__int__error_when_illegal_max(capfd, maximum):
+    args = ["randog", "int", "-1000", maximum]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "int: error: argument MAXIMUM: invalid int value: " in err
+
+
+def test__main__int__error_when_max_lt_min(capfd):
+    args = ["randog", "int", "1", "0"]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "int: error: arguments must satisfy MINIMUM <= MAXIMUM" in err
+
+
+@pytest.mark.parametrize(
     "expected",
     [-1, 0, 1],
 )

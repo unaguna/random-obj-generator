@@ -7,11 +7,15 @@ from randog._main_args import Args
 
 
 def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
-    for filepath in args.factories:
-        if filepath == "-":
-            yield randog.factory.from_pyfile(sys.stdin)
-        else:
-            yield randog.factory.from_pyfile(filepath)
+    if args.sub_cmd == "byfile":
+        for filepath in args.factories:
+            if filepath == "-":
+                yield randog.factory.from_pyfile(sys.stdin)
+            else:
+                yield randog.factory.from_pyfile(filepath)
+    elif args.sub_cmd == "int":
+        iargs, kwargs = args.randint_args()
+        yield randog.factory.randint(*iargs, **kwargs)
 
 
 class _DummyIO:

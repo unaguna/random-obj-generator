@@ -78,8 +78,13 @@ class Args:
             metavar="FACTORY_PATH",
             help="path of factory definition files",
         )
+        _add_int_parser(subparsers, parent_parser=parent_parser)
 
         self._args = parser.parse_args(argv[1:])
+
+    @property
+    def sub_cmd(self) -> str:
+        return self._args.sub
 
     @property
     def factories(self) -> t.Sequence[str]:
@@ -113,3 +118,29 @@ class Args:
             return None
         else:
             return self._args.output.format(number)
+
+    def randint_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        return (self._args.minimum, self._args.maximum), {}
+
+
+def _add_int_parser(subparsers, *, parent_parser):
+    int_parser = subparsers.add_parser(
+        "int",
+        parents=[parent_parser],
+        usage="python -m randog int MINIMUM MAXIMUM [options]",
+        description="",  # TODO: implement
+    )
+    int_parser.add_argument(
+        "minimum",
+        type=int,
+        metavar="MINIMUM",
+        help="the minimum value",
+    )
+    int_parser.add_argument(
+        "maximum",
+        type=int,
+        metavar="MAXIMUM",
+        help="the maximum value",
+    )
+
+    return int_parser

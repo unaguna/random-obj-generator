@@ -66,18 +66,7 @@ class Args:
             metavar="MODE",
             help="",  # TODO: implement
         )
-        byfile_parser = subparsers.add_parser(
-            "byfile",
-            parents=[parent_parser],
-            usage="python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [options]",
-            description="",  # TODO: implement
-        )
-        byfile_parser.add_argument(
-            "factories",
-            nargs="+",
-            metavar="FACTORY_PATH",
-            help="path of factory definition files",
-        )
+        _add_byfile_parser(subparsers, parent_parser=parent_parser)
         _add_int_parser(subparsers, parent_parser=parent_parser)
 
         self._args = parser.parse_args(argv[1:])
@@ -121,6 +110,23 @@ class Args:
 
     def randint_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
         return (self._args.minimum, self._args.maximum), {}
+
+
+def _add_byfile_parser(subparsers, *, parent_parser):
+    byfile_parser = subparsers.add_parser(
+        "byfile",
+        parents=[parent_parser],
+        usage="python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [options]",
+        description="",  # TODO: implement
+    )
+    byfile_parser.add_argument(
+        "factories",
+        nargs="+",
+        metavar="FACTORY_PATH",
+        help="path of factory definition files",
+    )
+
+    return byfile_parser
 
 
 def _add_int_parser(subparsers, *, parent_parser):

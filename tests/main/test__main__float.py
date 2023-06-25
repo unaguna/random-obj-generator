@@ -83,6 +83,126 @@ def test__main__float__error_when_max_lt_min(capfd):
 
 
 @pytest.mark.parametrize(
+    ("prob_p_inf", "contains_inf", "contains_fin"),
+    [
+        ("1", True, False),
+        ("0", False, True),
+        ("0.5", True, True),
+    ],
+)
+def test__main__float__p_inf(capfd, prob_p_inf, contains_inf, contains_fin):
+    args = ["randog", "float", "0", "0", "--p-inf", prob_p_inf, "--repeat=100"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        if contains_inf:
+            assert "inf" in out
+            assert "-inf" not in out
+        else:
+            assert "inf" not in out
+
+        if contains_fin:
+            assert "0.0" in out
+        else:
+            assert "0" not in out
+
+
+@pytest.mark.parametrize(
+    ("prob_n_inf", "contains_inf", "contains_fin"),
+    [
+        ("1", True, False),
+        ("0", False, True),
+        ("0.5", True, True),
+    ],
+)
+def test__main__float__n_inf(capfd, prob_n_inf, contains_inf, contains_fin):
+    args = ["randog", "float", "0", "0", "--n-inf", prob_n_inf, "--repeat=100"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        if contains_inf:
+            assert "-inf" in out
+            assert " inf" not in out
+        else:
+            assert "inf" not in out
+
+        if contains_fin:
+            assert "0.0" in out
+        else:
+            assert "0" not in out
+
+
+@pytest.mark.parametrize(
+    ("prob_nan", "contains_nan", "contains_non_nan"),
+    [
+        ("1", True, False),
+        ("0", False, True),
+        ("0.5", True, True),
+    ],
+)
+def test__main__float__nan(capfd, prob_nan, contains_nan, contains_non_nan):
+    args = ["randog", "float", "0", "0", "--nan", prob_nan, "--repeat=100"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        if contains_nan:
+            assert "nan" in out
+        else:
+            assert "nan" not in out
+
+        if contains_non_nan:
+            assert "0.0" in out
+        else:
+            assert "0" not in out
+
+
+@pytest.mark.parametrize(
+    ("prob_nan", "prob_p_inf", "prob_n_inf"),
+    [
+        ("0.6", "0.6", "0"),
+        ("0.6", "0", "0.6"),
+        ("0", "0.6", "0.6"),
+        ("0.4", "0.4", "0.4"),
+    ],
+)
+def test__main__float__error_when_too_large_inf_nan(
+    capfd, prob_nan, prob_p_inf, prob_n_inf
+):
+    args = [
+        "randog",
+        "float",
+        "0",
+        "0",
+        "--nan",
+        prob_nan,
+        "--p-inf",
+        prob_p_inf,
+        "--n-inf",
+        prob_n_inf,
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            "arguments must satisfy that PROB_P_INF + PROB_N_INF + PROB_NAN <= 1.0"
+            in err
+        )
+
+
+@pytest.mark.parametrize(
     "expected",
     [-1, 0, 1, 0.1],
 )

@@ -128,7 +128,11 @@ class Args:
         return (self._args.minimum, self._args.maximum), {}
 
     def randfloat_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (self._args.minimum, self._args.maximum), {}
+        return (self._args.minimum, self._args.maximum), {
+            "p_inf": self._args.p_inf,
+            "n_inf": self._args.n_inf,
+            "nan": self._args.nan,
+        }
 
 
 def _add_byfile_parser(subparsers, *, parent_parser):
@@ -194,7 +198,8 @@ def _add_float_parser(subparsers, *, parent_parser):
     float_parser = subparsers.add_parser(
         Subcmd.Float.value,
         parents=[parent_parser],
-        usage="python -m randog float MINIMUM MAXIMUM [options]",
+        usage="python -m randog float MINIMUM MAXIMUM [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] "
+        "[options]",
         description="",  # TODO: implement
     )
     float_parser.add_argument(
@@ -209,6 +214,28 @@ def _add_float_parser(subparsers, *, parent_parser):
         metavar="MAXIMUM",
         help="the maximum value",
     )
+    float_parser.add_argument(
+        "--p-inf",
+        type=float,
+        default=0.0,
+        metavar="PROB_P_INF",
+        help="the probability of positive infinity; default=0.0",
+    )
+    float_parser.add_argument(
+        "--n-inf",
+        type=float,
+        default=0.0,
+        metavar="PROB_N_INF",
+        help="the probability of negative infinity; default=0.0",
+    )
+    float_parser.add_argument(
+        "--nan",
+        type=float,
+        default=0.0,
+        metavar="PROB_NAN",
+        help="the probability of NaN; default=0.0",
+    )
+
     return float_parser
 
 
@@ -227,8 +254,16 @@ def _validate_float_parser(args: Args, subparser: argparse.ArgumentParser):
     if args.sub_cmd != Subcmd.Float:
         return
 
-    iargs, kwargs = args.randint_args()
+    iargs, kwargs = args.randfloat_args()
     minimum, maximum = iargs
+    nan = kwargs["nan"]
+    p_inf = kwargs["p_inf"]
+    n_inf = kwargs["n_inf"]
 
     if minimum is not None and maximum is not None and minimum > maximum:
         subparser.error("arguments must satisfy MINIMUM <= MAXIMUM")
+
+    if nan + p_inf + n_inf > 1.0:
+        subparser.error(
+            "arguments must satisfy that PROB_P_INF + PROB_N_INF + PROB_NAN <= 1.0"
+        )

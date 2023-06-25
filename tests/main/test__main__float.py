@@ -166,6 +166,26 @@ def test__main__float__nan(capfd, prob_nan, contains_nan, contains_non_nan):
 
 
 @pytest.mark.parametrize(
+    "option",
+    ["--p-inf", "--n-inf", "--nan"],
+)
+@pytest.mark.parametrize(
+    "prop_p_inf",
+    ["-1", "-0.1", "1.1", "INF", "foo"],
+)
+def test__main__float__error_when_illegal_prop(capfd, option, prop_p_inf):
+    args = ["randog", "float", "0", "0", option, prop_p_inf]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert f"float: error: argument {option}: invalid probability value: " in err
+
+
+@pytest.mark.parametrize(
     ("prob_nan", "prob_p_inf", "prob_n_inf"),
     [
         ("0.6", "0.6", "0"),

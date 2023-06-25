@@ -216,21 +216,21 @@ def _add_float_parser(subparsers, *, parent_parser):
     )
     float_parser.add_argument(
         "--p-inf",
-        type=float,
+        type=probability,
         default=0.0,
         metavar="PROB_P_INF",
         help="the probability of positive infinity; default=0.0",
     )
     float_parser.add_argument(
         "--n-inf",
-        type=float,
+        type=probability,
         default=0.0,
         metavar="PROB_N_INF",
         help="the probability of negative infinity; default=0.0",
     )
     float_parser.add_argument(
         "--nan",
-        type=float,
+        type=probability,
         default=0.0,
         metavar="PROB_NAN",
         help="the probability of NaN; default=0.0",

@@ -11,8 +11,9 @@ from ._utils.type import positive_int, probability
 
 class Subcmd(Enum):
     Byfile = "byfile"
-    Int = "int"
     Bool = "bool"
+    Int = "int"
+    Float = "float"
 
 
 class Args:
@@ -76,10 +77,12 @@ class Args:
         _add_byfile_parser(subparsers, parent_parser=parent_parser)
         _add_bool_parser(subparsers, parent_parser=parent_parser)
         int_parser = _add_int_parser(subparsers, parent_parser=parent_parser)
+        float_parser = _add_float_parser(subparsers, parent_parser=parent_parser)
 
         self._args = parser.parse_args(argv[1:])
 
         _validate_int_parser(self, int_parser)
+        _validate_float_parser(self, float_parser)
 
     @property
     def sub_cmd(self) -> Subcmd:
@@ -122,6 +125,9 @@ class Args:
         return (self._args.prop_true,), {}
 
     def randint_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        return (self._args.minimum, self._args.maximum), {}
+
+    def randfloat_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
         return (self._args.minimum, self._args.maximum), {}
 
 
@@ -184,8 +190,41 @@ def _add_int_parser(subparsers, *, parent_parser):
     return int_parser
 
 
+def _add_float_parser(subparsers, *, parent_parser):
+    float_parser = subparsers.add_parser(
+        Subcmd.Float.value,
+        parents=[parent_parser],
+        usage="python -m randog float MINIMUM MAXIMUM [options]",
+        description="",  # TODO: implement
+    )
+    float_parser.add_argument(
+        "minimum",
+        type=float,
+        metavar="MINIMUM",
+        help="the minimum value",
+    )
+    float_parser.add_argument(
+        "maximum",
+        type=float,
+        metavar="MAXIMUM",
+        help="the maximum value",
+    )
+    return float_parser
+
+
 def _validate_int_parser(args: Args, subparser: argparse.ArgumentParser):
     if args.sub_cmd != Subcmd.Int:
+        return
+
+    iargs, kwargs = args.randint_args()
+    minimum, maximum = iargs
+
+    if minimum is not None and maximum is not None and minimum > maximum:
+        subparser.error("arguments must satisfy MINIMUM <= MAXIMUM")
+
+
+def _validate_float_parser(args: Args, subparser: argparse.ArgumentParser):
+    if args.sub_cmd != Subcmd.Float:
         return
 
     iargs, kwargs = args.randint_args()

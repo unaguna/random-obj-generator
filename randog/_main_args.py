@@ -20,50 +20,6 @@ class Args:
     _args: argparse.Namespace
 
     def __init__(self, argv: t.Sequence[str]):
-        parent_parser = argparse.ArgumentParser(add_help=False)
-        group_output_fmt = parent_parser.add_mutually_exclusive_group()
-        parent_parser.add_argument(
-            "--repeat",
-            "-r",
-            metavar="COUNT",
-            default=1,
-            type=positive_int,
-            help=(
-                "repeat generation a specified number of times. "
-                "The results are output one by one; if you want them as a single list, use --list instead."
-            ),
-        )
-        parent_parser.add_argument(
-            "--list",
-            "-L",
-            metavar="LENGTH",
-            type=positive_int,
-            help=(
-                "if specified, repeats the specified numerical generation "
-                "and returns a list consisting of the results."
-            ),
-        )
-        group_output_fmt.add_argument(
-            "--repr",
-            dest="output_fmt",
-            action="store_const",
-            const="repr",
-            help="if specified, it outputs generated object by repr()",
-        )
-        group_output_fmt.add_argument(
-            "--json",
-            dest="output_fmt",
-            action="store_const",
-            const="json",
-            help="if specified, it outputs generated object by json format",
-        )
-        parent_parser.add_argument(
-            "--output",
-            "-O",
-            metavar="DESC_PATH",
-            help="destination file path",
-        )
-
         parser = argparse.ArgumentParser(
             prog="randog",
             description="Create object at random.",
@@ -74,10 +30,10 @@ class Args:
             metavar="MODE",
             help="",  # TODO: implement
         )
-        _add_byfile_parser(subparsers, parent_parser=parent_parser)
-        _add_bool_parser(subparsers, parent_parser=parent_parser)
-        int_parser = _add_int_parser(subparsers, parent_parser=parent_parser)
-        float_parser = _add_float_parser(subparsers, parent_parser=parent_parser)
+        _add_byfile_parser(subparsers)
+        _add_bool_parser(subparsers)
+        int_parser = _add_int_parser(subparsers)
+        float_parser = _add_float_parser(subparsers)
 
         self._args = parser.parse_args(argv[1:])
 
@@ -135,31 +91,84 @@ class Args:
         }
 
 
-def _add_byfile_parser(subparsers, *, parent_parser):
+def _add_common_arguments(parser: argparse.ArgumentParser):
+    common_opt_group = parser.add_argument_group("common-options")
+    other_opt_group = parser.add_argument_group("other options")
+    group_output_fmt = common_opt_group.add_mutually_exclusive_group()
+    common_opt_group.add_argument(
+        "--repeat",
+        "-r",
+        metavar="COUNT",
+        default=1,
+        type=positive_int,
+        help=(
+            "repeat generation a specified number of times. "
+            "The results are output one by one; if you want them as a single list, use --list instead."
+        ),
+    )
+    common_opt_group.add_argument(
+        "--list",
+        "-L",
+        metavar="LENGTH",
+        type=positive_int,
+        help=(
+            "if specified, repeats the specified numerical generation "
+            "and returns a list consisting of the results."
+        ),
+    )
+    group_output_fmt.add_argument(
+        "--repr",
+        dest="output_fmt",
+        action="store_const",
+        const="repr",
+        help="if specified, it outputs generated object by repr()",
+    )
+    group_output_fmt.add_argument(
+        "--json",
+        dest="output_fmt",
+        action="store_const",
+        const="json",
+        help="if specified, it outputs generated object by json format",
+    )
+    common_opt_group.add_argument(
+        "--output",
+        "-O",
+        metavar="DESC_PATH",
+        help="destination file path",
+    )
+    other_opt_group.add_argument(
+        "-h", "--help", action="help", help="show this help message and exit"
+    )
+
+
+def _add_byfile_parser(subparsers):
     byfile_parser = subparsers.add_parser(
         Subcmd.Byfile.value,
-        parents=[parent_parser],
-        usage="python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [options]",
+        usage="python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [common-options]",
         description="",  # TODO: implement
+        add_help=False,
     )
-    byfile_parser.add_argument(
+    byfile_args_group = byfile_parser.add_argument_group("arguments")
+    byfile_args_group.add_argument(
         "factories",
         nargs="+",
         metavar="FACTORY_PATH",
         help="path of factory definition files",
     )
+    _add_common_arguments(byfile_parser)
 
     return byfile_parser
 
 
-def _add_bool_parser(subparsers, *, parent_parser):
+def _add_bool_parser(subparsers):
     bool_parser = subparsers.add_parser(
         Subcmd.Bool.value,
-        parents=[parent_parser],
-        usage="python -m randog int [PROP_TRUE] [options]",
+        usage="python -m randog int [PROP_TRUE] [common-options]",
         description="",  # TODO: implement
+        add_help=False,
     )
-    bool_parser.add_argument(
+    bool_args_group = bool_parser.add_argument_group("arguments")
+    bool_args_group.add_argument(
         "prop_true",
         type=probability,
         default=0.5,
@@ -167,74 +176,79 @@ def _add_bool_parser(subparsers, *, parent_parser):
         metavar="PROP_TRUE",
         help="the probability of True",
     )
+    _add_common_arguments(bool_parser)
 
     return bool_parser
 
 
-def _add_int_parser(subparsers, *, parent_parser):
+def _add_int_parser(subparsers):
     int_parser = subparsers.add_parser(
         Subcmd.Int.value,
-        parents=[parent_parser],
-        usage="python -m randog int MINIMUM MAXIMUM [options]",
+        usage="python -m randog int MINIMUM MAXIMUM [common-options]",
         description="",  # TODO: implement
+        add_help=False,
     )
-    int_parser.add_argument(
+    int_args_group = int_parser.add_argument_group("arguments")
+    int_args_group.add_argument(
         "minimum",
         type=int,
         metavar="MINIMUM",
         help="the minimum value",
     )
-    int_parser.add_argument(
+    int_args_group.add_argument(
         "maximum",
         type=int,
         metavar="MAXIMUM",
         help="the maximum value",
     )
+    _add_common_arguments(int_parser)
 
     return int_parser
 
 
-def _add_float_parser(subparsers, *, parent_parser):
+def _add_float_parser(subparsers):
     float_parser = subparsers.add_parser(
         Subcmd.Float.value,
-        parents=[parent_parser],
         usage="python -m randog float MINIMUM MAXIMUM [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] "
-        "[options]",
+        "[common-options]",
         description="",  # TODO: implement
+        add_help=False,
     )
-    float_parser.add_argument(
+    float_args_group = float_parser.add_argument_group("arguments")
+    float_args_group.add_argument(
         "minimum",
         type=float,
         metavar="MINIMUM",
         help="the minimum value",
     )
-    float_parser.add_argument(
+    float_args_group.add_argument(
         "maximum",
         type=float,
         metavar="MAXIMUM",
         help="the maximum value",
     )
-    float_parser.add_argument(
+    float_args_group.add_argument(
         "--p-inf",
         type=probability,
         default=0.0,
         metavar="PROB_P_INF",
         help="the probability of positive infinity; default=0.0",
     )
-    float_parser.add_argument(
+    float_args_group.add_argument(
         "--n-inf",
         type=probability,
         default=0.0,
         metavar="PROB_N_INF",
         help="the probability of negative infinity; default=0.0",
     )
-    float_parser.add_argument(
+    float_args_group.add_argument(
         "--nan",
         type=probability,
         default=0.0,
         metavar="PROB_NAN",
         help="the probability of NaN; default=0.0",
     )
+    _add_common_arguments(float_parser)
 
     return float_parser
 

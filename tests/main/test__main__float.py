@@ -6,16 +6,14 @@ import pytest
 import randog.__main__
 
 
-def test__main__float__error_when_miss_args(capfd):
+def test__main__float__without_min_max(capfd):
     args = ["randog", "float"]
     with patch.object(sys, "argv", args):
-        with pytest.raises(SystemExit):
-            randog.__main__.main()
+        randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == ""
-        assert err.startswith("usage:")
-        assert "the following arguments are required: MINIMUM, MAXIMUM" in err
+        assert 0 <= float(out) <= 1
+        assert err == ""
 
 
 @pytest.mark.parametrize(
@@ -163,6 +161,24 @@ def test__main__float__nan(capfd, prob_nan, contains_nan, contains_non_nan):
             assert "0.0" in out
         else:
             assert "0" not in out
+
+
+@pytest.mark.parametrize(
+    ("option", "expected"),
+    [
+        ("--p-inf=1", "inf"),
+        ("--n-inf=1", "-inf"),
+        ("--nan=1", "nan"),
+    ],
+)
+def test__main__float__special__without_min_max(capfd, option, expected):
+    args = ["randog", "float", option, "--repeat=100"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert {*out.splitlines(keepends=False)} == {expected}
+        assert err == ""
 
 
 @pytest.mark.parametrize(

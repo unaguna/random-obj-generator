@@ -209,7 +209,7 @@ def _add_int_parser(subparsers):
 def _add_float_parser(subparsers):
     float_parser = subparsers.add_parser(
         Subcmd.Float.value,
-        usage="python -m randog float MINIMUM MAXIMUM [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] "
+        usage="python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] "
         "[common-options]",
         description="",  # TODO: implement
         add_help=False,
@@ -218,14 +218,18 @@ def _add_float_parser(subparsers):
     float_args_group.add_argument(
         "minimum",
         type=float,
+        nargs="?",
         metavar="MINIMUM",
-        help="the minimum value",
+        help="the minimum value. "
+        "If not specified, the behavior is left to the specification of randog.factory.randfloat.",
     )
     float_args_group.add_argument(
         "maximum",
         type=float,
+        nargs="?",
         metavar="MAXIMUM",
-        help="the maximum value",
+        help="the maximum value. "
+        "If not specified, the behavior is left to the specification of randog.factory.randfloat.",
     )
     float_args_group.add_argument(
         "--p-inf",

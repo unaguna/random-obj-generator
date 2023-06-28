@@ -6,7 +6,7 @@ import argparse
 import typing as t
 from enum import Enum
 
-from ._utils.type import positive_int, probability
+from ._utils.type import positive_int, probability, non_negative_int
 
 
 class Subcmd(Enum):
@@ -14,6 +14,7 @@ class Subcmd(Enum):
     Bool = "bool"
     Int = "int"
     Float = "float"
+    String = "str"
 
 
 class Args:
@@ -34,6 +35,7 @@ class Args:
         _add_bool_parser(subparsers)
         int_parser = _add_int_parser(subparsers)
         float_parser = _add_float_parser(subparsers)
+        _add_str_parser(subparsers)
 
         self._args = parser.parse_args(argv[1:])
 
@@ -89,6 +91,13 @@ class Args:
             "n_inf": self._args.n_inf,
             "nan": self._args.nan,
         }
+
+    def randstr_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        kwargs = {"charset": self._args.charset}
+        if self._args.length is not None:
+            kwargs["length"] = self._args.length
+
+        return tuple(), kwargs
 
 
 def _add_common_arguments(parser: argparse.ArgumentParser):
@@ -255,6 +264,33 @@ def _add_float_parser(subparsers):
     _add_common_arguments(float_parser)
 
     return float_parser
+
+
+def _add_str_parser(subparsers):
+    str_parser = subparsers.add_parser(
+        Subcmd.String.value,
+        usage="python -m randog str [--length LENGTH] [--charset CHARSET] [common-options]",
+        description="",  # TODO: implement
+        add_help=False,
+    )
+    str_args_group = str_parser.add_argument_group("arguments")
+    str_args_group.add_argument(
+        "--length",
+        type=non_negative_int,
+        default=None,
+        metavar="LENGTH",
+        help="the length of generated strings",
+    )
+    str_args_group.add_argument(
+        "--charset",
+        type=str,
+        default=None,
+        metavar="CHARSET",
+        help="the characters which contained by generated strings",
+    )
+    _add_common_arguments(str_parser)
+
+    return str_parser
 
 
 def _validate_int_parser(args: Args, subparser: argparse.ArgumentParser):

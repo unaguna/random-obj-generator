@@ -25,6 +25,9 @@ def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
     elif args.sub_cmd == Subcmd.String:
         iargs, kwargs = args.randstr_args()
         yield randog.factory.randstr(*iargs, **kwargs)
+    elif args.sub_cmd == Subcmd.Decimal:
+        iargs, kwargs = args.randdecimal_args()
+        yield randog.factory.randdecimal(*iargs, **kwargs)
 
 
 class _DummyIO:

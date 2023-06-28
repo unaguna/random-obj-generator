@@ -31,10 +31,24 @@ def test__main__str__length(capfd, length):
 
 
 @pytest.mark.parametrize(
+    ("length", "expected_length"),
+    [("0:2", range(0, 3)), ("5:7", range(5, 8)), ("10:10", [10])],
+)
+def test__main__str__random_length(capfd, length, expected_length):
+    args = ["randog", "str", "--length", length, "--repeat=200"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert set(map(len, out.splitlines(keepends=False))) == set(expected_length)
+        assert err == ""
+
+
+@pytest.mark.parametrize(
     "charset",
     ["0123456789", "abc", "ABC"],
 )
-def test__main__str__length(capfd, charset):
+def test__main__str__charset(capfd, charset):
     args = ["randog", "str", "--charset", charset, "--length=1000"]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
@@ -47,7 +61,27 @@ def test__main__str__length(capfd, charset):
 
 @pytest.mark.parametrize(
     "length",
-    ["0.1", "a", "-1", "-"],
+    [
+        "0.1",
+        "a",
+        "-1",
+        "-",
+        # illegal range (missing)
+        ":",
+        "1:",
+        ":5",
+        # illegal range (non-integer)
+        "1.2:5",
+        "1:5.6",
+        "a:5",
+        "5:a",
+        # illegal range (negative)
+        "'-1:1'",
+        "1:-1",
+        # illegal range (max < min)
+        "2:1",
+        "10:7",
+    ],
 )
 def test__main__str__error_when_illegal_length(capfd, length):
     args = ["randog", "str", "--length", length]
@@ -58,7 +92,10 @@ def test__main__str__error_when_illegal_length(capfd, length):
         out, err = capfd.readouterr()
         assert out == ""
         assert err.startswith("usage:")
-        assert "str: error: argument --length: invalid non_negative_int value: " in err
+        assert (
+            "str: error: argument --length: invalid non_negative_int_range value: "
+            in err
+        )
 
 
 @pytest.mark.parametrize(

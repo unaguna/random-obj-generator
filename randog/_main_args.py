@@ -6,6 +6,7 @@ import argparse
 import typing as t
 from enum import Enum
 
+import randog.factory
 from ._utils.type import positive_int, probability, non_negative_int
 
 
@@ -95,7 +96,10 @@ class Args:
     def randstr_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
         kwargs = {"charset": self._args.charset}
         if self._args.length is not None:
-            kwargs["length"] = self._args.length
+            if self._args.length[0] == self._args.length[1]:
+                kwargs["length"] = self._args.length[0]
+            else:
+                kwargs["length"] = randog.factory.randint(*self._args.length)
 
         return tuple(), kwargs
 
@@ -276,10 +280,11 @@ def _add_str_parser(subparsers):
     str_args_group = str_parser.add_argument_group("arguments")
     str_args_group.add_argument(
         "--length",
-        type=non_negative_int,
+        type=non_negative_int_range,
         default=None,
         metavar="LENGTH",
-        help="the length of generated strings",
+        help="the length of generated strings. "
+        "You can specify an integer such as '--length 5' or a range such as '--length 3:8'.",
     )
     str_args_group.add_argument(
         "--charset",
@@ -321,3 +326,18 @@ def _validate_float_parser(args: Args, subparser: argparse.ArgumentParser):
         subparser.error(
             "arguments must satisfy that PROB_P_INF + PROB_N_INF + PROB_NAN <= 1.0"
         )
+
+
+def non_negative_int_range(value: str) -> t.Tuple[int, int]:
+    if ":" in value:
+        value_s_str, value_e_str = value.split(":", 1)
+        value_s = non_negative_int(value_s_str)
+        value_e = non_negative_int(value_e_str)
+
+        if value_s > value_e:
+            raise ValueError("range must not be empty")
+
+    else:
+        value_s = value_e = non_negative_int(value)
+
+    return value_s, value_e

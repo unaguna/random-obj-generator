@@ -7,7 +7,7 @@ import typing as t
 from enum import Enum
 
 import randog.factory
-from ._utils.type import positive_int, probability, non_negative_int
+from ._utils.type import positive_int, probability, non_negative_int, datetime
 
 
 class Subcmd(Enum):
@@ -17,6 +17,7 @@ class Subcmd(Enum):
     Float = "float"
     String = "str"
     Decimal = "decimal"
+    Datetime = "datetime"
 
 
 class Args:
@@ -39,12 +40,14 @@ class Args:
         float_parser = _add_float_parser(subparsers)
         _add_str_parser(subparsers)
         decimal_parser = _add_decimal_parser(subparsers)
+        datetime_parser = _add_datetime_parser(subparsers)
 
         self._args = parser.parse_args(argv[1:])
 
         _validate_int_parser(self, int_parser)
         _validate_float_parser(self, float_parser)
         _validate_decimal_parser(self, decimal_parser)
+        _validate_datetime_parser(self, datetime_parser)
 
     @property
     def sub_cmd(self) -> Subcmd:
@@ -113,6 +116,9 @@ class Args:
             "n_inf": self._args.n_inf,
             "nan": self._args.nan,
         }
+
+    def randdatetime_args(self) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        return (self._args.minimum, self._args.maximum), {}
 
 
 def _add_common_arguments(parser: argparse.ArgumentParser):
@@ -367,6 +373,35 @@ def _add_decimal_parser(subparsers):
     return decimal_parser
 
 
+def _add_datetime_parser(subparsers):
+    datetime_parser = subparsers.add_parser(
+        Subcmd.Datetime.value,
+        usage="python -m randog datetime [MINIMUM MAXIMUM] [common-options]",
+        description="",  # TODO: implement
+        add_help=False,
+    )
+    datetime_args_group = datetime_parser.add_argument_group("arguments")
+    datetime_args_group.add_argument(
+        "minimum",
+        type=datetime,
+        nargs="?",
+        metavar="MINIMUM",
+        help="the minimum value with the ISO-8601 format. "
+        "If not specified, the behavior is left to the specification of randog.factory.randdatetime.",
+    )
+    datetime_args_group.add_argument(
+        "maximum",
+        type=datetime,
+        nargs="?",
+        metavar="MAXIMUM",
+        help="the maximum value with the ISO-8601 format. "
+        "If not specified, the behavior is left to the specification of randog.factory.randdatetime.",
+    )
+    _add_common_arguments(datetime_parser)
+
+    return datetime_parser
+
+
 def _validate_int_parser(args: Args, subparser: argparse.ArgumentParser):
     if args.sub_cmd != Subcmd.Int:
         return
@@ -414,6 +449,17 @@ def _validate_decimal_parser(args: Args, subparser: argparse.ArgumentParser):
         subparser.error(
             "arguments must satisfy that PROB_P_INF + PROB_N_INF + PROB_NAN <= 1.0"
         )
+
+
+def _validate_datetime_parser(args: Args, subparser: argparse.ArgumentParser):
+    if args.sub_cmd != Subcmd.Datetime:
+        return
+
+    iargs, kwargs = args.randdatetime_args()
+    minimum, maximum = iargs
+
+    if minimum is not None and maximum is not None and minimum > maximum:
+        subparser.error("arguments must satisfy MINIMUM <= MAXIMUM")
 
 
 def non_negative_int_range(value: str) -> t.Tuple[int, int]:

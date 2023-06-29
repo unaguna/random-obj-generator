@@ -1,3 +1,6 @@
+import datetime as dt
+
+
 def positive_int(value):
     value_int = int(value)
     if value_int <= 0:
@@ -18,3 +21,7 @@ def probability(value):
         return value_float
     else:
         raise ValueError("must be in the range [0, 1]")
+
+
+def datetime(value):
+    return dt.datetime.fromisoformat(value)

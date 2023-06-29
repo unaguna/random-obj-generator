@@ -117,6 +117,40 @@ def test__main__datetime__option_json(capfd, arg, expected):
 @pytest.mark.parametrize(
     ("arg", "expected"),
     [
+        ("2020-01-02T03:04:05", "2020-01-02T03:04:05"),
+        ("2020-01-02T00:00:00", "2020-01-02T00:00:00"),
+    ],
+)
+def test__main__datetime__option_iso(capfd, arg, expected):
+    args = ["randog", "datetime", arg, arg, "--iso"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == f"{expected}\n"
+        assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("arg", "expected"),
+    [
+        ("2020-01-02T03:04:05", '"2020-01-02T03:04:05"'),
+        ("2020-01-02T00:00:00", '"2020-01-02T00:00:00"'),
+    ],
+)
+def test__main__datetime__option_json_iso(capfd, arg, expected):
+    args = ["randog", "datetime", arg, arg, "--json", "--iso"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == f"{expected}\n"
+        assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("arg", "expected"),
+    [
         ("2020-01-02T03:04:05", "2020-01-02 03:04:05"),
         ("2020-01-02T00:00:00", "2020-01-02 00:00:00"),
     ],
@@ -320,6 +354,7 @@ def test__main__datetime__option_output__option_repeat__separate(
     ("options",),
     [
         (["--json", "--repr"],),
+        (["--iso", "--repr"],),
     ],
 )
 def test__main__datetime__error_duplicate_format(capfd, resources, options):

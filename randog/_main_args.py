@@ -80,6 +80,13 @@ class Args:
         else:
             return self.output_path_for(1) != self.output_path_for(2)
 
+    @property
+    def iso(self) -> bool:
+        if hasattr(self._args, "iso"):
+            return self._args.iso
+        else:
+            return False
+
     def output_path_for(self, number: int) -> t.Optional[str]:
         if self._args.output is None:
             return None
@@ -376,7 +383,7 @@ def _add_decimal_parser(subparsers):
 def _add_datetime_parser(subparsers):
     datetime_parser = subparsers.add_parser(
         Subcmd.Datetime.value,
-        usage="python -m randog datetime [MINIMUM MAXIMUM] [common-options]",
+        usage="python -m randog datetime [MINIMUM MAXIMUM] [--iso] [common-options]",
         description="",  # TODO: implement
         add_help=False,
     )
@@ -396,6 +403,11 @@ def _add_datetime_parser(subparsers):
         metavar="MAXIMUM",
         help="the maximum value with the ISO-8601 format. "
         "If not specified, the behavior is left to the specification of randog.factory.randdatetime.",
+    )
+    datetime_args_group.add_argument(
+        "--iso",
+        action="store_true",
+        help="if specified, it outputs generated object with ISO-8601 format",
     )
     _add_common_arguments(datetime_parser)
 
@@ -460,6 +472,9 @@ def _validate_datetime_parser(args: Args, subparser: argparse.ArgumentParser):
 
     if minimum is not None and maximum is not None and minimum > maximum:
         subparser.error("arguments must satisfy MINIMUM <= MAXIMUM")
+
+    if args.output_fmt == "repr" and args.iso:
+        subparser.error("argument --iso: not allowed with argument --repr")
 
 
 def non_negative_int_range(value: str) -> t.Tuple[int, int]:

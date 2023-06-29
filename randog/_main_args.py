@@ -87,6 +87,13 @@ class Args:
         else:
             return False
 
+    @property
+    def date_fmt(self) -> t.Optional[str]:
+        if hasattr(self._args, "date_fmt"):
+            return self._args.date_fmt
+        else:
+            return None
+
     def output_path_for(self, number: int) -> t.Optional[str]:
         if self._args.output is None:
             return None
@@ -404,10 +411,18 @@ def _add_datetime_parser(subparsers):
         help="the maximum value with the ISO-8601 format. "
         "If not specified, the behavior is left to the specification of randog.factory.randdatetime.",
     )
-    datetime_args_group.add_argument(
+    group_date_fmt = datetime_args_group.add_mutually_exclusive_group()
+    group_date_fmt.add_argument(
         "--iso",
         action="store_true",
         help="if specified, it outputs generated object with ISO-8601 format",
+    )
+    group_date_fmt.add_argument(
+        "--fmt",
+        dest="date_fmt",
+        metavar="FORMAT",
+        help="if specified, it outputs generated object with the specified format, "
+        "such as '%%Y/%%m/%%d %%H:%%M:%%S.%%f'",
     )
     _add_common_arguments(datetime_parser)
 
@@ -475,6 +490,8 @@ def _validate_datetime_parser(args: Args, subparser: argparse.ArgumentParser):
 
     if args.output_fmt == "repr" and args.iso:
         subparser.error("argument --iso: not allowed with argument --repr")
+    elif args.output_fmt == "repr" and args.date_fmt:
+        subparser.error("argument --fmt: not allowed with argument --repr")
 
 
 def non_negative_int_range(value: str) -> t.Tuple[int, int]:

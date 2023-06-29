@@ -60,28 +60,24 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
     if args.output_fmt == "repr":
         print(repr(generated), file=fp)
     elif args.output_fmt == "json":
-        if args.iso:
-            default = _json_default_iso
-        else:
-            default = _json_default
-
-        json.dump(generated, fp, default=default)
+        json.dump(generated, fp, default=_json_default(args))
         fp.write("\n")
     else:
         if args.iso and isinstance(generated, datetime.datetime):
             print(generated.isoformat(), file=fp)
+        elif args.date_fmt and isinstance(generated, datetime.datetime):
+            print(generated.strftime(args.date_fmt), file=fp)
         else:
             print(generated, file=fp)
 
 
-_json_default = str
-
-
-def _json_default_iso(value):
-    if isinstance(value, datetime.datetime):
-        return value.isoformat()
+def _json_default(args: Args):
+    if args.iso:
+        return lambda v: v.isoformat()
+    elif args.date_fmt:
+        return lambda v: v.strftime(args.date_fmt)
     else:
-        return _json_default(value)
+        return str
 
 
 def main():

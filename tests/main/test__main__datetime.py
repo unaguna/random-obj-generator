@@ -115,14 +115,21 @@ def test__main__datetime__option_json(capfd, arg, expected):
 
 
 @pytest.mark.parametrize(
-    ("arg", "expected"),
+    ("arg", "options", "expected"),
     [
-        ("2020-01-02T03:04:05", "2020-01-02T03:04:05"),
-        ("2020-01-02T00:00:00", "2020-01-02T00:00:00"),
+        ("2020-01-02T03:04:05", ["--iso"], "2020-01-02T03:04:05"),
+        ("2020-01-02T00:00:00", ["--iso"], "2020-01-02T00:00:00"),
+        ("2020-01-02T03:04:05", ["--fmt", "%Y/%m/%d %H:%M:%S"], "2020/01/02 03:04:05"),
+        (
+            "2020-01-02T03:04:05",
+            ["--fmt", "%Y/%m/%d %H:%M:%S.%f"],
+            "2020/01/02 03:04:05.000000",
+        ),
+        ("2020-01-02T03:04:05", ["--fmt", "%m/%d/%Y"], "01/02/2020"),
     ],
 )
-def test__main__datetime__option_iso(capfd, arg, expected):
-    args = ["randog", "datetime", arg, arg, "--iso"]
+def test__main__datetime__option_datetime_fmt(capfd, arg, options, expected):
+    args = ["randog", "datetime", arg, arg, *options]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
@@ -355,6 +362,9 @@ def test__main__datetime__option_output__option_repeat__separate(
     [
         (["--json", "--repr"],),
         (["--iso", "--repr"],),
+        (["--fmt", "%Y/%m/%d", "--repr"],),
+        (["--fmt", "%Y/%m/%d", "--iso"],),
+        (["--fmt", "%Y/%m/%d", "--iso", "--repr"],),
     ],
 )
 def test__main__datetime__error_duplicate_format(capfd, resources, options):

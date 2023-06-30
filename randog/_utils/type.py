@@ -25,3 +25,7 @@ def probability(value):
 
 def datetime(value):
     return dt.datetime.fromisoformat(value)
+
+
+def date(value):
+    return dt.date.fromisoformat(value)

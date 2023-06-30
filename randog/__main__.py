@@ -50,9 +50,9 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
         json.dump(generated, fp, default=_json_default(args))
         fp.write("\n")
     else:
-        if args.iso and isinstance(generated, datetime.datetime):
+        if args.iso and isinstance(generated, datetime.date):
             print(generated.isoformat(), file=fp)
-        elif args.date_fmt and isinstance(generated, datetime.datetime):
+        elif args.date_fmt and isinstance(generated, datetime.date):
             print(generated.strftime(args.date_fmt), file=fp)
         else:
             print(generated, file=fp)

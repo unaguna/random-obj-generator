@@ -9,3 +9,4 @@ class Subcmd(Enum):
     String = "str"
     Decimal = "decimal"
     Datetime = "datetime"
+    Date = "date"

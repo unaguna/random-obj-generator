@@ -304,3 +304,16 @@ def test__main__int__error_duplicate_format(capfd, resources, options):
         assert out == ""
         assert err.startswith("usage:")
         assert "not allowed with argument" in err
+
+
+def test__main__int__help(capfd):
+    args = ["randog", "int", "--help"]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit) as ex:
+            randog.__main__.main()
+
+        assert ex.value.code == 0
+
+        out, err = capfd.readouterr()
+        assert out.startswith("usage: python -m randog int")
+        assert err == ""

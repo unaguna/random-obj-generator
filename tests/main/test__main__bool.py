@@ -286,3 +286,16 @@ def test__main__bool__error_duplicate_format(capfd, options):
         assert out == ""
         assert err.startswith("usage:")
         assert "not allowed with argument" in err
+
+
+def test__main__bool__help(capfd):
+    args = ["randog", "bool", "--help"]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit) as ex:
+            randog.__main__.main()
+
+        assert ex.value.code == 0
+
+        out, err = capfd.readouterr()
+        assert out.startswith("usage: python -m randog bool")
+        assert err == ""

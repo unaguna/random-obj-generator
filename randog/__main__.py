@@ -4,34 +4,21 @@ import sys
 import typing as t
 
 import randog.factory
-from randog._main_args import Args, Subcmd
+from ._main import Args, Subcmd, get_subcmd_def
 
 
 def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
+    subcmd_def = get_subcmd_def(args.sub_cmd)
+
     if args.sub_cmd == Subcmd.Byfile:
         for filepath in args.factories:
             if filepath == "-":
                 yield randog.factory.from_pyfile(sys.stdin)
             else:
                 yield randog.factory.from_pyfile(filepath)
-    elif args.sub_cmd == Subcmd.Bool:
-        iargs, kwargs = args.randbool_args()
-        yield randog.factory.randbool(*iargs, **kwargs)
-    elif args.sub_cmd == Subcmd.Int:
-        iargs, kwargs = args.randint_args()
-        yield randog.factory.randint(*iargs, **kwargs)
-    elif args.sub_cmd == Subcmd.Float:
-        iargs, kwargs = args.randfloat_args()
-        yield randog.factory.randfloat(*iargs, **kwargs)
-    elif args.sub_cmd == Subcmd.String:
-        iargs, kwargs = args.randstr_args()
-        yield randog.factory.randstr(*iargs, **kwargs)
-    elif args.sub_cmd == Subcmd.Decimal:
-        iargs, kwargs = args.randdecimal_args()
-        yield randog.factory.randdecimal(*iargs, **kwargs)
-    elif args.sub_cmd == Subcmd.Datetime:
-        iargs, kwargs = args.randdatetime_args()
-        yield randog.factory.randdatetime(*iargs, **kwargs)
+    else:
+        iargs, kwargs = subcmd_def.build_args(args)
+        yield subcmd_def.get_factory_constructor()(*iargs, **kwargs)
 
 
 class _DummyIO:

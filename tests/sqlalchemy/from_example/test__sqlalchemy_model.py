@@ -11,7 +11,10 @@ except ModuleNotFoundError:
 
 @pytest.fixture()
 def my_base1():
-    from sqlalchemy.ext.declarative import declarative_base
+    try:
+        from sqlalchemy.orm import declarative_base
+    except ImportError:
+        from sqlalchemy.ext.declarative import declarative_base
 
     return declarative_base()
 

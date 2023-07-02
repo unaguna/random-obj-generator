@@ -1,112 +1,24 @@
-import argparse
+import datetime
 import json
 import sys
 import typing as t
 
 import randog.factory
-
-from ._utils.type import positive_int
-
-
-class Args:
-    _args: argparse.Namespace
-
-    def __init__(self, argv: t.Sequence[str]):
-        parser = argparse.ArgumentParser(
-            prog="randog",
-            usage="python -m randog [options] FACTORY_PATH [FACTORY_PATH ...]",
-            description="Create object at random.",
-        )
-        group_output_fmt = parser.add_mutually_exclusive_group()
-        parser.add_argument(
-            "factories",
-            nargs="+",
-            metavar="FACTORY_PATH",
-            help="path of factory definition files",
-        )
-        parser.add_argument(
-            "--repeat",
-            "-r",
-            metavar="COUNT",
-            default=1,
-            type=positive_int,
-            help=(
-                "repeat generation a specified number of times. "
-                "The results are output one by one; if you want them as a single list, use --list instead."
-            ),
-        )
-        parser.add_argument(
-            "--list",
-            "-L",
-            metavar="LENGTH",
-            type=positive_int,
-            help=(
-                "if specified, repeats the specified numerical generation "
-                "and returns a list consisting of the results."
-            ),
-        )
-        group_output_fmt.add_argument(
-            "--repr",
-            dest="output_fmt",
-            action="store_const",
-            const="repr",
-            help="if specified, it outputs generated object by repr()",
-        )
-        group_output_fmt.add_argument(
-            "--json",
-            dest="output_fmt",
-            action="store_const",
-            const="json",
-            help="if specified, it outputs generated object by json format",
-        )
-        parser.add_argument(
-            "--output",
-            "-O",
-            metavar="DESC_PATH",
-            help="destination file path",
-        )
-        self._args = parser.parse_args(argv[1:])
-
-    @property
-    def factories(self) -> t.Sequence[str]:
-        return self._args.factories
-
-    @property
-    def repeat(self) -> int:
-        return self._args.repeat
-
-    @property
-    def list(self) -> t.Optional[int]:
-        return self._args.list
-
-    @property
-    def output_fmt(self) -> t.Optional[str]:
-        return self._args.output_fmt
-
-    @property
-    def output_path(self) -> t.Optional[str]:
-        return self._args.output
-
-    @property
-    def multiple_output_path(self) -> bool:
-        if self._args.output is None:
-            return False
-        else:
-            return self.output_path_for(1) != self.output_path_for(2)
-
-    def output_path_for(self, number: int) -> t.Optional[str]:
-        if self._args.output is None:
-            return None
-        else:
-            return self._args.output.format(number)
+from ._main import Args, Subcmd, get_subcmd_def
 
 
 def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
-    for filepath in args.factories:
-        if filepath == "-":
-            yield randog.factory.from_pyfile(sys.stdin)
-        else:
-            yield randog.factory.from_pyfile(filepath)
+    subcmd_def = get_subcmd_def(args.sub_cmd)
+
+    if args.sub_cmd == Subcmd.Byfile:
+        for filepath in args.factories:
+            if filepath == "-":
+                yield randog.factory.from_pyfile(sys.stdin)
+            else:
+                yield randog.factory.from_pyfile(filepath)
+    else:
+        iargs, kwargs = subcmd_def.build_args(args)
+        yield subcmd_def.get_factory_constructor()(*iargs, **kwargs)
 
 
 class _DummyIO:
@@ -135,10 +47,24 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
     if args.output_fmt == "repr":
         print(repr(generated), file=fp)
     elif args.output_fmt == "json":
-        json.dump(generated, fp, default=str)
+        json.dump(generated, fp, default=_json_default(args))
         fp.write("\n")
     else:
-        print(generated, file=fp)
+        if args.iso and isinstance(generated, datetime.date):
+            print(generated.isoformat(), file=fp)
+        elif args.date_fmt and isinstance(generated, datetime.date):
+            print(generated.strftime(args.date_fmt), file=fp)
+        else:
+            print(generated, file=fp)
+
+
+def _json_default(args: Args):
+    if args.iso:
+        return lambda v: v.isoformat()
+    elif args.date_fmt:
+        return lambda v: v.strftime(args.date_fmt)
+    else:
+        return str
 
 
 def main():

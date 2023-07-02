@@ -49,6 +49,44 @@ def test__random_time__min_gt_max(minimum, maximum):
     assert value <= maximum or minimum <= value
 
 
+@pytest.mark.parametrize(
+    ("minimum", "expected_maximum"),
+    [
+        (dt.time(23, 59, 59), dt.time(0, 59, 59)),
+        (dt.time(13, 0, 0), dt.time(14, 0, 0)),
+    ],
+)
+def test__random_time__only_min(minimum, expected_maximum):
+    factory = randog.factory.randtime(minimum=minimum)
+
+    values = list(factory.iter(200))
+
+    assert set(map(type, values)) == {dt.time}
+    if minimum <= expected_maximum:
+        assert all(map(lambda v: minimum <= v <= expected_maximum, values))
+    else:
+        assert all(map(lambda v: v <= minimum or expected_maximum <= v, values))
+
+
+@pytest.mark.parametrize(
+    ("expected_minimum", "maximum"),
+    [
+        (dt.time(23, 59, 59), dt.time(0, 59, 59)),
+        (dt.time(13, 0, 0), dt.time(14, 0, 0)),
+    ],
+)
+def test__random_time__only_max(expected_minimum, maximum):
+    factory = randog.factory.randtime(maximum=maximum)
+
+    values = list(factory.iter(200))
+
+    assert set(map(type, values)) == {dt.time}
+    if expected_minimum <= maximum:
+        assert all(map(lambda v: expected_minimum <= v <= maximum, values))
+    else:
+        assert all(map(lambda v: v <= expected_minimum or maximum <= v, values))
+
+
 def test__random_time__by_different_tz_time():
     minimum = dt.time(11, 22, 33, 444_555, tzinfo=dt.timezone.utc)
     maximum = dt.time(12, 22, 33, 444_555, tzinfo=dt.timezone(dt.timedelta(hours=1)))

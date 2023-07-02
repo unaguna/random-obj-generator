@@ -117,8 +117,8 @@ class TimeRandomFactory(Factory[dt.time]):
         if minimum is not None and maximum is not None:
             return minimum, maximum
         elif minimum is not None:
-            return minimum, minimum  # TODO: 適度にレンジを広げる
+            return minimum, minimum.replace(hour=(minimum.hour + 1) % 24)
         elif maximum is not None:
-            return maximum, maximum  # TODO: 適度にレンジを広げる
+            return maximum.replace(hour=(maximum.hour + 23) % 24), maximum
         else:
             return dt.time(0, 0, 0), dt.time(23, 59, 59, 999_999)

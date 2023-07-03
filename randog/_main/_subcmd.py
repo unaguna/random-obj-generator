@@ -10,3 +10,4 @@ class Subcmd(Enum):
     Decimal = "decimal"
     Datetime = "datetime"
     Date = "date"
+    Time = "time"

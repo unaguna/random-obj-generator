@@ -10,6 +10,7 @@ from ._decimal import SubcmdDefDecimal
 from ._float import SubcmdDefFloat
 from ._int import SubcmdDefInt
 from ._str import SubcmdDefString
+from ._time import SubcmdDefTime
 
 _subcmd_def_list: t.Sequence[SubcmdDef] = (
     SubcmdDefBool(),
@@ -20,6 +21,7 @@ _subcmd_def_list: t.Sequence[SubcmdDef] = (
     SubcmdDefFloat(),
     SubcmdDefInt(),
     SubcmdDefString(),
+    SubcmdDefTime(),
 )
 
 _subcmd_def_dict: t.Mapping[Subcmd, SubcmdDef] = {

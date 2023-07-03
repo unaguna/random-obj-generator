@@ -2,6 +2,16 @@ import datetime as dt
 import re
 
 
+def to_iso(
+    value: dt.timedelta,
+    *,
+    exclude_milliseconds: bool = False,
+    point_char: str = ".",
+) -> str:
+    # TODO: implement
+    pass
+
+
 def from_str(value: str) -> dt.timedelta:
     if not re.match(r"^([-+]?\d+[a-zA-Z]+)+$", value):
         raise TimedeltaExpressionError(f"illegal timedelta expression: {value}")

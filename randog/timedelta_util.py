@@ -72,7 +72,8 @@ def from_str(value: str) -> dt.timedelta:
     >>> import randog.timedelta_util as timedelta_util
     >>>
     >>> assert timedelta_util.from_str("1h30m") == timedelta(hours=1, minutes=30)
-    >>> assert timedelta_util.from_str("1d2h3m4s5ms6us") == timedelta(days=1, hours=2, minutes=3, seconds=4, milliseconds=5, microseconds=6)
+    >>> assert timedelta_util.from_str("1d2h3m4s5ms6us") == timedelta(
+    ...             days=1, hours=2, minutes=3, seconds=4, milliseconds=5, microseconds=6)
 
     Parameters
     ----------

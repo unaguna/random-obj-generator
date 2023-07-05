@@ -85,5 +85,36 @@ def test__timedelta_util__to_iso(input_td, expected):
     assert generated == expected
 
 
-# TODO: to_iso(exclude_milliseconds=True) のテスト
-# TODO: to_iso(point_char=",") のテスト
+@pytest.mark.parametrize(
+    ("input_td", "expected"),
+    [
+        (timedelta(hours=20, minutes=30, seconds=55), "PDT20H30M55S"),
+        (
+            timedelta(hours=20, minutes=30, seconds=55, microseconds=51200),
+            "PDT20H30M55S",
+        ),
+    ],
+)
+def test__timedelta_util__to_iso__exclude_milliseconds(input_td, expected):
+    generated = to_iso(input_td, exclude_milliseconds=True)
+    assert generated == expected
+
+
+@pytest.mark.parametrize(
+    ("input_td", "point_char", "expected"),
+    [
+        (
+            timedelta(hours=20, minutes=30, seconds=55, microseconds=51200),
+            ".",
+            "PDT20H30M55.0512S",
+        ),
+        (
+            timedelta(hours=20, minutes=30, seconds=55, microseconds=51200),
+            ",",
+            "PDT20H30M55,0512S",
+        ),
+    ],
+)
+def test__timedelta_util__to_iso__point_char(input_td, point_char, expected):
+    generated = to_iso(input_td, point_char=point_char)
+    assert generated == expected

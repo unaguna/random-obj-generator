@@ -1,4 +1,5 @@
 import datetime as dt
+from decimal import Decimal
 import re
 
 
@@ -8,8 +9,58 @@ def to_iso(
     exclude_milliseconds: bool = False,
     point_char: str = ".",
 ) -> str:
-    # TODO: implement
-    pass
+    """Convert timedelta into ISO-8601 format
+
+    Because the timedelta object manages the date part in terms of days,
+    the date parts in the output string are also expressed in terms of days only.
+    For example, 365 days are represented as "P365D" instead of "P1Y".
+
+    Parameters
+    ----------
+    value : timedelta
+        the timedelta object
+    exclude_milliseconds : bool
+        If it is True, the microsecond part is excluded.
+    point_char : str
+        the point character. For example, if "," is specified, 500 milliseconds would be "PT0,5S".
+
+    Returns
+    -------
+    str
+        the ISO-8601 format of the received timedelta
+    """
+    if value < dt.timedelta():
+        result = "-P"
+        value = -1 * value
+    else:
+        result = "P"
+
+    if value.days > 0:
+        result += f"{value.days}D"
+
+    minutes, seconds = divmod(value.seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+
+    # add decimal part into seconds
+    if not exclude_milliseconds and value.microseconds != 0:
+        seconds += Decimal(value.microseconds).scaleb(-6).normalize()
+
+    result_time_part = ""
+    if hours != 0:
+        result_time_part += f"{hours}H"
+    if minutes != 0:
+        result_time_part += f"{minutes}M"
+    if seconds != 0:
+        result_time_part += f"{seconds}S".replace(".", point_char)
+
+    if len(result_time_part) > 0:
+        result += "T" + result_time_part
+
+    # "P" is invalid even if the value equals 0
+    if len(result) <= 1:
+        return "PT0S"
+
+    return result
 
 
 def from_str(value: str) -> dt.timedelta:

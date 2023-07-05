@@ -73,10 +73,11 @@ def test__timedelta_util__from_str__error_by_illegal_arg(input_str):
         (timedelta(0), "PT0S"),
         (timedelta(days=1000), "P1000D"),
         (timedelta(hours=26, minutes=30), "P1DT2H30M"),
-        (timedelta(hours=20, minutes=30, seconds=55), "PDT20H30M55S"),
+        (-timedelta(hours=26, minutes=30), "-P1DT2H30M"),
+        (timedelta(hours=20, minutes=30, seconds=55), "PT20H30M55S"),
         (
             timedelta(hours=20, minutes=30, seconds=55, microseconds=51200),
-            "PDT20H30M55.0512S",
+            "PT20H30M55.0512S",
         ),
     ],
 )
@@ -88,10 +89,10 @@ def test__timedelta_util__to_iso(input_td, expected):
 @pytest.mark.parametrize(
     ("input_td", "expected"),
     [
-        (timedelta(hours=20, minutes=30, seconds=55), "PDT20H30M55S"),
+        (timedelta(hours=20, minutes=30, seconds=55), "PT20H30M55S"),
         (
             timedelta(hours=20, minutes=30, seconds=55, microseconds=51200),
-            "PDT20H30M55S",
+            "PT20H30M55S",
         ),
     ],
 )
@@ -106,12 +107,12 @@ def test__timedelta_util__to_iso__exclude_milliseconds(input_td, expected):
         (
             timedelta(hours=20, minutes=30, seconds=55, microseconds=51200),
             ".",
-            "PDT20H30M55.0512S",
+            "PT20H30M55.0512S",
         ),
         (
             timedelta(hours=20, minutes=30, seconds=55, microseconds=51200),
             ",",
-            "PDT20H30M55,0512S",
+            "PT20H30M55,0512S",
         ),
     ],
 )

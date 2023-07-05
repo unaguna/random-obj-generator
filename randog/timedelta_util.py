@@ -64,6 +64,26 @@ def to_iso(
 
 
 def from_str(value: str) -> dt.timedelta:
+    """Converts a string of the format to timedelta.
+
+    Examples
+    --------
+    >>> from datetime import timedelta
+    >>> import randog.timedelta_util as timedelta_util
+    >>>
+    >>> assert timedelta_util.from_str("1h30m") == timedelta(hours=1, minutes=30)
+    >>> assert timedelta_util.from_str("1d2h3m4s5ms6us") == timedelta(days=1, hours=2, minutes=3, seconds=4, milliseconds=5, microseconds=6)
+
+    Parameters
+    ----------
+    value : str
+        the string of the format
+
+    Returns
+    -------
+    timedelta
+        the timedelta object for the received value
+    """
     if not re.match(r"^([-+]?\d+[a-zA-Z]+)+$", value):
         raise TimedeltaExpressionError(f"illegal timedelta expression: {value}")
 

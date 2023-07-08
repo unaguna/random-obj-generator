@@ -113,6 +113,31 @@ __TO_FMT_MAP: t.Mapping[str, t.Callable[[dt.timedelta], str]] = {
 
 
 def to_fmt(value: dt.timedelta, fmt: str) -> str:
+    """Convert timedelta into the specified format
+
+    The following is a list of all the format codes:
+
+    * :code:`%D`: replaced by :code:`timedelta.days`
+    * :code:`%H`: hours part (zero-padded to 2 digits)
+    * :code:`%tH`: total duration in hours (rounded down)
+    * :code:`%M`: minutes part (zero-padded to 2 digits)
+    * :code:`%tH`: total duration in minutes (rounded down)
+    * :code:`%S`: seconds part (zero-padded to 2 digits)
+    * :code:`%tS`: total duration in seconds (rounded down)
+    * :code:`%f`: decimal part in seconds (zero-padded to 6 digits)
+
+    Parameters
+    ----------
+    value : timedelta
+        the timedelta object
+    fmt : str
+        the format string
+
+    Returns
+    -------
+    str
+        the specified format of the specified timedelta
+    """
     result = ""
     replace_map = {}
 

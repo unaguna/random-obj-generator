@@ -4,6 +4,31 @@ import re
 import typing as t
 
 
+class TimedeltaTuple(t.NamedTuple):
+    days: int = 0
+    hours: int = 0
+    minutes: int = 0
+    seconds: int = 0
+    milliseconds: int = 0
+    microseconds: int = 0
+
+    @classmethod
+    def of(cls, value: dt.timedelta) -> "TimedeltaTuple":
+        minutes, seconds = divmod(value.seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+
+        milliseconds, microseconds = divmod(value.microseconds, 1000)
+
+        return TimedeltaTuple(
+            days=value.days,
+            hours=hours,
+            minutes=minutes,
+            seconds=seconds,
+            milliseconds=milliseconds,
+            microseconds=microseconds,
+        )
+
+
 def to_iso(
     value: dt.timedelta,
     *,
@@ -36,15 +61,14 @@ def to_iso(
     else:
         result = "P"
 
-    if value.days > 0:
-        result += f"{value.days}D"
-
-    minutes, seconds = divmod(value.seconds, 60)
-    hours, minutes = divmod(minutes, 60)
+    days, hours, minutes, seconds, _, _ = TimedeltaTuple.of(value)
 
     # add decimal part into seconds
     if not exclude_milliseconds and value.microseconds != 0:
         seconds += Decimal(value.microseconds).scaleb(-6).normalize()
+
+    if value.days > 0:
+        result += f"{days}D"
 
     result_time_part = ""
     if hours != 0:

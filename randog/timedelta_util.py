@@ -88,6 +88,48 @@ def to_iso(
     return result
 
 
+FROM_ISO_REGEX = re.compile(
+    r"^(-?)P(?:(-?\d+(?:\.\d+)?)D)?(?:T(?:(-?\d+(?:\.\d+)?)H)?(?:(-?\d+(?:\.\d+)?)M)?(?:(-?\d+(?:\.\d+)?)S)?)?$"
+)
+
+
+def from_iso(value: str) -> dt.timedelta:
+    """Converts a string of the ISO-8601 format to timedelta.
+
+    Examples
+    --------
+    >>> from datetime import timedelta
+    >>> import randog.timedelta_util as timedelta_util
+    >>>
+    >>> assert timedelta_util.from_iso("P1D") == timedelta(days=1)
+    >>> assert timedelta_util.from_iso("PT3H30M") == timedelta(hours=3, minutes=30)
+
+    Parameters
+    ----------
+    value : str
+        the string of the ISO-8601 format
+
+    Returns
+    -------
+    timedelta
+        the timedelta object for the received value
+    """
+    match = re.match(FROM_ISO_REGEX, value)
+
+    if not match:
+        raise TimedeltaExpressionError(f"Invalid isoformat string: {value}")
+
+    sign = -1 if match.group(1) == "-" else 1
+    days, hours, minutes, seconds = map(_float_or_zero, match.groups()[1:])
+
+    return sign * dt.timedelta(
+        days=days,
+        hours=hours,
+        minutes=minutes,
+        seconds=seconds,
+    )
+
+
 def to_str(
     value: dt.timedelta,
 ) -> str:
@@ -257,6 +299,13 @@ _UNIT_TERM_CONSTRUCTOR = {
     "ms": lambda num: dt.timedelta(milliseconds=num),
     "us": lambda num: dt.timedelta(microseconds=num),
 }
+
+
+def _float_or_zero(value: t.Union[str, None]) -> float:
+    if not value:
+        return 0
+    else:
+        return float(value)
 
 
 class TimedeltaExpressionError(ValueError):

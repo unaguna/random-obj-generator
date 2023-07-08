@@ -8,6 +8,7 @@ from randog.timedelta_util import (
     TimedeltaExpressionError,
     to_fmt,
     to_str,
+    from_iso,
 )
 
 
@@ -90,6 +91,51 @@ def test__timedelta_util__from_str__error_by_illegal_arg(input_str):
 def test__timedelta_util__to_str(input_td, expected):
     generated = to_str(input_td)
     assert generated == expected
+
+
+@pytest.mark.parametrize(
+    ("input_str", "expected"),
+    [
+        # each units
+        ("P1D", timedelta(days=1)),
+        ("PT1H", timedelta(hours=1)),
+        ("PT1M", timedelta(minutes=1)),
+        ("PT1S", timedelta(seconds=1)),
+        ("PT0.001S", timedelta(milliseconds=1)),
+        ("PT0.000001S", timedelta(microseconds=1)),
+        ("-P1D", timedelta(days=-1)),
+        ("-PT1H", timedelta(hours=-1)),
+        ("-PT1M", timedelta(minutes=-1)),
+        ("-PT1S", timedelta(seconds=-1)),
+        ("-PT0.001S", timedelta(milliseconds=-1)),
+        ("-PT0.000001S", timedelta(microseconds=-1)),
+        # combined term
+        ("P2DT1H20M", timedelta(days=2, hours=1, minutes=20)),
+        ("PT1H20M", timedelta(hours=1, minutes=20)),
+        ("PT1H20S", timedelta(hours=1, seconds=20)),
+        ("-PT1H20M", timedelta(hours=-1, minutes=-20)),
+        ("-PT1H20S", timedelta(hours=-1, seconds=-20)),
+        ("PT1H1M20S", timedelta(hours=1, minutes=1, seconds=20)),
+        ("PT1H80S", timedelta(hours=1, minutes=1, seconds=20)),
+    ],
+)
+def test__timedelta_util__from_iso(input_str, expected):
+    generated = from_iso(input_str)
+    assert generated == expected
+
+
+@pytest.mark.parametrize(
+    "input_str",
+    ["1", "d", "10", "10D", "P1H"],
+)
+def test__timedelta_util__from_iso__error_by_illegal_arg(input_str):
+    with pytest.raises(TimedeltaExpressionError) as e_ctx:
+        from_iso(input_str)
+    e = e_ctx.value
+    message = e.args[0]
+
+    assert isinstance(message, str)
+    assert message.startswith("Invalid isoformat string: ")
 
 
 @pytest.mark.parametrize(

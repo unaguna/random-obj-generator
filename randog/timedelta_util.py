@@ -1,6 +1,7 @@
 import datetime as dt
 from decimal import Decimal
 import re
+import typing as t
 
 
 def to_iso(
@@ -95,6 +96,45 @@ def from_str(value: str) -> dt.timedelta:
             result += _term_from_str(combined_term.group(0))
     except TimedeltaExpressionError as e:
         raise TimedeltaExpressionError(f"illegal timedelta expression: {value}") from e
+
+    return result
+
+
+__TO_FMT_MAP: t.Mapping[str, t.Callable[[dt.timedelta], str]] = {
+    "%D": lambda td: str(td.days),
+    "%H": lambda td: f"{td.seconds // 3600:02}",
+    "%tH": lambda td: f"{td.total_seconds() // 3600:.0f}",
+    "%M": lambda td: f"{(td.seconds % 3600) // 60:02}",
+    "%tM": lambda td: f"{td.total_seconds() // 60:.0f}",
+    "%S": lambda td: f"{td.seconds % 60:02}",
+    "%tS": lambda td: f"{int(td.total_seconds())}",
+    "%f": lambda td: f"{td.microseconds:06}",
+}
+
+
+def to_fmt(value: dt.timedelta, fmt: str) -> str:
+    result = ""
+    replace_map = {}
+
+    i = 0
+    while i < len(fmt):
+        if fmt[i] == "%":
+            if fmt[i + 1] == "t":
+                fmt_exp = fmt[i : i + 3]
+            else:
+                fmt_exp = fmt[i : i + 2]
+
+            if fmt_exp not in replace_map:
+                try:
+                    replace_map[fmt_exp] = __TO_FMT_MAP[fmt_exp](value)
+                except KeyError:
+                    raise ValueError("Invalid format string")
+            result += replace_map[fmt_exp]
+
+            i += len(fmt_exp)
+        else:
+            result += fmt[i]
+            i += 1
 
     return result
 

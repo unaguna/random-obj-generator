@@ -93,7 +93,23 @@ FROM_ISO_REGEX = re.compile(
 )
 
 
-def from_iso(value: str) -> dt.timedelta:
+@t.overload
+def from_iso(
+    value: str, *, returns_none_by_fmt_error: t.Literal[False] = False
+) -> dt.timedelta:
+    pass
+
+
+@t.overload
+def from_iso(
+    value: str, *, returns_none_by_fmt_error: t.Literal[True]
+) -> t.Optional[dt.timedelta]:
+    pass
+
+
+def from_iso(
+    value: str, *, returns_none_by_fmt_error: bool = False
+) -> t.Optional[dt.timedelta]:
     """Converts a string of the ISO-8601 format to timedelta.
 
     Examples
@@ -108,6 +124,8 @@ def from_iso(value: str) -> dt.timedelta:
     ----------
     value : str
         the string of the ISO-8601 format
+    returns_none_by_fmt_error : bool
+        if True is specified, when the specified string is illegal, returns None instead of raising an exception.
 
     Returns
     -------
@@ -117,7 +135,10 @@ def from_iso(value: str) -> dt.timedelta:
     match = re.match(FROM_ISO_REGEX, value)
 
     if not match:
-        raise TimedeltaExpressionError(f"Invalid isoformat string: {value}")
+        if returns_none_by_fmt_error:
+            return None
+        else:
+            raise ValueError(f"Invalid isoformat string: {value}")
 
     sign = -1 if match.group(1) == "-" else 1
     days, hours, minutes, seconds = map(_float_or_zero, match.groups()[1:])

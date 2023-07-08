@@ -129,13 +129,22 @@ def test__timedelta_util__from_iso(input_str, expected):
     ["1", "d", "10", "10D", "P1H"],
 )
 def test__timedelta_util__from_iso__error_by_illegal_arg(input_str):
-    with pytest.raises(TimedeltaExpressionError) as e_ctx:
+    with pytest.raises(ValueError) as e_ctx:
         from_iso(input_str)
     e = e_ctx.value
     message = e.args[0]
 
     assert isinstance(message, str)
     assert message.startswith("Invalid isoformat string: ")
+
+
+@pytest.mark.parametrize(
+    "input_str",
+    ["1", "d", "10", "10D", "P1H"],
+)
+def test__timedelta_util__from_iso__returns_none_by_illegal_arg(input_str):
+    generated = from_iso(input_str, returns_none_by_fmt_error=True)
+    assert generated is None
 
 
 @pytest.mark.parametrize(

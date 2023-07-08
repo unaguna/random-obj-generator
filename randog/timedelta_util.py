@@ -88,8 +88,51 @@ def to_iso(
     return result
 
 
+def to_str(
+    value: dt.timedelta,
+) -> str:
+    """Convert timedelta into the simple format
+
+    Parameters
+    ----------
+    value : timedelta
+        the timedelta object
+
+    Returns
+    -------
+    str
+        the simple format of the received timedelta
+    """
+    if value < dt.timedelta():
+        result = "-"
+        value = -1 * value
+    else:
+        result = ""
+
+    value_tuple = TimedeltaTuple.of(value)
+
+    if value_tuple.days > 0:
+        result += f"{value_tuple.days}d"
+    if value_tuple.hours != 0:
+        result += f"{value_tuple.hours}h"
+    if value_tuple.minutes != 0:
+        result += f"{value_tuple.minutes}m"
+    if value_tuple.seconds != 0:
+        result += f"{value_tuple.seconds}s"
+    if value_tuple.milliseconds != 0:
+        result += f"{value_tuple.milliseconds}ms"
+    if value_tuple.microseconds != 0:
+        result += f"{value_tuple.microseconds}us"
+
+    # "P" is invalid even if the value equals 0
+    if len(result) == 0:
+        return "0s"
+
+    return result
+
+
 def from_str(value: str) -> dt.timedelta:
-    """Converts a string of the format to timedelta.
+    """Converts a string of the simple format to timedelta.
 
     Examples
     --------

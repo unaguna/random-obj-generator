@@ -2,7 +2,13 @@ from datetime import timedelta
 
 import pytest
 
-from randog.timedelta_util import from_str, to_iso, TimedeltaExpressionError, to_fmt
+from randog.timedelta_util import (
+    from_str,
+    to_iso,
+    TimedeltaExpressionError,
+    to_fmt,
+    to_str,
+)
 
 
 @pytest.mark.parametrize(
@@ -59,6 +65,31 @@ def test__timedelta_util__from_str__error_by_illegal_arg(input_str):
 
     assert isinstance(message, str)
     assert message.startswith("illegal timedelta expression: ")
+
+
+@pytest.mark.parametrize(
+    ("input_td", "expected"),
+    [
+        (timedelta(days=1), "1d"),
+        (timedelta(hours=1), "1h"),
+        (timedelta(minutes=1), "1m"),
+        (timedelta(seconds=1), "1s"),
+        (timedelta(milliseconds=1), "1ms"),
+        (timedelta(microseconds=1), "1us"),
+        (timedelta(0), "0s"),
+        (timedelta(days=1000), "1000d"),
+        (timedelta(hours=26, minutes=30), "1d2h30m"),
+        (-timedelta(hours=26, minutes=30), "-1d2h30m"),
+        (timedelta(hours=20, minutes=30, seconds=55), "20h30m55s"),
+        (
+            timedelta(hours=20, minutes=30, seconds=55, microseconds=51200),
+            "20h30m55s51ms200us",
+        ),
+    ],
+)
+def test__timedelta_util__to_str(input_td, expected):
+    generated = to_str(input_td)
+    assert generated == expected
 
 
 @pytest.mark.parametrize(

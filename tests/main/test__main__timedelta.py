@@ -1,3 +1,4 @@
+import datetime
 import re
 import sys
 from unittest.mock import patch
@@ -38,7 +39,7 @@ def test__main__timedelta__min_max(capfd, expected):
     ["0.1", "a", "-"],
 )
 def test__main__timedelta__error_when_illegal_min(capfd, minimum):
-    args = ["randog", "timedelta", minimum, "1000"]
+    args = ["randog", "timedelta", minimum, "1d"]
     with patch.object(sys, "argv", args):
         with pytest.raises(SystemExit):
             randog.__main__.main()
@@ -54,7 +55,7 @@ def test__main__timedelta__error_when_illegal_min(capfd, minimum):
     ["0.1", "a", "-"],
 )
 def test__main__timedelta__error_when_illegal_max(capfd, maximum):
-    args = ["randog", "timedelta", "-1000", maximum]
+    args = ["randog", "timedelta", "1d", maximum]
     with patch.object(sys, "argv", args):
         with pytest.raises(SystemExit):
             randog.__main__.main()
@@ -100,11 +101,11 @@ def test__main__timedelta__option_repr(capfd, arg, expected):
 @pytest.mark.parametrize(
     ("arg", "expected"),
     [
-        ("1d", "1d"),
-        ("1h20m", "1h20m"),
-        ("20d1h20m", "20d1h20m"),
-        ("1s20ms", "1s20ms"),
-        ("1s20ms500us", "1s20ms500us"),
+        ("1d", '"1d"'),
+        ("1h20m", '"1h20m"'),
+        ("20d1h20m", '"20d1h20m"'),
+        ("1s20ms", '"1s20ms"'),
+        ("1s20ms500us", '"1s20ms500us"'),
     ],
 )
 def test__main__timedelta__option_json(capfd, arg, expected):
@@ -124,7 +125,7 @@ def test__main__timedelta__option_json(capfd, arg, expected):
         ("1d1h20m", ["--iso"], "P1DT1H20M"),
         ("1h20m", ["--fmt", "%H:%M:%S"], "01:20:00"),
         ("10d1h20m", ["--fmt", "%tH:%M:%S"], "241:20:00"),
-        ("10d1h20m", ["--fmt", "%D %tH:%M:%S"], "10 01:20:00"),
+        ("10d1h20m", ["--fmt", "%D %H:%M:%S"], "10 01:20:00"),
         ("1h20m40ms", ["--fmt", "%H:%M:%S.%f"], "01:20:00.040000"),
         ("1h20m", ["--iso", "--json"], '"PT1H20M"'),
         ("10d1h20m", ["--fmt", "%tH:%M:%S", "--json"], '"241:20:00"'),
@@ -199,8 +200,12 @@ def test__main__timedelta__error_with_negative_repeat(capfd, resources, option, 
 
 
 @pytest.mark.parametrize(
-    "expected",
-    ["1d", "20h", "1h30m"],
+    ("arg", "expected"),
+    [
+        ("1d", datetime.timedelta(days=1)),
+        ("20h", datetime.timedelta(hours=20)),
+        ("1h30m", datetime.timedelta(hours=1, minutes=30)),
+    ],
 )
 @pytest.mark.parametrize(
     ("option", "length"),
@@ -209,12 +214,12 @@ def test__main__timedelta__error_with_negative_repeat(capfd, resources, option, 
         ("-L", 2),
     ],
 )
-def test__main__timedelta__option_list(capfd, resources, expected, option, length):
+def test__main__timedelta__option_list(capfd, resources, arg, expected, option, length):
     args = [
         "randog",
         "timedelta",
-        str(expected),
-        str(expected),
+        arg,
+        arg,
         option,
         str(length),
     ]

@@ -1,4 +1,5 @@
 import datetime as dt
+from .. import timedelta_util
 
 
 def positive_int(value):
@@ -33,3 +34,7 @@ def time(value):
 
 def date(value):
     return dt.date.fromisoformat(value)
+
+
+def timedelta(value):
+    return timedelta_util.from_str(value)

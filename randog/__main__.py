@@ -4,6 +4,7 @@ import sys
 import typing as t
 
 import randog.factory
+from . import timedelta_util
 from ._main import Args, Subcmd, get_subcmd_def
 
 
@@ -52,17 +53,29 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
     else:
         if args.iso and isinstance(generated, (datetime.date, datetime.time)):
             print(generated.isoformat(), file=fp)
+        elif args.iso and isinstance(generated, datetime.timedelta):
+            print(timedelta_util.to_iso(generated), file=fp)
         elif args.date_fmt and isinstance(generated, (datetime.date, datetime.time)):
             print(generated.strftime(args.date_fmt), file=fp)
+        elif args.date_fmt and isinstance(generated, datetime.timedelta):
+            print(timedelta_util.to_fmt(generated, args.date_fmt), file=fp)
         else:
             print(generated, file=fp)
 
 
 def _json_default(args: Args):
     if args.iso:
-        return lambda v: v.isoformat()
+        return (
+            lambda v: v.isoformat()
+            if isinstance(v, (datetime.date, datetime.time))
+            else timedelta_util.to_iso(v)
+        )
     elif args.date_fmt:
-        return lambda v: v.strftime(args.date_fmt)
+        return (
+            lambda v: v.strftime(args.date_fmt)
+            if isinstance(v, (datetime.date, datetime.time))
+            else timedelta_util.to_fmt(v, args.date_fmt)
+        )
     else:
         return str
 

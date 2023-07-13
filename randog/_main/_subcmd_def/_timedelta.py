@@ -45,7 +45,7 @@ class SubcmdDefTimedelta(SubcmdDef):
         )
         group_date_fmt.add_argument(
             "--fmt",
-            dest="date_fmt",
+            dest="format",
             metavar="FORMAT",
             help="if specified, it outputs generated object with the specified format, "
             "such as '%%tH:%%M:%%S.%%f'",
@@ -66,7 +66,7 @@ class SubcmdDefTimedelta(SubcmdDef):
 
         if args.output_fmt == "repr" and args.iso:
             subparser.error("argument --iso: not allowed with argument --repr")
-        elif args.output_fmt == "repr" and args.date_fmt:
+        elif args.output_fmt == "repr" and args.format:
             subparser.error("argument --fmt: not allowed with argument --repr")
 
     def build_args(
@@ -98,3 +98,9 @@ class _TimedeltaWrapper(datetime.timedelta):
 
     def __repr__(self):
         return repr(self._base)
+
+    def __format__(self, format_spec):
+        return timedelta_util.to_fmt(self, format_spec)
+
+    def isoformat(self):
+        return timedelta_util.to_iso(self)

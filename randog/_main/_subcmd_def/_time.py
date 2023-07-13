@@ -44,7 +44,7 @@ class SubcmdDefTime(SubcmdDef):
         )
         group_date_fmt.add_argument(
             "--fmt",
-            dest="date_fmt",
+            dest="format",
             metavar="FORMAT",
             help="if specified, it outputs generated object with the specified format, such as '%%H:%%M:%%S.%%f'",
         )
@@ -58,7 +58,7 @@ class SubcmdDefTime(SubcmdDef):
 
         if args.output_fmt == "repr" and args.iso:
             subparser.error("argument --iso: not allowed with argument --repr")
-        elif args.output_fmt == "repr" and args.date_fmt:
+        elif args.output_fmt == "repr" and args.format:
             subparser.error("argument --fmt: not allowed with argument --repr")
 
     def build_args(

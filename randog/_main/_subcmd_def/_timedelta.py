@@ -4,7 +4,7 @@ import math
 import typing as t
 
 import randog.factory
-from ..._utils.type import timedelta
+from ..._utils.type import timedelta, positive_timedelta
 from ... import timedelta_util
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
@@ -40,7 +40,7 @@ class SubcmdDefTimedelta(SubcmdDef):
         )
         timedelta_args_group.add_argument(
             "--unit",
-            type=timedelta,
+            type=positive_timedelta,
             metavar="UNIT",
             help="the minimum unit of generated values. "
             "If not specified, the behavior is left to the specification of randog.factory.randtimedelta.",

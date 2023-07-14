@@ -102,7 +102,7 @@ def test__main__timedelta__unit(capfd, unit, minimum, maximum, unit_expected):
 
 @pytest.mark.parametrize(
     "unit",
-    ["0.1", "a", "-"],
+    ["0.1", "a", "-", '"-1s"', "0s"],
 )
 def test__main__timedelta__error_when_illegal_unit(capfd, unit):
     args = ["randog", "timedelta", "--unit", unit]
@@ -113,7 +113,10 @@ def test__main__timedelta__error_when_illegal_unit(capfd, unit):
         out, err = capfd.readouterr()
         assert out == ""
         assert err.startswith("usage:")
-        assert "timedelta: error: argument --unit: invalid timedelta value: " in err
+        assert (
+            "timedelta: error: argument --unit: invalid positive_timedelta value: "
+            in err
+        )
 
 
 @pytest.mark.parametrize(

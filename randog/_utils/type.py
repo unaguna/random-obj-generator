@@ -38,3 +38,10 @@ def date(value):
 
 def timedelta(value):
     return timedelta_util.from_str(value)
+
+
+def positive_timedelta(value):
+    result = timedelta_util.from_str(value)
+    if result <= dt.timedelta(0):
+        raise ValueError("must be positive")
+    return timedelta_util.from_str(value)

@@ -17,7 +17,7 @@ class SubcmdDefTimedelta(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         timedelta_parser = subparsers.add_parser(
             Subcmd.Timedelta.value,
-            usage="python -m randog timedelta [MINIMUM MAXIMUM] [--iso] [common-options]",
+            usage="python -m randog timedelta [MINIMUM MAXIMUM] [--unit UNIT] [--iso | --fmt FORMAT] [common-options]",
             description="",  # TODO: implement
             add_help=False,
         )

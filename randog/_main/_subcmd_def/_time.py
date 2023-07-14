@@ -15,7 +15,7 @@ class SubcmdDefTime(SubcmdDef):
         time_parser = subparsers.add_parser(
             Subcmd.Time.value,
             usage="python -m randog time [MINIMUM MAXIMUM] [--iso] [common-options]",
-            description="",  # TODO: implement
+            description="It generates values of type datetime.time.",
             add_help=False,
         )
         time_args_group = time_parser.add_argument_group("arguments")

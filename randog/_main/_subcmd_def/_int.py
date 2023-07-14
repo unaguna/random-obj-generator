@@ -14,7 +14,7 @@ class SubcmdDefInt(SubcmdDef):
         int_parser = subparsers.add_parser(
             Subcmd.Int.value,
             usage="python -m randog int MINIMUM MAXIMUM [common-options]",
-            description="",  # TODO: implement
+            description="It generates integer values.",
             add_help=False,
         )
         int_args_group = int_parser.add_argument_group("arguments")

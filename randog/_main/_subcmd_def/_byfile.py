@@ -13,7 +13,7 @@ class SubcmdDefByfile(SubcmdDef):
         byfile_parser = subparsers.add_parser(
             Subcmd.Byfile.value,
             usage="python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [common-options]",
-            description="",  # TODO: implement
+            description="It generates values according to factory definition files.",
             add_help=False,
         )
         byfile_args_group = byfile_parser.add_argument_group("arguments")

@@ -18,7 +18,8 @@ class SubcmdDefTimedelta(SubcmdDef):
         timedelta_parser = subparsers.add_parser(
             Subcmd.Timedelta.value,
             usage="python -m randog timedelta [MINIMUM MAXIMUM] [--unit UNIT] [--iso | --fmt FORMAT] [common-options]",
-            description="",  # TODO: implement
+            description="It generates values of type datetime.timedelta. "
+            "This mode uses the simple format to represent timedelta; such as '30d', '1h30m' and '1d20h30m40s'",
             add_help=False,
         )
         timedelta_args_group = timedelta_parser.add_argument_group("arguments")

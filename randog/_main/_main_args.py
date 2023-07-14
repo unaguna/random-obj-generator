@@ -76,9 +76,9 @@ class Args:
             return False
 
     @property
-    def date_fmt(self) -> t.Optional[str]:
-        if hasattr(self._args, "date_fmt"):
-            return self._args.date_fmt
+    def format(self) -> t.Optional[str]:
+        if hasattr(self._args, "format"):
+            return self._args.format
         else:
             return None
 

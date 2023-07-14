@@ -1,4 +1,3 @@
-import datetime
 import json
 import sys
 import typing as t
@@ -50,10 +49,10 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
         json.dump(generated, fp, default=_json_default(args))
         fp.write("\n")
     else:
-        if args.iso and isinstance(generated, (datetime.date, datetime.time)):
+        if args.iso and hasattr(generated, "isoformat"):
             print(generated.isoformat(), file=fp)
-        elif args.date_fmt and isinstance(generated, (datetime.date, datetime.time)):
-            print(generated.strftime(args.date_fmt), file=fp)
+        elif args.format:
+            print(generated.__format__(args.format), file=fp)
         else:
             print(generated, file=fp)
 
@@ -61,8 +60,8 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
 def _json_default(args: Args):
     if args.iso:
         return lambda v: v.isoformat()
-    elif args.date_fmt:
-        return lambda v: v.strftime(args.date_fmt)
+    elif args.format:
+        return lambda v: v.__format__(args.format)
     else:
         return str
 

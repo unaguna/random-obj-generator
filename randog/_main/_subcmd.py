@@ -11,3 +11,4 @@ class Subcmd(Enum):
     Datetime = "datetime"
     Date = "date"
     Time = "time"
+    Timedelta = "timedelta"

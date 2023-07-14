@@ -49,7 +49,7 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
         json.dump(generated, fp, default=_json_default(args))
         fp.write("\n")
     else:
-        if args.iso:
+        if args.iso and hasattr(generated, "isoformat"):
             print(generated.isoformat(), file=fp)
         elif args.format:
             print(generated.__format__(args.format), file=fp)

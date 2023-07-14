@@ -6,6 +6,7 @@ from unittest.mock import patch
 import pytest
 
 import randog.__main__
+from randog import timedelta_util
 
 
 def test__main__timedelta__without_min_max(capfd):
@@ -76,6 +77,65 @@ def test__main__timedelta__error_when_max_lt_min(capfd):
         assert out == ""
         assert err.startswith("usage:")
         assert "timedelta: error: arguments must satisfy MINIMUM <= MAXIMUM" in err
+
+
+@pytest.mark.parametrize(
+    ("unit", "minimum", "maximum", "unit_expected"),
+    [
+        ("1d", "0s", "10d", datetime.timedelta(days=1)),
+        ("12h", "0s", "10d", datetime.timedelta(hours=12)),
+        ("1s", "0s", "10d", datetime.timedelta(seconds=1)),
+        ("10s", "21s", "31s", datetime.timedelta(seconds=10)),
+    ],
+)
+def test__main__timedelta__unit(capfd, unit, minimum, maximum, unit_expected):
+    args = ["randog", "timedelta", minimum, maximum, "--unit", unit]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert timedelta_util.from_str(
+            out.strip()
+        ) % unit_expected == datetime.timedelta(0)
+        assert err == ""
+
+
+@pytest.mark.parametrize(
+    "unit",
+    ["0.1", "a", "-"],
+)
+def test__main__timedelta__error_when_illegal_unit(capfd, unit):
+    args = ["randog", "timedelta", "--unit", unit]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "timedelta: error: argument --unit: invalid timedelta value: " in err
+
+
+@pytest.mark.parametrize(
+    ("unit", "minimum", "maximum"),
+    [
+        ("1d", "1s", "10s"),
+        ("1h", "1s", "10s"),
+    ],
+)
+def test__main__timedelta__error_unit_unfit_to_min_max(capfd, unit, minimum, maximum):
+    args = ["randog", "timedelta", minimum, maximum, "--unit", unit]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            "timedelta: error: argument --unit: there is no multiple of the unit value between MINIMUM and MAXIMUM"
+            in err
+        )
 
 
 @pytest.mark.parametrize(

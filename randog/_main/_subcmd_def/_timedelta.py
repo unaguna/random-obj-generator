@@ -1,5 +1,6 @@
 import argparse
 import datetime
+import math
 import typing as t
 
 import randog.factory
@@ -37,6 +38,13 @@ class SubcmdDefTimedelta(SubcmdDef):
             help="the maximum value with the simple format such as '1d20h30m40s'. "
             "If not specified, the behavior is left to the specification of randog.factory.randtimedelta.",
         )
+        timedelta_args_group.add_argument(
+            "--unit",
+            type=timedelta,
+            metavar="UNIT",
+            help="the minimum unit of generated values. "
+            "If not specified, the behavior is left to the specification of randog.factory.randtimedelta.",
+        )
         group_date_fmt = timedelta_args_group.add_mutually_exclusive_group()
         group_date_fmt.add_argument(
             "--iso",
@@ -60,9 +68,18 @@ class SubcmdDefTimedelta(SubcmdDef):
 
         iargs, kwargs = self.build_args(args)
         minimum, maximum = iargs
+        unit = kwargs["unit"]
 
         if minimum is not None and maximum is not None and minimum > maximum:
             subparser.error("arguments must satisfy MINIMUM <= MAXIMUM")
+
+        if None not in (unit, minimum, maximum):
+            min_by_unit = math.ceil(minimum / unit)
+            max_by_unit = math.floor(maximum / unit)
+            if min_by_unit > max_by_unit:
+                subparser.error(
+                    "argument --unit: there is no multiple of the unit value between MINIMUM and MAXIMUM"
+                )
 
         if args.output_fmt == "repr" and args.iso:
             subparser.error("argument --iso: not allowed with argument --repr")
@@ -72,7 +89,7 @@ class SubcmdDefTimedelta(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (args.get("minimum"), args.get("maximum")), {}
+        return (args.get("minimum"), args.get("maximum")), {"unit": args.get("unit")}
 
     def get_factory_constructor(self) -> t.Callable:
         return lambda *a, **kw: randog.factory.randtimedelta(*a, **kw).post_process(

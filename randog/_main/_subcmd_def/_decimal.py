@@ -16,7 +16,7 @@ class SubcmdDefDecimal(SubcmdDef):
             Subcmd.Decimal.value,
             usage="python -m randog decimal [MINIMUM MAXIMUM] [--decimal-len DECIMAL_LENGTH] "
             "[--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]",
-            description="",  # TODO: implement
+            description="It generates values of type decimal.Decimal.",
             add_help=False,
         )
         decimal_args_group = decimal_parser.add_argument_group("arguments")

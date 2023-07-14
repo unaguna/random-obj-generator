@@ -15,7 +15,7 @@ class SubcmdDefBool(SubcmdDef):
         bool_parser = subparsers.add_parser(
             Subcmd.Bool.value,
             usage="python -m randog bool [PROP_TRUE] [common-options]",
-            description="",  # TODO: implement
+            description="It generates boolean values.",
             add_help=False,
         )
         bool_args_group = bool_parser.add_argument_group("arguments")

@@ -16,7 +16,7 @@ class SubcmdDefFloat(SubcmdDef):
             Subcmd.Float.value,
             usage="python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] "
             "[common-options]",
-            description="",  # TODO: implement
+            description="It generates values of type float.",
             add_help=False,
         )
         float_args_group = float_parser.add_argument_group("arguments")

@@ -34,7 +34,7 @@ The following modes are available for command execution. Arguments and options a
      - :code:`int`
      - :code:`python -m randog int -100 100`
      - :code:`42`
-     -
+     - :doc:`detail <doc.as_command.int>`
 
    * - float
      - :code:`float`
@@ -106,5 +106,6 @@ Details of Modes
    :maxdepth: 1
 
    doc.as_command.bool
+   doc.as_command.int
    doc.as_command.byfile
 

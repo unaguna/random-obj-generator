@@ -22,7 +22,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tips (Usage)" href="doc.tips.html" />
+    <link rel="next" title="Common Options" href="doc.as_command.common_option.html" />
     <link rel="prev" title="External File Definition of Factory" href="doc.external_def.html" /> 
 </head>
 
@@ -55,9 +55,15 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">External File Definition of Factory</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Run as Command</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#output-format">Output format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#output-to-file">Output to file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#iteration">Iteration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modes">Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arguments-and-options">Arguments and Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.common_option.html">Common Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#details-of-modes">Details of Modes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.byfile.html">byfile Mode</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
@@ -98,72 +104,116 @@
              
   <section id="run-as-command">
 <h1>Run as Command<a class="headerlink" href="#run-as-command" title="Permalink to this heading"></a></h1>
-<p>randog can be used as a command. The simplest way to execute the command is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>&lt;factory_definition_file&gt;
+<p>randog can be used as a command. The basic command format is as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>&lt;MODE&gt;<span class="w"> </span>...
 </pre></div>
 </div>
-<p>The argument is <a class="reference internal" href="doc.external_def.html"><span class="doc">a filename of a factory definition</span></a>. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
-
-<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
-    <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
-<span class="p">})</span>
-</pre></div>
+<p>Specify MODE according to the values you want to generate, and specify further arguments to specify more detailed conditions.</p>
+<section id="modes">
+<h2>Modes<a class="headerlink" href="#modes" title="Permalink to this heading"></a></h2>
+<p>The following modes are available for command execution. Arguments and options available for each mode are described on the detail page for each mode.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>mode</p></th>
+<th class="head"><p>value type</p></th>
+<th class="head"><p>command example</p></th>
+<th class="head"><p>output example</p></th>
+<th class="head"><p>detail</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>bool</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">bool</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>int</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">int</span> <span class="pre">-100</span> <span class="pre">100</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">42</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>float</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">float</span> <span class="pre">-10</span> <span class="pre">10</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">2.826684165562185</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>str</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">str</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">XTGh3VH1</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>decimal</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">Decimal</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">decimal</span> <span class="pre">-10</span> <span class="pre">10</span> <span class="pre">--decimal-len</span> <span class="pre">2</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">3.91</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>datetime</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">datetime</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">datetime</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">2022-03-20</span> <span class="pre">12:43:51.110244</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>date</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">date</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">date</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">2022-03-20</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>time</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">time</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">time</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">12:43:51.110244</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>timedelta</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">timedelta</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">timedelta</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">17h</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>byfile</p></td>
+<td><div class="line-block">
+<div class="line">according to</div>
+<div class="line">the definition file</div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In factory definition file, <code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> can be omitted.</p>
+</td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code></p></td>
+<td><div class="line-block">
+<div class="line">according to</div>
+<div class="line">./factory_def.py</div>
 </div>
-<section id="output-format">
-<h2>Output format<a class="headerlink" href="#output-format" title="Permalink to this heading"></a></h2>
-<p>Normally, the generated objects are output as is with <code class="code docutils literal notranslate"><span class="pre">print()</span></code>, but the output format can be changed by using the following options.</p>
-<ul class="simple">
-<li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: The generated object is converted by using <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> before output.</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--json</span></code>: Outputs the generated object in JSON format. Objects for which no standard JSON format is defined are converted to JSON after being converted to strings with <code class="code docutils literal notranslate"><span class="pre">str()</span></code>.</p></li>
+</td>
+<td><p><a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">detail</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="arguments-and-options">
+<h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
+<p>For mode-specific arguments and options, see the detailed page for each mode.</p>
+<p>Several options can be used in any mode; see also:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.common_option.html">Common Options</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#output-format">Output format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#output-to-file">Output to file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#iteration">Iteration</a></li>
 </ul>
-<p>For example:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--json
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repr
-</pre></div>
+</li>
+</ul>
 </div>
 </section>
-<section id="output-to-file">
-<h2>Output to file<a class="headerlink" href="#output-to-file" title="Permalink to this heading"></a></h2>
-<p><code class="code docutils literal notranslate"><span class="pre">--output</span></code> option can be used to output to a file, as in the following example.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--output<span class="w"> </span>./out.txt
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option exists to be combined with the other options described below. Details will be included when describing them.</p>
-</div>
-</section>
-<section id="iteration">
-<h2>Iteration<a class="headerlink" href="#iteration" title="Permalink to this heading"></a></h2>
-<p>There are two types of repeat generation options: <code class="code docutils literal notranslate"><span class="pre">--list</span></code> (<code class="code docutils literal notranslate"><span class="pre">-L</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>).</p>
-<p>If you want to output repeatedly generated objects in a single list, use <code class="code docutils literal notranslate"><span class="pre">--list</span></code> as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate ONE list which contains 3 objects; each element conforms to factory_def.py.</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--list<span class="w"> </span><span class="m">3</span>
-</pre></div>
-</div>
-<p>On the other hand, if you want to output each repeatedly generated object separately, use <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate and output 3 times</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you want to output to different files one at a time using <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code>, use <code class="code docutils literal notranslate"><span class="pre">--output</span></code> with a placeholder as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to &#39;out_1.txt&#39;, &#39;out_2.txt&#39;, and &#39;out_3.txt&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{}.txt&#39;</span>
-
-<span class="c1"># output to &#39;out_0001.txt&#39;, &#39;out_0002.txt&#39;, and &#39;out_0003.txt&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{:04}.txt&#39;</span>
-</pre></div>
-</div>
-<p>The rules for placeholders are the same as <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">the standard python format</a>.</p>
+<section id="details-of-modes">
+<h2>Details of Modes<a class="headerlink" href="#details-of-modes" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.byfile.html">byfile Mode</a></li>
+</ul>
 </div>
 </section>
 </section>
@@ -173,7 +223,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="doc.external_def.html" class="btn btn-neutral float-left" title="External File Definition of Factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="doc.tips.html" class="btn btn-neutral float-right" title="Tips (Usage)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.as_command.common_option.html" class="btn btn-neutral float-right" title="Common Options" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tips (使い方) &mdash; random-obj-generator 0.5.0 ドキュメント</title>
+  <title>byfile モード &mdash; random-obj-generator 0.5.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -23,8 +23,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="next" title="ランダムな時系列データ -- 前のデータに依存するデータ生成" href="doc.tips_timeline.html" />
-    <link rel="prev" title="byfile モード" href="doc.as_command.byfile.html" /> 
+    <link rel="next" title="Tips (使い方)" href="doc.tips.html" />
+    <link rel="prev" title="共通オプション" href="doc.as_command.common_option.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -55,12 +55,19 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tips (使い方)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doc.tips_timeline.html">ランダムな時系列データ -- 前のデータに依存するデータ生成</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doc.tips_json.html">JSON をランダムに生成する</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#modes">モード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#arguments-and-options">引数とオプション</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.as_command.html#details-of-modes">各モードの詳細</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">byfile モード</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#arguments-and-options">引数とオプション</a></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
 
@@ -78,13 +85,14 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Tips (使い方)</li>
+          <li class="breadcrumb-item"><a href="doc.as_command.html">コマンドとして実行</a></li>
+      <li class="breadcrumb-item active">byfile モード</li>
     <li class="spacer"></li>
     <li class="wy-breadcrumbs-aside">
         <select name="lang" onchange="location.href=value;">
-            <option value="../en/doc.tips.html"
+            <option value="../en/doc.as_command.byfile.html"
             >English</option>
-            <option value="../ja/doc.tips.html"
+            <option value="../ja/doc.as_command.byfile.html"
                 selected
             >日本語</option>
         </select>
@@ -96,23 +104,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="tips-usage">
-<h1>Tips (使い方)<a class="headerlink" href="#tips-usage" title="この見出しへのパーマリンク"></a></h1>
-<p>具体的な使用例を紹介します。</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="doc.tips_timeline.html">ランダムな時系列データ -- 前のデータに依存するデータ生成</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doc.tips_json.html">JSON をランダムに生成する</a></li>
-</ul>
+  <section id="byfile-mode">
+<h1>byfile モード<a class="headerlink" href="#byfile-mode" title="この見出しへのパーマリンク"></a></h1>
+<p>byfile モードでは、<a class="reference internal" href="doc.external_def.html"><span class="doc">ファクトリ定義ファイル</span></a> で定義されたファクトリを使用して値が生成されます。実行例は次の通りです：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+</pre></div>
 </div>
+<p>引数 <code class="code docutils literal notranslate"><span class="pre">factory_def.py</span></code> は <a class="reference internal" href="doc.external_def.html"><span class="doc">factory の外部定義ファイル</span></a> のファイル名です。このファイルは python プログラムであり、以下のように factory を作成して変数 FACTORY にバインドするプログラムである必要があります。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
+    <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>factory定義ファイルでは、<code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> を省略できます。</p>
+</div>
+<section id="arguments-and-options">
+<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
+<p>byfile モード独自の引数はありません。</p>
+<p>共通オプションを使用できます。こちらをご覧ください：<a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">共通オプション</span></a></p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="doc.as_command.byfile.html" class="btn btn-neutral float-left" title="byfile モード" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="doc.tips_timeline.html" class="btn btn-neutral float-right" title="ランダムな時系列データ -- 前のデータに依存するデータ生成" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.as_command.common_option.html" class="btn btn-neutral float-left" title="共通オプション" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.tips.html" class="btn btn-neutral float-right" title="Tips (使い方)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

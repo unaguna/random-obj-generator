@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-15 14:02+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.as_command.byfile.rst:2
+msgid "byfile Mode"
+msgstr "byfile モード"
+
+#: ../../source/doc.as_command.byfile.rst:4
+msgid ""
+"In byfile mode, values are generated using the factories defined in "
+":doc:`a factory definition <doc.external_def>`. An example run is as "
+"follows:"
+msgstr ""
+"byfile モードでは、:doc:`ファクトリ定義ファイル <doc.external_def>` "
+"で定義されたファクトリを使用して値が生成されます。実行例は次の通りです："
+
+#: ../../source/doc.as_command.byfile.rst:10
+msgid ""
+"The argument :code:`factory_def.py` is :doc:`a filename of the factory "
+"definition <doc.external_def>`. It must be python code that creates an "
+"instance of factory in the variable FACTORY as in the following example:"
+msgstr ""
+"引数 :code:`factory_def.py` は :doc:`factory の外部定義ファイル <doc.external_def>` "
+"のファイル名です。このファイルは python プログラムであり、以下のように factory を作成して変数 FACTORY "
+"にバインドするプログラムである必要があります。"
+
+#: ../../source/doc.as_command.byfile.rst:23
+msgid "In factory definition file, :code:`import randog` can be omitted."
+msgstr "factory定義ファイルでは、:code:`import randog` を省略できます。"
+
+#: ../../source/doc.as_command.byfile.rst:26
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.byfile.rst:28
+msgid "No unique arguments."
+msgstr "byfile モード独自の引数はありません。"
+
+#: ../../source/doc.as_command.byfile.rst:30
+msgid "Common options are available; see also :doc:`doc.as_command.common_option`"
+msgstr "共通オプションを使用できます。こちらをご覧ください：:doc:`doc.as_command.common_option`"
+

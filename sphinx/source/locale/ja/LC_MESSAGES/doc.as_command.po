@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 13:12+0900\n"
+"POT-Creation-Date: 2023-07-15 13:45+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -18,126 +18,238 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.12.1\n"
 
 #: ../../source/doc.as_command.rst:2
 msgid "Run as Command"
 msgstr "コマンドとして実行"
 
 #: ../../source/doc.as_command.rst:4
-msgid ""
-"randog can be used as a command. The simplest way to execute the command "
-"is as follows:"
-msgstr ""
-"randog はコマンドとして実行することもできます。最も簡素な実行コマンドは次の通りです。"
+msgid "randog can be used as a command. The basic command format is as follows:"
+msgstr "randog はコマンドとして実行することもできます。コマンド実行の基本的な形式は次の通りです。"
 
 #: ../../source/doc.as_command.rst:10
 msgid ""
-"The argument is :doc:`a filename of a factory definition "
-"<doc.external_def>`. It must be python code that creates an instance of "
-"factory in the variable FACTORY as in the following example:"
+"Specify MODE according to the values you want to generate, and specify "
+"further arguments to specify more detailed conditions."
 msgstr ""
-"引数は :doc:`factory の外部定義ファイル <doc.external_def>` のファイル名です。"
-"このファイルは python プログラムであり、以下のように factory を作成して変数 FACTORY に"
-"バインドするプログラムである必要があります。"
+"生成したい値に応じたモードを :code:`<MODE>` に指定し、より詳しい条件を指定するためにさらに引数を指定してください。"
+
+#: ../../source/doc.as_command.rst:14
+msgid "Modes"
+msgstr "モード"
+
+#: ../../source/doc.as_command.rst:16
+msgid ""
+"The following modes are available for command execution. Arguments and "
+"options available for each mode are described on the detail page for each"
+" mode."
+msgstr ""
+"下記のモードを使用することができます。各モードで使用できる引数やオプションはそれぞれのモードの詳細ページで確認できます。"
 
 #: ../../source/doc.as_command.rst:21
-msgid "In factory definition file, :code:`import randog` can be omitted."
-msgstr "factory定義ファイルでは、:code:`import randog` を省略できます。"
+msgid "mode"
+msgstr "モード"
+
+#: ../../source/doc.as_command.rst:22
+msgid "value type"
+msgstr "値の型"
+
+#: ../../source/doc.as_command.rst:23
+msgid "command example"
+msgstr "コマンドの例"
+
+#: ../../source/doc.as_command.rst:24
+msgid "output example"
+msgstr "出力例"
 
 #: ../../source/doc.as_command.rst:25
-msgid "Output format"
-msgstr "出力形式の変更"
+msgid "detail"
+msgstr "詳細"
 
 #: ../../source/doc.as_command.rst:27
-msgid ""
-"Normally, the generated objects are output as is with :code:`print()`, "
-"but the output format can be changed by using the following options."
+msgid "bool"
 msgstr ""
-"通常、生成されたオブジェクトはそのまま :code:`print()` 関数で出力されますが、"
-"以下のオプションを使用することで出力形式を変更することができます。"
+
+#: ../../source/doc.as_command.rst:28
+msgid ":code:`bool`"
+msgstr ""
 
 #: ../../source/doc.as_command.rst:29
-msgid ""
-":code:`--repr`: The generated object is converted by using :code:`repr()`"
-" before output."
+msgid ":code:`python -m randog bool`"
 msgstr ""
-":code:`--repr`: 生成されたオブジェクトを :code:`repr()` 関数で変換して出力します。"
 
 #: ../../source/doc.as_command.rst:30
-msgid ""
-":code:`--json`: Outputs the generated object in JSON format. Objects for "
-"which no standard JSON format is defined are converted to JSON after "
-"being converted to strings with :code:`str()`."
+msgid ":code:`True`"
 msgstr ""
-":code:`--json`: 生成されたオブジェクトをJSON形式で出力します。"
-"標準的なJSON形式が定められていないオブジェクトは :code:`str()` 関数で文字列に変換してから"
-"JSON化されます。"
 
-#: ../../source/doc.as_command.rst:32
-msgid "For example:"
-msgstr "例:"
+#: ../../source/doc.as_command.rst:33
+msgid "int"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:34
+msgid ":code:`int`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:35
+msgid ":code:`python -m randog int -100 100`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:36
+msgid ":code:`42`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:39
+msgid "float"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:40
+msgid ":code:`float`"
+msgstr ""
 
 #: ../../source/doc.as_command.rst:41
-msgid "Output to file"
-msgstr "ファイル出力"
-
-#: ../../source/doc.as_command.rst:43
-msgid ""
-":code:`--output` option can be used to output to a file, as in the "
-"following example."
+msgid ":code:`python -m randog float -10 10`"
 msgstr ""
-"以下の例のように :code:`--output` オプションを使用することで、結果をファイル出力することができます。"
 
-#: ../../source/doc.as_command.rst:50
-msgid ""
-"The above example is not very practical, since the same thing can be done"
-" using the standard redirection feature of shell. This option exists to "
-"be combined with the other options described below. Details will be "
-"included when describing them."
+#: ../../source/doc.as_command.rst:42
+msgid ":code:`2.826684165562185`"
 msgstr ""
-"シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。"
-"このオプションは他のオプションと組み合わせて使用するために存在します。"
-"詳細はそれらの説明に併記します。"
+
+#: ../../source/doc.as_command.rst:45
+msgid "str"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:46
+msgid ":code:`str`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:47
+msgid ":code:`python -m randog str`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:48
+msgid ":code:`XTGh3VH1`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:51
+msgid "decimal"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:52
+msgid ":code:`Decimal`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:53
+msgid ":code:`python -m randog decimal -10 10 --decimal-len 2`"
+msgstr ""
 
 #: ../../source/doc.as_command.rst:54
-msgid "Iteration"
-msgstr "繰り返し"
-
-#: ../../source/doc.as_command.rst:56
-msgid ""
-"There are two types of repeat generation options: :code:`--list` "
-"(:code:`-L`) and :code:`--repeat` (:code:`-r`)."
+msgid ":code:`3.91`"
 msgstr ""
-"繰り返し値を生成するオプションには、 :code:`--list` (:code:`-L`) と :code:`--repeat` (:code:`-r`) があります。"
+
+#: ../../source/doc.as_command.rst:57
+msgid "datetime"
+msgstr ""
 
 #: ../../source/doc.as_command.rst:58
-msgid ""
-"If you want to output repeatedly generated objects in a single list, use "
-":code:`--list` as follows:"
+msgid ":code:`datetime`"
 msgstr ""
-"繰り返し生成した値を1つのリストにまとめて出力したい場合は、以下のように :code:`--list` オプションを使用します。"
+
+#: ../../source/doc.as_command.rst:59
+msgid ":code:`python -m randog datetime 2022-01-01 2023-01-01`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:60
+msgid ":code:`2022-03-20 12:43:51.110244`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:63
+msgid "date"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:64
+msgid ":code:`date`"
+msgstr ""
 
 #: ../../source/doc.as_command.rst:65
-msgid ""
-"On the other hand, if you want to output each repeatedly generated object"
-" separately, use :code:`--repeat` as follows:"
+msgid ":code:`python -m randog date 2022-01-01 2023-01-01`"
 msgstr ""
-"一方で、繰り返し生成した値を1つずつ個別に出力したい場合、以下のように :code:`--repeat` オプションを使用します。"
 
-#: ../../source/doc.as_command.rst:73
-msgid ""
-"If you want to output to different files one at a time using "
-":code:`--repeat`, use :code:`--output` with a placeholder as follows:"
+#: ../../source/doc.as_command.rst:66
+msgid ":code:`2022-03-20`"
 msgstr ""
-":code:`--repeat` を使用して生成した値を別々のファイルへ1つずつ出力したい場合、"
-"以下のようにプレースホルダーとともに :code:`--output` オプションを使用します。"
 
-#: ../../source/doc.as_command.rst:83
-msgid ""
-"The rules for placeholders are the same as `the standard python format "
-"<https://docs.python.org/3/library/string.html#format-string-syntax>`_."
+#: ../../source/doc.as_command.rst:69
+msgid "time"
 msgstr ""
-"プレースホルダーのルールは `標準的な python のフォーマット "
-"<https://docs.python.org/ja/3/library/string.html#format-string-syntax>`_ と同一です。"
+
+#: ../../source/doc.as_command.rst:70
+msgid ":code:`time`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:71
+msgid ":code:`python -m randog time`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:72
+msgid ":code:`12:43:51.110244`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:75
+msgid "timedelta"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:76
+msgid ":code:`timedelta`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:77
+msgid ":code:`python -m randog timedelta`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:78
+msgid ":code:`17h`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:81
+msgid "byfile"
+msgstr ""
+
+#: ../../source/doc.as_command.rst
+msgid "according to"
+msgstr ""
+
+#: ../../source/doc.as_command.rst
+msgid "the definition file"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:84
+msgid ":code:`python -m randog byfile ./factory_def.py`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst
+msgid "./factory_def.py"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:87
+msgid ":doc:`detail <doc.as_command.byfile>`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:91
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.rst:93
+msgid ""
+"For mode-specific arguments and options, see the detailed page for each "
+"mode."
+msgstr "モードごとの引数やオプションの説明は、各モードの詳細ページで確認してください。"
+
+#: ../../source/doc.as_command.rst:95
+msgid "Several options can be used in any mode; see also:"
+msgstr "いくつかのオプションは全てのモードで指定できます。次のページをご覧ください："
+
+#: ../../source/doc.as_command.rst:103
+msgid "Details of Modes"
+msgstr "各モードの詳細"
 

@@ -40,7 +40,7 @@ The following modes are available for command execution. Arguments and options a
      - :code:`float`
      - :code:`python -m randog float -10 10`
      - :code:`2.826684165562185`
-     -
+     - :doc:`detail <doc.as_command.float>`
 
    * - str
      - :code:`str`
@@ -107,5 +107,6 @@ Details of Modes
 
    doc.as_command.bool
    doc.as_command.int
+   doc.as_command.float
    doc.as_command.byfile
 

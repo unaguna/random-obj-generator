@@ -35,10 +35,10 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 .. code-block:: shell
 
     # Repeat 10 times
-    python -m randog bool -r 10
+    python -m randog int -r 10
 
     # Generate list which contains 10 values
-    python -m randog bool -L 10
+    python -m randog int -L 10
 
 .. note::
 

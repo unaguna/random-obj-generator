@@ -1,0 +1,149 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-15 18:31+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.as_command.float.rst:2
+msgid "float Mode"
+msgstr "float モード"
+
+#: ../../source/doc.as_command.float.rst:4
+msgid ""
+"In float mode, floating-point numeric values are generated. The format of"
+" the command is as follows:"
+msgstr "int モードでは、浮動小数点数を生成します。コマンドの形式は次の通りです："
+
+#: ../../source/doc.as_command.float.rst:12
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.float.rst:15
+msgid ":code:`MINIMUM` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.float.rst:15
+msgid ""
+"the minimum value. If not specified, the behavior is left to the "
+"specification of `randfloat "
+"<randog.factory.html#randog.factory.randfloat>`_."
+msgstr ""
+"最小値。指定がない場合の動作は、`randfloat "
+"<randog.factory.html#randog.factory.randfloat>`_ の仕様に準ずる。"
+
+#: ../../source/doc.as_command.float.rst:18
+msgid ":code:`MAXIMUM` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.float.rst:18
+msgid ""
+"the maximum value. If not specified, the behavior is left to the "
+"specification of `randfloat "
+"<randog.factory.html#randog.factory.randfloat>`_."
+msgstr ""
+"最大値。指定がない場合の動作は、`randfloat "
+"<randog.factory.html#randog.factory.randfloat>`_ の仕様に準ずる。"
+
+#: ../../source/doc.as_command.float.rst:21
+msgid ":code:`--p-inf PROB_P_INF` (optional, default=0.0):"
+msgstr ""
+
+#: ../../source/doc.as_command.float.rst:21
+msgid "the probability of positive infinity."
+msgstr "正の無限大を生成する確率。"
+
+#: ../../source/doc.as_command.float.rst:24
+msgid ":code:`--n-inf PROB_N_INF` (optional, default=0.0):"
+msgstr ""
+
+#: ../../source/doc.as_command.float.rst:24
+msgid "the probability of negative infinity."
+msgstr "負の無限大を生成する確率。"
+
+#: ../../source/doc.as_command.float.rst:27
+msgid ":code:`--nan PROB_NAN` (optional, default=0.0):"
+msgstr ""
+
+#: ../../source/doc.as_command.float.rst:27
+msgid "the probability of NaN."
+msgstr "NaNを生成する確率。"
+
+#: ../../source/doc.as_command.float.rst:31
+msgid ":code:`common-options`"
+msgstr ""
+
+#: ../../source/doc.as_command.float.rst:30
+msgid ":doc:`common options <doc.as_command.common_option>`"
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
+
+#: ../../source/doc.as_command.float.rst:34
+msgid "Examples"
+msgstr "実行例"
+
+#: ../../source/doc.as_command.float.rst:36
+msgid ""
+"The simplest example is the following, which outputs a value between 0 "
+"and 1."
+msgstr "最も簡素な例は次の通りです。0から1の間の数値を出力します。"
+
+#: ../../source/doc.as_command.float.rst:42
+msgid ""
+"You can specify a range of values to be generated, as in the following "
+"example:"
+msgstr "次の例のように、生成する値の範囲を指定することができます："
+
+#: ../../source/doc.as_command.float.rst:49
+msgid ""
+"Infinity and NaN can be included as candidates for generation by "
+"specifying optional arguments."
+msgstr "オプション引数を指定することで無限大やNaNを生成の候補に含めることができます。"
+
+#: ../../source/doc.as_command.float.rst:59
+msgid ""
+"Use python standard for representing infinity and NaN such as "
+":code:`inf`, :code:`-inf`, and, :code:`nan`. The output can also be in "
+"JSON format, such as :code:`Infinity`, :code:`-Infinity`, and, "
+":code:`NaN`, by :code:`--json` option if there is a problem, such as when"
+" reading the output in programs written in other languages."
+msgstr ""
+"無限大やNaNの表現は python の標準 (:code:`inf`, :code:`-inf`, :code:`nan`) "
+"を使用します。出力を他の言語で書かれたプログラムで読み込む場合などで支障があれば、:code:`--json` オプションを使用してJSON形式 "
+"(:code:`Infinity`, :code:`-Infinity`, :code:`NaN`) で出力することもできます。"
+
+#: ../../source/doc.as_command.float.rst:67
+msgid ""
+"Most likely, you will not be satisfied with just one generated, so you "
+"will probably want to output multiple times as follows:"
+msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
+
+#: ../../source/doc.as_command.float.rst:79
+msgid ""
+"The float mode does not have the ability to specify the number of decimal"
+" places. If you want to specify the digits after the decimal point, use "
+":doc:`decimal mode <doc.as_command.decimal>`."
+msgstr ""
+"float モードには小数点以下の桁数を指定する機能がありません。小数点以下の桁数を指定したい場合は :doc:`decimal モード "
+"<doc.as_command.decimal>` を使用してください。"
+
+#: ../../source/doc.as_command.float.rst:82
+msgid ""
+"If you want to generate an integer with no decimal part, use :doc:`int "
+"mode <doc.as_command.int>`."
+msgstr "小数部がない整数を生成したい場合は :doc:`int モード <doc.as_command.int>` を使用してください。"
+

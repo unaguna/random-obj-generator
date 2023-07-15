@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 14:02+0900\n"
+"POT-Creation-Date: 2023-07-15 20:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -47,15 +47,41 @@ msgstr ""
 msgid "In factory definition file, :code:`import randog` can be omitted."
 msgstr "factory定義ファイルでは、:code:`import randog` を省略できます。"
 
-#: ../../source/doc.as_command.byfile.rst:26
+#: ../../source/doc.as_command.byfile.rst:27
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.byfile.rst:28
+#: ../../source/doc.as_command.byfile.rst:29
 msgid "No unique arguments."
 msgstr "byfile モード独自の引数はありません。"
 
-#: ../../source/doc.as_command.byfile.rst:30
+#: ../../source/doc.as_command.byfile.rst:31
 msgid "Common options are available; see also :doc:`doc.as_command.common_option`"
 msgstr "共通オプションを使用できます。こちらをご覧ください：:doc:`doc.as_command.common_option`"
+
+#: ../../source/doc.as_command.byfile.rst:35
+msgid "Examples"
+msgstr "実行例"
+
+#: ../../source/doc.as_command.byfile.rst:37
+msgid "The simplest example is the following:"
+msgstr "最も簡素な例は次の通りです："
+
+#: ../../source/doc.as_command.byfile.rst:43
+msgid ""
+"If the definition file defines a factory that generates a dict equivalent"
+" to one record in the database, you can obtain data for testing by "
+"generating multiple dict as shown below:"
+msgstr ""
+"定義ファイルでデータベースのレコード1つに相当するdictを生成する factory "
+"を定義している場合、下記のように複数個生成することでテスト用データをそろえることができます。"
+
+#: ../../source/doc.as_command.byfile.rst:50
+msgid ""
+"You may want to generate multiple values while outputting each one to a "
+"separate file. In that case, you can utilize :code:`-O` and :code:`-r` as"
+" follows:"
+msgstr ""
+"1つ1つを別々のファイルに出力しながら複数個生成したいことがあるかもしれません。その場合は、以下のように :code:`-O` や "
+":code:`-r` を活用します。"
 

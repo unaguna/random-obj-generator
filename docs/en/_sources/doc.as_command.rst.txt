@@ -46,7 +46,7 @@ The following modes are available for command execution. Arguments and options a
      - :code:`str`
      - :code:`python -m randog str`
      - :code:`XTGh3VH1`
-     -
+     - :doc:`detail <doc.as_command.str>`
 
    * - decimal
      - :code:`Decimal`
@@ -108,5 +108,6 @@ Details of Modes
    doc.as_command.bool
    doc.as_command.int
    doc.as_command.float
+   doc.as_command.str
    doc.as_command.byfile
 

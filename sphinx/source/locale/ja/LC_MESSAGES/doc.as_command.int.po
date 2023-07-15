@@ -56,7 +56,7 @@ msgstr ""
 
 #: ../../source/doc.as_command.int.rst:21
 msgid ":doc:`common options <doc.as_command.common_option>`"
-msgstr ""
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
 
 #: ../../source/doc.as_command.int.rst:25
 msgid "Examples"

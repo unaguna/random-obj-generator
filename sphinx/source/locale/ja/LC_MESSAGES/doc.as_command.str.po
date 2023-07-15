@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-15 20:02+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.as_command.str.rst:2
+msgid "str Mode"
+msgstr "str モード"
+
+#: ../../source/doc.as_command.str.rst:4
+msgid ""
+"In str mode, string values are generated. The format of the command is as"
+" follows:"
+msgstr "str モードでは、文字列を生成します。コマンドの形式は次の通りです："
+
+#: ../../source/doc.as_command.str.rst:12
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.str.rst:15
+msgid ":code:`--length LENGTH`:"
+msgstr ""
+
+#: ../../source/doc.as_command.str.rst:15
+msgid ""
+"the length of generated strings. You can specify an integer such as "
+":code:`--length 5` or a range such as :code:`--length 3:8`."
+msgstr ""
+"生成される文字列の文字列長。:code:`--length 5` のように整数値を指定することや、:code:`--length 3:8` のように範囲を指定することができる。"
+
+#: ../../source/doc.as_command.str.rst:18
+msgid ":code:`--charset CHARSET`:"
+msgstr ""
+
+#: ../../source/doc.as_command.str.rst:18
+msgid "the characters which contained by generated strings."
+msgstr "生成される文字列が含む文字"
+
+#: ../../source/doc.as_command.str.rst:22
+msgid ":code:`common-options`"
+msgstr ""
+
+#: ../../source/doc.as_command.str.rst:21
+msgid ":doc:`common options <doc.as_command.common_option>`"
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
+
+#: ../../source/doc.as_command.str.rst:25
+msgid "Examples"
+msgstr "実行例"
+
+#: ../../source/doc.as_command.str.rst:27
+msgid "The simplest example is the following:"
+msgstr "最も簡素な例は次の通りです："
+

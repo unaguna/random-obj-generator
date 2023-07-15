@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 18:09+0900\n"
+"POT-Creation-Date: 2023-07-15 20:02+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -139,6 +139,10 @@ msgstr ""
 
 #: ../../source/doc.as_command.rst:48
 msgid ":code:`XTGh3VH1`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:49
+msgid ":doc:`detail <doc.as_command.str>`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:51

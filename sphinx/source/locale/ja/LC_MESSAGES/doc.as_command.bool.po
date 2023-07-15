@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-15 15:04+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.as_command.bool.rst:2
+msgid "bool Mode"
+msgstr "bool モード"
+
+#: ../../source/doc.as_command.bool.rst:4
+msgid ""
+"In bool mode, boolean values are generated. The format of the command is "
+"as follows:"
+msgstr "bool モードでは、真偽値を生成します。コマンドの形式は次の通りです："
+
+#: ../../source/doc.as_command.bool.rst:12
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.bool.rst:15
+msgid ":code:`PROP_TRUE` (optional, default=0.5):"
+msgstr ""
+
+#: ../../source/doc.as_command.bool.rst:15
+msgid "the probability of True."
+msgstr "True を生成する確率。"
+
+#: ../../source/doc.as_command.bool.rst:19
+msgid ":code:`common-options`"
+msgstr ""
+
+#: ../../source/doc.as_command.bool.rst:18
+msgid ":doc:`common options <doc.as_command.common_option>`"
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
+
+#: ../../source/doc.as_command.bool.rst:22
+msgid "Examples"
+msgstr "実行例"
+
+#: ../../source/doc.as_command.bool.rst:24
+msgid ""
+"The simplest example is the following, which outputs True or False with a"
+" 50% probability of each."
+msgstr "最も簡素な例は次の通りです。True または False を 50% ずつの確率で出力します。"
+
+#: ../../source/doc.as_command.bool.rst:30
+msgid ""
+"Most likely, you will not be satisfied with just one generated, so you "
+"will probably want to output multiple times as follows:"
+msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
+
+#: ../../source/doc.as_command.bool.rst:40
+msgid ""
+"It may be necessary to output in lower case, for example, if the output "
+"is to be processed by a program in another language. In that case, the "
+"desired format can be obtained by outputting in json format as follows:"
+msgstr ""
+"出力を他の言語のプログラムで処理する場合などでは小文字で出力する必要があるかもしれません。その場合、次のように json "
+"形式で出力すると目的の形式で得られます。"

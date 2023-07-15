@@ -28,7 +28,7 @@ The following modes are available for command execution. Arguments and options a
      - :code:`bool`
      - :code:`python -m randog bool`
      - :code:`True`
-     -
+     - :doc:`detail <doc.as_command.bool>`
 
    * - int
      - :code:`int`
@@ -105,5 +105,6 @@ Details of Modes
 .. toctree::
    :maxdepth: 1
 
+   doc.as_command.bool
    doc.as_command.byfile
 

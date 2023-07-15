@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 13:45+0900\n"
+"POT-Creation-Date: 2023-07-15 15:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -32,8 +32,7 @@ msgstr "randog はコマンドとして実行することもできます。コ�
 msgid ""
 "Specify MODE according to the values you want to generate, and specify "
 "further arguments to specify more detailed conditions."
-msgstr ""
-"生成したい値に応じたモードを :code:`<MODE>` に指定し、より詳しい条件を指定するためにさらに引数を指定してください。"
+msgstr "生成したい値に応じたモードを :code:`<MODE>` に指定し、より詳しい条件を指定するためにさらに引数を指定してください。"
 
 #: ../../source/doc.as_command.rst:14
 msgid "Modes"
@@ -44,8 +43,7 @@ msgid ""
 "The following modes are available for command execution. Arguments and "
 "options available for each mode are described on the detail page for each"
 " mode."
-msgstr ""
-"下記のモードを使用することができます。各モードで使用できる引数やオプションはそれぞれのモードの詳細ページで確認できます。"
+msgstr "下記のモードを使用することができます。各モードで使用できる引数やオプションはそれぞれのモードの詳細ページで確認できます。"
 
 #: ../../source/doc.as_command.rst:21
 msgid "mode"
@@ -81,6 +79,10 @@ msgstr ""
 
 #: ../../source/doc.as_command.rst:30
 msgid ":code:`True`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:31
+msgid ":doc:`detail <doc.as_command.bool>`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:33

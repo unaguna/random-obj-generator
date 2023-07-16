@@ -24,6 +24,26 @@ def test__random_list(length):
             assert value[2] == ""
 
 
+@pytest.mark.parametrize("as_list", [True, False])
+@pytest.mark.parametrize(
+    "items",
+    [
+        [randog.factory.randint(1, 1), range(0, 10)],
+        [randog.factory.randint(1, 1), lambda: None],
+        [randog.factory.randint(1, 1), "const"],
+    ],
+)
+def test__random_list__error_when_item_is_not_factory(as_list, items):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        if as_list:
+            randog.factory.randlist(items_list=items)
+        else:
+            randog.factory.randlist(*items)
+    e = e_ctx.value
+
+    assert e.message.startswith("randlist received non-factory object for item")
+
+
 @pytest.mark.parametrize("length", (0, 1, 2, 3))
 def test__random_list__with_random_length(length):
     length_factory = randog.factory.randint(length, length)

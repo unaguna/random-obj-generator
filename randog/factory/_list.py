@@ -82,6 +82,16 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
         self._factories = items
         self._type = type
 
+        non_factory_item_indexes = [
+            str(i)
+            for i, factory in enumerate(self._factories)
+            if not isinstance(factory, Factory)
+        ]
+        if len(non_factory_item_indexes) > 0:
+            raise FactoryConstructionError(
+                f"randlist received non-factory object for item: index {', '.join(non_factory_item_indexes)}"
+            )
+
         if isinstance(self._length, Factory) and len(self._factories) == 0:
             raise FactoryConstructionError(
                 "the factory of element must be given to randlist() if length is at random"

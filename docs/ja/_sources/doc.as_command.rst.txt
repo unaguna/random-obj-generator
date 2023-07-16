@@ -64,7 +64,7 @@ The following modes are available for command execution. Arguments and options a
      - :code:`date`
      - :code:`python -m randog date 2022-01-01 2023-01-01`
      - :code:`2022-03-20`
-     -
+     - :doc:`detail <doc.as_command.date>`
 
    * - time
      - :code:`time`
@@ -111,5 +111,6 @@ Details of Modes
    doc.as_command.str
    doc.as_command.decimal
    doc.as_command.datetime
+   doc.as_command.date
    doc.as_command.byfile
 

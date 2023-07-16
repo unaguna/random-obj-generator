@@ -74,12 +74,19 @@ def randdict(
     if items_dict is not None:
         items = items_dict
 
-    try:
-        items_normalized = {
-            k: v if isinstance(v, DictItem) else DictItem(v) for k, v in items.items()
-        }
-    except DictItemValueError:
-        raise FactoryConstructionError("randdict received non-factory object for item")
+    items_normalized = {}
+    non_factory_item_keys = []
+    for key, value in items.items():
+        try:
+            items_normalized[key] = (
+                value if isinstance(value, DictItem) else DictItem(value)
+            )
+        except DictItemValueError:
+            non_factory_item_keys.append(str(key))
+    if len(non_factory_item_keys) > 0:
+        raise FactoryConstructionError(
+            f"randdict received non-factory object for item: {', '.join(non_factory_item_keys)}"
+        )
 
     return DictRandomFactory(items_normalized, rnd=rnd)
 

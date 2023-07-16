@@ -190,6 +190,14 @@ def test__random_timedelta__unit(minimum, maximum, unit, expected_value):
     assert (value / unit).is_integer()
 
 
+def test__random_timedelta__error_when_unit_is_zero():
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.randtimedelta(unit=dt.timedelta(0))
+    e = e_ctx.value
+
+    assert e.message == "the unit for randtimedelta must not be zero"
+
+
 def test__random_timedelta__or_none():
     expected_value = dt.timedelta(seconds=5)
     factory = randog.factory.randtimedelta(expected_value, expected_value).or_none(0.5)

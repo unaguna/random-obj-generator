@@ -1,85 +1,118 @@
 Run as Command
 ==============
 
-randog can be used as a command. The simplest way to execute the command is as follows:
+randog can be used as a command. The basic command format is as follows:
 
 .. code-block:: shell
 
-    python -m randog <factory_definition_file>
+    python -m randog <MODE> ...
 
-The argument is :doc:`a filename of a factory definition <doc.external_def>`. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:
-
-.. code-block:: python
-
-    import uuid
-
-    FACTORY = randog.factory.from_example({
-        "uuid": uuid.uuid4,
-        "name": "",
-        "age": 20,
-    })
-
-.. note::
-    In factory definition file, :code:`import randog` can be omitted.
+Specify MODE according to the values you want to generate, and specify further arguments to specify more detailed conditions.
 
 
-Output format
--------------
+Modes
+-----
 
-Normally, the generated objects are output as is with :code:`print()`, but the output format can be changed by using the following options.
+The following modes are available for command execution. Arguments and options available for each mode are described on the detail page for each mode.
 
-- :code:`--repr`: The generated object is converted by using :code:`repr()` before output.
-- :code:`--json`: Outputs the generated object in JSON format. Objects for which no standard JSON format is defined are converted to JSON after being converted to strings with :code:`str()`.
+.. list-table::
+   :header-rows: 1
 
-For example:
+   * - mode
+     - value type
+     - command example
+     - output example
+     - detail
 
-.. code-block:: shell
+   * - bool
+     - :code:`bool`
+     - :code:`python -m randog bool`
+     - :code:`True`
+     - :doc:`detail <doc.as_command.bool>`
 
-    python -m randog factory_def.py --json
-    python -m randog factory_def.py --repr
+   * - int
+     - :code:`int`
+     - :code:`python -m randog int -100 100`
+     - :code:`42`
+     - :doc:`detail <doc.as_command.int>`
+
+   * - float
+     - :code:`float`
+     - :code:`python -m randog float -10 10`
+     - :code:`2.826684165562185`
+     - :doc:`detail <doc.as_command.float>`
+
+   * - str
+     - :code:`str`
+     - :code:`python -m randog str`
+     - :code:`XTGh3VH1`
+     - :doc:`detail <doc.as_command.str>`
+
+   * - decimal
+     - :code:`Decimal`
+     - :code:`python -m randog decimal -10 10 --decimal-len 2`
+     - :code:`3.91`
+     - :doc:`detail <doc.as_command.decimal>`
+
+   * - datetime
+     - :code:`datetime`
+     - :code:`python -m randog datetime 2022-01-01 2023-01-01`
+     - :code:`2022-03-20 12:43:51.110244`
+     - :doc:`detail <doc.as_command.datetime>`
+
+   * - date
+     - :code:`date`
+     - :code:`python -m randog date 2022-01-01 2023-01-01`
+     - :code:`2022-03-20`
+     - :doc:`detail <doc.as_command.date>`
+
+   * - time
+     - :code:`time`
+     - :code:`python -m randog time`
+     - :code:`12:43:51.110244`
+     - :doc:`detail <doc.as_command.time>`
+
+   * - timedelta
+     - :code:`timedelta`
+     - :code:`python -m randog timedelta`
+     - :code:`17h`
+     - :doc:`detail <doc.as_command.timedelta>`
+
+   * - byfile
+     - | according to
+       | the definition file
+     - :code:`python -m randog byfile ./factory_def.py`
+     - | according to
+       | ./factory_def.py
+     - :doc:`detail <doc.as_command.byfile>`
 
 
-Output to file
---------------
+Arguments and Options
+---------------------
 
-:code:`--output` option can be used to output to a file, as in the following example.
+For mode-specific arguments and options, see the detailed page for each mode.
 
-.. code-block:: shell
+Several options can be used in any mode; see also:
 
-    python -m randog factory_def.py --output ./out.txt
+.. toctree::
+   :maxdepth: 2
 
-.. note::
-    The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option exists to be combined with the other options described below. Details will be included when describing them.
+   doc.as_command.common_option
 
+Details of Modes
+----------------
 
-Iteration
----------
+.. toctree::
+   :maxdepth: 1
 
-There are two types of repeat generation options: :code:`--list` (:code:`-L`) and :code:`--repeat` (:code:`-r`).
+   doc.as_command.bool
+   doc.as_command.int
+   doc.as_command.float
+   doc.as_command.str
+   doc.as_command.decimal
+   doc.as_command.datetime
+   doc.as_command.date
+   doc.as_command.time
+   doc.as_command.timedelta
+   doc.as_command.byfile
 
-If you want to output repeatedly generated objects in a single list, use :code:`--list` as follows:
-
-.. code-block:: shell
-
-    # generate ONE list which contains 3 objects; each element conforms to factory_def.py.
-    python -m randog factory_def.py --list 3
-
-On the other hand, if you want to output each repeatedly generated object separately, use :code:`--repeat` as follows:
-
-.. code-block:: shell
-
-    # generate and output 3 times
-    python -m randog factory_def.py --repeat 3
-
-.. note::
-    If you want to output to different files one at a time using :code:`--repeat`, use :code:`--output` with a placeholder as follows:
-
-    .. code-block:: shell
-
-        # output to 'out_1.txt', 'out_2.txt', and 'out_3.txt'
-        python -m randog factory_def.py --repeat 3 --output './out_{}.txt'
-
-        # output to 'out_0001.txt', 'out_0002.txt', and 'out_0003.txt'
-        python -m randog factory_def.py --repeat 3 --output './out_{:04}.txt'
-
-    The rules for placeholders are the same as `the standard python format <https://docs.python.org/3/library/string.html#format-string-syntax>`_.

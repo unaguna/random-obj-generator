@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>byfile モード &mdash; random-obj-generator 0.5.0 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Tips (使い方)" href="doc.tips.html" />
+    <link rel="prev" title="timedelta モード" href="doc.as_command.timedelta.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+              <div class="version">
+                0.5.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#modes">モード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#arguments-and-options">引数とオプション</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.as_command.html#details-of-modes">各モードの詳細</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.bool.html">bool モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.int.html">int モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.float.html">float モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.str.html">str モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.decimal.html">decimal モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.datetime.html">datetime モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.date.html">date モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.time.html">time モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta モード</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">byfile モード</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#arguments-and-options">引数とオプション</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">実行例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="doc.as_command.html">コマンドとして実行</a></li>
+      <li class="breadcrumb-item active">byfile モード</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.as_command.byfile.html"
+            >English</option>
+            <option value="../ja/doc.as_command.byfile.html"
+                selected
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="byfile-mode">
+<h1>byfile モード<a class="headerlink" href="#byfile-mode" title="この見出しへのパーマリンク"></a></h1>
+<p>byfile モードでは、<a class="reference internal" href="doc.external_def.html"><span class="doc">ファクトリ定義ファイル</span></a> で定義されたファクトリを使用して値が生成されます。実行例は次の通りです：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+</pre></div>
+</div>
+<p>引数 <code class="code docutils literal notranslate"><span class="pre">factory_def.py</span></code> は <a class="reference internal" href="doc.external_def.html"><span class="doc">factory の外部定義ファイル</span></a> のファイル名です。このファイルは python プログラムであり、以下のように factory を作成して変数 FACTORY にバインドするプログラムである必要があります。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
+    <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>factory定義ファイルでは、<code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> を省略できます。</p>
+</div>
+<section id="arguments-and-options">
+<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
+<p>byfile モード独自の引数はありません。</p>
+<p>共通オプションを使用できます。こちらをご覧ください：<a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">共通オプション</span></a></p>
+</section>
+<section id="examples">
+<h2>実行例<a class="headerlink" href="#examples" title="この見出しへのパーマリンク"></a></h2>
+<p>最も簡素な例は次の通りです：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+</pre></div>
+</div>
+<p>定義ファイルでデータベースのレコード1つに相当するdictを生成する factory を定義している場合、下記のように複数個生成することでテスト用データをそろえることができます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate list which contains 10 values</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
+</pre></div>
+</div>
+<p>1つ1つを別々のファイルに出力しながら複数個生成したいことがあるかもしれません。その場合は、以下のように <code class="code docutils literal notranslate"><span class="pre">-O</span></code> や <code class="code docutils literal notranslate"><span class="pre">-r</span></code> を活用します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times and output each of them into out_001.json, out_002.json, ... with json format</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.json&#39;</span><span class="w"> </span>--json
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.as_command.timedelta.html" class="btn btn-neutral float-left" title="timedelta モード" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.tips.html" class="btn btn-neutral float-right" title="Tips (使い方)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

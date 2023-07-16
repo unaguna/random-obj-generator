@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-10 17:14+0900\n"
+"POT-Creation-Date: 2023-07-15 08:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.12.1\n"
 
 #: ../../source/randog.factory.rst:2
 msgid "randog.factory package"
@@ -135,7 +135,7 @@ msgstr "None を生成する確率"
 #: randog.factory._float.randfloat:13
 #: randog.factory._from_example.from_example:14 randog.factory._int.randint:7
 #: randog.factory._list.randlist:10 randog.factory._str.randstr:7
-#: randog.factory._time.randtime:5 randog.factory._timedelta.randtimedelta:9
+#: randog.factory._time.randtime:10 randog.factory._timedelta.randtimedelta:9
 #: randog.factory._union.union:8
 msgid "random number generator to be used"
 msgstr "乱数生成に使用するインスタンス"
@@ -257,8 +257,7 @@ msgid ""
 "the maximum value. If the generated value reaches the maximum value, 1 is"
 " generated next. If the maximum value is not specified, it is not reset "
 "to 1."
-msgstr ""
-"最大値。生成値がこの値に達した場合、次の生成値は1になる。最大値が指定されない場合、生成値は1に戻されない。"
+msgstr "最大値。生成値がこの値に達した場合、次の生成値は1になる。最大値が指定されない場合、生成値は1に戻されない。"
 
 #: of randog.factory._increment.increment:11
 msgid "if it is not satisfied `1 <= initial_value <= maximum`"
@@ -276,7 +275,7 @@ msgstr "True を生成する確率"
 #: randog.factory._datetime.randdatetime:13
 #: randog.factory._decimal.randdecimal:18 randog.factory._float.randfloat:16
 #: randog.factory._int.randint:10 randog.factory._list.randlist:15
-#: randog.factory._str.randstr:10 randog.factory._time.randtime:8
+#: randog.factory._str.randstr:10 randog.factory._time.randtime:13
 #: randog.factory._timedelta.randtimedelta:12
 msgid "When the specified generating conditions are inconsistent."
 msgstr "指定した生成条件に矛盾がある場合。"
@@ -305,13 +304,15 @@ msgstr "ランダムに date 型の値を生成する factory を返す。"
 
 #: of randog.factory._date.randdate:3 randog.factory._datetime.randdatetime:3
 #: randog.factory._decimal.randdecimal:3 randog.factory._float.randfloat:3
-#: randog.factory._int.randint:3 randog.factory._timedelta.randtimedelta:3
+#: randog.factory._int.randint:3 randog.factory._time.randtime:3
+#: randog.factory._timedelta.randtimedelta:3
 msgid "the minimum"
 msgstr "最小値"
 
 #: of randog.factory._date.randdate:5 randog.factory._datetime.randdatetime:5
 #: randog.factory._decimal.randdecimal:5 randog.factory._float.randfloat:5
-#: randog.factory._int.randint:5 randog.factory._timedelta.randtimedelta:5
+#: randog.factory._int.randint:5 randog.factory._time.randtime:5
+#: randog.factory._timedelta.randtimedelta:5
 msgid "the maximum"
 msgstr "最大値"
 
@@ -319,7 +320,7 @@ msgstr "最大値"
 msgid "Return a factory generating random datetime values."
 msgstr "ランダムに datetime 型の値を生成する factory を返す。"
 
-#: of randog.factory._datetime.randdatetime:7
+#: of randog.factory._datetime.randdatetime:7 randog.factory._time.randtime:7
 msgid ""
 "If specified, the tzinfo of result will be fixed to this value (False "
 "means no specification). When it fixes aware datetime to aware, the time "
@@ -424,10 +425,6 @@ msgstr "文字列の生成に使用する文字"
 msgid "Return a factory generating random time values."
 msgstr "ランダムに time 型の値を生成する factory を返す。"
 
-#: of randog.factory._time.randtime:3
-msgid "the timezone information"
-msgstr "生成する時刻のタイムゾーン情報"
-
 #: of randog.factory._timedelta.randtimedelta:1
 msgid "Return a factory generating random timedelta values."
 msgstr "ランダムに timedelta 型の値を生成する factory を返す。"
@@ -472,4 +469,7 @@ msgstr "factory が一つも指定されていない。"
 #~ "list の子要素の factory "
 #~ "を作成する際にも実施されます。将来のアップデートでキーワード引数を増やせるように、`custom_funcs` は "
 #~ "`**kwargs` を受け取ることが推奨されています。"
+
+#~ msgid "the timezone information"
+#~ msgstr "生成する時刻のタイムゾーン情報"
 

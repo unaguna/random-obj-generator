@@ -1,0 +1,9 @@
+###### dependent for document ######
+Sphinx
+sphinx_rtd_theme
+sphinx-copybutton
+sphinx-intl
+
+
+##### additional modules to enable all features of randog #####
+SQLAlchemy

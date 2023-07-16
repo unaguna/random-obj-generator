@@ -52,7 +52,7 @@ The following modes are available for command execution. Arguments and options a
      - :code:`Decimal`
      - :code:`python -m randog decimal -10 10 --decimal-len 2`
      - :code:`3.91`
-     -
+     - :doc:`detail <doc.as_command.decimal>`
 
    * - datetime
      - :code:`datetime`
@@ -109,5 +109,6 @@ Details of Modes
    doc.as_command.int
    doc.as_command.float
    doc.as_command.str
+   doc.as_command.decimal
    doc.as_command.byfile
 

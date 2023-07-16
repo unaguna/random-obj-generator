@@ -1,0 +1,144 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-16 12:03+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.as_command.decimal.rst:2
+msgid "decimal Mode"
+msgstr "decimal モード"
+
+#: ../../source/doc.as_command.decimal.rst:4
+msgid ""
+"In decimal mode, decimal values are generated. The format of the command "
+"is as follows:"
+msgstr "decimal モードでは、10進小数値を生成します。コマンドの形式は次の通りです："
+
+#: ../../source/doc.as_command.decimal.rst:12
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.decimal.rst:15
+msgid ":code:`MINIMUM` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:15
+msgid ""
+"the minimum value. If not specified, the behavior is left to the "
+"specification of `randdecimal "
+"<randog.factory.html#randog.factory.randdecimal>`_."
+msgstr ""
+"最小値。指定がない場合の動作は、`randdecimal "
+"<randog.factory.html#randog.factory.randdecimal>`_ の仕様に準ずる。"
+
+#: ../../source/doc.as_command.decimal.rst:18
+msgid ":code:`MAXIMUM` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:18
+msgid ""
+"the maximum value. If not specified, the behavior is left to the "
+"specification of `randdecimal "
+"<randog.factory.html#randog.factory.randdecimal>`_.."
+msgstr ""
+"最大値。指定がない場合の動作は、`randdecimal "
+"<randog.factory.html#randog.factory.randdecimal>`_ の仕様に準ずる。"
+
+#: ../../source/doc.as_command.decimal.rst:21
+msgid ":code:`--decimal-len DECIMAL_LENGTH` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:21
+msgid ""
+"the length of decimal part of generated values. If not specified, the "
+"behavior is left to the specification of `randdecimal "
+"<randog.factory.html#randog.factory.randdecimal>`_."
+msgstr ""
+"生成される値の小数部分の桁数。指定がない場合の動作は、`randdecimal "
+"<randog.factory.html#randog.factory.randdecimal>`_ の仕様に準ずる。"
+
+#: ../../source/doc.as_command.decimal.rst:24
+msgid ":code:`--p-inf PROB_P_INF` (optional, default=0.0):"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:24
+msgid "the probability of positive infinity."
+msgstr "正の無限大を生成する確率。"
+
+#: ../../source/doc.as_command.decimal.rst:27
+msgid ":code:`--n-inf PROB_N_INF` (optional, default=0.0):"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:27
+msgid "the probability of negative infinity."
+msgstr "負の無限大を生成する確率。"
+
+#: ../../source/doc.as_command.decimal.rst:30
+msgid ":code:`--nan PROB_NAN` (optional, default=0.0):"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:30
+msgid "the probability of NaN."
+msgstr "NaNを生成する確率。"
+
+#: ../../source/doc.as_command.decimal.rst:34
+msgid ":code:`common-options`"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:33
+msgid ":doc:`common options <doc.as_command.common_option>`"
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
+
+#: ../../source/doc.as_command.decimal.rst:37
+msgid "Examples"
+msgstr "実行例"
+
+#: ../../source/doc.as_command.decimal.rst:39
+msgid ""
+"The simplest example is the following, which outputs a value between 0 "
+"and 1."
+msgstr "最も簡素な例は次の通りです。0から1の間の数値を出力します。"
+
+#: ../../source/doc.as_command.decimal.rst:45
+msgid ""
+"You can specify a range of values to be generated, as in the following "
+"example:"
+msgstr "次の例のように、生成する値の範囲を指定することができます："
+
+#: ../../source/doc.as_command.decimal.rst:52
+msgid ""
+"When using decimal numbers, you will often want to limit the number of "
+"decimal places. In that case, use :code:`--decimal-len` as in the "
+"following example:"
+msgstr ""
+"10進数を使用する場合、小数点以下の桁数を制限したい場合が多いでしょう。その場合は次の例のように :code:`--decimal-len` "
+"を使用します。"
+
+#: ../../source/doc.as_command.decimal.rst:59
+msgid ""
+"Infinity and NaN can be included as candidates for generation by "
+"specifying optional arguments."
+msgstr "オプション引数を指定することで無限大やNaNを生成の候補に含めることができます。"
+
+#: ../../source/doc.as_command.decimal.rst:69
+msgid ""
+"Most likely, you will not be satisfied with just one generated, so you "
+"will probably want to output multiple times as follows:"
+msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
+

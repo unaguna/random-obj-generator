@@ -132,7 +132,7 @@ msgid ""
 "<https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as "
 "follows:"
 msgstr ""
-"デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を :ref:`独自の書式コード "
+"デフォルトでは :ref:`簡易書式 <simple-format>` で出力されますが、次のようにオプションを指定することで出力形式を :ref:`独自の書式コード "
 "<format-codes>` で指定したフォーマットや `ISO-8601 形式 "
 "<https://ja.wikipedia.org/wiki/ISO_8601>`_ に変更できます："
 

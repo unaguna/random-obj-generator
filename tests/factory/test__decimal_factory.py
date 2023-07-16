@@ -106,6 +106,29 @@ def test__random_decimal__decimal_len(condition, decimal_len, expected_value):
 
 
 @pytest.mark.parametrize(
+    "decimal_len",
+    [0, 1, 2],
+)
+@pytest.mark.parametrize(
+    ("condition", "is_expected"),
+    (
+        ({"p_inf": 1}, lambda v: v == Decimal("Infinity")),
+        ({"n_inf": 1}, lambda v: v == Decimal("-Infinity")),
+        ({"nan": 1}, lambda v: isinstance(v, Decimal) and v.is_nan()),
+    ),
+)
+def test__random_decimal__decimal_len__inf_nan(condition, decimal_len, is_expected):
+    # The main purpose is to check that no exceptions raise
+
+    factory = randog.factory.randdecimal(decimal_len=decimal_len, **condition)
+
+    value = factory.next()
+
+    assert isinstance(value, Decimal)
+    assert is_expected(value)
+
+
+@pytest.mark.parametrize(
     ("p_inf", "n_inf", "expected_value"),
     (
         (1.0, 0.0, Decimal("inf")),

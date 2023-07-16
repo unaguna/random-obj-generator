@@ -51,19 +51,19 @@ If the minimum unit is not specified, it will be adjusted to the appropriate len
 .. code-block:: shell
 
     # generates a value between 0 day and 1 day with minimum unit 1 second
-    python -m randog timedelta 0d 1d --unit 1s
+    python -m randog timedelta 0 1d --unit 1s
 
 By default, the output is in :ref:`the simple format <simple-format>`, but you can change the output format to the format specified in :ref:`the format codes <format-codes>` or `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as follows:
 
 .. code-block:: shell
 
     # generates a value with ISO-8601 format
-    python -m randog timedelta 0d 1d --unit 1s --iso
+    python -m randog timedelta 0 1d --unit 1s --iso
 
     # generates a value with the specified format　(x days xx:xx:xx)
-    python -m randog timedelta 0d 7d --unit 1s --fmt '%D days %H:%M:%S'
+    python -m randog timedelta 0 7d --unit 1s --fmt '%D days %H:%M:%S'
     # generates a value with the specified format　(x:xx:xx)
-    python -m randog timedelta 0d 7d --unit 1s --fmt '%tH:%M:%S'
+    python -m randog timedelta 0 7d --unit 1s --fmt '%tH:%M:%S'
 
 Most likely, you will not be satisfied with just one generated, so you will probably want to output multiple times as follows:
 
@@ -108,6 +108,10 @@ This format expresses duration by concatenating one or more of the following ele
 
    * - :code:`Xus`
      - X is number of microseconds. For example, :code:`2us` means "2 microseconds"
+
+   * - :code:`0`
+     - | Zero. It is same as :code:`0d`, :code:`0h`, :code:`0s`, and so on.
+       | In the case of zero, the unit is meaningless, so the notation without unit is also allowed.
 
 
 .. note::

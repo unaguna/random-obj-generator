@@ -194,6 +194,10 @@ def to_str(
     return result
 
 
+FROM_STR__VALIDATE__REGEXP = re.compile(r"^([-+]?(\d+[a-zA-Z]+|0))+$")
+FROM_STR__SPLIT_TERM__REGEXP = re.compile(r"(?:^|[-+])(?:\d+[a-zA-Z]+)+")
+
+
 def from_str(value: str) -> dt.timedelta:
     """Converts a string of the simple format to timedelta.
 
@@ -216,13 +220,13 @@ def from_str(value: str) -> dt.timedelta:
     timedelta
         the timedelta object for the received value
     """
-    if not re.match(r"^([-+]?\d+[a-zA-Z]+)+$", value):
+    if not re.match(FROM_STR__VALIDATE__REGEXP, value):
         raise TimedeltaExpressionError(f"illegal timedelta expression: {value}")
 
     result = dt.timedelta(0)
 
     try:
-        for combined_term in re.finditer(r"(?:^|[-+])(?:\d+[a-zA-Z]+)+", value):
+        for combined_term in re.finditer(FROM_STR__SPLIT_TERM__REGEXP, value):
             result += _term_from_str(combined_term.group(0))
     except TimedeltaExpressionError as e:
         raise TimedeltaExpressionError(f"illegal timedelta expression: {value}") from e
@@ -294,15 +298,21 @@ def to_fmt(value: dt.timedelta, fmt: str) -> str:
     return result
 
 
+TERM_FROM_STR__VALIDATE__REGEXP = re.compile(r"^[-+]?(?:\d+[a-zA-Z]+)+$")
+TERM_FROM_STR__SPLIT_SINGLE_UNIT_TERM__REGEXP = re.compile(r"(\d+)([a-zA-Z]+)")
+
+
 def _term_from_str(term_str: str) -> dt.timedelta:
-    if not re.match(r"^[-+]?(?:\d+[a-zA-Z]+)+$", term_str):
+    if not re.match(TERM_FROM_STR__VALIDATE__REGEXP, term_str):
         raise ValueError(f"illegal timedelta term expression: {term_str}")
 
     sign = -1 if term_str.startswith("-") else 1
     result = dt.timedelta(0)
 
     try:
-        for single_unit_term in re.finditer(r"(\d+)([a-zA-Z]+)", term_str):
+        for single_unit_term in re.finditer(
+            TERM_FROM_STR__SPLIT_SINGLE_UNIT_TERM__REGEXP, term_str
+        ):
             numeric_str, unit = single_unit_term.group(1, 2)
             numeric = int(numeric_str)
             result += _UNIT_TERM_CONSTRUCTOR[unit](numeric)

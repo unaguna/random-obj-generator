@@ -28,7 +28,7 @@ msgstr "float モード"
 msgid ""
 "In float mode, floating-point numeric values are generated. The format of"
 " the command is as follows:"
-msgstr "int モードでは、浮動小数点数を生成します。コマンドの形式は次の通りです："
+msgstr "float モードでは、浮動小数点数を生成します。コマンドの形式は次の通りです："
 
 #: ../../source/doc.as_command.float.rst:12
 msgid "Arguments and Options"

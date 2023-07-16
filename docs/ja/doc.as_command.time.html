@@ -23,7 +23,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="next" title="byfile モード" href="doc.as_command.byfile.html" />
+    <link rel="next" title="timedelta モード" href="doc.as_command.timedelta.html" />
     <link rel="prev" title="date モード" href="doc.as_command.date.html" /> 
 </head>
 
@@ -71,6 +71,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#examples">実行例</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.byfile.html">byfile モード</a></li>
 </ul>
 </li>
@@ -124,14 +125,14 @@
 <ul class="simple">
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>最小値。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randtime">randtime</a> の仕様に準ずる。</p></li>
+<li><p>最小値を ISO-8601 形式で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randtime">randtime</a> の仕様に準ずる。</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>最大値。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randtime">randtime</a> の仕様に準ずる。</p></li>
+<li><p>最大値を ISO-8601 形式で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randtime">randtime</a> の仕様に準ずる。</p></li>
 </ul>
 </dd>
 </dl>
@@ -170,7 +171,7 @@
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span><span class="m">00</span>:00:00<span class="w"> </span><span class="m">12</span>:00:00
 </pre></div>
 </div>
-<p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference external" href="https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-format-codes">strftime や strptime と同じ形式</a> で指定したフォーマットやISOに変更できます：</p>
+<p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference external" href="https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-format-codes">strftime や strptime と同じ形式</a> で指定したフォーマットや ISO-8601 形式に変更できます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--iso
 
@@ -189,7 +190,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>time モードでは日付は生成されません。日付も込みで生成したい場合、<a class="reference internal" href="doc.as_command.datetime.html"><span class="doc">datetime モード</span></a> を使用してください。</p>
-<p>また、ある時点を指す時刻ではなく経過時間を生成したい場合は <span class="xref std std-doc">timedelta モード</span> を利用してください。</p>
+<p>また、ある時点を指す時刻ではなく経過時間を生成したい場合は <a class="reference internal" href="doc.as_command.timedelta.html"><span class="doc">timedelta モード</span></a> を利用してください。</p>
 </div>
 </section>
 </section>
@@ -199,7 +200,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="doc.as_command.date.html" class="btn btn-neutral float-left" title="date モード" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="doc.as_command.byfile.html" class="btn btn-neutral float-right" title="byfile モード" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.as_command.timedelta.html" class="btn btn-neutral float-right" title="timedelta モード" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

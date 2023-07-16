@@ -71,6 +71,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.time.html">time モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.byfile.html">byfile モード</a></li>
 </ul>
 </li>
@@ -124,14 +125,14 @@
 <ul class="simple">
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>最小値。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
+<li><p>最小値を ISO-8601 形式で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>最大値。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
+<li><p>最大値を ISO-8601 形式で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
 </ul>
 </dd>
 </dl>
@@ -170,7 +171,7 @@
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span><span class="m">2021</span>-01-01<span class="w"> </span><span class="m">2021</span>-01-31
 </pre></div>
 </div>
-<p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference external" href="https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-format-codes">strftime や strptime と同じ形式</a> で指定したフォーマットやISOに変更できます：</p>
+<p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference external" href="https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-format-codes">strftime や strptime と同じ形式</a> で指定したフォーマットや ISO-8601 形式に変更できます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>--iso
 

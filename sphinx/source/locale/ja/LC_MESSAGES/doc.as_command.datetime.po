@@ -44,7 +44,7 @@ msgid ""
 "behavior is left to the specification of `randdatetime "
 "<randog.factory.html#randog.factory.randdatetime>`_."
 msgstr ""
-"最小値。指定がない場合の動作は、`randdatetime "
+"最小値を ISO-8601 形式で指定する。指定がない場合の動作は、`randdatetime "
 "<randog.factory.html#randog.factory.randdatetime>`_ の仕様に準ずる。"
 
 #: ../../source/doc.as_command.datetime.rst:18
@@ -57,7 +57,7 @@ msgid ""
 "behavior is left to the specification of `randdatetime "
 "<randog.factory.html#randog.factory.randdatetime>`_."
 msgstr ""
-"最大値。指定がない場合の動作は、`randdatetime "
+"最大値を ISO-8601 形式で指定する。指定がない場合の動作は、`randdatetime "
 "<randog.factory.html#randog.factory.randdatetime>`_ の仕様に準ずる。"
 
 #: ../../source/doc.as_command.datetime.rst:21
@@ -115,7 +115,7 @@ msgid ""
 msgstr ""
 "デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を `strftime や strptime"
 " と同じ形式 <https://docs.python.org/ja/3/library/datetime.html#strftime-and-"
-"strptime-format-codes>`_ で指定したフォーマットやISOに変更できます："
+"strptime-format-codes>`_ で指定したフォーマットや ISO-8601 形式に変更できます："
 
 #: ../../source/doc.as_command.datetime.rst:56
 msgid ""

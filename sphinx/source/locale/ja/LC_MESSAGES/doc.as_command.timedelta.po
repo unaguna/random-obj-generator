@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-16 15:46+0900\n"
+"POT-Creation-Date: 2023-07-16 15:55+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -79,8 +79,11 @@ msgid ":code:`--iso` (optional):"
 msgstr ""
 
 #: ../../source/doc.as_command.timedelta.rst:24
-msgid "if specified, it outputs generated object with ISO-8601 format."
-msgstr "指定した場合、ISO-8601 形式で出力する。"
+msgid ""
+"if specified, it outputs generated object with `ISO-8601 format "
+"<https://en.wikipedia.org/wiki/ISO_8601>`_."
+msgstr "指定した場合、`ISO-8601 形式 "
+"<https://ja.wikipedia.org/wiki/ISO_8601>`_ で出力する。"
 
 #: ../../source/doc.as_command.timedelta.rst:27
 msgid ":code:`--fmt FORMAT` (optional):"
@@ -125,11 +128,13 @@ msgstr "生成される値の最小単位を指定しない場合、適当な長
 msgid ""
 "By default, the output is in :ref:`the simple format <simple-format>`, "
 "but you can change the output format to the format specified in :ref:`the"
-" format codes <format-codes>` or ISO-8601 by specifying options as "
+" format codes <format-codes>` or `ISO-8601 format "
+"<https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as "
 "follows:"
 msgstr ""
 "デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を :ref:`独自の書式コード "
-"<format-codes>` で指定したフォーマットや ISO-8601 形式に変更できます："
+"<format-codes>` で指定したフォーマットや `ISO-8601 形式 "
+"<https://ja.wikipedia.org/wiki/ISO_8601>`_ に変更できます："
 
 #: ../../source/doc.as_command.timedelta.rst:68
 msgid ""

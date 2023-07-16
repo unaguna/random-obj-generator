@@ -21,7 +21,7 @@ Arguments and Options
     - the minimum unit of generated values with the simple format; see also :ref:`here <simple-format>`. If not specified, the behavior is left to the specification of `randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_.
 
 - :code:`--iso` (optional):
-    - if specified, it outputs generated object with ISO-8601 format.
+    - if specified, it outputs generated object with `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_.
 
 - :code:`--fmt FORMAT` (optional):
     - if specified, it outputs generated object with the specified format; The format is specified in :ref:`the format codes <format-codes>`.
@@ -53,7 +53,7 @@ If the minimum unit is not specified, it will be adjusted to the appropriate len
     # generates a value between 0 day and 1 day with minimum unit 1 second
     python -m randog timedelta 0d 1d --unit 1s
 
-By default, the output is in :ref:`the simple format <simple-format>`, but you can change the output format to the format specified in :ref:`the format codes <format-codes>` or ISO-8601 by specifying options as follows:
+By default, the output is in :ref:`the simple format <simple-format>`, but you can change the output format to the format specified in :ref:`the format codes <format-codes>` or `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as follows:
 
 .. code-block:: shell
 

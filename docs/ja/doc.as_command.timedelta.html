@@ -148,7 +148,7 @@
 </li>
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">--iso</span></code> (optional):</dt><dd><ul>
-<li><p>指定した場合、ISO-8601 形式で出力する。</p></li>
+<li><p>指定した場合、<a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> で出力する。</p></li>
 </ul>
 </dd>
 </dl>
@@ -185,7 +185,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>0d<span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s
 </pre></div>
 </div>
-<p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference internal" href="#format-codes"><span class="std std-ref">独自の書式コード</span></a> で指定したフォーマットや ISO-8601 形式に変更できます：</p>
+<p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference internal" href="#format-codes"><span class="std std-ref">独自の書式コード</span></a> で指定したフォーマットや <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> に変更できます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>0d<span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--iso
 
@@ -205,7 +205,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="simple-format">
-<span id="id3"></span><h2>簡易書式<a class="headerlink" href="#simple-format" title="この見出しへのパーマリンク"></a></h2>
+<span id="id4"></span><h2>簡易書式<a class="headerlink" href="#simple-format" title="この見出しへのパーマリンク"></a></h2>
 <p>このモードでは、経過時間を <code class="code docutils literal notranslate"><span class="pre">1h30m</span></code> や <code class="code docutils literal notranslate"><span class="pre">1d2h3m4s5ms6us</span></code> のような独自のフォーマットで表現します。</p>
 <p>このフォーマットは、以下の要素を1つ以上連結することで経過時間を表現します。</p>
 <table class="docutils align-default">
@@ -241,7 +241,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="format-codes">
-<span id="id4"></span><h2>書式コード<a class="headerlink" href="#format-codes" title="この見出しへのパーマリンク"></a></h2>
+<span id="id5"></span><h2>書式コード<a class="headerlink" href="#format-codes" title="この見出しへのパーマリンク"></a></h2>
 <p>pythonのtimedeltaには書式コードが定義されていませんが、このモードでは独自の書式コードを使用することができます。</p>
 <table class="docutils align-default">
 <thead>

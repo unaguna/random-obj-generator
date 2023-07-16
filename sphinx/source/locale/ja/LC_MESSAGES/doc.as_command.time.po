@@ -1,0 +1,142 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-16 14:08+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.as_command.time.rst:2
+msgid "time Mode"
+msgstr "time モード"
+
+#: ../../source/doc.as_command.time.rst:4
+msgid ""
+"In time mode, time values are generated. The format of the command is as "
+"follows:"
+msgstr "time モードでは、時刻を生成します。コマンドの形式は次の通りです："
+
+#: ../../source/doc.as_command.time.rst:12
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.time.rst:15
+msgid ":code:`MINIMUM` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.time.rst:15
+msgid ""
+"the minimum value with the ISO-8601 format. If not specified, the "
+"behavior is left to the specification of `randtime "
+"<randog.factory.html#randog.factory.randtime>`_."
+msgstr ""
+"最小値。指定がない場合の動作は、`randtime <randog.factory.html#randog.factory.randtime>`_"
+" の仕様に準ずる。"
+
+#: ../../source/doc.as_command.time.rst:18
+msgid ":code:`MAXIMUM` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.time.rst:18
+msgid ""
+"the maximum value with the ISO-8601 format. If not specified, the "
+"behavior is left to the specification of `randtime "
+"<randog.factory.html#randog.factory.randtime>`_."
+msgstr ""
+"最大値。指定がない場合の動作は、`randtime <randog.factory.html#randog.factory.randtime>`_"
+" の仕様に準ずる。"
+
+#: ../../source/doc.as_command.time.rst:21
+msgid ":code:`--iso` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.time.rst:21
+msgid "if specified, it outputs generated object with ISO-8601 format."
+msgstr "指定した場合、ISO-8601 形式で出力する。"
+
+#: ../../source/doc.as_command.time.rst:24
+msgid ":code:`--fmt FORMAT` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.time.rst:24
+msgid ""
+"if specified, it outputs generated object with the specified format; The "
+"format is specified in `the form of strftime or strptime "
+"<https://docs.python.org/3/library/datetime.html#strftime-and-strptime-"
+"format-codes>`_."
+msgstr ""
+"指定した場合、指定したフォーマットで出力する。フォーマットは `strftime や strptime の形式 "
+"<https://docs.python.org/ja/3/library/datetime.html#strftime-and-"
+"strptime-format-codes>`_ で指定する。"
+
+#: ../../source/doc.as_command.time.rst:28
+msgid ":code:`common-options`"
+msgstr ""
+
+#: ../../source/doc.as_command.time.rst:27
+msgid ":doc:`common options <doc.as_command.common_option>`"
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
+
+#: ../../source/doc.as_command.time.rst:31
+msgid "Examples"
+msgstr "実行例"
+
+#: ../../source/doc.as_command.time.rst:33
+msgid "The simplest example is the following, which outputs a time value."
+msgstr "最も簡素な例は次の通りです。日付を出力します。"
+
+#: ../../source/doc.as_command.time.rst:39
+msgid ""
+"You can specify a range of values to be generated, as in the following "
+"example:"
+msgstr "次の例のように、生成する値の範囲を指定することができます："
+
+#: ../../source/doc.as_command.time.rst:46
+msgid ""
+"By default, the output is in the standard python format, but you can "
+"change the output format to the format specified in `the form of strftime"
+" or strptime <https://docs.python.org/3/library/datetime.html#strftime-"
+"and-strptime-format-codes>`_ or ISO-8601 by specifying options as "
+"follows:"
+msgstr ""
+"デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を `strftime や strptime"
+" と同じ形式 <https://docs.python.org/ja/3/library/datetime.html#strftime-and-"
+"strptime-format-codes>`_ で指定したフォーマットやISOに変更できます："
+
+#: ../../source/doc.as_command.time.rst:56
+msgid ""
+"Most likely, you will not be satisfied with just one generated, so you "
+"will probably want to output multiple times as follows:"
+msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
+
+#: ../../source/doc.as_command.time.rst:67
+msgid ""
+"In time mode, date is not generated simultaneously. If both is wanted, "
+"use :doc:`datetime mode <doc.as_command.datetime>`."
+msgstr ""
+"time モードでは日付は生成されません。日付も込みで生成したい場合、:doc:`datetime モード "
+"<doc.as_command.datetime>` を使用してください。"
+
+#: ../../source/doc.as_command.time.rst:69
+msgid ""
+"Also, if you want to generate an elapsed time rather than a time that "
+"points to a certain point in time, use :doc:`timedelta mode "
+"<doc.as_command.timedelta>`."
+msgstr ""
+"また、ある時点を指す時刻ではなく経過時間を生成したい場合は :doc:`timedelta モード "
+"<doc.as_command.timedelta>` を利用してください。"
+

@@ -70,7 +70,7 @@ The following modes are available for command execution. Arguments and options a
      - :code:`time`
      - :code:`python -m randog time`
      - :code:`12:43:51.110244`
-     -
+     - :doc:`detail <doc.as_command.time>`
 
    * - timedelta
      - :code:`timedelta`
@@ -112,5 +112,6 @@ Details of Modes
    doc.as_command.decimal
    doc.as_command.datetime
    doc.as_command.date
+   doc.as_command.time
    doc.as_command.byfile
 

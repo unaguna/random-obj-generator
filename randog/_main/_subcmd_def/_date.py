@@ -14,7 +14,7 @@ class SubcmdDefDate(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         date_parser = subparsers.add_parser(
             Subcmd.Date.value,
-            usage="python -m randog date [MINIMUM MAXIMUM] [--iso] [common-options]",
+            usage="python -m randog date [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] [common-options]",
             description="It generates values of type datetime.date.",
             add_help=False,
         )

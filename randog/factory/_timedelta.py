@@ -98,8 +98,13 @@ class TimedeltaRandomFactory(Factory[dt.timedelta]):
         FactoryConstructionError
             When the specified generating conditions are inconsistent.
         """
-        if unit is not None and unit < dt.timedelta(0):
-            unit = -unit
+        if unit is not None:
+            if unit == dt.timedelta(0):
+                raise FactoryConstructionError(
+                    "the unit for randtimedelta must not be zero"
+                )
+            if unit < dt.timedelta(0):
+                unit = -unit
 
         self._random = dfor(rnd, Random())
         self._min, self._max, self._unit = self._normalize(minimum, maximum, unit)

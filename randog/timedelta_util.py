@@ -216,7 +216,7 @@ def from_str(value: str) -> dt.timedelta:
     timedelta
         the timedelta object for the received value
     """
-    if not re.match(r"^([-+]?\d+[a-zA-Z]+)+$", value):
+    if not re.match(r"^([-+]?(\d+[a-zA-Z]+|0))+$", value):
         raise TimedeltaExpressionError(f"illegal timedelta expression: {value}")
 
     result = dt.timedelta(0)

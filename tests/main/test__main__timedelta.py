@@ -22,11 +22,17 @@ def test__main__timedelta__without_min_max(capfd):
 
 
 @pytest.mark.parametrize(
-    "expected",
-    ["1d", "20h", "1h30m"],
+    ("arg", "expected"),
+    [
+        ("1d", "1d"),
+        ("20h", "20h"),
+        ("1h30m", "1h30m"),
+        ("0s", "0s"),
+        ("0", "0s"),
+    ],
 )
-def test__main__timedelta__min_max(capfd, expected):
-    args = ["randog", "timedelta", str(expected), str(expected)]
+def test__main__timedelta__min_max(capfd, arg, expected):
+    args = ["randog", "timedelta", arg, arg]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 

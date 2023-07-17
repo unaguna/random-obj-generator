@@ -276,12 +276,47 @@ def test__main__error_duplicate_format(capfd, resources, options):
         assert "not allowed with argument" in err
 
 
-# TODO: --csv のテスト (dict (CSV_COLUMNS の有り無し両方), list, str, その他)
+@pytest.mark.parametrize(
+    ("def_file", "line_num", "expected"),
+    [
+        # Tests outputting various types
+        ("factory_def_dict.py", 1, "0,aaa,2019-10-14\n"),
+        ("factory_def_dict_without_col.py", 1, "0,aaa,2019-10-14\n"),
+        ("factory_def_list.py", 1, "0,aaa,2019-10-14\n"),
+        ("factory_def.py", 1, "aaa\n"),
+        ("factory_def_date.py", 1, "2019-10-14\n"),
+        # Test for multiple lines of output
+        ("factory_def_dict.py", 2, "0,aaa,2019-10-14\n1,aaa,2019-10-14\n"),
+        (
+            "factory_def_dict.py",
+            3,
+            "0,aaa,2019-10-14\n1,aaa,2019-10-14\n2,aaa,2019-10-14\n",
+        ),
+    ],
+)
+def test__main__csv(capfd, resources, def_file, line_num, expected):
+    args = [
+        "randog",
+        "byfile",
+        "--csv",
+        str(line_num),
+        str(resources.joinpath(def_file)),
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == expected
+        assert err == ""
+
+
 # TODO: CSV_COLUMNS の要素として、フィールド値を返す関数を設定できることのテスト
 # TODO: --csv と --json の両立を認めないテスト
 # TODO: --csv と --repr の両立を認めないテスト
-# TODO: --csv と -L, -r, -Lr で複数行出力するテスト
-# TODO: --csv と -OL, -Or, -OLr で複数ファイル出力するテスト
+# TODO: --csv と --list, -L の両立を認めないテスト
+# TODO: --csv と -r で複数行出力するテスト
+# TODO: --csv と -Or で複数ファイル出力するテスト
 
 
 def test__main__byfile__help(capfd):

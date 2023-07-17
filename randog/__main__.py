@@ -4,7 +4,6 @@ import sys
 import typing as t
 
 import randog.factory
-from ._utils.nullsafe import dfor
 from .factory import FactoryDef
 from ._main import Args, Subcmd, get_subcmd_def
 
@@ -42,10 +41,11 @@ def _gen_post_function(
 ) -> t.Optional[t.Callable[[t.Any], t.Any]]:
     """args に応じて、factory_def.factory に適用する post_process 関数を作成する。"""
 
+    # CSV 出力の場合、CSVの行 (Sequence[Any]) を生成するような post_process を作成する。
     if args.get("csv", False):
         if factory_def.csv_columns is not None:
 
-            def _post_function(pre_value):
+            def _post_function(pre_value) -> t.Sequence[t.Any]:
                 if isinstance(pre_value, t.Mapping):
                     return [
                         _get_csv_field(pre_value, col)
@@ -59,7 +59,7 @@ def _gen_post_function(
 
         else:
 
-            def _post_function(pre_value):
+            def _post_function(pre_value) -> t.Sequence[t.Any]:
                 if isinstance(pre_value, t.Mapping):
                     # TODO: 警告
                     return list(pre_value.values())
@@ -132,28 +132,26 @@ def _json_default(args: Args):
         return str
 
 
-def _output_generated_csv(generated: t.Sequence[t.Sequence[t.Any]], fp: t.TextIO):
+def _output_to_csv(
+    factory: randog.factory.Factory[t.Sequence[t.Sequence[t.Any]]],
+    line_num: int,
+    fp: t.TextIO,
+):
     csv_writer = csv.writer(fp, lineterminator="\n")
-    csv_writer.writerows(generated)
+    csv_writer.writerows(factory.iter(line_num))
 
 
 def main():
     args = Args(sys.argv)
+    args_csv: t.Optional[int] = args.get("csv")
 
     with _open_output_fp_only(args) as fp_only:
         index = 0
         for factory in _build_factories(args):
             for r_index in range(args.repeat):
-                # args.list の指定がある場合、リストを生成する。
-                # また、CSV出力の場合は args.list の指定がなくとも、要素数1のリストを生成する。
-                if args.list is not None or args.get("csv", False):
-                    args_list = dfor(args.list, 1)
-                    generated = list(factory.iter(args_list))
-                # args.list の指定が無い場合、普通に1つ生成する。
-                else:
-                    generated = factory.next()
-
                 with _open_output_fp_numbered(args, index) as fp_numbered:
+                    # args と index に応じて出力先 fp を決定する。
+                    # args と index に応じて fp_numbered, fp_only の状態が異なるので、それを条件に使用する。
                     if not isinstance(fp_numbered, _DummyIO):
                         fp = fp_numbered
                     elif not isinstance(fp_only, _DummyIO):
@@ -161,9 +159,16 @@ def main():
                     else:
                         fp = sys.stdout
 
-                    if args.get("csv", False):
-                        _output_generated_csv(generated, fp)
+                    # 生成処理と出力処理
+                    # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
+                    if args_csv is not None:
+                        _output_to_csv(factory, args_csv, fp)
                     else:
+                        if args.list is not None:
+                            generated = list(factory.iter(args.list))
+                        else:
+                            generated = factory.next()
+
                         _output_generated(generated, fp, args=args)
 
                 index += 1

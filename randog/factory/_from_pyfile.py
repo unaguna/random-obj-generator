@@ -1,8 +1,14 @@
+import dataclasses
 from os import PathLike
 import types
 import typing as t
 
 from randog.factory import Factory
+
+
+@dataclasses.dataclass
+class FactoryDef:
+    factory: Factory
 
 
 def from_pyfile(file: t.Union[str, PathLike, t.IO]) -> Factory:
@@ -15,12 +21,17 @@ def from_pyfile(file: t.Union[str, PathLike, t.IO]) -> Factory:
     """
     if isinstance(file, (str, PathLike)):
         with open(file, mode="rb") as fp:
-            return _from_pyfile(fp, file)
+            factory_def = _from_pyfile(fp, file)
     else:
-        return _from_pyfile(file, "<io>")
+        factory_def = _from_pyfile(file, "<io>")
+
+    return factory_def.factory
 
 
-def _from_pyfile(fp: t.IO, filename: t.Union[str, PathLike]) -> Factory:
+FACTORY_ATTR_NAME = "FACTORY"
+
+
+def _from_pyfile(fp: t.IO, filename: t.Union[str, PathLike]) -> FactoryDef:
     import randog
 
     d = types.ModuleType("factory")
@@ -32,18 +43,24 @@ def _from_pyfile(fp: t.IO, filename: t.Union[str, PathLike]) -> Factory:
         e.strerror = f"Unable to load factory file ({e.strerror})"
         raise
 
-    attr_name = "FACTORY"
+    return _load_factory_module(d, filename=filename)
 
-    if not hasattr(d, attr_name):
+
+def _load_factory_module(
+    module: types.ModuleType, *, filename: t.Union[str, PathLike]
+) -> FactoryDef:
+    if not hasattr(module, FACTORY_ATTR_NAME):
         raise AttributeError(
-            f"factory file '{filename}' has no attribute '{attr_name}'"
+            f"factory file '{filename}' has no attribute '{FACTORY_ATTR_NAME}'"
         )
 
-    factory = getattr(d, attr_name)
+    factory = getattr(module, FACTORY_ATTR_NAME)
 
     if not isinstance(factory, Factory):
         raise AttributeError(
-            f"attribute '{attr_name}' of factory file '{filename}' is not a factory"
+            f"attribute '{FACTORY_ATTR_NAME}' of factory file '{filename}' is not a factory"
         )
 
-    return factory
+    return FactoryDef(
+        factory=factory,
+    )

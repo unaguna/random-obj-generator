@@ -32,7 +32,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore=randog/sqlalchemy/__init__.py --ignore-glob=**/doc.sqlalchemy.rst
+        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore-glob=randog/sqlalchemy/*.py --ignore-glob=**/doc.sqlalchemy.rst
 
   test-with-sqlalchemy:
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>randog.sqlalchemy package &mdash; random-obj-generator 0.5.0 ドキュメント</title>
+  <title>randog.sqlalchemy package &mdash; random-obj-generator 0.6.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -62,6 +62,8 @@
 <li class="toctree-l3"><a class="reference internal" href="randog.factory.html">randog.factory package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">randog.sqlalchemy package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#randog.sqlalchemy.custom"><code class="docutils literal notranslate"><span class="pre">custom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#randog.sqlalchemy.factory"><code class="docutils literal notranslate"><span class="pre">factory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#randog.sqlalchemy.factory_from_column"><code class="docutils literal notranslate"><span class="pre">factory_from_column()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -109,7 +111,7 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.sqlalchemy.custom">
 <span class="sig-prename descclassname"><span class="pre">randog.sqlalchemy.</span></span><span class="sig-name descname"><span class="pre">custom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">example</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#randog.sqlalchemy.custom" title="この定義へのパーマリンク"></a></dt>
-<dd><p>sqlalchemy 由来のオブジェクトの生成のための custom_func</p>
+<dd><p>sqlalchemy 由来のオブジェクトの生成のための custom_func。</p>
 <p>この関数は <cite>randog.factory.from_example</cite> のアドオンです。</p>
 <p><cite>from_example</cite> で sqlalchemy 由来の値を生成する factory を作成したい場合、この関数を引数 <cite>custom_func</cite> として指定します。</p>
 <p class="rubric">サンプル</p>
@@ -131,6 +133,36 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="randog.sqlalchemy.factory">
+<span class="sig-prename descclassname"><span class="pre">randog.sqlalchemy.</span></span><span class="sig-name descname"><span class="pre">factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">M</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">M</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.sqlalchemy.factory" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ランダムにモデルインスタンスを生成する factory を返す。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Type</em><em>[</em><em>Model</em><em>]</em>) -- sqlalchemy のモデルクラス</p></li>
+<li><p><strong>override_columns</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>Union</em><em>[</em><a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>, </em><em>Column</em><em>, </em><em>Any</em><em>]</em><em>]</em><em>, </em><em>optional</em>) -- この dict で値を指定したカラムについては、その値を使用して factory を生成し、model 内の column 定義は無視する。factory オブジェクトがこの dict の値に指定された場合、それがそのままフィールドの生成に使用される。それ以外が指定された場合、それを引数として <cite>from_example</cite> を実行することで得られる factory がフィールドの生成に使用される。</p></li>
+<li><p><strong>as_dict</strong> (<em>bool</em><em>, </em><em>default=False</em>) -- True の場合、モデルインスタンスの代わりに dict 型の値を生成する。</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="randog.sqlalchemy.factory_from_column">
+<span class="sig-prename descclassname"><span class="pre">randog.sqlalchemy.</span></span><span class="sig-name descname"><span class="pre">factory_from_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Column</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></span></span><a class="headerlink" href="#randog.sqlalchemy.factory_from_column" title="この定義へのパーマリンク"></a></dt>
+<dd><p>カラムに合致する値をランダムに生成する factory を返す。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>Column</em>) -- sqlalchemy のカラム</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

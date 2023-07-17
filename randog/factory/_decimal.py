@@ -104,7 +104,7 @@ class DecimalRandomFactory(Factory[Decimal]):
         pre_value = self._factory.next()
         value = Decimal(pre_value)
 
-        if self._decimal_len is not None:
+        if self._decimal_len is not None and value.is_finite():
             value = value.quantize(self._decimal_len)
 
         return value

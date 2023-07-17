@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-11 10:05+0900\n"
+"POT-Creation-Date: 2023-06-17 18:50+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -26,106 +26,161 @@ msgstr ""
 
 #: ../../source/doc.sqlalchemy.rst:4
 msgid ""
-"You can create a factory from Column or Model of sqlalchemy. This feature"
-" is enabled by specifying `randog.sqlalchemy.custom "
-"<randog.sqlalchemy.html#custom>`_ as custom_func when using `from_example"
-" <randog.factory.html#randog.factory.from_example>`_."
+"You can create a factory that generates instances of SQLAlchemy Model. "
+"The elements of the Model instance are always randomly generated each "
+"time."
 msgstr ""
-"sqlalchemy の Model や Column から factory を作成することができます。"
-"この機能は `from_example"
-" <randog.factory.html#randog.factory.from_example>`_ を使う際に引数 custom_func として "
-"`randog.sqlalchemy.custom <randog.sqlalchemy.html#custom>`_ を指定することで有効化できます。"
+"SQLAlchemy のモデルのインスタンスを生成する factory を作成することができます。この factory "
+"では各フィールドの値も毎回ランダムに生成します。"
 
-#: ../../source/doc.sqlalchemy.rst:7
+#: ../../source/doc.sqlalchemy.rst:6
+msgid ""
+"Like any other factory, a model factory can be built in two ways: "
+"`randog.sqlalchemy.factory "
+"<randog.sqlalchemy.html#randog.sqlalchemy.factory>`_, `from_example "
+"<randog.factory.html#randog.factory.from_example>`_."
+msgstr ""
+"他の factory と同様に、model factory も2つの方法 (`randog.sqlalchemy.factory "
+"<randog.sqlalchemy.html#randog.sqlalchemy.factory>`_, `from_example "
+"<randog.factory.html#randog.factory.from_example>`_) で作成することができます。"
+
+#: ../../source/doc.sqlalchemy.rst:9
 msgid ""
 "This is an experimental feature. It may be removed or significantly "
 "changed in the future."
 msgstr "これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。"
 
-#: ../../source/doc.sqlalchemy.rst:10
+#: ../../source/doc.sqlalchemy.rst:12
 msgid ""
 "This is an experimental feature. Various :ref:`limitations <limitations>`"
 " apply."
 msgstr "これは実験的な機能です。様々な :ref:`制限事項 <limitations>` があります。"
 
-#: ../../source/doc.sqlalchemy.rst:13
+#: ../../source/doc.sqlalchemy.rst:15
 msgid ""
 "The following examples use the model of sqlalchemy 1.4, but also supports"
 " the 2.0 using :code:`mapped_column`."
-msgstr "以降の例では sqlalchemy 1.4 のモデルを使用していますが、:code:`mapped_column` を使う2.0のモデルにも対応しています。"
+msgstr ""
+"以降の例では sqlalchemy 1.4 のモデルを使用していますが、:code:`mapped_column` "
+"を使う2.0のモデルにも対応しています。"
 
-#: ../../source/doc.sqlalchemy.rst:48
+#: ../../source/doc.sqlalchemy.rst:19
+msgid "Factory by :code:`randog.sqlalchemy.factory`"
+msgstr ":code:`randog.sqlalchemy.factory` を使用して作成"
+
+#: ../../source/doc.sqlalchemy.rst:21
 msgid ""
-"In this example, the model class is given to :code:`from_example`, but it"
-" works the same way if a model instance is given."
+"If you use `randog.sqlalchemy.factory "
+"<randog.sqlalchemy.html#randog.sqlalchemy.factory>`_, for example, the "
+"code would look like this:"
 msgstr ""
-"この例ではモデルクラスを :code:`from_example` に渡していますが、モデルインスタンスを渡しても同じように動作します。"
-
-#: ../../source/doc.sqlalchemy.rst:52
-msgid "Supported column type"
-msgstr "対応しているカラムの型"
-
-#: ../../source/doc.sqlalchemy.rst:54
-msgid "The following types of columns are supported"
-msgstr "以下の型のカラムに対応しています。"
-
-#: ../../source/doc.sqlalchemy.rst:56
-msgid "Integer, BigInteger"
-msgstr ""
-
-#: ../../source/doc.sqlalchemy.rst:57
-msgid "Numeric"
-msgstr ""
-
-#: ../../source/doc.sqlalchemy.rst:58
-msgid "Float"
-msgstr ""
-
-#: ../../source/doc.sqlalchemy.rst:59
-msgid "String, Text"
-msgstr ""
-
-#: ../../source/doc.sqlalchemy.rst:60
-msgid "Boolean"
-msgstr ""
-
-#: ../../source/doc.sqlalchemy.rst:61
-msgid "Date"
-msgstr ""
-
-#: ../../source/doc.sqlalchemy.rst:62
-msgid "DateTime, TIMESTAMP"
-msgstr ""
+"`randog.sqlalchemy.factory "
+"<randog.sqlalchemy.html#randog.sqlalchemy.factory>`_ "
+"を使用する場合、以下の例のようになります。"
 
 #: ../../source/doc.sqlalchemy.rst:63
-msgid "Time"
+msgid ""
+"As in this example, by passing a model class of SQLAlchemy to "
+":code:`randog.sqlalchemy.factory`, you can create a model instance "
+"factory that randomly generates each field. By passing fields' factories "
+"as second argument, this factories are used instead of factories created "
+"from Column objects of the model; like :code:`age` in the example above."
 msgstr ""
+"この例のようにSQLAlchemyのモデルクラスを :code:`randog.sqlalchemy.factory` "
+"の引数とすることで各フィールドをランダムに生成するモデルインスタンス factory を作成できます。また、第二引数としてフィールドの値の "
+"factory を指定することで、モデルクラスのカラム定義から作成されるデフォルトの factory の代わりに指定した factory "
+"が使用されます (上記の例の :code:`age` のように)。"
 
-#: ../../source/doc.sqlalchemy.rst:64
-msgid "Interval"
+#: ../../source/doc.sqlalchemy.rst:67
+msgid ""
+"See also :doc:`here <doc.construct_factories>` for how to build each "
+"factory of fields."
 msgstr ""
+"フィールドの値の factory として指定する factory の生成方法は :doc:`こちら "
+"<doc.construct_factories>` に記載しています。"
 
-#: ../../source/doc.sqlalchemy.rst:69
-msgid "Limitations"
-msgstr "制限事項"
+#: ../../source/doc.sqlalchemy.rst:70
+msgid "Factory by :code:`from_example`"
+msgstr ":code:`from_example` を使用して作成"
 
 #: ../../source/doc.sqlalchemy.rst:71
 msgid ""
+"If you use `from_example "
+"<randog.factory.html#randog.factory.from_example>`_, for example, the "
+"code would look like this:"
+msgstr ""
+"`from_example <randog.factory.html#randog.factory.from_example>`_ "
+"を使用する場合、以下の例のようになります。"
+
+#: ../../source/doc.sqlalchemy.rst:106
+msgid ""
+"In this example, the model class is given to :code:`from_example`, but it"
+" works the same way if a model instance is given."
+msgstr "この例ではモデルクラスを :code:`from_example` に渡していますが、モデルインスタンスを渡しても同じように動作します。"
+
+#: ../../source/doc.sqlalchemy.rst:110
+msgid "Supported column type"
+msgstr "対応しているカラムの型"
+
+#: ../../source/doc.sqlalchemy.rst:112
+msgid "The following types of columns are supported"
+msgstr "以下の型のカラムに対応しています。"
+
+#: ../../source/doc.sqlalchemy.rst:114
+msgid "Integer, BigInteger"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:115
+msgid "Numeric"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:116
+msgid "Float"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:117
+msgid "String, Text"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:118
+msgid "Boolean"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:119
+msgid "Date"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:120
+msgid "DateTime, TIMESTAMP"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:121
+msgid "Time"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:122
+msgid "Interval"
+msgstr ""
+
+#: ../../source/doc.sqlalchemy.rst:127
+msgid "Limitations"
+msgstr "制限事項"
+
+#: ../../source/doc.sqlalchemy.rst:129
+msgid ""
 "randog does not support all of sqlalchemy and RDB features. In "
 "particular, please note the following:"
-msgstr ""
-"randog は sqlalchemy や RDB の全ての機能には対応していません。"
-"とくに、下記の点に注意してください。"
+msgstr "randog は sqlalchemy や RDB の全ての機能には対応していません。とくに、下記の点に注意してください。"
 
-#: ../../source/doc.sqlalchemy.rst:73
+#: ../../source/doc.sqlalchemy.rst:131
 msgid "A factory CANNOT be generated if the model contains a relationship."
 msgstr "モデルが relationship を含む場合、factory を作成できません。"
 
-#: ../../source/doc.sqlalchemy.rst:75
+#: ../../source/doc.sqlalchemy.rst:133
 msgid "Foreign key constraints are ignored."
 msgstr "外部キー制約は無視されます。"
 
-#: ../../source/doc.sqlalchemy.rst:77
+#: ../../source/doc.sqlalchemy.rst:135
 msgid ""
 "Even with unique constraints (includes primary key constraint), they are "
 "ignored, so fields may be duplicated when values are generated "
@@ -133,25 +188,96 @@ msgid ""
 "intuition (`birthday problem "
 "<https://en.wikipedia.org/wiki/Birthday_problem>`_)."
 msgstr ""
-"一意制約 (主キー制約を含む) があっても、それらは無視されるため、繰り返し生成する間にフィールドが重複する可能性があります。"
-"重複する確率は直感よりも大きいことが知られています (`誕生日のパラドックス "
+"一意制約 (主キー制約を含む) "
+"があっても無視されるため、繰り返し生成する間にフィールドが重複する可能性があります。重複する確率は直感よりも大きいことが知られています "
+"(`誕生日のパラドックス "
 "<https://ja.wikipedia.org/wiki/%E8%AA%95%E7%94%9F%E6%97%A5%E3%81%AE%E3%83%91%E3%83%A9%E3%83%89%E3%83%83%E3%82%AF%E3%82%B9>`_)。"
 
-#: ../../source/doc.sqlalchemy.rst:79
+#: ../../source/doc.sqlalchemy.rst:137
 msgid "Check constraints are ignored."
 msgstr "チェック制約は無視されます。"
 
-#: ../../source/doc.sqlalchemy.rst:83
-msgid "Generate a model instance"
-msgstr "モデルインスタンスの生成"
-
-#: ../../source/doc.sqlalchemy.rst:85
+#: ../../source/doc.sqlalchemy.rst:140
 msgid ""
-"As shown in the example above, a dictionary type value is generated. "
-"randog do not provide a feature to generate an instance of the model, but"
-" this can be accomplished by using `post_process "
-"<doc.construct_factories.html#processing-output>`_."
+"If the constraints are known in advance, it may be possible to satisfy "
+"the constraint by specifying the factory of the field. See also: "
+":ref:`override_columns`"
 msgstr ""
-"これまで示した例で作成した factory からはすべて辞書型の値が生成されます。"
-"randog ではモデルインスタンスを生成する機能を提供していませんが、`post_process "
-"<doc.construct_factories.html#processing-output>`_ を使うことで実現できます。"
+"制約が事前にわかる場合、フィールドの factory を明示的に指定することで制約を満たすようにできることがあります。こちらもご覧ください： "
+":ref:`override_columns`"
+
+#: ../../source/doc.sqlalchemy.rst:147
+msgid "Specify factories for individual fields"
+msgstr "各フィールドの factory の指定"
+
+#: ../../source/doc.sqlalchemy.rst:149
+msgid ""
+"The factory that generates each field is automatically created from the "
+"column definitions in the model class, but some or all of it can be "
+"specified manually. For example:"
+msgstr ""
+"各フィールドを生成する factory はモデルクラスのカラム定義から自動で作成されますが、以下の例のように一部またはすべての factory "
+"を明示的に指定することができます。"
+
+#: ../../source/doc.sqlalchemy.rst:186
+msgid ""
+"In the above example, factories that generate :code:`type` and "
+":code:`group_id` are specified in order to generate records that satisfy "
+"foreign key constraints and check constraints specified in the actual "
+"database. :code:`id` and :code:`name`, whose factories are not specified,"
+" are generated by the factories created from the column definitions as "
+"default."
+msgstr ""
+"上の例では、実際のデータベースの外部キー制約とチェック制約を満たすレコードを生成するために、:code:`type` と "
+":code:`group_id` の factory を指定しています。指定されていない :code:`id` と :code:`name` "
+"はカラム定義から作成される factory で生成されます。"
+
+#: ../../source/doc.sqlalchemy.rst:190
+msgid "Generate a dict instance"
+msgstr "dict オブジェクトの生成"
+
+#: ../../source/doc.sqlalchemy.rst:193
+msgid ""
+"Reiteration: This is an experimental feature. It may be removed or "
+"significantly changed in the future. Various :ref:`limitations "
+"<limitations>` apply."
+msgstr ""
+"再掲：これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。様々な :ref:`制限事項 <limitations>` "
+"があります。"
+
+#: ../../source/doc.sqlalchemy.rst:195
+msgid ""
+"As in the previous examples, a model instance is generated by default, "
+"but you can generate a dict object for each case of using "
+":code:`randog.sqlalchemy.factory` and :code:`from_example`, respectively."
+msgstr ""
+"これまで示した例で作成した factory からはすべてモデルのインスタンスが生成されますが、dict オブジェクトを生成する factory "
+"を作成する方法があります (:code:`randog.sqlalchemy.factory` を使用する場合も "
+":code:`from_example` を使用する場合も)。"
+
+#: ../../source/doc.sqlalchemy.rst:198
+msgid ""
+"If you simply want to generate dict objects independent of model classes,"
+" use :doc:`randdict <doc.dict_factory>`."
+msgstr ""
+"モデルクラスと無関係に単にdictオブジェクトを生成したい場合は、:doc:`randdict <doc.dict_factory>` "
+"を使用してください。"
+
+#: ../../source/doc.sqlalchemy.rst:200
+msgid ""
+"When using :code:`randog.sqlalchemy.factory`, a factory that generates a "
+"dict object can be created by specifying :code:`as_dict=True` as an "
+"argument. For example:"
+msgstr ""
+":code:`randog.sqlalchemy.factory` を使用する場合、次の例のように、引数に "
+":code:`as_dict=True` を指定することでdict オブジェクトを生成する factory を作成することができます。"
+
+#: ../../source/doc.sqlalchemy.rst:231
+msgid ""
+"When using :code:`from_example`, a factory that generates a dict object "
+"can be created by using `post_process <doc.construct_factories.html"
+"#processing-output>`_. For example:"
+msgstr ""
+":code:`from_example`　を使用する場合、次の例のように、`post_process "
+"<doc.construct_factories.html#processing-output>`_ を使用することでdict "
+"オブジェクトを生成する factory を作成することができます。"

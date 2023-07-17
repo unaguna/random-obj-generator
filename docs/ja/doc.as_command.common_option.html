@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>共通オプション &mdash; random-obj-generator 0.6.0 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="bool モード" href="doc.as_command.bool.html" />
+    <link rel="prev" title="コマンドとして実行" href="doc.as_command.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+              <div class="version">
+                0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#modes">モード</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.as_command.html#arguments-and-options">引数とオプション</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">共通オプション</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#output-format">出力形式の変更</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#output-to-file">ファイル出力</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iteration">繰り返し</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#details-of-modes">各モードの詳細</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="doc.as_command.html">コマンドとして実行</a></li>
+      <li class="breadcrumb-item active">共通オプション</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.as_command.common_option.html"
+            >English</option>
+            <option value="../ja/doc.as_command.common_option.html"
+                selected
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="common-options">
+<h1>共通オプション<a class="headerlink" href="#common-options" title="この見出しへのパーマリンク"></a></h1>
+<p>コマンド実行のいくつかのオプションは全てのモードで使用することができます。</p>
+<section id="output-format">
+<h2>出力形式の変更<a class="headerlink" href="#output-format" title="この見出しへのパーマリンク"></a></h2>
+<p>通常、生成されたオブジェクトはそのまま <code class="code docutils literal notranslate"><span class="pre">print()</span></code> 関数で出力されますが、以下のオプションを使用することで出力形式を変更することができます。</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: 生成されたオブジェクトを <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> 関数で変換して出力します。</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--json</span></code>: 生成されたオブジェクトをJSON形式で出力します。標準的なJSON形式が定められていないオブジェクトは <code class="code docutils literal notranslate"><span class="pre">str()</span></code> 関数で文字列に変換してからJSON化されます。</p></li>
+</ul>
+<p>例:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
+</pre></div>
+</div>
+</section>
+<section id="output-to-file">
+<h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
+<p>以下の例のように <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用することで、結果をファイル出力することができます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。このオプションは他のオプションと組み合わせて使用するために存在します。詳細はそれらの説明に併記します。</p>
+</div>
+</section>
+<section id="iteration">
+<h2>繰り返し<a class="headerlink" href="#iteration" title="この見出しへのパーマリンク"></a></h2>
+<p>繰り返し値を生成するオプションには、 <code class="code docutils literal notranslate"><span class="pre">--list</span></code> (<code class="code docutils literal notranslate"><span class="pre">-L</span></code>) と <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>) があります。</p>
+<p>繰り返し生成した値を1つのリストにまとめて出力したい場合は、以下のように <code class="code docutils literal notranslate"><span class="pre">--list</span></code> オプションを使用します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate ONE list which contains 3 objects; each element conforms to factory_def.py.</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--list<span class="w"> </span><span class="m">3</span>
+</pre></div>
+</div>
+<p>一方で、繰り返し生成した値を1つずつ個別に出力したい場合、以下のように <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> オプションを使用します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate and output 3 times</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> を使用して生成した値を別々のファイルへ1つずつ出力したい場合、以下のようにプレースホルダーとともに <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to &#39;out_1.txt&#39;, &#39;out_2.txt&#39;, and &#39;out_3.txt&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{}.txt&#39;</span>
+
+<span class="c1"># output to &#39;out_0001.txt&#39;, &#39;out_0002.txt&#39;, and &#39;out_0003.txt&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{:04}.txt&#39;</span>
+</pre></div>
+</div>
+<p>プレースホルダーのルールは <a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-string-syntax">標準的な python のフォーマット</a> と同一です。</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.as_command.html" class="btn btn-neutral float-left" title="コマンドとして実行" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.as_command.bool.html" class="btn btn-neutral float-right" title="bool モード" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

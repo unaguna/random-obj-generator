@@ -1,4 +1,3 @@
-import datetime
 import datetime as dt
 
 import pytest
@@ -13,6 +12,7 @@ def test__random_datetime():
     value = factory.next()
 
     assert isinstance(value, dt.datetime)
+    assert value.tzinfo is None
 
 
 @pytest.mark.parametrize(
@@ -52,7 +52,7 @@ def test__random_datetime__by_date(condition, expected_min, expected_max):
 def test__random_datetime__by_different_tz_datetime():
     minimum = dt.datetime(2021, 1, 2, 11, 22, 33, 444_555, tzinfo=dt.timezone.utc)
     maximum = dt.datetime(
-        2021, 1, 2, 12, 22, 33, 444_555, tzinfo=dt.timezone(datetime.timedelta(hours=1))
+        2021, 1, 2, 12, 22, 33, 444_555, tzinfo=dt.timezone(dt.timedelta(hours=1))
     )
     assert minimum == maximum
 

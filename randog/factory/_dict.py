@@ -4,6 +4,7 @@ import typing as t
 
 from ._base import Factory
 from .._utils.nullsafe import dfor
+from ..exceptions import FactoryConstructionError
 
 
 _item_tuple = t.Tuple[Factory, float]
@@ -44,7 +45,11 @@ class DictItem:
             self.factory = args[0]
             self.prop_exists = args[1]
         else:
-            raise ValueError()
+            raise DictItemValueError()
+
+
+class DictItemValueError(ValueError):
+    pass
 
 
 def randdict(
@@ -54,7 +59,7 @@ def randdict(
     *,
     rnd: t.Optional[Random] = None,
     **items: t.Union[Factory, _item_tuple, DictItem],
-) -> Factory[int]:
+) -> Factory[dict]:
     """Return a factory generating random dict.
 
     Parameters
@@ -69,9 +74,19 @@ def randdict(
     if items_dict is not None:
         items = items_dict
 
-    items_normalized = {
-        k: v if isinstance(v, DictItem) else DictItem(v) for k, v in items.items()
-    }
+    items_normalized = {}
+    non_factory_item_keys = []
+    for key, value in items.items():
+        try:
+            items_normalized[key] = (
+                value if isinstance(value, DictItem) else DictItem(value)
+            )
+        except DictItemValueError:
+            non_factory_item_keys.append(str(key))
+    if len(non_factory_item_keys) > 0:
+        raise FactoryConstructionError(
+            f"randdict received non-factory object for item: {', '.join(non_factory_item_keys)}"
+        )
 
     return DictRandomFactory(items_normalized, rnd=rnd)
 

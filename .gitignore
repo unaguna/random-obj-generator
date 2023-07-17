@@ -286,7 +286,7 @@ poetry.toml
 # Sphinx
 .doctrees/
 
-/.venv_*
+.venv_*/
 /memo.txt
 
 /.idea/misc.xml

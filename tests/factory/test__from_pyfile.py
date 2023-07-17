@@ -26,7 +26,7 @@ def test__from_pyfile__full_response__without_csv_col(resources):
 
 
 def test__from_pyfile__full_response__with_csv_col(resources):
-    filepath = resources.joinpath("factory_def_record.py")
+    filepath = resources.joinpath("factory_def_dict.py")
     factory_def = randog.factory.from_pyfile(filepath, full_response=True)
 
     factory = factory_def.factory

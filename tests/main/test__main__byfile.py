@@ -276,6 +276,14 @@ def test__main__error_duplicate_format(capfd, resources, options):
         assert "not allowed with argument" in err
 
 
+# TODO: --csv のテスト (dict (CSV_COLUMNS の有り無し両方), list, str, その他)
+# TODO: CSV_COLUMNS の要素として、フィールド値を返す関数を設定できることのテスト
+# TODO: --csv と --json の両立を認めないテスト
+# TODO: --csv と --repr の両立を認めないテスト
+# TODO: --csv と -L, -r, -Lr で複数行出力するテスト
+# TODO: --csv と -OL, -Or, -OLr で複数ファイル出力するテスト
+
+
 def test__main__byfile__help(capfd):
     args = ["randog", "byfile", "--help"]
     with patch.object(sys, "argv", args):

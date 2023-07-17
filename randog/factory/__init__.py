@@ -17,7 +17,7 @@ from ._by_iterator import ByIteratorFactory, by_iterator
 from ._increment import increment
 from ._union import UnionRandomFactory, union
 from ._from_example import from_example, FromExampleContext
-from ._from_pyfile import from_pyfile
+from ._from_pyfile import from_pyfile, FactoryDef
 
 __all__ = [
     "from_example",
@@ -43,4 +43,5 @@ __all__ = [
     "increment",
     "union",
     "DictItem",
+    "FactoryDef",
 ]

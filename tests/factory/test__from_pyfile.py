@@ -33,7 +33,7 @@ def test__from_pyfile__full_response__with_csv_col(resources):
     csv_columns = factory_def.csv_columns
 
     assert isinstance(factory, randog.factory.Factory)
-    assert csv_columns == ["id", "name", "join_datetime"]
+    assert csv_columns == ["id", "name", "join_date"]
 
     value = factory.next()
 

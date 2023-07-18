@@ -120,19 +120,12 @@ In the following example, some records are missing by randomly converting the ge
             yield next
             next += timedelta(hours=1)
 
-    # Returns None with 10% probability
-    def post_process(value):
-        if random.random() < 0.9:
-            return value
-        else:
-            return None
-
-    # The action of post_process causes this factory to ignore records generated with a probability of 10% and then return None.
+    # The action of `or_none(0.1, lazy_choice=True)` causes this factory to ignore records generated with a probability of 10% and then return None.
     FACTORY = randog.factory.randdict(
         timestamp=randog.factory.by_iterator(timestamp_iter()),
         name=randog.factory.randstr(),
         age=randog.factory.randint(0, 100),
-    ).post_process(post_process)
+    ).or_none(0.1, lazy_choice=True)
 
     CSV_COLUMNS = ["timestamp", "name", "age"]
 
@@ -145,4 +138,4 @@ In the following example, some records are missing by randomly converting the ge
     Missing rows in this way will result in fewer rows of output than the number specified by :code:`--csv`.
 
 .. warning::
-    Using `or_none <randog.factory.html#randog.factory.Factory.or_none>`_ or `union <randog.factory.html#randog.factory.union>`_ as a means of generating None probabilistically does not allow for random missing. This is because a factory built using them first determines if it will output None, and generates a dict only if it does not.
+    Using `or_none <randog.factory.html#randog.factory.Factory.or_none>`_ without :code:`lazy_choice=True` as a means of generating None probabilistically does not allow for random missing. This is because a factory built by this way first determines whether it output None, and generates a dict only if it does not.

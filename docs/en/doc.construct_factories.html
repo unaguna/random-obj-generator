@@ -236,6 +236,12 @@
 <p class="admonition-title">Note</p>
 <p>If you want to get a factory that always returns None, use <a class="reference internal" href="#constance"><span class="std std-ref">const</span></a> instead.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Normally, when an or_null factory generates a value, it first randomly determines whether to return None or generate a value and return it, and then generates a value only if it is returned.
+However, if the argument is specified as in <code class="code docutils literal notranslate"><span class="pre">or_none(...,</span> <span class="pre">lazy_choice=True)</span></code>, then when the union factory generates the value, it first generates the value using the factory and then randomly decides whether to adopt it or None.</p>
+<p>This difference affects, for example, the use of non-random factories.</p>
+</div>
 </section>
 <section id="union-type">
 <h2>Union type<a class="headerlink" href="#union-type" title="Permalink to this heading"></a></h2>
@@ -267,6 +273,12 @@
 <span class="gp">... </span>    <span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 <span class="gp">... </span>    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Normally, when a union factory generates a value, it first randomly determines which factory to use, and only that factory generates the value.
+However, if the argument is specified as in <code class="code docutils literal notranslate"><span class="pre">union(...,</span> <span class="pre">lazy_choice=True)</span></code>, then when the union factory generates the value, it first generates the values using all the factories and then randomly decides which of them to use.</p>
+<p>This difference affects, for example, the use of non-random factories.</p>
 </div>
 </section>
 <section id="randomly-choice">

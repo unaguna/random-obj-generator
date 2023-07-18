@@ -22,6 +22,7 @@ class Factory(ABC, t.Generic[T]):
         self,
         prob: float = 0.1,
         *,
+        lazy_choice: bool = False,
         rnd: t.Optional[Random] = None,
     ) -> "Factory[t.Union[T, None]]":
         """Returns a factory whose result may be None with the specified probability.
@@ -39,6 +40,11 @@ class Factory(ABC, t.Generic[T]):
         ----------
         prob : float, default=0.1
             Probability that the result is None
+        lazy_choice : bool, optional
+            If it is True, when generating a value,
+            first generate value with the base factory and then decides whether to adopt it or None.
+            Otherwise, it first decides whether to return None or generate a value and return it,
+            and then generates a value only if it is returned.
         rnd : Random, optional
             random number generator to be used
 
@@ -53,6 +59,7 @@ class Factory(ABC, t.Generic[T]):
             self,
             randog.factory.const(None),
             weights=[1 - prob, prob],
+            lazy_choice=lazy_choice,
             rnd=rnd,
         )
 

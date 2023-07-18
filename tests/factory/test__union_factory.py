@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 import pytest
 
 import randog.factory
@@ -25,6 +27,36 @@ def test__random_union__value(expected_value):
     value = factory.next()
 
     assert value == expected_value
+
+
+def test__random_union__no_lazy_choice():
+    child_fac1 = MagicMock()
+    child_fac2 = MagicMock()
+
+    factory = randog.factory.union(
+        child_fac1,
+        child_fac2,
+    )
+
+    factory.next()
+
+    assert child_fac1.next.call_count + child_fac2.next.call_count == 1
+
+
+def test__random_union__lazy_choice():
+    child_fac1 = MagicMock()
+    child_fac2 = MagicMock()
+
+    factory = randog.factory.union(
+        child_fac1,
+        child_fac2,
+        lazy_choice=True,
+    )
+
+    factory.next()
+
+    child_fac1.next.assert_called_once()
+    child_fac2.next.assert_called_once()
 
 
 @pytest.mark.parametrize(

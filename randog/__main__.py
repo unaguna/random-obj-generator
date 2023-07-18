@@ -147,7 +147,6 @@ def _output_to_csv(
 
 def main():
     args = Args(sys.argv)
-    args_csv: t.Optional[int] = args.get("csv")
 
     with _open_output_fp_only(args) as fp_only:
         index = 0
@@ -165,8 +164,8 @@ def main():
 
                     # 生成処理と出力処理
                     # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
-                    if args_csv is not None:
-                        _output_to_csv(factory, args_csv, fp)
+                    if args.csv is not None:
+                        _output_to_csv(factory, args.csv, fp)
                     else:
                         if args.list is not None:
                             generated = list(factory.iter(args.list))

@@ -83,6 +83,13 @@ class Args:
         else:
             return None
 
+    @property
+    def csv(self) -> t.Optional[int]:
+        if hasattr(self._args, "csv"):
+            return self._args.csv
+        else:
+            return None
+
     def output_path_for(self, number: int) -> t.Optional[str]:
         if self._args.output is None:
             return None

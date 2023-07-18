@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 14:18+0900\n"
+"POT-Creation-Date: 2023-07-18 13:32+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -42,22 +42,30 @@ msgstr ""
 "外部定義ファイルは以下のように、factory を作成して変数 :code:`FACTORY` にバインドする python "
 "コードとして記載します。"
 
-#: ../../source/doc.external_def.rst:19
+#: ../../source/doc.external_def.rst:22
 msgid "In factory definition file, :code:`import randog` can be omitted."
 msgstr "factory定義ファイルでは、:code:`import randog` を省略できます。"
 
-#: ../../source/doc.external_def.rst:21
+#: ../../source/doc.external_def.rst:25
+msgid ""
+":code:`CSV_COLUMNS` is used when executing randog as command in byfile "
+"mode. See also :doc:`doc.as_command.byfile`."
+msgstr ""
+":code:`CSV_COLUMNS` は byfile "
+"モードでコマンド実行する際に使用されます。:doc:`doc.as_command.byfile` もご覧ください。"
+
+#: ../../source/doc.external_def.rst:27
 msgid ""
 "If you save this file under the name :code:`factory_def.py`, you can use "
 "it in your python code as follows:"
 msgstr "このファイルを :code:`factory_def.py` という名称で保存した場合、以下のような python プログラムから使用できます。"
 
-#: ../../source/doc.external_def.rst:34
+#: ../../source/doc.external_def.rst:40
 msgid ""
 "The definition file can also be used when executing randog as command in "
 "byfile mode such as :code:`python -m randog byfile ./factory_def.py`. See"
 " also :doc:`doc.as_command.byfile`."
 msgstr ""
-"外部定義ファイルは :code:`python -m randog byfile ./factory_def.py` のように "
-"byfile モードでコマンド実行する際にも使用できます。:doc:`doc.as_command.byfile` もご覧ください。"
+"外部定義ファイルは :code:`python -m randog byfile ./factory_def.py` のように byfile "
+"モードでコマンド実行する際にも使用できます。:doc:`doc.as_command.byfile` もご覧ください。"
 

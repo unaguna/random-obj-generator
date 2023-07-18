@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 20:37+0900\n"
+"POT-Creation-Date: 2023-07-19 00:02+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,47 +27,69 @@ msgstr "byfile モード"
 #: ../../source/doc.as_command.byfile.rst:4
 msgid ""
 "In byfile mode, values are generated using the factories defined in "
-":doc:`a factory definition <doc.external_def>`. An example run is as "
-"follows:"
+":doc:`a factory definition <doc.external_def>`. The format of the command"
+" is as follows:"
 msgstr ""
 "byfile モードでは、:doc:`ファクトリ定義ファイル <doc.external_def>` "
-"で定義されたファクトリを使用して値が生成されます。実行例は次の通りです："
+"で定義されたファクトリを使用して値が生成されます。コマンドの形式は次の通りです："
 
 #: ../../source/doc.as_command.byfile.rst:10
 msgid ""
-"The argument :code:`factory_def.py` is :doc:`a filename of the factory "
-"definition <doc.external_def>`. It must be python code that creates an "
-"instance of factory in the variable FACTORY as in the following example:"
+"The argument FACTORY_PATH is :doc:`a filename of the factory definition "
+"<doc.external_def>`. It must be python code that creates an instance of "
+"factory in the variable FACTORY as in the following example:"
 msgstr ""
-"引数 :code:`factory_def.py` は :doc:`factory の外部定義ファイル <doc.external_def>` "
+"引数 FACTORY_PATH は :doc:`factory の外部定義ファイル <doc.external_def>` "
 "のファイル名です。このファイルは python プログラムであり、以下のように factory を作成して変数 FACTORY "
 "にバインドするプログラムである必要があります。"
 
-#: ../../source/doc.as_command.byfile.rst:23
+#: ../../source/doc.as_command.byfile.rst:26
 msgid "In factory definition file, :code:`import randog` can be omitted."
 msgstr "factory定義ファイルでは、:code:`import randog` を省略できます。"
 
-#: ../../source/doc.as_command.byfile.rst:27
+#: ../../source/doc.as_command.byfile.rst:30
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.byfile.rst:29
-msgid "No unique arguments."
-msgstr "byfile モード独自の引数はありません。"
+#: ../../source/doc.as_command.byfile.rst:33
+msgid ":code:`FACTORY_PATH [...]`:"
+msgstr ""
 
-#: ../../source/doc.as_command.byfile.rst:31
-msgid "Common options are available; see also :doc:`doc.as_command.common_option`"
-msgstr "共通オプションを使用できます。こちらをご覧ください：:doc:`doc.as_command.common_option`"
+#: ../../source/doc.as_command.byfile.rst:33
+msgid "paths of one or more :doc:`factory definition files <doc.external_def>`."
+msgstr "1つ以上の :doc:`factory定義ファイル <doc.external_def>` のパス"
 
-#: ../../source/doc.as_command.byfile.rst:35
+#: ../../source/doc.as_command.byfile.rst:36
+msgid ":code:`--csv ROW_NUM` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.byfile.rst:36
+msgid ""
+"if specified, it outputs generated ROW_NUM objects as CSV. When using "
+"this option, it is recommended to use a factory that generates "
+"dictionaries and to define :code:`CSV_COLUMNS` in the definition file to "
+"specify the fields of the CSV."
+msgstr ""
+"指定すると、ROW_NUM 個の生成されたオブジェクトをCSV形式で出力します。このオプションを使用する場合、辞書を生成する factory "
+"を使用し、定義ファイル内にカラムを定義する :code:`CSV_COLUMNS` を定義することが推奨されます。"
+
+#: ../../source/doc.as_command.byfile.rst:40
+msgid ":code:`common-options`"
+msgstr ""
+
+#: ../../source/doc.as_command.byfile.rst:39
+msgid ":doc:`common options <doc.as_command.common_option>`"
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
+
+#: ../../source/doc.as_command.byfile.rst:43
 msgid "Examples"
 msgstr "実行例"
 
-#: ../../source/doc.as_command.byfile.rst:37
+#: ../../source/doc.as_command.byfile.rst:45
 msgid "The simplest example is the following:"
 msgstr "最も簡素な例は次の通りです："
 
-#: ../../source/doc.as_command.byfile.rst:43
+#: ../../source/doc.as_command.byfile.rst:51
 msgid ""
 "If the definition file defines a factory that generates a dict equivalent"
 " to one record in the database, you can obtain data for testing by "
@@ -76,7 +98,7 @@ msgstr ""
 "定義ファイルでデータベースのレコード1つに相当するdictを生成する factory "
 "を定義している場合、下記のように複数個生成することでテスト用データをそろえることができます。"
 
-#: ../../source/doc.as_command.byfile.rst:50
+#: ../../source/doc.as_command.byfile.rst:58
 msgid ""
 "You may want to generate multiple values while outputting each one to a "
 "separate file. In that case, you can utilize :code:`-O` and :code:`-r` as"
@@ -84,4 +106,77 @@ msgid ""
 msgstr ""
 "1つ1つを別々のファイルに出力しながら複数個生成したいことがあるかもしれません。その場合は、以下のように :code:`-O` や "
 ":code:`-r` を活用します。"
+
+#: ../../source/doc.as_command.byfile.rst:67
+msgid "output as CSV"
+msgstr "CSV として出力"
+
+#: ../../source/doc.as_command.byfile.rst:69
+msgid ""
+"To output in CSV format, use the :code:`--csv` option. The value of each "
+"field is determined by the :code:`CSV_COLUMNS` defined in the definition "
+"file."
+msgstr ""
+"CSV形式で出力したい場合は、:code:`--csv` オプションを使用します。各フィールドの値は、定義ファイル内で定義された "
+":code:`CSV_COLUMNS` によって決定されます。"
+
+#: ../../source/doc.as_command.byfile.rst:77
+msgid ""
+"Even if factory generates objects other than dict or :code:`CSV_COLUMNS` "
+"is not defined in the definition file, it will output something in CSV "
+"format if the :code:`--csv` option is specified, but this is not "
+"recommended. This behavior may be changed in the future."
+msgstr ""
+"factoryが辞書以外のオブジェクトを生成する場合や定義ファイルに :code:`CSV_COLUMNS` が定義されていない場合でも "
+":code:`--csv` オプションを指定すれば CSV "
+"形式で何かしら出力しますが、推奨されません。将来的に、その場合の動作を変更する可能性もあります。"
+
+#: ../../source/doc.as_command.byfile.rst:79
+msgid ""
+"CSV output can also be output to multiple files with the "
+":code:`--repeat/-r` and :code:`--output/-O` options. In the following "
+"example, it outputs 20 lines to each of 10 CSV files."
+msgstr ""
+"CSV出力においても、:code:`--repeat/-r` オプションと :code:`--output/-O` "
+"オプションで複数ファイルに出力することができます。"
+
+#: ../../source/doc.as_command.byfile.rst:87
+msgid ""
+"In the example at the top of this page, :code:`CSV_COLUMNS` was defined "
+"as a list of strings, but you can also specify a function that returns a "
+"field instead of a string that specifies a dictionary key. In the "
+"following example, the third field is a string that is processed from the"
+" value of age."
+msgstr ""
+"このページ上部の例では :code:`CSV_COLUMNS` "
+"を文字列のリストとして定義していましたが、辞書のキーを指定する文字列の代わりにフィールドを返す関数を指定することもできます。次の例では、3番目のフィールドとして、age"
+" の値を加工した文字列を使用します。"
+
+#: ../../source/doc.as_command.byfile.rst:107
+msgid ""
+"You may want to discard some of the generated values, for example, if you"
+" are using PK with missing some timestamps. In the case of CSV output, "
+"the output can be made missing by generating None. In the following "
+"example, some records are missing by randomly converting the generated "
+"values to None."
+msgstr "欠番ありのタイムスタンプをPKにしている場合などは、生成した値の一部を破棄したい場合があるかもしれません。CSV出力の場合、Noneを生成することで出力を欠損させることができます。以下の例では、生成値をランダムにNoneに変換することでレコードを欠損させます。"
+
+#: ../../source/doc.as_command.byfile.rst:138
+msgid ""
+"Missing rows in this way will result in fewer rows of output than the "
+"number specified by :code:`--csv`."
+msgstr "この方法で行を欠落させると、出力される行は :code:`--csv` で指定した数より少なくなります。"
+
+#: ../../source/doc.as_command.byfile.rst:141
+msgid ""
+"Using `or_none <randog.factory.html#randog.factory.Factory.or_none>`_ "
+"without :code:`lazy_choice=True` as a means of generating None "
+"probabilistically does not allow for random missing. This is because a "
+"factory built by this way first determines whether it output None, and "
+"generates a dict only if it does not."
+msgstr ""
+"確率的に None を生成する手段として `or_none "
+"<randog.factory.html#randog.factory.Factory.or_none>`_ を "
+":code:`lazy_choice=True` 無しで使用すると、ランダムに欠損させることができません。この方法で作成した factory "
+"は、まずNoneを出力するかどうかを判定し、そうでない場合にのみ辞書を生成するためです。"
 

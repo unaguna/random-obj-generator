@@ -130,6 +130,13 @@ If you want None to be a candidate for generation, use `or_none <randog.factory.
 
    If you want to get a factory that always returns None, use :ref:`const <constance>` instead.
 
+.. note::
+    Normally, when an or_null factory generates a value, it first randomly determines whether to return None or generate a value and return it, and then generates a value only if it is returned.
+    However, if the argument is specified as in :code:`or_none(..., lazy_choice=True)`, then when the union factory generates the value, it first generates the value using the factory and then randomly decides whether to adopt it or None.
+
+    This difference affects, for example, the use of non-random factories.
+
+
 
 Union type
 ----------
@@ -167,6 +174,14 @@ If you create candidate factories, you can use `union <randog.factory.html#rando
    >>> for _ in range(10):
    ...     generated = factory.next()
    ...     assert isinstance(generated, (int, bool))
+
+
+.. note::
+    Normally, when a union factory generates a value, it first randomly determines which factory to use, and only that factory generates the value.
+    However, if the argument is specified as in :code:`union(..., lazy_choice=True)`, then when the union factory generates the value, it first generates the values using all the factories and then randomly decides which of them to use.
+
+    This difference affects, for example, the use of non-random factories.
+
 
 
 Randomly choice

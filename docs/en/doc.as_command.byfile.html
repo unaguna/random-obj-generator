@@ -226,19 +226,12 @@ In the following example, some records are missing by randomly converting the ge
         <span class="k">yield</span> <span class="nb">next</span>
         <span class="nb">next</span> <span class="o">+=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># Returns None with 10% probability</span>
-<span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">value</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-<span class="c1"># The action of post_process causes this factory to ignore records generated with a probability of 10% and then return None.</span>
+<span class="c1"># The action of `or_none(0.1, lazy_choice=True)` causes this factory to ignore records generated with a probability of 10% and then return None.</span>
 <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
     <span class="n">timestamp</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="n">timestamp_iter</span><span class="p">()),</span>
     <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
     <span class="n">age</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-<span class="p">)</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">post_process</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">or_none</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">lazy_choice</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span>
 </pre></div>
@@ -253,7 +246,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Using <a class="reference external" href="randog.factory.html#randog.factory.Factory.or_none">or_none</a> or <a class="reference external" href="randog.factory.html#randog.factory.union">union</a> as a means of generating None probabilistically does not allow for random missing. This is because a factory built using them first determines if it will output None, and generates a dict only if it does not.</p>
+<p>Using <a class="reference external" href="randog.factory.html#randog.factory.Factory.or_none">or_none</a> without <code class="code docutils literal notranslate"><span class="pre">lazy_choice=True</span></code> as a means of generating None probabilistically does not allow for random missing. This is because a factory built by this way first determines whether it output None, and generates a dict only if it does not.</p>
 </div>
 </section>
 </section>

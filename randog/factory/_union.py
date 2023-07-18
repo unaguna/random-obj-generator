@@ -9,6 +9,7 @@ from ..exceptions import FactoryConstructionError
 def union(
     *factories: Factory,
     weights: t.Optional[t.Sequence[float]] = None,
+    lazy_choice: bool = False,
     rnd: t.Optional[Random] = None,
 ) -> Factory[t.Any]:
     """Return a factory generating value by one of specified factories.
@@ -20,6 +21,10 @@ def union(
     weights : Sequence[float], optional
         the probabilities that each factory is chosen.
         The length must equal to the number of factories.
+    lazy_choice : bool, optional
+        If it is True, when generating a value,
+        first generate values with all factories and then decide which of them to adopt.
+        Otherwise, it first decides which factory to adopt, and then generates a value using only that factory.
     rnd : Random, optional
         random number generator to be used
 
@@ -28,7 +33,11 @@ def union(
     FactoryConstructionError
         No factories are specified.
     """
-    return UnionRandomFactory(*factories, weights=weights, rnd=rnd)
+    if lazy_choice:
+        return UnionRandomLazyChoiceFactory(*factories, weights=weights, rnd=rnd)
+
+    else:
+        return UnionRandomFactory(*factories, weights=weights, rnd=rnd)
 
 
 class UnionRandomFactory(Factory[t.Any]):
@@ -74,3 +83,9 @@ class UnionRandomFactory(Factory[t.Any]):
 
     def next(self) -> t.Any:
         return self._random.choices(self._factories, self._weights)[0].next()
+
+
+class UnionRandomLazyChoiceFactory(UnionRandomFactory):
+    def next(self) -> t.Any:
+        values = [f.next() for f in self._factories]
+        return self._random.choices(values, self._weights)[0]

@@ -301,6 +301,8 @@ def test__main__error_duplicate_format(capfd, resources, options):
         ),
         # Test for specifying column by lambda
         ("factory_def_dict_with_lambda_column.py", 1, "0,N-aaa,2019/10/14\n"),
+        # Test for skipping none
+        ("factory_def_dict_half_none.py", 4, "0,aaa,2019-10-14\n2,aaa,2019-10-14\n"),
     ],
 )
 def test__main__csv(capfd, resources, def_file, line_num, expected):

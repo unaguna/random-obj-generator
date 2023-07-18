@@ -45,8 +45,10 @@ def _gen_post_function(
     if args.get("csv", False):
         if factory_def.csv_columns is not None:
 
-            def _post_function(pre_value) -> t.Sequence[t.Any]:
-                if isinstance(pre_value, t.Mapping):
+            def _post_function(pre_value) -> t.Optional[t.Sequence[t.Any]]:
+                if pre_value is None:
+                    return None
+                elif isinstance(pre_value, t.Mapping):
                     return [
                         _get_csv_field(pre_value, col)
                         for col in factory_def.csv_columns
@@ -59,8 +61,10 @@ def _gen_post_function(
 
         else:
 
-            def _post_function(pre_value) -> t.Sequence[t.Any]:
-                if isinstance(pre_value, t.Mapping):
+            def _post_function(pre_value) -> t.Optional[t.Sequence[t.Any]]:
+                if pre_value is None:
+                    return None
+                elif isinstance(pre_value, t.Mapping):
                     # TODO: 警告
                     return list(pre_value.values())
                 elif isinstance(pre_value, t.Sequence) and not isinstance(
@@ -133,12 +137,12 @@ def _json_default(args: Args):
 
 
 def _output_to_csv(
-    factory: randog.factory.Factory[t.Sequence[t.Sequence[t.Any]]],
+    factory: randog.factory.Factory[t.Optional[t.Sequence[t.Sequence[t.Any]]]],
     line_num: int,
     fp: t.TextIO,
 ):
     csv_writer = csv.writer(fp, lineterminator="\n")
-    csv_writer.writerows(factory.iter(line_num))
+    csv_writer.writerows(filter(lambda x: x is not None, factory.iter(line_num)))
 
 
 def main():

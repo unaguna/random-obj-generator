@@ -103,3 +103,46 @@ In the following example, the third field is a string that is processed from the
         "name",
         lambda d: f"{d['age']} years old",
     ]
+
+You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
+In the case of CSV output, the output can be made missing by generating None.
+In the following example, some records are missing by randomly converting the generated values to None.
+
+.. code-block:: python
+
+    import uuid
+    from datetime import datetime, timedelta
+    import random
+
+    def timestamp_iter():
+        next = datetime(2002, 1, 1, 0)
+        while True:
+            yield next
+            next += timedelta(hours=1)
+
+    # Returns None with 10% probability
+    def post_process(value):
+        if random.random() < 0.9:
+            return value
+        else:
+            return None
+
+    # The action of post_process causes this factory to ignore records generated with a probability of 10% and then return None.
+    FACTORY = randog.factory.randdict(
+        timestamp=randog.factory.by_iterator(timestamp_iter()),
+        name=randog.factory.randstr(),
+        age=randog.factory.randint(0, 100),
+    ).post_process(post_process)
+
+    CSV_COLUMNS = ["timestamp", "name", "age"]
+
+.. code-block:: shell
+
+    # output at most 20 rows
+    python -m randog byfile factory_def.py --csv 20
+
+.. note::
+    Missing rows in this way will result in fewer rows of output than the number specified by :code:`--csv`.
+
+.. warning::
+    Using or_none or union as a means of generating None probabilistically does not allow for random missing. This is because a factory built using them first determines if it will output None, and generates a dict only if it does not.

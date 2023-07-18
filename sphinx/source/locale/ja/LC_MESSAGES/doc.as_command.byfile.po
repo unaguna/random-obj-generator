@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 13:17+0900\n"
+"POT-Creation-Date: 2023-07-18 19:57+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -120,28 +120,7 @@ msgstr ""
 "CSV形式で出力したい場合は、:code:`--csv` オプションを使用します。各フィールドの値は、定義ファイル内で定義された "
 ":code:`CSV_COLUMNS` によって決定されます。"
 
-#: ../../source/doc.as_command.byfile.rst:76
-msgid ""
-"CSV output can also be output to multiple files with the "
-":code:`--repeat/-r` and :code:`--output/-O` options. In the following "
-"example, it outputs 20 lines to each of 10 CSV files."
-msgstr ""
-"CSV出力においても、:code:`--repeat/-r` オプションと :code:`--output/-O` "
-"オプションで複数ファイルに出力することができます。"
-
-#: ../../source/doc.as_command.byfile.rst:84
-msgid ""
-"In the example at the top of this page, :code:`CSV_COLUMNS` was defined "
-"as a list of strings, but you can also specify a function that returns a "
-"field instead of a string that specifies a dictionary key. In the "
-"following example, the third field is a string that is processed from the"
-" value of age."
-msgstr ""
-"このページ上部の例では :code:`CSV_COLUMNS` "
-"を文字列のリストとして定義していましたが、辞書のキーを指定する文字列の代わりにフィールドを返す関数を指定することもできます。"
-"次の例では、3番目のフィールドとして、age の値を加工した文字列を使用します。"
-
-#: ../../source/doc.as_command.byfile.rst:105
+#: ../../source/doc.as_command.byfile.rst:77
 msgid ""
 "Even if factory generates objects other than dict or :code:`CSV_COLUMNS` "
 "is not defined in the definition file, it will output something in CSV "
@@ -151,4 +130,51 @@ msgstr ""
 "factoryが辞書以外のオブジェクトを生成する場合や定義ファイルに :code:`CSV_COLUMNS` が定義されていない場合でも "
 ":code:`--csv` オプションを指定すれば CSV "
 "形式で何かしら出力しますが、推奨されません。将来的に、その場合の動作を変更する可能性もあります。"
+
+#: ../../source/doc.as_command.byfile.rst:79
+msgid ""
+"CSV output can also be output to multiple files with the "
+":code:`--repeat/-r` and :code:`--output/-O` options. In the following "
+"example, it outputs 20 lines to each of 10 CSV files."
+msgstr ""
+"CSV出力においても、:code:`--repeat/-r` オプションと :code:`--output/-O` "
+"オプションで複数ファイルに出力することができます。"
+
+#: ../../source/doc.as_command.byfile.rst:87
+msgid ""
+"In the example at the top of this page, :code:`CSV_COLUMNS` was defined "
+"as a list of strings, but you can also specify a function that returns a "
+"field instead of a string that specifies a dictionary key. In the "
+"following example, the third field is a string that is processed from the"
+" value of age."
+msgstr ""
+"このページ上部の例では :code:`CSV_COLUMNS` "
+"を文字列のリストとして定義していましたが、辞書のキーを指定する文字列の代わりにフィールドを返す関数を指定することもできます。次の例では、3番目のフィールドとして、age"
+" の値を加工した文字列を使用します。"
+
+#: ../../source/doc.as_command.byfile.rst:107
+msgid ""
+"You may want to discard some of the generated values, for example, if you"
+" are using PK with missing some timestamps. In the case of CSV output, "
+"the output can be made missing by generating None. In the following "
+"example, some records are missing by randomly converting the generated "
+"values to None."
+msgstr "欠番ありのタイムスタンプをPKにしている場合などは、生成した値の一部を破棄したい場合があるかもしれません。CSV出力の場合、Noneを生成することで出力を欠損させることができます。以下の例では、生成値をランダムにNoneに変換することでレコードを欠損させます。"
+
+#: ../../source/doc.as_command.byfile.rst:145
+msgid ""
+"Missing rows in this way will result in fewer rows of output than the "
+"number specified by :code:`--csv`."
+msgstr "この方法で行を欠落させると、出力される行は :code:`--csv` で指定した数より少なくなります。"
+
+#: ../../source/doc.as_command.byfile.rst:148
+msgid ""
+"Using or_none or union as a means of generating None probabilistically "
+"does not allow for random missing. This is because a factory built using "
+"them first determines if it will output None, and generates a dict only "
+"if it does not."
+msgstr ""
+"確率的に None を生成する手段として or_none や union "
+"を使用すると、ランダムに欠損させることができません。これらを使用して作った factory "
+"は、まずNoneを出力するかどうかを判定し、そうでない場合にのみ辞書を生成するためです。"
 

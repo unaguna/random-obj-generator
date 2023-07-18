@@ -145,4 +145,4 @@ In the following example, some records are missing by randomly converting the ge
     Missing rows in this way will result in fewer rows of output than the number specified by :code:`--csv`.
 
 .. warning::
-    Using or_none or union as a means of generating None probabilistically does not allow for random missing. This is because a factory built using them first determines if it will output None, and generates a dict only if it does not.
+    Using `or_none <randog.factory.html#randog.factory.Factory.or_none>`_ or `union <randog.factory.html#randog.factory.union>`_ as a means of generating None probabilistically does not allow for random missing. This is because a factory built using them first determines if it will output None, and generates a dict only if it does not.

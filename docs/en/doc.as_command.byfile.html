@@ -115,11 +115,11 @@
              
   <section id="byfile-mode">
 <h1>byfile Mode<a class="headerlink" href="#byfile-mode" title="Permalink to this heading"></a></h1>
-<p>In byfile mode, values are generated using the factories defined in <a class="reference internal" href="doc.external_def.html"><span class="doc">a factory definition</span></a>. An example run is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+<p>In byfile mode, values are generated using the factories defined in <a class="reference internal" href="doc.external_def.html"><span class="doc">a factory definition</span></a>. The format of the command is as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
-<p>The argument <code class="code docutils literal notranslate"><span class="pre">factory_def.py</span></code> is <a class="reference internal" href="doc.external_def.html"><span class="doc">a filename of the factory definition</span></a>. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:</p>
+<p>The argument FACTORY_PATH is <a class="reference internal" href="doc.external_def.html"><span class="doc">a filename of the factory definition</span></a>. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
 
 <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
@@ -127,6 +127,9 @@
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
 <span class="p">})</span>
+
+<span class="c1"># (optional) Settings used for CSV output</span>
+<span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -135,8 +138,29 @@
 </div>
 <section id="arguments-and-options">
 <h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
-<p>No unique arguments.</p>
-<p>Common options are available; see also <a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">Common Options</span></a></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">FACTORY_PATH</span> <span class="pre">[...]</span></code>:</dt><dd><ul>
+<li><p>paths of one or more <a class="reference internal" href="doc.external_def.html"><span class="doc">factory definition files</span></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--csv</span> <span class="pre">ROW_NUM</span></code> (optional):</dt><dd><ul>
+<li><p>if specified, it outputs generated ROW_NUM objects as CSV. When using this option, it is recommended to use a factory that generates dictionaries and to define <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> in the definition file to specify the fields of the CSV.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">common options</span></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 </section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
@@ -154,6 +178,84 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.json&#39;</span><span class="w"> </span>--json
 </pre></div>
 </div>
+<section id="output-as-csv">
+<h3>output as CSV<a class="headerlink" href="#output-as-csv" title="Permalink to this heading"></a></h3>
+<p>To output in CSV format, use the <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> option. The value of each field is determined by the <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> defined in the definition file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output CSV which contains 20 rows</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Even if factory generates objects other than dict or <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> is not defined in the definition file, it will output something in CSV format if the <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> option is specified, but this is not recommended. This behavior may be changed in the future.</p>
+</div>
+<p>CSV output can also be output to multiple files with the <code class="code docutils literal notranslate"><span class="pre">--repeat/-r</span></code> and <code class="code docutils literal notranslate"><span class="pre">--output/-O</span></code> options.
+In the following example, it outputs 20 lines to each of 10 CSV files.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output 10 CSV files; each file contains 20 rows</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.csv&#39;</span>
+</pre></div>
+</div>
+<p>In the example at the top of this page, <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> was defined as a list of strings, but you can also specify a function that returns a field instead of a string that specifies a dictionary key.
+In the following example, the third field is a string that is processed from the value of age.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
+    <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="c1"># output example: 17642547-0a4c-4897-a8da-2d495558b8fa,d40s8Jqs,20 years old</span>
+<span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;uuid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> years old&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
+In the case of CSV output, the output can be made missing by generating None.
+In the following example, some records are missing by randomly converting the generated values to None.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">def</span> <span class="nf">timestamp_iter</span><span class="p">():</span>
+    <span class="nb">next</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2002</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="nb">next</span>
+        <span class="nb">next</span> <span class="o">+=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Returns None with 10% probability</span>
+<span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># The action of post_process causes this factory to ignore records generated with a probability of 10% and then return None.</span>
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
+    <span class="n">timestamp</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="n">timestamp_iter</span><span class="p">()),</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+    <span class="n">age</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">post_process</span><span class="p">)</span>
+
+<span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 rows</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Missing rows in this way will result in fewer rows of output than the number specified by <code class="code docutils literal notranslate"><span class="pre">--csv</span></code>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using <a class="reference external" href="randog.factory.html#randog.factory.Factory.or_none">or_none</a> or <a class="reference external" href="randog.factory.html#randog.factory.union">union</a> as a means of generating None probabilistically does not allow for random missing. This is because a factory built using them first determines if it will output None, and generates a dict only if it does not.</p>
+</div>
+</section>
 </section>
 </section>
 

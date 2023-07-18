@@ -103,11 +103,18 @@
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
 <span class="p">})</span>
+
+<span class="c1"># (optional) Settings used by &#39;byfile&#39; mode of command executing</span>
+<span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>factory定義ファイルでは、<code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> を省略できます。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> は byfile モードでコマンド実行する際に使用されます。<a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile モード</span></a> もご覧ください。</p>
 </div>
 <p>このファイルを <code class="code docutils literal notranslate"><span class="pre">factory_def.py</span></code> という名称で保存した場合、以下のような python プログラムから使用できます。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">randog.factory</span>

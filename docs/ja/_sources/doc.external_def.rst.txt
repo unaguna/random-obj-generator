@@ -15,8 +15,14 @@ The external definition file is written as follows, in python code, so that the 
         "age": 20,
     })
 
+    # (optional) Settings used by 'byfile' mode of command executing
+    CSV_COLUMNS = ["uuid", "name", "age"]
+
 .. note::
     In factory definition file, :code:`import randog` can be omitted.
+
+.. note::
+    :code:`CSV_COLUMNS` is used when executing randog as command in byfile mode. See also :doc:`doc.as_command.byfile`.
 
 If you save this file under the name :code:`factory_def.py`, you can use it in your python code as follows:
 

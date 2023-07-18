@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 08:06+0900\n"
+"POT-Creation-Date: 2023-07-18 12:38+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -26,6 +26,7 @@ msgstr ""
 
 #: of randog.factory._dict.DictItem:1
 #: randog.factory._from_example.FromExampleContext:1
+#: randog.factory._from_pyfile.FactoryDef:1
 msgid "Bases: :py:class:`object`"
 msgstr ""
 
@@ -243,6 +244,12 @@ msgstr "指定したファイルで定義される factory を返す。"
 #: of randog.factory._from_pyfile.from_pyfile:3
 msgid "the filename of the factory definition"
 msgstr "factory 定義ファイルのパス"
+
+#: of randog.factory._from_pyfile.from_pyfile:5
+msgid ""
+"If True is specified, the return value is the FactoryDef dataclass, and "
+"data other than the factory can be obtained."
+msgstr "Trueを指定すると、戻り値が FactoryDef データクラスになり、factory本体以外のデータも得られる。"
 
 #: of randog.factory._increment.increment:1
 msgid "Return a factory which returns sequential numbers."

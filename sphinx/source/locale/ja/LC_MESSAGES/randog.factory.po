@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 12:38+0900\n"
+"POT-Creation-Date: 2023-07-18 23:32+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -129,7 +129,17 @@ msgstr "指定した確率で None を生成する factory を返す。"
 msgid "Probability that the result is None"
 msgstr "None を生成する確率"
 
-#: of randog.factory._base.Factory.or_none:14 randog.factory._bool.randbool:5
+#: of randog.factory._base.Factory.or_none:14
+msgid ""
+"If it is True, when generating a value, first generate value with the "
+"base factory and then decides whether to adopt it or None. Otherwise, it "
+"first decides whether to return None or generate a value and return it, "
+"and then generates a value only if it is returned."
+msgstr ""
+"Trueである場合、値の生成時に、まず factory で値を生成してから、それを採用するかNoneを採用するかを決定する。"
+"そうでない場合、まずNoneを返すか値を生成して返すか決定してから、生成した値を返す場合のみ値を生成する。"
+
+#: of randog.factory._base.Factory.or_none:19 randog.factory._bool.randbool:5
 #: randog.factory._choice.randchoice:8 randog.factory._choice.randenum:7
 #: randog.factory._date.randdate:7 randog.factory._datetime.randdatetime:10
 #: randog.factory._decimal.randdecimal:15 randog.factory._dict.randdict:7
@@ -137,11 +147,11 @@ msgstr "None を生成する確率"
 #: randog.factory._from_example.from_example:14 randog.factory._int.randint:7
 #: randog.factory._list.randlist:10 randog.factory._str.randstr:7
 #: randog.factory._time.randtime:10 randog.factory._timedelta.randtimedelta:9
-#: randog.factory._union.union:8
+#: randog.factory._union.union:12
 msgid "random number generator to be used"
 msgstr "乱数生成に使用するインスタンス"
 
-#: of randog.factory._base.Factory.or_none:17
+#: of randog.factory._base.Factory.or_none:22
 msgid "A factory whose result may be None with the specified probability."
 msgstr "指定した確率で None を生成する factory"
 
@@ -454,7 +464,17 @@ msgid ""
 "the number of factories."
 msgstr "それぞれの factory が選ばれる確率。長さは factory の数に一致しなければならない。"
 
-#: of randog.factory._union.union:11
+#: of randog.factory._union.union:8
+msgid ""
+"If it is True, when generating a value, first generate values with all "
+"factories and then decide which of them to adopt. Otherwise, it first "
+"decides which factory to adopt, and then generates a value using only "
+"that factory."
+msgstr ""
+"Trueである場合、値の生成時に、まずすべての factory で値を生成してから、そのどれを採用するか決定する。"
+"そうでない場合、まずどの factory を採用するか決定してから、そのfactoryのみで値を生成する。"
+
+#: of randog.factory._union.union:15
 msgid "No factories are specified."
 msgstr "factory が一つも指定されていない。"
 

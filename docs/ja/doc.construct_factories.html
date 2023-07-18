@@ -237,6 +237,11 @@
 <p class="admonition-title">注釈</p>
 <p>常に None を返す factory を作りたい場合は <a class="reference internal" href="#constance"><span class="std std-ref">const</span></a> を使用してください。</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>通常、or_null factory が値を生成する際は、まず factory を使用するかNoneを返すかをランダムに決定し、factory の値を使用する場合にのみ値を生成させます。ただし、<code class="code docutils literal notranslate"><span class="pre">or_none(...,</span> <span class="pre">lazy_choice=True)</span></code> のように引数を指定した場合、その or_null factory が値を生成する際は、まず factory で値を生成した後で、それを採用するかNoneを返すかをランダムに決定します。</p>
+<p>この違いは、非ランダムな factory を使用する場合等に影響します。</p>
+</div>
 </section>
 <section id="union-type">
 <h2>合成型 (Union type)<a class="headerlink" href="#union-type" title="この見出しへのパーマリンク"></a></h2>
@@ -268,6 +273,11 @@
 <span class="gp">... </span>    <span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 <span class="gp">... </span>    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>通常、union factory が値を生成する際は、まずどの factory を使用するかをランダムに決定し、その factory にのみ値を生成させます。ただし、<code class="code docutils literal notranslate"><span class="pre">union(...,</span> <span class="pre">lazy_choice=True)</span></code> のように引数を指定した場合、その union factory が値を生成する際は、まずすべての factory で値を生成した後でそのうちどの値を採用するかをランダムに決定します。</p>
+<p>この違いは、非ランダムな factory を使用する場合等に影響します。</p>
 </div>
 </section>
 <section id="randomly-choice">

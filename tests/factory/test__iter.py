@@ -88,3 +88,33 @@ def test__infinity_iter():
     for i in range(20):
         generated = next(inf_iter)
         assert generated == 10
+
+
+def test__infinity_iter__regenerate():
+    list_len = 100
+    factory = randog.factory.by_iterator(itertools.count(0))
+    iterator = factory.infinity_iter(regenerate=0.5)
+    generated = [next(iterator) for _ in range(list_len)]
+
+    assert len(generated) == list_len
+    for prev_value, value in zip(generated[:-1], generated[1:]):
+        assert prev_value < value
+    assert list_len - 1 < generated[-1]
+
+
+@pytest.mark.parametrize(
+    "regenerate",
+    [
+        -0.1,
+        1.1,
+        float(Fraction(2047, 2048)),
+    ],
+)
+def test__infinity_iter__regenerate__error_when_illegal_probability(regenerate):
+    factory = randog.factory.by_iterator(itertools.count(0))
+    with pytest.raises(ValueError) as e_ctx:
+        factory.infinity_iter(regenerate=regenerate)
+    e = e_ctx.value
+    message = e.args[0]
+
+    assert message == "the probability `regenerate` must range from 0 to 1023/1024"

@@ -140,7 +140,12 @@ class Factory(ABC, t.Generic[T]):
         """
         return FactoryIter(self, size, regenerate=regenerate, discard=discard, rnd=rnd)
 
-    def infinity_iter(self) -> t.Iterator[T]:
+    def infinity_iter(
+        self,
+        *,
+        regenerate: float = 0.0,
+        rnd: t.Optional[Random] = None,
+    ) -> t.Iterator[T]:
         """Returns an infinity iterator which serves result randomly.
 
         The result is INFINITY so do NOT use it directly with `for`, `list`, and so on.
@@ -155,13 +160,20 @@ class Factory(ABC, t.Generic[T]):
         ...     assert k in keys
         ...     assert isinstance(v, str)
 
+        Parameters
+        ----------
+        regenerate : float, default=0.0
+            the probability that the original factory generation value is not returned as is, but is regenerated.
+            It affects cases where the original factory returns a value that is not completely random.
+        rnd : Random, optional
+            random number generator to be used
+
         Returns
         -------
         Iterator[T]
             An infinity iterator
         """
-        while True:
-            yield self.next()
+        return FactoryIter(self, None, regenerate=regenerate, rnd=rnd)
 
 
 class PostFactory(Factory[R], t.Generic[T, R]):
@@ -180,7 +192,7 @@ class PostFactory(Factory[R], t.Generic[T, R]):
 class FactoryIter(t.Generic[T], t.Iterator[T]):
     _rnd: random.Random
     _factory: Factory[T]
-    _size: int
+    _size: t.Union[int, float]
     _regenerate_prob: float
     _discard_prob: float
     _count: int = 0
@@ -208,7 +220,7 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
         if discard < 0 or 1 < discard:
             raise ValueError("the probability `discard` must range from 0 to 1")
 
-        self._size = size
+        self._size = size if size is not None else float("Infinity")
         self._regenerate_prob = regenerate
         self._discard_prob = discard
 

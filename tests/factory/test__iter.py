@@ -25,6 +25,16 @@ def test__iter__regenerate():
     assert list_len - 1 < generated[-1]
 
 
+def test__iter__regenerate__zero():
+    list_len = 100
+    factory = randog.factory.by_iterator(itertools.count(0))
+    generated = list(factory.iter(list_len, regenerate=0))
+
+    assert len(generated) == list_len
+    for prev_value, value in zip(generated[:-1], generated[1:]):
+        assert value - prev_value == 1
+
+
 @pytest.mark.parametrize(
     "regenerate",
     [
@@ -52,6 +62,24 @@ def test__iter__discard():
     for prev_value, value in zip(generated[:-1], generated[1:]):
         assert prev_value < value
     assert len(generated) - 1 < generated[-1] < list_len
+
+
+def test__iter__discard__zero():
+    list_len = 100
+    factory = randog.factory.by_iterator(itertools.count(0))
+    generated = list(factory.iter(list_len, discard=0))
+
+    assert len(generated) == list_len
+    for prev_value, value in zip(generated[:-1], generated[1:]):
+        assert value - prev_value == 1
+
+
+def test__iter__discard__full():
+    list_len = 100
+    factory = randog.factory.by_iterator(itertools.count(0))
+    generated = list(factory.iter(list_len, discard=1.0))
+
+    assert len(generated) == 0
 
 
 @pytest.mark.parametrize(

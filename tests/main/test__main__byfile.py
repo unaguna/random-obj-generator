@@ -260,14 +260,15 @@ def test__main__option_output__option_repeat__separate(capfd, tmp_path, resource
                 assert out_fp.readline() == ""
 
 
-def test__main__regenerate__with_repeat(capfd, resources):
+@pytest.mark.parametrize("regenerate", [0.5, 0])
+def test__main__regenerate__with_repeat(capfd, resources, regenerate):
     line_num = 100
     args = [
         "randog",
         "byfile",
         str(resources.joinpath("factory_def_sequential.py")),
         "--regenerate",
-        "0.5",
+        str(regenerate),
         "-r",
         str(line_num),
     ]
@@ -281,18 +282,25 @@ def test__main__regenerate__with_repeat(capfd, resources):
         out_lines = list(out.splitlines())
         assert len(out_lines) == line_num
         for i, line in enumerate(out_lines):
-            assert i <= int(line)
-        assert line_num - 1 < int(out_lines[-1])
+            if regenerate == 0:
+                assert i == int(line)
+            else:
+                assert i <= int(line)
+        if regenerate == 0:
+            assert line_num - 1 == int(out_lines[-1])
+        else:
+            assert line_num - 1 < int(out_lines[-1])
 
 
-def test__main__regenerate__with_list(capfd, resources):
+@pytest.mark.parametrize("regenerate", [0.5, 0])
+def test__main__regenerate__with_list(capfd, resources, regenerate):
     list_size = 100
     args = [
         "randog",
         "byfile",
         str(resources.joinpath("factory_def_sequential.py")),
         "--regenerate",
-        "0.5",
+        str(regenerate),
         "-L",
         str(list_size),
         "--json",
@@ -307,11 +315,18 @@ def test__main__regenerate__with_list(capfd, resources):
         out_list = json.loads(out)
         assert len(out_list) == list_size
         for i, value in enumerate(out_list):
-            assert i <= value
-        assert list_size - 1 < out_list[-1]
+            if regenerate == 0:
+                assert i == value
+            else:
+                assert i <= value
+        if regenerate == 0:
+            assert list_size - 1 == out_list[-1]
+        else:
+            assert list_size - 1 < out_list[-1]
 
 
-def test__main__regenerate__with_repeat_list(capfd, resources):
+@pytest.mark.parametrize("regenerate", [0.5, 0])
+def test__main__regenerate__with_repeat_list(capfd, resources, regenerate):
     line_num = 3
     list_size = 100
     args = [
@@ -319,7 +334,7 @@ def test__main__regenerate__with_repeat_list(capfd, resources):
         "byfile",
         str(resources.joinpath("factory_def_sequential.py")),
         "--regenerate",
-        "0.5",
+        str(regenerate),
         "-r",
         str(line_num),
         "-L",
@@ -340,8 +355,14 @@ def test__main__regenerate__with_repeat_list(capfd, resources):
         for out_list in out_list_list:
             assert len(out_list) == list_size
         for i, value in enumerate(out_list_concat):
-            assert i <= value
-        assert list_size - 1 < out_list_concat[-1]
+            if regenerate == 0:
+                assert i == value
+            else:
+                assert i <= value
+        if regenerate == 0:
+            assert list_size * line_num - 1 == out_list_concat[-1]
+        else:
+            assert list_size * line_num - 1 < out_list_concat[-1]
 
 
 @pytest.mark.parametrize(
@@ -407,14 +428,15 @@ def test__main__regenerate__error_when_illegal_probability2(
         )
 
 
-def test__main__discard__with_repeat(capfd, resources):
+@pytest.mark.parametrize("discard", [0.5, 0])
+def test__main__discard__with_repeat(capfd, resources, discard):
     line_num = 100
     args = [
         "randog",
         "byfile",
         str(resources.joinpath("factory_def_sequential.py")),
         "--discard",
-        "0.5",
+        str(discard),
         "-r",
         str(line_num),
     ]
@@ -426,20 +448,50 @@ def test__main__discard__with_repeat(capfd, resources):
         assert err == ""
 
         out_lines = list(out.splitlines())
-        assert len(out_lines) < line_num
+        if discard == 0:
+            assert len(out_lines) == line_num
+        else:
+            assert len(out_lines) < line_num
         for i, line in enumerate(out_lines):
-            assert i <= int(line)
-        assert len(out_lines) - 1 < int(out_lines[-1]) < line_num
+            if discard == 0:
+                assert i == int(line)
+            else:
+                assert i <= int(line)
+        if discard == 0:
+            assert len(out_lines) - 1 == int(out_lines[-1])
+        else:
+            assert len(out_lines) - 1 < int(out_lines[-1]) < line_num
 
 
-def test__main__discard__with_list(capfd, resources):
+def test__main__discard__max__with_repeat(capfd, resources):
+    line_num = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--discard",
+        "1",
+        "-r",
+        str(line_num),
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+
+@pytest.mark.parametrize("discard", [0.5, 0])
+def test__main__discard__with_list(capfd, resources, discard):
     list_size = 100
     args = [
         "randog",
         "byfile",
         str(resources.joinpath("factory_def_sequential.py")),
         "--discard",
-        "0.5",
+        str(discard),
         "-L",
         str(list_size),
         "--json",
@@ -452,13 +504,46 @@ def test__main__discard__with_list(capfd, resources):
         assert err == ""
 
         out_list = json.loads(out)
-        assert len(out_list) < list_size
+        if discard == 0:
+            assert len(out_list) == list_size
+        else:
+            assert len(out_list) < list_size
         for i, value in enumerate(out_list):
-            assert i <= value
-        assert len(out_list) - 1 < out_list[-1] < list_size
+            if discard == 0:
+                assert i == int(value)
+            else:
+                assert i <= int(value)
+        if discard == 0:
+            assert len(out_list) - 1 == int(out_list[-1])
+        else:
+            assert len(out_list) - 1 < int(out_list[-1]) < list_size
 
 
-def test__main__discard__with_repeat_list(capfd, resources):
+def test__main__discard__max__with_list(capfd, resources):
+    list_size = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--discard",
+        "1",
+        "-L",
+        str(list_size),
+        "--json",
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        out_list = json.loads(out)
+        assert len(out_list) == 0
+
+
+@pytest.mark.parametrize("discard", [0.5, 0])
+def test__main__discard__with_repeat_list(capfd, resources, discard):
     line_num = 3
     list_size = 100
     args = [
@@ -466,7 +551,7 @@ def test__main__discard__with_repeat_list(capfd, resources):
         "byfile",
         str(resources.joinpath("factory_def_sequential.py")),
         "--discard",
-        "0.5",
+        str(discard),
         "-r",
         str(line_num),
         "-L",
@@ -485,10 +570,48 @@ def test__main__discard__with_repeat_list(capfd, resources):
 
         assert len(out_list_list) == line_num
         for out_list in out_list_list:
-            assert len(out_list) < list_size
+            if discard == 0:
+                assert len(out_list) == list_size
+            else:
+                assert len(out_list) < list_size
         for i, value in enumerate(out_list_concat):
-            assert i <= value
-        assert len(out_list_concat) - 1 < out_list_concat[-1] < list_size * line_num
+            if discard == 0:
+                assert i == value
+            else:
+                assert i <= value
+        if discard == 0:
+            assert len(out_list_concat) - 1 == out_list_concat[-1]
+        else:
+            assert len(out_list_concat) - 1 < out_list_concat[-1] < list_size * line_num
+
+
+def test__main__discard__max__with_repeat_list(capfd, resources):
+    line_num = 3
+    list_size = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--discard",
+        "1",
+        "-r",
+        str(line_num),
+        "-L",
+        str(list_size),
+        "--json",
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        out_list_list = list(json.loads(line) for line in out.splitlines())
+        out_list_concat = list(itertools.chain(*out_list_list))
+
+        assert len(out_list_list) == 3
+        assert len(out_list_concat) == 0
 
 
 @pytest.mark.parametrize(

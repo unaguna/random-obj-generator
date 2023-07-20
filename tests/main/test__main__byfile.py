@@ -1,3 +1,5 @@
+import itertools
+import json
 import sys
 from unittest.mock import patch
 
@@ -258,7 +260,262 @@ def test__main__option_output__option_repeat__separate(capfd, tmp_path, resource
                 assert out_fp.readline() == ""
 
 
-# TODO: 複数定義ファイル + --repeat の試験 (--repeat では factory を使いまわすが、別の定義ファイルに移ったら factory が再ロードされてイテレーションが0からに戻ることを確認する)
+def test__main__regenerate__with_repeat(capfd, resources):
+    line_num = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--regenerate",
+        "0.5",
+        "-r",
+        str(line_num),
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        out_lines = list(out.splitlines())
+        assert len(out_lines) == line_num
+        for i, line in enumerate(out_lines):
+            assert i <= int(line)
+        assert line_num - 1 < int(out_lines[-1])
+
+
+def test__main__regenerate__with_list(capfd, resources):
+    list_size = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--regenerate",
+        "0.5",
+        "-L",
+        str(list_size),
+        "--json",
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        out_list = json.loads(out)
+        assert len(out_list) == list_size
+        for i, value in enumerate(out_list):
+            assert i <= value
+        assert list_size - 1 < out_list[-1]
+
+
+def test__main__regenerate__with_repeat_list(capfd, resources):
+    line_num = 3
+    list_size = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--regenerate",
+        "0.5",
+        "-r",
+        str(line_num),
+        "-L",
+        str(list_size),
+        "--json",
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        out_list_list = list(json.loads(line) for line in out.splitlines())
+        out_list_concat = list(itertools.chain(*out_list_list))
+
+        assert len(out_list_list) == line_num
+        for out_list in out_list_list:
+            assert len(out_list) == list_size
+        for i, value in enumerate(out_list_concat):
+            assert i <= value
+        assert list_size - 1 < out_list_concat[-1]
+
+
+@pytest.mark.parametrize(
+    "regenerate",
+    [
+        "-0.1",
+        "1.1",
+    ],
+)
+def test__main__regenerate__error_when_illegal_probability(
+    capfd, resources, regenerate
+):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--regenerate",
+        regenerate,
+        "-r",
+        "100",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            "byfile: error: argument --regenerate: invalid probability value: " in err
+        )
+
+
+@pytest.mark.parametrize(
+    "regenerate",
+    [
+        # 2047/2048; it is greater than 1023/1024
+        "0.99951171875",
+    ],
+)
+def test__main__regenerate__error_when_illegal_probability2(
+    capfd, resources, regenerate
+):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--regenerate",
+        regenerate,
+        "-r",
+        "100",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            "byfile: error: argument --regenerate: must be lower than or equal to 1023/1024"
+            in err
+        )
+
+
+def test__main__discard__with_repeat(capfd, resources):
+    line_num = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--discard",
+        "0.5",
+        "-r",
+        str(line_num),
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        out_lines = list(out.splitlines())
+        assert len(out_lines) < line_num
+        for i, line in enumerate(out_lines):
+            assert i <= int(line)
+        assert len(out_lines) - 1 < int(out_lines[-1]) < line_num
+
+
+def test__main__discard__with_list(capfd, resources):
+    list_size = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--discard",
+        "0.5",
+        "-L",
+        str(list_size),
+        "--json",
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        out_list = json.loads(out)
+        assert len(out_list) < list_size
+        for i, value in enumerate(out_list):
+            assert i <= value
+        assert len(out_list) - 1 < out_list[-1] < list_size
+
+
+def test__main__discard__with_repeat_list(capfd, resources):
+    line_num = 3
+    list_size = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--discard",
+        "0.5",
+        "-r",
+        str(line_num),
+        "-L",
+        str(list_size),
+        "--json",
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+        out_list_list = list(json.loads(line) for line in out.splitlines())
+        out_list_concat = list(itertools.chain(*out_list_list))
+
+        assert len(out_list_list) == line_num
+        for out_list in out_list_list:
+            assert len(out_list) < list_size
+        for i, value in enumerate(out_list_concat):
+            assert i <= value
+        assert len(out_list_concat) - 1 < out_list_concat[-1] < list_size * line_num
+
+
+@pytest.mark.parametrize(
+    "regenerate",
+    [
+        "-0.1",
+        "1.1",
+    ],
+)
+def test__main__discard__error_when_illegal_probability(capfd, resources, regenerate):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--discard",
+        regenerate,
+        "-r",
+        "100",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "byfile: error: argument --discard: invalid probability value: " in err
 
 
 @pytest.mark.parametrize(
@@ -435,6 +692,88 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
                     i = repeat_i * line_num + row_i
                     assert out_fp.readline() == f"{i},aaa,2019-10-14\n"
                 assert out_fp.readline() == ""
+
+
+def test__main__csv__with_regenerate_repeat(capfd, tmp_path, resources):
+    output_fmt_path = tmp_path.joinpath("out_{}.txt")
+    output_paths = [tmp_path.joinpath("out_0.txt"), tmp_path.joinpath("out_1.txt")]
+    count = len(output_paths)
+    line_num = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--output",
+        str(output_fmt_path),
+        "--regenerate",
+        "0.5",
+        "-r",
+        str(count),
+        "--csv",
+        str(line_num),
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        out_list_list = []
+        for repeat_i in range(count):
+            with open(output_paths[repeat_i], mode="r") as out_fp:
+                out_list = [int(line) for line in out_fp.readlines()]
+            out_list_list.append(out_list)
+        out_list_concat = list(itertools.chain(*out_list_list))
+
+        assert len(out_list_list) == count
+        for out_list in out_list_list:
+            assert len(out_list) == line_num
+        for i, value in enumerate(out_list_concat):
+            assert i <= value
+        assert line_num - 1 < out_list_concat[-1]
+
+
+def test__main__csv__with_discard_repeat(capfd, tmp_path, resources):
+    output_fmt_path = tmp_path.joinpath("out_{}.txt")
+    output_paths = [tmp_path.joinpath("out_0.txt"), tmp_path.joinpath("out_1.txt")]
+    count = len(output_paths)
+    line_num = 100
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_sequential.py")),
+        "--output",
+        str(output_fmt_path),
+        "--discard",
+        "0.5",
+        "-r",
+        str(count),
+        "--csv",
+        str(line_num),
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        out_list_list = []
+        for repeat_i in range(count):
+            with open(output_paths[repeat_i], mode="r") as out_fp:
+                out_list = [int(line) for line in out_fp.readlines()]
+            out_list_list.append(out_list)
+        out_list_concat = list(itertools.chain(*out_list_list))
+
+        assert len(out_list_list) == count
+        for out_list in out_list_list:
+            assert len(out_list) < line_num
+        for i, value in enumerate(out_list_concat):
+            assert i <= value
+        assert len(out_list_concat) - 1 < out_list_concat[-1] < line_num * count
 
 
 def test__main__byfile__help(capfd):

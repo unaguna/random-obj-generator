@@ -9,7 +9,7 @@ from .._utils.nullsafe import dfor
 T = t.TypeVar("T")
 R = t.TypeVar("R")
 
-_REGENERATE_PROB_MAX = float(Fraction(1023, 1024))
+REGENERATE_PROB_MAX = float(Fraction(1023, 1024))
 
 
 class Factory(ABC, t.Generic[T]):
@@ -213,7 +213,7 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
             raise ValueError(
                 "`regenerate` and `discard` cannot be specified at the same time"
             )
-        if regenerate < 0 or _REGENERATE_PROB_MAX < regenerate:
+        if regenerate < 0 or REGENERATE_PROB_MAX < regenerate:
             raise ValueError(
                 "the probability `regenerate` must range from 0 to 1023/1024"
             )

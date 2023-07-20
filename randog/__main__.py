@@ -1,5 +1,6 @@
 import csv
 import json
+import random
 import sys
 import typing as t
 
@@ -140,9 +141,20 @@ def _output_to_csv(
     factory: randog.factory.Factory[t.Optional[t.Sequence[t.Sequence[t.Any]]]],
     line_num: int,
     fp: t.TextIO,
+    regenerate: float,
+    discard: float,
 ):
     csv_writer = csv.writer(fp, lineterminator="\n")
-    csv_writer.writerows(filter(lambda x: x is not None, factory.iter(line_num)))
+    csv_writer.writerows(
+        filter(
+            lambda x: x is not None,
+            factory.iter(
+                line_num,
+                regenerate=regenerate,
+                discard=discard,
+            ),
+        )
+    )
 
 
 def main():
@@ -153,6 +165,7 @@ def main():
         for factory in _build_factories(args):
             for r_index in range(args.repeat):
                 with _open_output_fp_numbered(args, index) as fp_numbered:
+                    index += 1
                     # args と index に応じて出力先 fp を決定する。
                     # args と index に応じて fp_numbered, fp_only の状態が異なるので、それを条件に使用する。
                     if not isinstance(fp_numbered, _DummyIO):
@@ -165,16 +178,31 @@ def main():
                     # 生成処理と出力処理
                     # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
                     if args.csv is not None:
-                        _output_to_csv(factory, args.csv, fp)
+                        _output_to_csv(
+                            factory,
+                            args.csv,
+                            fp,
+                            regenerate=args.regenerate,
+                            discard=args.discard,
+                        )
                     else:
                         if args.list is not None:
-                            generated = list(factory.iter(args.list))
+                            generated = list(
+                                factory.iter(
+                                    args.list,
+                                    regenerate=args.regenerate,
+                                    discard=args.discard,
+                                )
+                            )
                         else:
-                            generated = factory.next()
+                            while True:
+                                generated = factory.next()
+                                if random.random() >= args.regenerate:
+                                    break
+                            if random.random() < args.discard:
+                                continue
 
                         _output_generated(generated, fp, args=args)
-
-                index += 1
 
 
 if __name__ == "__main__":

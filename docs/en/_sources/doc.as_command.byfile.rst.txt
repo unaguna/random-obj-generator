@@ -68,6 +68,16 @@ You may want to generate multiple values while outputting each one to a separate
     # Repeat 10 times and output each of them into out_001.json, out_002.json, ... with json format
     python -m randog byfile factory_def.py -r 10 -O 'out_{:03}.json' --json
 
+You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
+In the case, the output can be made missing by :code:`--discard` or :code:`--regenerate`. For example:
+
+.. code-block:: shell
+
+    # output at most 20 values (each value will be discarded at 10% probability)
+    python -m randog byfile factory_def.py --repeat 20 --discard 0.1
+
+    # output exactly 20 values (each value will be regenerated at 10% probability)
+    python -m randog byfile factory_def.py --repeat 20 --regenerate 0.1
 
 output as CSV
 ~~~~~~~~~~~~~

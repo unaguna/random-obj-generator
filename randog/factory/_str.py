@@ -9,7 +9,7 @@ from ..exceptions import FactoryConstructionError
 
 def randstr(
     *,
-    length: t.Union[int, Factory[int]] = 8,
+    length: t.Union[int, Factory[int], None] = None,
     charset: t.Optional[str] = None,
     rnd: t.Optional[Random] = None,
 ) -> Factory[str]:
@@ -42,7 +42,7 @@ class StrRandomFactory(Factory[str]):
     def __init__(
         self,
         *,
-        length: t.Union[int, Factory[int]] = 8,
+        length: t.Union[int, Factory[int], None] = None,
         charset: t.Optional[str] = None,
         rnd: t.Optional[Random] = None,
     ):
@@ -63,7 +63,7 @@ class StrRandomFactory(Factory[str]):
             When the specified generating conditions are inconsistent.
         """
         self._random = dfor(rnd, Random())
-        self._length = length
+        self._length = dfor(length, 8)
         self._charset = dfor(charset, string.ascii_letters + string.digits)
 
         if isinstance(self._length, Factory) and len(self._charset) == 0:

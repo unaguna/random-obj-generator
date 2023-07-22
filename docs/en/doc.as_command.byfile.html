@@ -116,7 +116,7 @@
   <section id="byfile-mode">
 <h1>byfile Mode<a class="headerlink" href="#byfile-mode" title="Permalink to this heading"></a></h1>
 <p>In byfile mode, values are generated using the factories defined in <a class="reference internal" href="doc.external_def.html"><span class="doc">a factory definition</span></a>. The format of the command is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--regenerate<span class="w"> </span>PROB_REGEN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--discard<span class="w"> </span>PROB_DISCARD<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <p>The argument FACTORY_PATH is <a class="reference internal" href="doc.external_def.html"><span class="doc">a filename of the factory definition</span></a>. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:</p>
@@ -142,6 +142,20 @@
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">FACTORY_PATH</span> <span class="pre">[...]</span></code>:</dt><dd><ul>
 <li><p>paths of one or more <a class="reference internal" href="doc.external_def.html"><span class="doc">factory definition files</span></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--regenerate</span> <span class="pre">PROB_REGEN</span></code> (default=0.0):</dt><dd><ul>
+<li><p>the probability that the factory generation value is not returned as is, but is regenerated. It affects cases where the original factory returns a value that is not completely random.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--discard</span> <span class="pre">PROB_DISCARD</span></code> (default=0.0):</dt><dd><ul>
+<li><p>the probability that the factory generation value is not returned as is, but is discarded. If discarded, the number of times the value is generated is less than <code class="code docutils literal notranslate"><span class="pre">--repeat/-r</span></code> or <code class="code docutils literal notranslate"><span class="pre">--list/-L</span></code> or <code class="code docutils literal notranslate"><span class="pre">--csv</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -214,8 +228,7 @@ In the following example, the third field is a string that is processed from the
 </pre></div>
 </div>
 <p>You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
-In the case of CSV output, the output can be made missing by generating None.
-In the following example, some records are missing by randomly converting the generated values to None.</p>
+In the case, the output can be made missing by <code class="code docutils literal notranslate"><span class="pre">--discard</span></code> or <code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code>. For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">import</span> <span class="nn">random</span>
@@ -226,27 +239,29 @@ In the following example, some records are missing by randomly converting the ge
         <span class="k">yield</span> <span class="nb">next</span>
         <span class="nb">next</span> <span class="o">+=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># The action of `or_none(0.1, lazy_choice=True)` causes this factory to ignore records generated with a probability of 10% and then return None.</span>
 <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
     <span class="n">timestamp</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="n">timestamp_iter</span><span class="p">()),</span>
     <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
     <span class="n">age</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-<span class="p">)</span><span class="o">.</span><span class="n">or_none</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">lazy_choice</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
 
 <span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 rows</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 rows (each row will be discarded at 10% probability)</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
+
+<span class="c1"># output exactly 20 rows (Gaps of &#39;timestamp&#39; at 10% probability)</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Missing rows in this way will result in fewer rows of output than the number specified by <code class="code docutils literal notranslate"><span class="pre">--csv</span></code>.</p>
+<p>Missing rows by <code class="code docutils literal notranslate"><span class="pre">--discard</span></code> will result in fewer rows of output than the number specified by <code class="code docutils literal notranslate"><span class="pre">--csv</span></code>.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Using <a class="reference external" href="randog.factory.html#randog.factory.Factory.or_none">or_none</a> without <code class="code docutils literal notranslate"><span class="pre">lazy_choice=True</span></code> as a means of generating None probabilistically does not allow for random missing. This is because a factory built by this way first determines whether it output None, and generates a dict only if it does not.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Skipping rows by <code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code> will result in higher generations than the number specified by <code class="code docutils literal notranslate"><span class="pre">--csv</span></code>.</p>
 </div>
 </section>
 </section>

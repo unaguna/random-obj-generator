@@ -5,7 +5,7 @@ In byfile mode, values are generated using the factories defined in :doc:`a fact
 
 .. code-block:: shell
 
-    python -m randog byfile FACTORY_PATH [...] [--csv ROW_NUM] [common-options]
+    python -m randog byfile FACTORY_PATH [...] [--regenerate PROB_REGEN] [--discard PROB_DISCARD] [--csv ROW_NUM] [common-options]
 
 The argument FACTORY_PATH is :doc:`a filename of the factory definition <doc.external_def>`. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:
 
@@ -31,6 +31,12 @@ Arguments and Options
 
 - :code:`FACTORY_PATH [...]`:
     - paths of one or more :doc:`factory definition files <doc.external_def>`.
+
+- :code:`--regenerate PROB_REGEN` (default=0.0):
+    - the probability that the factory generation value is not returned as is, but is regenerated. It affects cases where the original factory returns a value that is not completely random.
+
+- :code:`--discard PROB_DISCARD` (default=0.0):
+    - the probability that the factory generation value is not returned as is, but is discarded. If discarded, the number of times the value is generated is less than :code:`--repeat/-r` or :code:`--list/-L` or :code:`--csv`.
 
 - :code:`--csv ROW_NUM` (optional):
     -  if specified, it outputs generated ROW_NUM objects as CSV. When using this option, it is recommended to use a factory that generates dictionaries and to define :code:`CSV_COLUMNS` in the definition file to specify the fields of the CSV.
@@ -105,8 +111,7 @@ In the following example, the third field is a string that is processed from the
     ]
 
 You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
-In the case of CSV output, the output can be made missing by generating None.
-In the following example, some records are missing by randomly converting the generated values to None.
+In the case, the output can be made missing by :code:`--discard` or :code:`--regenerate`. For example:
 
 .. code-block:: python
 
@@ -120,22 +125,24 @@ In the following example, some records are missing by randomly converting the ge
             yield next
             next += timedelta(hours=1)
 
-    # The action of `or_none(0.1, lazy_choice=True)` causes this factory to ignore records generated with a probability of 10% and then return None.
     FACTORY = randog.factory.randdict(
         timestamp=randog.factory.by_iterator(timestamp_iter()),
         name=randog.factory.randstr(),
         age=randog.factory.randint(0, 100),
-    ).or_none(0.1, lazy_choice=True)
+    )
 
     CSV_COLUMNS = ["timestamp", "name", "age"]
 
 .. code-block:: shell
 
-    # output at most 20 rows
-    python -m randog byfile factory_def.py --csv 20
+    # output at most 20 rows (each row will be discarded at 10% probability)
+    python -m randog byfile factory_def.py --csv 20 --discard 0.1
+
+    # output exactly 20 rows (Gaps of 'timestamp' at 10% probability)
+    python -m randog byfile factory_def.py --csv 20 --regenerate 0.1
 
 .. note::
-    Missing rows in this way will result in fewer rows of output than the number specified by :code:`--csv`.
+    Missing rows by :code:`--discard` will result in fewer rows of output than the number specified by :code:`--csv`.
 
-.. warning::
-    Using `or_none <randog.factory.html#randog.factory.Factory.or_none>`_ without :code:`lazy_choice=True` as a means of generating None probabilistically does not allow for random missing. This is because a factory built by this way first determines whether it output None, and generates a dict only if it does not.
+.. note::
+    Skipping rows by :code:`--regenerate` will result in higher generations than the number specified by :code:`--csv`.

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 23:32+0900\n"
+"POT-Creation-Date: 2023-07-22 19:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -67,28 +67,7 @@ msgid "Examples"
 msgstr ""
 
 #: of randog.factory._base.Factory.infinity_iter
-#: randog.factory._base.Factory.iter randog.factory._base.Factory.next
-#: randog.factory._base.Factory.or_none
-#: randog.factory._base.Factory.post_process
-msgid "Returns"
-msgstr ""
-
-#: of randog.factory._base.Factory.infinity_iter:15
-msgid "An infinity iterator"
-msgstr "無限イテレータ"
-
-#: of randog.factory._base.Factory.infinity_iter
-#: randog.factory._base.Factory.iter randog.factory._base.Factory.next
-#: randog.factory._base.Factory.or_none
-#: randog.factory._base.Factory.post_process
-msgid "Return type"
-msgstr ""
-
-#: of randog.factory._base.Factory.iter:1
-msgid "Returns an iterator which serves result randomly `size` times."
-msgstr "`size` 回だけランダムに値を生成するイテレータを返す。"
-
-#: of randog.factory._base.Factory.iter randog.factory._base.Factory.or_none
+#: randog.factory._base.Factory.iter randog.factory._base.Factory.or_none
 #: randog.factory._base.Factory.post_process randog.factory._bool.randbool
 #: randog.factory._by_callable.by_callable
 #: randog.factory._by_iterator.by_iterator randog.factory._choice.randchoice
@@ -103,11 +82,62 @@ msgstr "`size` 回だけランダムに値を生成するイテレータを返�
 msgid "Parameters"
 msgstr ""
 
+#: of randog.factory._base.Factory.infinity_iter:15
+#: randog.factory._base.Factory.iter:16
+msgid ""
+"the probability that the original factory generation value is not "
+"returned as is, but is regenerated. It affects cases where the original "
+"factory returns a value that is not completely random."
+msgstr ""
+
+#: of randog.factory._base.Factory.infinity_iter:18
+#: randog.factory._base.Factory.iter:22 randog.factory._base.Factory.or_none:19
+#: randog.factory._bool.randbool:5 randog.factory._choice.randchoice:8
+#: randog.factory._choice.randenum:7 randog.factory._date.randdate:7
+#: randog.factory._datetime.randdatetime:10
+#: randog.factory._decimal.randdecimal:15 randog.factory._dict.randdict:7
+#: randog.factory._float.randfloat:13
+#: randog.factory._from_example.from_example:14 randog.factory._int.randint:7
+#: randog.factory._list.randlist:10 randog.factory._str.randstr:9
+#: randog.factory._time.randtime:10 randog.factory._timedelta.randtimedelta:9
+#: randog.factory._union.union:12
+msgid "random number generator to be used"
+msgstr "乱数生成に使用するインスタンス"
+
+#: of randog.factory._base.Factory.infinity_iter
+#: randog.factory._base.Factory.iter randog.factory._base.Factory.next
+#: randog.factory._base.Factory.or_none
+#: randog.factory._base.Factory.post_process
+msgid "Returns"
+msgstr ""
+
+#: of randog.factory._base.Factory.infinity_iter:21
+msgid "An infinity iterator"
+msgstr "無限イテレータ"
+
+#: of randog.factory._base.Factory.infinity_iter
+#: randog.factory._base.Factory.iter randog.factory._base.Factory.next
+#: randog.factory._base.Factory.or_none
+#: randog.factory._base.Factory.post_process
+msgid "Return type"
+msgstr ""
+
+#: of randog.factory._base.Factory.iter:1
+msgid "Returns an iterator which serves result randomly `size` times."
+msgstr "`size` 回だけランダムに値を生成するイテレータを返す。"
+
 #: of randog.factory._base.Factory.iter:14
 msgid "the number of the iterator"
 msgstr "イテレータが値を返す回数"
 
-#: of randog.factory._base.Factory.iter:17
+#: of randog.factory._base.Factory.iter:19
+msgid ""
+"the probability that the original factory generation value is not "
+"returned as is, but is discarded. If discarded, the number of times the "
+"value is generated is less than `size`."
+msgstr ""
+
+#: of randog.factory._base.Factory.iter:25
 msgid "An iterator"
 msgstr "イテレータ"
 
@@ -136,20 +166,8 @@ msgid ""
 "first decides whether to return None or generate a value and return it, "
 "and then generates a value only if it is returned."
 msgstr ""
-"Trueである場合、値の生成時に、まず factory で値を生成してから、それを採用するかNoneを採用するかを決定する。"
-"そうでない場合、まずNoneを返すか値を生成して返すか決定してから、生成した値を返す場合のみ値を生成する。"
-
-#: of randog.factory._base.Factory.or_none:19 randog.factory._bool.randbool:5
-#: randog.factory._choice.randchoice:8 randog.factory._choice.randenum:7
-#: randog.factory._date.randdate:7 randog.factory._datetime.randdatetime:10
-#: randog.factory._decimal.randdecimal:15 randog.factory._dict.randdict:7
-#: randog.factory._float.randfloat:13
-#: randog.factory._from_example.from_example:14 randog.factory._int.randint:7
-#: randog.factory._list.randlist:10 randog.factory._str.randstr:7
-#: randog.factory._time.randtime:10 randog.factory._timedelta.randtimedelta:9
-#: randog.factory._union.union:12
-msgid "random number generator to be used"
-msgstr "乱数生成に使用するインスタンス"
+"Trueである場合、値の生成時に、まず factory "
+"で値を生成してから、それを採用するかNoneを採用するかを決定する。そうでない場合、まずNoneを返すか値を生成して返すか決定してから、生成した値を返す場合のみ値を生成する。"
 
 #: of randog.factory._base.Factory.or_none:22
 msgid "A factory whose result may be None with the specified probability."
@@ -292,7 +310,7 @@ msgstr "True を生成する確率"
 #: randog.factory._datetime.randdatetime:13
 #: randog.factory._decimal.randdecimal:18 randog.factory._float.randfloat:16
 #: randog.factory._int.randint:10 randog.factory._list.randlist:15
-#: randog.factory._str.randstr:10 randog.factory._time.randtime:13
+#: randog.factory._str.randstr:12 randog.factory._time.randtime:13
 #: randog.factory._timedelta.randtimedelta:12
 msgid "When the specified generating conditions are inconsistent."
 msgstr "指定した生成条件に矛盾がある場合。"
@@ -438,6 +456,12 @@ msgstr "生成される文字列の長さ"
 msgid "characters to be used"
 msgstr "文字列の生成に使用する文字"
 
+#: of randog.factory._str.randstr:7
+msgid ""
+"regular expression for generated string. It cannot be used with `length` "
+"or `charset`."
+msgstr ""
+
 #: of randog.factory._time.randtime:1
 msgid "Return a factory generating random time values."
 msgstr "ランダムに time 型の値を生成する factory を返す。"
@@ -471,8 +495,8 @@ msgid ""
 "decides which factory to adopt, and then generates a value using only "
 "that factory."
 msgstr ""
-"Trueである場合、値の生成時に、まずすべての factory で値を生成してから、そのどれを採用するか決定する。"
-"そうでない場合、まずどの factory を採用するか決定してから、そのfactoryのみで値を生成する。"
+"Trueである場合、値の生成時に、まずすべての factory で値を生成してから、そのどれを採用するか決定する。そうでない場合、まずどの "
+"factory を採用するか決定してから、そのfactoryのみで値を生成する。"
 
 #: of randog.factory._union.union:15
 msgid "No factories are specified."

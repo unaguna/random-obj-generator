@@ -117,7 +117,7 @@
   <section id="byfile-mode">
 <h1>byfile モード<a class="headerlink" href="#byfile-mode" title="この見出しへのパーマリンク"></a></h1>
 <p>byfile モードでは、<a class="reference internal" href="doc.external_def.html"><span class="doc">ファクトリ定義ファイル</span></a> で定義されたファクトリを使用して値が生成されます。コマンドの形式は次の通りです：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--regenerate<span class="w"> </span>PROB_REGEN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--discard<span class="w"> </span>PROB_DISCARD<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <p>引数 FACTORY_PATH は <a class="reference internal" href="doc.external_def.html"><span class="doc">factory の外部定義ファイル</span></a> のファイル名です。このファイルは python プログラムであり、以下のように factory を作成して変数 FACTORY にバインドするプログラムである必要があります。</p>
@@ -143,6 +143,20 @@
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">FACTORY_PATH</span> <span class="pre">[...]</span></code>:</dt><dd><ul>
 <li><p>1つ以上の <a class="reference internal" href="doc.external_def.html"><span class="doc">factory定義ファイル</span></a> のパス</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--regenerate</span> <span class="pre">PROB_REGEN</span></code> (default=0.0):</dt><dd><ul>
+<li><p>factory が生成した値をそのまま使用せずに再生成する確率。このオプションは factory が完全にランダムでない値を生成する場合に効果がある。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--discard</span> <span class="pre">PROB_DISCARD</span></code> (default=0.0):</dt><dd><ul>
+<li><p>factory が生成した値をそのまま使用せずに廃棄する確率。廃棄が生じた場合、生成される数は <code class="code docutils literal notranslate"><span class="pre">--repeat/-r</span></code> や <code class="code docutils literal notranslate"><span class="pre">--list/-L</span></code> や <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> で指定した数より少なくなる。</p></li>
 </ul>
 </dd>
 </dl>
@@ -212,7 +226,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>欠番ありのタイムスタンプをPKにしている場合などは、生成した値の一部を破棄したい場合があるかもしれません。CSV出力の場合、Noneを生成することで出力を欠損させることができます。以下の例では、生成値をランダムにNoneに変換することでレコードを欠損させます。</p>
+<p>欠番ありのタイムスタンプをPKにしている場合などは、生成した値の一部を破棄したい場合があるかもしれません。その場合、 <code class="code docutils literal notranslate"><span class="pre">--discard</span></code> や <code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code> を使用することで出力を欠損させることができます。例：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">import</span> <span class="nn">random</span>
@@ -223,27 +237,29 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
         <span class="k">yield</span> <span class="nb">next</span>
         <span class="nb">next</span> <span class="o">+=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># The action of `or_none(0.1, lazy_choice=True)` causes this factory to ignore records generated with a probability of 10% and then return None.</span>
 <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
     <span class="n">timestamp</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="n">timestamp_iter</span><span class="p">()),</span>
     <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
     <span class="n">age</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-<span class="p">)</span><span class="o">.</span><span class="n">or_none</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">lazy_choice</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
 
 <span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 rows</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 rows (each row will be discarded at 10% probability)</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
+
+<span class="c1"># output exactly 20 rows (Gaps of &#39;timestamp&#39; at 10% probability)</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>この方法で行を欠落させると、出力される行は <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> で指定した数より少なくなります。</p>
+<p><code class="code docutils literal notranslate"><span class="pre">--discard</span></code> で行を欠落させると、出力される行は <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> で指定した数より少なくなります。</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">警告</p>
-<p>確率的に None を生成する手段として <a class="reference external" href="randog.factory.html#randog.factory.Factory.or_none">or_none</a> を <code class="code docutils literal notranslate"><span class="pre">lazy_choice=True</span></code> 無しで使用すると、ランダムに欠損させることができません。この方法で作成した factory は、まずNoneを出力するかどうかを判定し、そうでない場合にのみ辞書を生成するためです。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code> で行を再生成させると、内部で値が生成される回数は <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> で指定した数より多くなります。</p>
 </div>
 </section>
 </section>

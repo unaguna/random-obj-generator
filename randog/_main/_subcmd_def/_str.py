@@ -14,7 +14,7 @@ class SubcmdDefString(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         str_parser = subparsers.add_parser(
             Subcmd.String.value,
-            usage="python -m randog str [--length LENGTH] [--charset CHARSET] [common-options]",
+            usage="python -m randog str [--length LENGTH] [--charset CHARSET] [--regex REGEX] [common-options]",
             description="It generates values of type str.",
             add_help=False,
         )

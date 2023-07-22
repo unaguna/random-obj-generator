@@ -8,6 +8,8 @@ import pytest
 def pytest_runtest_setup(item):
     for marker in item.iter_markers(name="require_sqlalchemy"):
         __require_sqlalchemy(*marker.args)
+    for _ in item.iter_markers(name="require_rstr"):
+        __require_rstr()
 
 
 def __require_sqlalchemy(*variants: t.Literal[1, 2]):
@@ -29,12 +31,24 @@ def __require_sqlalchemy(*variants: t.Literal[1, 2]):
         pass
 
 
+def __require_rstr():
+    if not __exists_rstr():
+        pytest.skip(reason="need rstr")
+
+
 def __get_version_of_sqlalchemy() -> t.Optional[str]:
     try:
         import sqlalchemy
         return sqlalchemy.__version__
     except (ModuleNotFoundError, AttributeError):
         return None
+
+def __exists_rstr() -> bool:
+    try:
+        import rstr
+        return True
+    except (ModuleNotFoundError, AttributeError):
+        return False
 
 
 @pytest.fixture

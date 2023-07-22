@@ -34,17 +34,40 @@ class SubcmdDefString(SubcmdDef):
             metavar="CHARSET",
             help="the characters which contained by generated strings",
         )
+        str_args_group.add_argument(
+            "--regex",
+            type=str,
+            default=None,
+            metavar="REGEX",
+            help="the regular expression for generated string. It cannot be used with `--length` or `--charset`.",
+        )
         add_common_arguments(str_parser)
 
         return str_parser
 
     def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
-        pass
+        iargs, kwargs = self.build_args(args)
+        regex = kwargs["regex"]
+        length = kwargs.get("length")
+        charset = kwargs["charset"]
+
+        if regex is not None:
+            try:
+                import rstr
+            except ImportError:
+                subparser.error(
+                    "argument --regex: package 'rstr' is required to use --regex"
+                )
+
+        if regex is not None and length is not None:
+            subparser.error("argument --regex: not allowed with argument --length")
+        if regex is not None and charset is not None:
+            subparser.error("argument --regex: not allowed with argument --charset")
 
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        kwargs = {"charset": args.get("charset")}
+        kwargs = {"charset": args.get("charset"), "regex": args.get("regex")}
         length = args.get("length")
         if length is not None:
             if length[0] == length[1]:

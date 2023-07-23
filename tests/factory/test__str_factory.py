@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 import randog.factory
@@ -87,6 +89,36 @@ def test__random_str_error_when_empty_charset_and_random_length(length):
     assert (
         e.message
         == "the charset for randstr() must not be empty if length is at random"
+    )
+
+
+@pytest.mark.require_rstr
+@pytest.mark.parametrize("regex", [r"[\d]+BC", re.compile(r"[abc]+")])
+def test__random_str__regex(regex):
+    factory = randog.factory.randstr(regex=regex)
+
+    value = factory.next()
+
+    assert isinstance(value, str)
+    assert re.fullmatch(regex, value)
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"length": 1},
+        {"charset": "a"},
+        {"length": 1, "charset": "a"},
+    ],
+)
+def test__random_str_error_when_specify_regex_and_length_charset(kwargs):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.randstr(regex=r"\d", **kwargs)
+    e = e_ctx.value
+
+    assert (
+        e.message
+        == "cannot specify argument 'regex' for randstr() with 'length' or 'charset'"
     )
 
 

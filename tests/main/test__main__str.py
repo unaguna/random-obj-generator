@@ -1,3 +1,4 @@
+import re
 import sys
 from unittest.mock import patch
 
@@ -94,6 +95,63 @@ def test__main__str__error_when_illegal_length(capfd, length):
         assert err.startswith("usage:")
         assert (
             "str: error: argument --length: invalid non_negative_int_range value: "
+            in err
+        )
+
+
+@pytest.mark.require_rstr
+@pytest.mark.parametrize(
+    "regex",
+    [
+        r"[\d]+BC",
+        r"[abc]+",
+    ],
+)
+def test__main__str__regex(capfd, regex):
+    args = ["randog", "str", "--regex", regex, "--repeat=100"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+
+        assert {
+            v for v in out.splitlines(keepends=False) if not re.fullmatch(regex, v)
+        } == set()
+        assert err == ""
+
+
+@pytest.mark.require_rstr
+@pytest.mark.parametrize(
+    "options",
+    [
+        ["--length", "3"],
+        ["--charset", "a"],
+    ],
+)
+def test__main__str__error_when_specify_regex_and_length_charset(capfd, options):
+    args = ["randog", "str", "--regex", "[0-9]+c", *options]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "not allowed with argument" in err
+
+
+@pytest.mark.without_rstr
+def test__main__str__regex__error_without_rstr(capfd):
+    args = ["randog", "str", "--regex", "[0-9]+c"]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            "str: error: argument --regex: package 'rstr' is required to use --regex"
             in err
         )
 

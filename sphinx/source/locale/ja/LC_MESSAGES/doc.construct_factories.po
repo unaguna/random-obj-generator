@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 23:42+0900\n"
+"POT-Creation-Date: 2023-07-23 17:35+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -132,6 +132,10 @@ msgstr ""
 
 #: ../../source/doc.construct_factories.rst:60
 msgid "a string value"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:61
+msgid ":doc:`detail <doc.str_factory>`"
 msgstr ""
 
 #: ../../source/doc.construct_factories.rst:63
@@ -295,8 +299,9 @@ msgid ""
 " factory and then randomly decides whether to adopt it or None."
 msgstr ""
 "通常、or_null factory が値を生成する際は、まず factory を使用するかNoneを返すかをランダムに決定し、factory "
-"の値を使用する場合にのみ値を生成させます。ただし、:code:`or_none(..., lazy_choice=True)` のように引数を指定した場合、その "
-"or_null factory が値を生成する際は、まず factory で値を生成した後で、それを採用するかNoneを返すかをランダムに決定します。"
+"の値を使用する場合にのみ値を生成させます。ただし、:code:`or_none(..., lazy_choice=True)` "
+"のように引数を指定した場合、その or_null factory が値を生成する際は、まず factory "
+"で値を生成した後で、それを採用するかNoneを返すかをランダムに決定します。"
 
 #: ../../source/doc.construct_factories.rst:137
 #: ../../source/doc.construct_factories.rst:183
@@ -441,11 +446,11 @@ msgstr "有限のイテレータを使用することもできますが、一度
 msgid "Details on how to build individual factories"
 msgstr "各 factory の詳細な生成方法"
 
-#: ../../source/doc.construct_factories.rst:308
+#: ../../source/doc.construct_factories.rst:309
 msgid "Special Factory"
 msgstr "特殊な Factory"
 
-#: ../../source/doc.construct_factories.rst:310
+#: ../../source/doc.construct_factories.rst:311
 msgid ""
 "Although any factory can be created with the :ref:`custom factory "
 "<custom_factory>`, some of the most commonly used factories are provided "

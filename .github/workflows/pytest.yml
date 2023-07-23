@@ -32,7 +32,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore-glob=randog/sqlalchemy/*.py --ignore-glob=**/doc.sqlalchemy.rst
+        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore=randog/factory/_str/_regex.py --ignore-glob=randog/sqlalchemy/*.py --ignore-glob=**/doc.sqlalchemy.rst --ignore-glob=**/doc.str_factory.rst
 
   test-with-sqlalchemy:
 
@@ -56,4 +56,27 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources
+        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore=randog/factory/_str/_regex.py --ignore-glob=**/doc.str_factory.rst
+
+  test-with-rstr:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest rstr
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Test with pytest
+      run: |
+        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore-glob=randog/sqlalchemy/*.py --ignore-glob=**/doc.sqlalchemy.rst

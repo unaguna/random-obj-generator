@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-19 00:02+0900\n"
+"POT-Creation-Date: 2023-07-22 19:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -60,10 +60,38 @@ msgid "paths of one or more :doc:`factory definition files <doc.external_def>`."
 msgstr "1つ以上の :doc:`factory定義ファイル <doc.external_def>` のパス"
 
 #: ../../source/doc.as_command.byfile.rst:36
-msgid ":code:`--csv ROW_NUM` (optional):"
+msgid ":code:`--regenerate PROB_REGEN` (default=0.0):"
 msgstr ""
 
 #: ../../source/doc.as_command.byfile.rst:36
+msgid ""
+"the probability that the factory generation value is not returned as is, "
+"but is regenerated. It affects cases where the original factory returns a"
+" value that is not completely random."
+msgstr ""
+"factory が生成した値をそのまま使用せずに再生成する確率。"
+"このオプションは factory が完全にランダムでない値を生成する場合に効果がある。"
+
+#: ../../source/doc.as_command.byfile.rst:39
+msgid ":code:`--discard PROB_DISCARD` (default=0.0):"
+msgstr ""
+
+#: ../../source/doc.as_command.byfile.rst:39
+msgid ""
+"the probability that the factory generation value is not returned as is, "
+"but is discarded. If discarded, the number of times the value is "
+"generated is less than :code:`--repeat/-r` or :code:`--list/-L` or "
+":code:`--csv`."
+msgstr ""
+"factory が生成した値をそのまま使用せずに廃棄する確率。"
+"廃棄が生じた場合、生成される数は :code:`--repeat/-r` や :code:`--list/-L` や "
+":code:`--csv` で指定した数より少なくなる。"
+
+#: ../../source/doc.as_command.byfile.rst:42
+msgid ":code:`--csv ROW_NUM` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.byfile.rst:42
 msgid ""
 "if specified, it outputs generated ROW_NUM objects as CSV. When using "
 "this option, it is recommended to use a factory that generates "
@@ -73,23 +101,23 @@ msgstr ""
 "指定すると、ROW_NUM 個の生成されたオブジェクトをCSV形式で出力します。このオプションを使用する場合、辞書を生成する factory "
 "を使用し、定義ファイル内にカラムを定義する :code:`CSV_COLUMNS` を定義することが推奨されます。"
 
-#: ../../source/doc.as_command.byfile.rst:40
+#: ../../source/doc.as_command.byfile.rst:46
 msgid ":code:`common-options`"
 msgstr ""
 
-#: ../../source/doc.as_command.byfile.rst:39
+#: ../../source/doc.as_command.byfile.rst:45
 msgid ":doc:`common options <doc.as_command.common_option>`"
 msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
 
-#: ../../source/doc.as_command.byfile.rst:43
+#: ../../source/doc.as_command.byfile.rst:49
 msgid "Examples"
 msgstr "実行例"
 
-#: ../../source/doc.as_command.byfile.rst:45
+#: ../../source/doc.as_command.byfile.rst:51
 msgid "The simplest example is the following:"
 msgstr "最も簡素な例は次の通りです："
 
-#: ../../source/doc.as_command.byfile.rst:51
+#: ../../source/doc.as_command.byfile.rst:57
 msgid ""
 "If the definition file defines a factory that generates a dict equivalent"
 " to one record in the database, you can obtain data for testing by "
@@ -98,7 +126,7 @@ msgstr ""
 "定義ファイルでデータベースのレコード1つに相当するdictを生成する factory "
 "を定義している場合、下記のように複数個生成することでテスト用データをそろえることができます。"
 
-#: ../../source/doc.as_command.byfile.rst:58
+#: ../../source/doc.as_command.byfile.rst:64
 msgid ""
 "You may want to generate multiple values while outputting each one to a "
 "separate file. In that case, you can utilize :code:`-O` and :code:`-r` as"
@@ -107,11 +135,11 @@ msgstr ""
 "1つ1つを別々のファイルに出力しながら複数個生成したいことがあるかもしれません。その場合は、以下のように :code:`-O` や "
 ":code:`-r` を活用します。"
 
-#: ../../source/doc.as_command.byfile.rst:67
+#: ../../source/doc.as_command.byfile.rst:73
 msgid "output as CSV"
 msgstr "CSV として出力"
 
-#: ../../source/doc.as_command.byfile.rst:69
+#: ../../source/doc.as_command.byfile.rst:75
 msgid ""
 "To output in CSV format, use the :code:`--csv` option. The value of each "
 "field is determined by the :code:`CSV_COLUMNS` defined in the definition "
@@ -120,7 +148,7 @@ msgstr ""
 "CSV形式で出力したい場合は、:code:`--csv` オプションを使用します。各フィールドの値は、定義ファイル内で定義された "
 ":code:`CSV_COLUMNS` によって決定されます。"
 
-#: ../../source/doc.as_command.byfile.rst:77
+#: ../../source/doc.as_command.byfile.rst:83
 msgid ""
 "Even if factory generates objects other than dict or :code:`CSV_COLUMNS` "
 "is not defined in the definition file, it will output something in CSV "
@@ -131,7 +159,7 @@ msgstr ""
 ":code:`--csv` オプションを指定すれば CSV "
 "形式で何かしら出力しますが、推奨されません。将来的に、その場合の動作を変更する可能性もあります。"
 
-#: ../../source/doc.as_command.byfile.rst:79
+#: ../../source/doc.as_command.byfile.rst:85
 msgid ""
 "CSV output can also be output to multiple files with the "
 ":code:`--repeat/-r` and :code:`--output/-O` options. In the following "
@@ -140,7 +168,7 @@ msgstr ""
 "CSV出力においても、:code:`--repeat/-r` オプションと :code:`--output/-O` "
 "オプションで複数ファイルに出力することができます。"
 
-#: ../../source/doc.as_command.byfile.rst:87
+#: ../../source/doc.as_command.byfile.rst:93
 msgid ""
 "In the example at the top of this page, :code:`CSV_COLUMNS` was defined "
 "as a list of strings, but you can also specify a function that returns a "
@@ -152,31 +180,26 @@ msgstr ""
 "を文字列のリストとして定義していましたが、辞書のキーを指定する文字列の代わりにフィールドを返す関数を指定することもできます。次の例では、3番目のフィールドとして、age"
 " の値を加工した文字列を使用します。"
 
-#: ../../source/doc.as_command.byfile.rst:107
+#: ../../source/doc.as_command.byfile.rst:113
 msgid ""
 "You may want to discard some of the generated values, for example, if you"
-" are using PK with missing some timestamps. In the case of CSV output, "
-"the output can be made missing by generating None. In the following "
-"example, some records are missing by randomly converting the generated "
-"values to None."
-msgstr "欠番ありのタイムスタンプをPKにしている場合などは、生成した値の一部を破棄したい場合があるかもしれません。CSV出力の場合、Noneを生成することで出力を欠損させることができます。以下の例では、生成値をランダムにNoneに変換することでレコードを欠損させます。"
-
-#: ../../source/doc.as_command.byfile.rst:138
-msgid ""
-"Missing rows in this way will result in fewer rows of output than the "
-"number specified by :code:`--csv`."
-msgstr "この方法で行を欠落させると、出力される行は :code:`--csv` で指定した数より少なくなります。"
-
-#: ../../source/doc.as_command.byfile.rst:141
-msgid ""
-"Using `or_none <randog.factory.html#randog.factory.Factory.or_none>`_ "
-"without :code:`lazy_choice=True` as a means of generating None "
-"probabilistically does not allow for random missing. This is because a "
-"factory built by this way first determines whether it output None, and "
-"generates a dict only if it does not."
+" are using PK with missing some timestamps. In the case, the output can "
+"be made missing by :code:`--discard` or :code:`--regenerate`. For "
+"example:"
 msgstr ""
-"確率的に None を生成する手段として `or_none "
-"<randog.factory.html#randog.factory.Factory.or_none>`_ を "
-":code:`lazy_choice=True` 無しで使用すると、ランダムに欠損させることができません。この方法で作成した factory "
-"は、まずNoneを出力するかどうかを判定し、そうでない場合にのみ辞書を生成するためです。"
+"欠番ありのタイムスタンプをPKにしている場合などは、生成した値の一部を破棄したい場合があるかもしれません。その場合、 "
+":code:`--discard` や :code:`--regenerate` "
+"を使用することで出力を欠損させることができます。例："
+
+#: ../../source/doc.as_command.byfile.rst:145
+msgid ""
+"Missing rows by :code:`--discard` will result in fewer rows of output "
+"than the number specified by :code:`--csv`."
+msgstr ":code:`--discard` で行を欠落させると、出力される行は :code:`--csv` で指定した数より少なくなります。"
+
+#: ../../source/doc.as_command.byfile.rst:148
+msgid ""
+"Skipping rows by :code:`--regenerate` will result in higher generations "
+"than the number specified by :code:`--csv`."
+msgstr ":code:`--regenerate` で行を再生成させると、内部で値が生成される回数は :code:`--csv` で指定した数より多くなります。"
 

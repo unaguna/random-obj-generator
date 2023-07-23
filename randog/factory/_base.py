@@ -1,9 +1,15 @@
+import random
 from abc import ABC, abstractmethod
 import typing as t
+from fractions import Fraction
 from random import Random
+
+from .._utils.nullsafe import dfor
 
 T = t.TypeVar("T")
 R = t.TypeVar("R")
+
+REGENERATE_PROB_MAX = float(Fraction(1023, 1024))
 
 
 class Factory(ABC, t.Generic[T]):
@@ -93,7 +99,14 @@ class Factory(ABC, t.Generic[T]):
         """
         return PostFactory(self, post_process)
 
-    def iter(self, size: int) -> t.Iterator[T]:
+    def iter(
+        self,
+        size: int,
+        *,
+        regenerate: float = 0.0,
+        discard: float = 0.0,
+        rnd: t.Optional[Random] = None,
+    ) -> t.Iterator[T]:
         """Returns an iterator which serves result randomly `size` times.
 
         Examples
@@ -111,16 +124,28 @@ class Factory(ABC, t.Generic[T]):
         ----------
         size : int
             the number of the iterator
+        regenerate : float, default=0.0
+            the probability that the original factory generation value is not returned as is, but is regenerated.
+            It affects cases where the original factory returns a value that is not completely random.
+        discard : float, default=0.0
+            the probability that the original factory generation value is not returned as is, but is discarded.
+            If discarded, the number of times the value is generated is less than `size`.
+        rnd : Random, optional
+            random number generator to be used
 
         Returns
         -------
         Iterator[T]
             An iterator
         """
-        for _ in range(size):
-            yield self.next()
+        return FactoryIter(self, size, regenerate=regenerate, discard=discard, rnd=rnd)
 
-    def infinity_iter(self) -> t.Iterator[T]:
+    def infinity_iter(
+        self,
+        *,
+        regenerate: float = 0.0,
+        rnd: t.Optional[Random] = None,
+    ) -> t.Iterator[T]:
         """Returns an infinity iterator which serves result randomly.
 
         The result is INFINITY so do NOT use it directly with `for`, `list`, and so on.
@@ -135,13 +160,20 @@ class Factory(ABC, t.Generic[T]):
         ...     assert k in keys
         ...     assert isinstance(v, str)
 
+        Parameters
+        ----------
+        regenerate : float, default=0.0
+            the probability that the original factory generation value is not returned as is, but is regenerated.
+            It affects cases where the original factory returns a value that is not completely random.
+        rnd : Random, optional
+            random number generator to be used
+
         Returns
         -------
         Iterator[T]
             An infinity iterator
         """
-        while True:
-            yield self.next()
+        return FactoryIter(self, None, regenerate=regenerate, rnd=rnd)
 
 
 class PostFactory(Factory[R], t.Generic[T, R]):
@@ -155,3 +187,61 @@ class PostFactory(Factory[R], t.Generic[T, R]):
     def next(self) -> R:
         pre_result = self._base_factory.next()
         return self._post_process(pre_result)
+
+
+class FactoryIter(t.Generic[T], t.Iterator[T]):
+    _rnd: random.Random
+    _factory: Factory[T]
+    _size: t.Union[int, float]
+    _regenerate_prob: float
+    _discard_prob: float
+    _count: int = 0
+
+    def __init__(
+        self,
+        factory: Factory[T],
+        size: t.Union[int, None],
+        *,
+        regenerate: float = 0.0,
+        discard: float = 0.0,
+        rnd: t.Optional[Random] = None,
+    ):
+        self._rnd = dfor(rnd, random.Random())
+        self._factory = factory
+
+        if regenerate > 0 and discard > 0:
+            raise ValueError(
+                "`regenerate` and `discard` cannot be specified at the same time"
+            )
+        if regenerate < 0 or REGENERATE_PROB_MAX < regenerate:
+            raise ValueError(
+                "the probability `regenerate` must range from 0 to 1023/1024"
+            )
+        if discard < 0 or 1 < discard:
+            raise ValueError("the probability `discard` must range from 0 to 1")
+
+        self._size = size if size is not None else float("Infinity")
+        self._regenerate_prob = regenerate
+        self._discard_prob = discard
+
+    def __next__(self) -> T:
+        while True:
+            if self._count >= self._size:
+                raise StopIteration()
+
+            self._count += 1
+
+            # Regenerate until break
+            while True:
+                generated = self._factory.next()
+                if (
+                    self._regenerate_prob <= 0
+                    or self._rnd.random() >= self._regenerate_prob
+                ):
+                    break
+
+            # Probabilistically, discard the value generated this time and proceed to the next one
+            if self._discard_prob > 0 and self._rnd.random() < self._discard_prob:
+                continue
+
+            return generated

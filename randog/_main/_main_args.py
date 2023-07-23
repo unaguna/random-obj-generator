@@ -84,6 +84,20 @@ class Args:
             return None
 
     @property
+    def regenerate(self) -> float:
+        if hasattr(self._args, "regenerate"):
+            return self._args.regenerate
+        else:
+            return 0.0
+
+    @property
+    def discard(self) -> float:
+        if hasattr(self._args, "discard"):
+            return self._args.discard
+        else:
+            return 0.0
+
+    @property
     def csv(self) -> t.Optional[int]:
         if hasattr(self._args, "csv"):
             return self._args.csv

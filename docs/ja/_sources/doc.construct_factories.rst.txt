@@ -58,7 +58,7 @@ You can create a factory that generates values of the following types:
    * - :code:`str`
      - `randstr <randog.factory.html#randog.factory.randstr>`_
      - a string value
-     -
+     - :doc:`detail <doc.str_factory>`
 
    * - :code:`list`
      - `randlist <randog.factory.html#randog.factory.randlist>`_
@@ -299,6 +299,7 @@ Details on how to build individual factories
 
    doc.dict_factory
    doc.list_factory
+   doc.str_factory
    doc.enum_factory
 
 

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Str factory &mdash; random-obj-generator 0.7.0 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Enum factory" href="doc.enum_factory.html" />
+    <link rel="prev" title="List factory" href="doc.list_factory.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+              <div class="version">
+                0.7.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#elemental-types">基本的な型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#nullable">Nullable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#union-type">合成型 (Union type)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#randomly-choice">ランダムな選択 (Randomly choice)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#constance">定数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#processing-output">結果の加工</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#custom-factory">カスタム Factory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#details-on-how-to-build-individual-factories">各 factory の詳細な生成方法</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Str factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simple-factory">単純な factory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specify-the-length-or-and-character-set">文字列長や文字種を指定する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specify-a-regular-expression">正規表現を指定する</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#special-factory">特殊な Factory</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="doc.construct_factories.html">Factory の生成</a></li>
+      <li class="breadcrumb-item active">Str factory</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.str_factory.html"
+            >English</option>
+            <option value="../ja/doc.str_factory.html"
+                selected
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="str-factory">
+<h1>Str factory<a class="headerlink" href="#str-factory" title="この見出しへのパーマリンク"></a></h1>
+<p><a class="reference external" href="randog.factory.html#randog.factory.randstr">randstr</a> を使用することで、文字列を生成する factory を作成できます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> に文字列を例として渡しても str の factory を作成できますが、生成条件の指定ができません。</p>
+</div>
+<section id="simple-factory">
+<h2>単純な factory<a class="headerlink" href="#simple-factory" title="この見出しへのパーマリンク"></a></h2>
+<p>生成される値が文字列でありさえすればよい場合には、次のように引数を指定せずに <a class="reference external" href="randog.factory.html#randog.factory.randstr">randstr</a> を使用します。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="specify-the-length-or-and-character-set">
+<h2>文字列長や文字種を指定する<a class="headerlink" href="#specify-the-length-or-and-character-set" title="この見出しへのパーマリンク"></a></h2>
+<p>引数 <code class="code docutils literal notranslate"><span class="pre">length</span></code> や <code class="code docutils literal notranslate"><span class="pre">charset</span></code> を使用することで、生成される文字列の長さや使用する文字種を指定することができます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">set</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">length</span></code> に <a class="reference external" href="randog.factory.html#randog.factory.randint">randint()</a> を指定することで、文字列長をランダムにすることもできます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="mi">10</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">19</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">charset</span></code> には、使用する文字からなる文字列を指定します。通常は <a class="reference external" href="https://docs.python.org/ja/3/library/string.html">string</a> モジュールの定数を指定しますが、自身で用意した文字列を指定することもできます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">charset</span><span class="o">=</span><span class="s2">&quot;AZ&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="specify-a-regular-expression">
+<h2>正規表現を指定する<a class="headerlink" href="#specify-a-regular-expression" title="この見出しへのパーマリンク"></a></h2>
+<p>正規表現によって、生成される文字列を指定することができます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{3}</span><span class="s2">-\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{4}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{3}</span><span class="s2">-\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{4}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">generated</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>引数 <code class="code docutils literal notranslate"><span class="pre">regex</span></code> を使用する場合、<code class="code docutils literal notranslate"><span class="pre">length</span></code> や <code class="code docutils literal notranslate"><span class="pre">charset</span></code> は使用できません。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>正規表現を使用した文字列生成には <a class="reference external" href="https://pypi.org/project/rstr/">rstr</a> パッケージを使用します。<code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">rstr</span></code> などであらかじめインストールする必要があります。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>正規表現を使用した文字列生成には <a class="reference external" href="https://pypi.org/project/rstr/">rstr</a> パッケージを使用します。使用する場合、rstr のライセンス条項を確認して従ってください。</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.list_factory.html" class="btn btn-neutral float-left" title="List factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.enum_factory.html" class="btn btn-neutral float-right" title="Enum factory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

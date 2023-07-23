@@ -32,7 +32,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore=randog/factory/_str/_regex.py --ignore-glob=randog/sqlalchemy/*.py --ignore-glob=**/doc.sqlalchemy.rst
+        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore=randog/factory/_str/_regex.py --ignore-glob=randog/sqlalchemy/*.py --ignore-glob=**/doc.sqlalchemy.rst --ignore-glob=**/doc.str_factory.rst
 
   test-with-sqlalchemy:
 
@@ -56,7 +56,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore=randog/factory/_str/_regex.py
+        pytest --doctest-modules --doctest-glob='*.rst' --ignore=tests/resources --ignore=randog/factory/_str/_regex.py --ignore-glob=**/doc.str_factory.rst
 
   test-with-rstr:
 

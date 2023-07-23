@@ -89,6 +89,7 @@ msgid ""
 "returned as is, but is regenerated. It affects cases where the original "
 "factory returns a value that is not completely random."
 msgstr ""
+"factory が生成した値をそのまま使用せずに再生成する確率。このオプションは factory が完全にランダムでない値を生成する場合に効果がある。"
 
 #: of randog.factory._base.Factory.infinity_iter:18
 #: randog.factory._base.Factory.iter:22 randog.factory._base.Factory.or_none:19
@@ -136,6 +137,7 @@ msgid ""
 "returned as is, but is discarded. If discarded, the number of times the "
 "value is generated is less than `size`."
 msgstr ""
+"factory が生成した値をそのまま使用せずに廃棄する確率。廃棄が生じた場合、生成される数は `size` で指定した数より少なくなる"
 
 #: of randog.factory._base.Factory.iter:25
 msgid "An iterator"
@@ -461,6 +463,7 @@ msgid ""
 "regular expression for generated string. It cannot be used with `length` "
 "or `charset`."
 msgstr ""
+"生成される文字列が満たす正規表現。`length` や `charset` と同時に使用することはできない。"
 
 #: of randog.factory._time.randtime:1
 msgid "Return a factory generating random time values."

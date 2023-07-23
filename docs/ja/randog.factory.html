@@ -175,8 +175,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>regenerate</strong> (<em>float</em><em>, </em><em>default=0.0</em>) -- the probability that the original factory generation value is not returned as is, but is regenerated.
-It affects cases where the original factory returns a value that is not completely random.</p></li>
+<li><p><strong>regenerate</strong> (<em>float</em><em>, </em><em>default=0.0</em>) -- factory が生成した値をそのまま使用せずに再生成する確率。このオプションは factory が完全にランダムでない値を生成する場合に効果がある。</p></li>
 <li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
@@ -208,10 +207,8 @@ It affects cases where the original factory returns a value that is not complete
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>size</strong> (<em>int</em>) -- イテレータが値を返す回数</p></li>
-<li><p><strong>regenerate</strong> (<em>float</em><em>, </em><em>default=0.0</em>) -- the probability that the original factory generation value is not returned as is, but is regenerated.
-It affects cases where the original factory returns a value that is not completely random.</p></li>
-<li><p><strong>discard</strong> (<em>float</em><em>, </em><em>default=0.0</em>) -- the probability that the original factory generation value is not returned as is, but is discarded.
-If discarded, the number of times the value is generated is less than <cite>size</cite>.</p></li>
+<li><p><strong>regenerate</strong> (<em>float</em><em>, </em><em>default=0.0</em>) -- factory が生成した値をそのまま使用せずに再生成する確率。このオプションは factory が完全にランダムでない値を生成する場合に効果がある。</p></li>
+<li><p><strong>discard</strong> (<em>float</em><em>, </em><em>default=0.0</em>) -- factory が生成した値をそのまま使用せずに廃棄する確率。廃棄が生じた場合、生成される数は <cite>size</cite> で指定した数より少なくなる</p></li>
 <li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>
@@ -656,7 +653,7 @@ If discarded, the number of times the value is generated is less than <cite>size
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>length</strong> (<em>int</em><em>|</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>[</em><em>int</em><em>]</em><em>, </em><em>default=8</em>) -- 生成される文字列の長さ</p></li>
 <li><p><strong>charset</strong> (<em>str</em><em>, </em><em>optional</em>) -- 文字列の生成に使用する文字</p></li>
-<li><p><strong>regex</strong> (<em>str</em><em>, </em><em>optional</em>) -- regular expression for generated string. It cannot be used with <cite>length</cite> or <cite>charset</cite>.</p></li>
+<li><p><strong>regex</strong> (<em>str</em><em>, </em><em>optional</em>) -- 生成される文字列が満たす正規表現。<cite>length</cite> や <cite>charset</cite> と同時に使用することはできない。</p></li>
 <li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>

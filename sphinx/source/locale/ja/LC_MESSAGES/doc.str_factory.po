@@ -1,0 +1,122 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-23 17:50+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.str_factory.rst:2
+msgid "Str factory"
+msgstr ""
+
+#: ../../source/doc.str_factory.rst:4
+msgid ""
+"You can create a factory that generates string values with `randstr "
+"<randog.factory.html#randog.factory.randstr>`_."
+msgstr ""
+"`randstr <randog.factory.html#randog.factory.randstr>`_ を使用することで、文字列を生成する"
+" factory を作成できます。"
+
+#: ../../source/doc.str_factory.rst:7
+msgid ""
+"Although a factory of str can be created by passing a string as an "
+"example to `from_example "
+"<randog.factory.html#randog.factory.from_example>`_, it is not possible "
+"to specify the creation condition."
+msgstr ""
+"`from_example <randog.factory.html#randog.factory.from_example>`_ "
+"に文字列を例として渡しても str の factory を作成できますが、生成条件の指定ができません。"
+
+#: ../../source/doc.str_factory.rst:11
+msgid "Simple factory"
+msgstr "単純な factory"
+
+#: ../../source/doc.str_factory.rst:13
+msgid ""
+"If all that is needed is for the generated value to be a string, use "
+"`randstr <randog.factory.html#randog.factory.randstr>`_ with no arguments"
+" as follows:"
+msgstr ""
+"生成される値が文字列でありさえすればよい場合には、次のように引数を指定せずに `randstr "
+"<randog.factory.html#randog.factory.randstr>`_ を使用します。"
+
+#: ../../source/doc.str_factory.rst:27
+msgid "Specify the length or/and character set"
+msgstr "文字列長や文字種を指定する"
+
+#: ../../source/doc.str_factory.rst:29
+msgid ""
+"The arguments :code:`length` and :code:`charset` can be used to specify "
+"the length of the generated string and the character set to be used."
+msgstr ""
+"引数 :code:`length` や :code:`charset` "
+"を使用することで、生成される文字列の長さや使用する文字種を指定することができます。"
+
+#: ../../source/doc.str_factory.rst:44
+msgid ""
+"The length of the string can also be randomized by specifying `randint() "
+"<randog.factory.html#randog.factory.randint>`_ for :code:`length` as "
+"follows:"
+msgstr ""
+":code:`length` に `randint() "
+"<randog.factory.html#randog.factory.randint>`_ "
+"を指定することで、文字列長をランダムにすることもできます。"
+
+#: ../../source/doc.str_factory.rst:58
+msgid ""
+"The argument :code:`charset` is a string consisting of the characters to "
+"be used. Usually a constant from `string "
+"<https://docs.python.org/3/library/string.html>`_ module, but you can "
+"also specify your own string as follows:"
+msgstr ""
+":code:`charset` には、使用する文字からなる文字列を指定します。通常は `string "
+"<https://docs.python.org/ja/3/library/string.html>`_ "
+"モジュールの定数を指定しますが、自身で用意した文字列を指定することもできます。"
+
+#: ../../source/doc.str_factory.rst:74
+msgid "Specify a regular expression"
+msgstr "正規表現を指定する"
+
+#: ../../source/doc.str_factory.rst:76
+msgid "A regular expression can be used to specify the string to be generated."
+msgstr "正規表現によって、生成される文字列を指定することができます。"
+
+#: ../../source/doc.str_factory.rst:91
+msgid ""
+"When using the argument :code:`regex`, the arguments :code:`length` and "
+":code:`charset` cannot be used."
+msgstr "引数 :code:`regex` を使用する場合、:code:`length` や :code:`charset` は使用できません。"
+
+#: ../../source/doc.str_factory.rst:94
+msgid ""
+"To generate strings using regular expressions, use the `rstr "
+"<https://pypi.org/project/rstr/>`_ package, which must be installed "
+"beforehand, e.g., by :code:`pip install rstr`."
+msgstr ""
+"正規表現を使用した文字列生成には `rstr <https://pypi.org/project/rstr/>`_ "
+"パッケージを使用します。:code:`pip install rstr` などであらかじめインストールする必要があります。"
+
+#: ../../source/doc.str_factory.rst:97
+msgid ""
+"To generate strings using regular expressions, use the `rstr "
+"<https://pypi.org/project/rstr/>`_ package. If you use it, please review "
+"and follow the license terms of rstr."
+msgstr ""
+"正規表現を使用した文字列生成には `rstr <https://pypi.org/project/rstr/>`_ "
+"パッケージを使用します。使用する場合、rstr のライセンス条項を確認して従ってください。"
+

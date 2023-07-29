@@ -105,6 +105,7 @@ class Factory(ABC, t.Generic[T]):
         *,
         regenerate: float = 0.0,
         discard: float = 0.0,
+        raise_on_factory_stopped: bool = False,
         rnd: t.Optional[Random] = None,
     ) -> t.Iterator[T]:
         """Returns an iterator which serves result randomly `size` times.
@@ -123,13 +124,20 @@ class Factory(ABC, t.Generic[T]):
         Parameters
         ----------
         size : int
-            the number of the iterator
+            the number of the iterator.
+            However, if the argument `raise_on_factory_stopped` is not True,
+            fewer iterations than the specified `size` will be executed if the factory is stopped.
+            Also, if the argument `discard` is specified, the size may be less.
         regenerate : float, default=0.0
             the probability that the original factory generation value is not returned as is, but is regenerated.
             It affects cases where the original factory returns a value that is not completely random.
         discard : float, default=0.0
             the probability that the original factory generation value is not returned as is, but is discarded.
             If discarded, the number of times the value is generated is less than `size`.
+        raise_on_factory_stopped : bool, default=False
+            If True, the iteration raises `FactoryStopException` in case the factory cannot generate value due to
+            `StopIteration`.
+            If False, the iteration simply stops in the case.
         rnd : Random, optional
             random number generator to be used
 
@@ -144,11 +152,15 @@ class Factory(ABC, t.Generic[T]):
         self,
         *,
         regenerate: float = 0.0,
+        raise_on_factory_stopped: bool = False,
         rnd: t.Optional[Random] = None,
     ) -> t.Iterator[T]:
         """Returns an infinity iterator which serves result randomly.
 
         The result is INFINITY so do NOT use it directly with `for`, `list`, and so on.
+
+        However, if the argument `raise_on_factory_stopped` is not True,
+        the iterator will be stopped if the factory is stopped.
 
         Examples
         --------
@@ -165,6 +177,10 @@ class Factory(ABC, t.Generic[T]):
         regenerate : float, default=0.0
             the probability that the original factory generation value is not returned as is, but is regenerated.
             It affects cases where the original factory returns a value that is not completely random.
+        raise_on_factory_stopped : bool, default=False
+            If True, the iteration raises `FactoryStopException` in case the factory cannot generate value due to
+            `StopIteration`.
+            If False, the iteration simply stops in the case.
         rnd : Random, optional
             random number generator to be used
 
@@ -245,3 +261,8 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
                 continue
 
             return generated
+
+
+class FactoryStopException(Exception):
+    # TODO
+    pass

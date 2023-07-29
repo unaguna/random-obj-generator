@@ -6,14 +6,16 @@ import pytest
 import randog.factory
 
 
-def _only_2_times():
-    _only_2_times.count += 1
-    if _only_2_times.count >= 3:
-        raise StopIteration
-    return 0
+def _get_callable_only_2_times():
+    def _only_2_times():
+        _only_2_times.count += 1
+        if _only_2_times.count >= 3:
+            raise StopIteration
+        return 0
 
+    _only_2_times.count = 0
 
-_only_2_times.count = 0
+    return _only_2_times
 
 
 def test__iter():
@@ -24,27 +26,62 @@ def test__iter():
     assert generated == list(range(10))
 
 
-@pytest.mark.parametrize(
-    "factory",
-    [
-        randog.factory.by_callable(_only_2_times),
+_CASES_STOP_ITER = [
+    lambda: randog.factory.by_callable(_get_callable_only_2_times()),
+    lambda: randog.factory.by_iterator(iter(range(1, 3))),
+    lambda: randog.factory.randdict(
+        a=randog.factory.by_iterator(iter(range(1, 3))),
+        b=randog.factory.randint(0, 10),
+    ),
+    lambda: randog.factory.randlist(
         randog.factory.by_iterator(iter(range(1, 3))),
-        randog.factory.randdict(
-            a=randog.factory.by_iterator(iter(range(1, 3))),
-            b=randog.factory.randint(0, 10),
-        ),
-        randog.factory.randlist(
-            randog.factory.by_iterator(iter(range(1, 3))),
-            randog.factory.randint(0, 10),
-        ),
-        randog.factory.randlist(
-            randog.factory.randint(0, 10),
-            length=randog.factory.by_iterator(iter(range(1, 3))),
-        ),
+        randog.factory.randint(0, 10),
+    ),
+    lambda: randog.factory.randlist(
+        randog.factory.randint(0, 10),
+        length=randog.factory.by_iterator(iter(range(1, 3))),
+    ),
+]
+
+
+@pytest.mark.parametrize(
+    "get_factory",
+    _CASES_STOP_ITER,
+)
+@pytest.mark.parametrize(
+    "options_raise_on_factory_stopped",
+    [
+        # default
+        {},
+        # Same behavior with explicit default values.
+        {"raise_on_factory_stopped": False},
     ],
 )
-def test__iter__stop_iteration(factory):
-    generated = list(factory.iter(10))
+def test__iter__stop_iteration(get_factory, options_raise_on_factory_stopped):
+    factory = get_factory()
+    generated = list(factory.iter(10, **options_raise_on_factory_stopped))
+    assert len(generated) == 2
+
+
+@pytest.mark.parametrize(
+    "get_factory",
+    _CASES_STOP_ITER,
+)
+def test__iter__raise_on_factory_stopped__true__error(get_factory):
+    factory = get_factory()
+    with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
+        list(factory.iter(10, raise_on_factory_stopped=True))
+
+
+@pytest.mark.parametrize(
+    "get_factory",
+    _CASES_STOP_ITER,
+)
+def test__iter__raise_on_factory_stopped__true__no_error(get_factory):
+    factory = get_factory()
+    generated = list(factory.iter(2, raise_on_factory_stopped=True))
+
+    assert isinstance(generated, list)
     assert len(generated) == 2
 
 
@@ -150,6 +187,35 @@ def test__infinity_iter():
     for i in range(20):
         generated = next(inf_iter)
         assert generated == 10
+
+
+@pytest.mark.parametrize(
+    "get_factory",
+    _CASES_STOP_ITER,
+)
+@pytest.mark.parametrize(
+    "options_raise_on_factory_stopped",
+    [
+        # default
+        {},
+        # Same behavior with explicit default values.
+        {"raise_on_factory_stopped": False},
+    ],
+)
+def test__infinity_iter__stop_iteration(get_factory, options_raise_on_factory_stopped):
+    factory = get_factory()
+    generated = list(factory.infinity_iter(**options_raise_on_factory_stopped))
+    assert len(generated) == 2
+
+
+@pytest.mark.parametrize(
+    "get_factory",
+    _CASES_STOP_ITER,
+)
+def test__infinity_iter__raise_on_factory_stopped__true__error(get_factory):
+    factory = get_factory()
+    with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
+        list(factory.infinity_iter(raise_on_factory_stopped=True))
 
 
 def test__infinity_iter__regenerate():

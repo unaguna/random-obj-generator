@@ -120,8 +120,7 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
 
     def _next_generator(self) -> t.Iterator[t.Any]:
         length = self._next_length()
-        for factory in self._factory_generator(length):
-            yield factory.next()
+        return _GeneratedAsIter(self._factory_generator(length))
 
     def _next_length(self) -> int:
         if isinstance(self._length, Factory):
@@ -130,4 +129,25 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
             return self._length
 
     def next(self) -> T:
-        return self._type(self._next_generator())
+        try:
+            return self._type(self._next_generator())
+        except _StopIterationOfItem:
+            raise StopIteration()
+
+
+class _GeneratedAsIter(t.Iterator[t.Any]):
+    _factories_iter: t.Iterator[Factory]
+
+    def __init__(self, factories_iter: t.Iterator[Factory]):
+        self._factories_iter = factories_iter
+
+    def __next__(self) -> t.Any:
+        factory = next(self._factories_iter)
+        try:
+            return factory.next()
+        except StopIteration:
+            raise _StopIterationOfItem()
+
+
+class _StopIterationOfItem(Exception):
+    pass

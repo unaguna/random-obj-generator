@@ -26,6 +26,10 @@ _only_2_times.count = 0
             randog.factory.by_iterator(iter(range(1, 3))),
             randog.factory.randint(0, 10),
         ),
+        randog.factory.randlist(
+            randog.factory.randint(0, 10),
+            length=randog.factory.by_iterator(iter(range(1, 3))),
+        ),
     ],
 )
 def test__next__stop_iteration(factory):

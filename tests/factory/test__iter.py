@@ -37,6 +37,10 @@ def test__iter():
             randog.factory.by_iterator(iter(range(1, 3))),
             randog.factory.randint(0, 10),
         ),
+        randog.factory.randlist(
+            randog.factory.randint(0, 10),
+            length=randog.factory.by_iterator(iter(range(1, 3))),
+        ),
     ],
 )
 def test__iter__stop_iteration(factory):

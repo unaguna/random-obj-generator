@@ -45,7 +45,6 @@ def test__iter():
 )
 def test__iter__stop_iteration(factory):
     generated = list(factory.iter(10))
-    print(generated)
     assert len(generated) == 2
 
 

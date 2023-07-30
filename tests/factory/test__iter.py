@@ -83,6 +83,10 @@ def test__iter__raise_on_factory_stopped__true__error(get_factory, iter_length):
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
         list(factory.iter(iter_length + 5, raise_on_factory_stopped=True))
+    e = e_ctx.value
+    message = e.args[0]
+
+    assert message == "the factory stopped generating"
 
 
 @pytest.mark.parametrize(
@@ -107,6 +111,10 @@ def test__iter__raise_on_factory_stopped__true__error__regenerate(
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
         list(factory.iter(iter_length, regenerate=0.99, raise_on_factory_stopped=True))
+    e = e_ctx.value
+    message = e.args[0]
+
+    assert message == "the factory stopped generating"
 
 
 @pytest.mark.parametrize(
@@ -119,6 +127,10 @@ def test__iter__raise_on_factory_stopped__true__error__discard(
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
         list(factory.iter(iter_length + 1, discard=0.99, raise_on_factory_stopped=True))
+    e = e_ctx.value
+    message = e.args[0]
+
+    assert message == "the factory stopped generating"
 
 
 @pytest.mark.parametrize(
@@ -272,6 +284,10 @@ def test__infinity_iter__raise_on_factory_stopped__true__error(
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
         list(factory.infinity_iter(raise_on_factory_stopped=True))
+    e = e_ctx.value
+    message = e.args[0]
+
+    assert message == "the factory stopped generating"
 
 
 @pytest.mark.parametrize(
@@ -284,6 +300,10 @@ def test__infinity_iter__raise_on_factory_stopped__true__error__regenerate(
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
         list(factory.infinity_iter(regenerate=0.99, raise_on_factory_stopped=True))
+    e = e_ctx.value
+    message = e.args[0]
+
+    assert message == "the factory stopped generating"
 
 
 def test__infinity_iter__regenerate():

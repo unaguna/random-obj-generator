@@ -287,5 +287,5 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
 
 
 class FactoryStopException(Exception):
-    # TODO
-    pass
+    def __init__(self):
+        super().__init__("the factory stopped generating")

@@ -284,13 +284,9 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
 
             # Regenerate until break
             while True:
-                try:
-                    generated = self._factory.next()
-                except StopIteration:
-                    if self._raise_on_factory_stopped:
-                        raise FactoryStopException()
-                    else:
-                        raise
+                generated = self._factory.next(
+                    raise_on_factory_stopped=self._raise_on_factory_stopped
+                )
 
                 if (
                     self._regenerate_prob <= 0

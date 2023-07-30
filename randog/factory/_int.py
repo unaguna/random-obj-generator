@@ -68,5 +68,5 @@ class IntRandomFactory(Factory[int]):
         if minimum > maximum:
             raise FactoryConstructionError("empty range for randint")
 
-    def next(self) -> int:
+    def _next(self) -> int:
         return self._random.randint(self._min, self._max)

@@ -105,7 +105,7 @@ class TimeRandomFactory(Factory[dt.time]):
             rnd=rnd,
         ).post_process(lambda v: v.time().replace(tzinfo=v.tzinfo))
 
-    def next(self) -> dt.time:
+    def _next(self) -> dt.time:
         return self._base.next()
 
     @classmethod

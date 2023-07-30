@@ -17,7 +17,7 @@ class SubcmdDefByfile(SubcmdDef):
             Subcmd.Byfile.value,
             usage=(
                 "python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [--regenerate PROB_REGEN] "
-                "[--discard PROB_DISCARD] [--csv ROW_NUM] [common-options]"
+                "[--discard PROB_DISCARD] [--csv ROW_NUM] [--error-on-factory-stopped] [common-options]"
             ),
             description="It generates values according to factory definition files.",
             add_help=False,
@@ -57,6 +57,12 @@ class SubcmdDefByfile(SubcmdDef):
             help="if specified, it outputs generated ROW_NUM objects as CSV. "
             "When using this option, it is recommended to use a factory that generates dictionaries and "
             "to define CSV_COLUMNS in the definition file to specify the fields of the CSV.",
+        )
+        byfile_args_group.add_argument(
+            "--error-on-factory-stopped",
+            action="store_true",
+            help="If specified, error is occurred in case the factory cannot generate value due to StopIteration. "
+            "If not specified, the generation simply stops in the case.",
         )
         add_common_arguments(byfile_parser)
 

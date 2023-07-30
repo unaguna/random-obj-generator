@@ -63,6 +63,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.DictItem"><code class="docutils literal notranslate"><span class="pre">DictItem</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.Factory"><code class="docutils literal notranslate"><span class="pre">Factory</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.FactoryDef"><code class="docutils literal notranslate"><span class="pre">FactoryDef</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#randog.factory.FactoryStopException"><code class="docutils literal notranslate"><span class="pre">FactoryStopException</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.FromExampleContext"><code class="docutils literal notranslate"><span class="pre">FromExampleContext</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.by_callable"><code class="docutils literal notranslate"><span class="pre">by_callable()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.by_iterator"><code class="docutils literal notranslate"><span class="pre">by_iterator()</span></code></a></li>
@@ -158,9 +159,11 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="randog.factory.Factory.infinity_iter">
-<span class="sig-name descname"><span class="pre">infinity_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regenerate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.Factory.infinity_iter" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">infinity_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regenerate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_on_factory_stopped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.Factory.infinity_iter" title="Permalink to this definition"></a></dt>
 <dd><p>Returns an infinity iterator which serves result randomly.</p>
 <p>The result is INFINITY so do NOT use it directly with <cite>for</cite>, <cite>list</cite>, and so on.</p>
+<p>However, if the argument <cite>raise_on_factory_stopped</cite> is not True,
+the iterator will be stopped if the factory is stopped.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -176,6 +179,9 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>regenerate</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – the probability that the original factory generation value is not returned as is, but is regenerated.
 It affects cases where the original factory returns a value that is not completely random.</p></li>
+<li><p><strong>raise_on_factory_stopped</strong> (<em>bool</em><em>, </em><em>default=False</em>) – If True, the iteration raises <cite>FactoryStopException</cite> in case the factory cannot generate value due to
+<cite>StopIteration</cite>.
+If False, the iteration simply stops in the case.</p></li>
 <li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) – random number generator to be used</p></li>
 </ul>
 </dd>
@@ -190,7 +196,7 @@ It affects cases where the original factory returns a value that is not complete
 
 <dl class="py method">
 <dt class="sig sig-object py" id="randog.factory.Factory.iter">
-<span class="sig-name descname"><span class="pre">iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regenerate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.Factory.iter" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regenerate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_on_factory_stopped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.Factory.iter" title="Permalink to this definition"></a></dt>
 <dd><p>Returns an iterator which serves result randomly <cite>size</cite> times.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
@@ -206,11 +212,17 @@ It affects cases where the original factory returns a value that is not complete
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>size</strong> (<em>int</em>) – the number of the iterator</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the number of the iterator.
+However, if the argument <cite>raise_on_factory_stopped</cite> is not True,
+fewer iterations than the specified <cite>size</cite> will be executed if the factory is stopped.
+Also, if the argument <cite>discard</cite> is specified, the size may be less.</p></li>
 <li><p><strong>regenerate</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – the probability that the original factory generation value is not returned as is, but is regenerated.
 It affects cases where the original factory returns a value that is not completely random.</p></li>
 <li><p><strong>discard</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – the probability that the original factory generation value is not returned as is, but is discarded.
 If discarded, the number of times the value is generated is less than <cite>size</cite>.</p></li>
+<li><p><strong>raise_on_factory_stopped</strong> (<em>bool</em><em>, </em><em>default=False</em>) – If True, the iteration raises <cite>FactoryStopException</cite> in case the factory cannot generate value due to
+<cite>StopIteration</cite>.
+If False, the iteration simply stops in the case.</p></li>
 <li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) – random number generator to be used</p></li>
 </ul>
 </dd>
@@ -225,14 +237,18 @@ If discarded, the number of times the value is generated is less than <cite>size
 
 <dl class="py method">
 <dt class="sig sig-object py" id="randog.factory.Factory.next">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="headerlink" href="#randog.factory.Factory.next" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_on_factory_stopped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="headerlink" href="#randog.factory.Factory.next" title="Permalink to this definition"></a></dt>
 <dd><p>Generate a value randomly according to the rules specified when assembling the factory.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>a value generated randomly</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>raise_on_factory_stopped</strong> (<em>bool</em><em>, </em><em>default=False</em>) – If True, raises <cite>FactoryStopException</cite> in case the factory cannot generate value due to <cite>StopIteration</cite>.
+If False, simply raises <cite>StopIteration</cite>.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>T</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a value generated randomly</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>T</p>
 </dd>
 </dl>
 </dd></dl>
@@ -318,6 +334,12 @@ and then generates a value only if it is returned.</p></li>
 <span class="sig-name descname"><span class="pre">factory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></em><a class="headerlink" href="#randog.factory.FactoryDef.factory" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="randog.factory.FactoryStopException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">FactoryStopException</span></span><a class="headerlink" href="#randog.factory.FactoryStopException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="py class">

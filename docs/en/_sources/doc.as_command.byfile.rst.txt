@@ -5,7 +5,7 @@ In byfile mode, values are generated using the factories defined in :doc:`a fact
 
 .. code-block:: shell
 
-    python -m randog byfile FACTORY_PATH [...] [--regenerate PROB_REGEN] [--discard PROB_DISCARD] [--csv ROW_NUM] [common-options]
+    python -m randog byfile FACTORY_PATH [...] [--regenerate PROB_REGEN] [--discard PROB_DISCARD] [--csv ROW_NUM] [--error-on-factory-stopped] [common-options]
 
 The argument FACTORY_PATH is :doc:`a filename of the factory definition <doc.external_def>`. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:
 
@@ -39,7 +39,10 @@ Arguments and Options
     - the probability that the factory generation value is not returned as is, but is discarded. If discarded, the number of times the value is generated is less than :code:`--repeat/-r` or :code:`--list/-L` or :code:`--csv`.
 
 - :code:`--csv ROW_NUM` (optional):
-    -  if specified, it outputs generated ROW_NUM objects as CSV. When using this option, it is recommended to use a factory that generates dictionaries and to define :code:`CSV_COLUMNS` in the definition file to specify the fields of the CSV.
+    - if specified, it outputs generated ROW_NUM objects as CSV. When using this option, it is recommended to use a factory that generates dictionaries and to define :code:`CSV_COLUMNS` in the definition file to specify the fields of the CSV.
+
+- :code:`--error-on-factory-stopped` (optional):
+    - If specified, error is occurred in case the factory cannot generate value due to `StopIteration <https://docs.python.org/3/library/exceptions.html#StopIteration>`_. If not specified, the generation simply stops in the case.
 
 - :code:`common-options`
     - :doc:`common options <doc.as_command.common_option>`

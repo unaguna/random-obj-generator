@@ -341,7 +341,7 @@ However, if the argument is specified as in <code class="code docutils literal n
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># define custom factory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MailAddressFactory</span><span class="p">(</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">Factory</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-<span class="gp">... </span>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="s2">&quot;a&quot;</span> <span class="o">+</span> <span class="s2">&quot;@example.com&quot;</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>

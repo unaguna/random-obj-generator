@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-22 19:56+0900\n"
+"POT-Creation-Date: 2023-07-30 16:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -60,14 +60,22 @@ msgid ""
 "so on."
 msgstr "このイテレータは無限です。for, list などで直接使用しないでください。"
 
-#: of randog.factory._base.Factory.infinity_iter:6
+#: of randog.factory._base.Factory.infinity_iter:5
+msgid ""
+"However, if the argument `raise_on_factory_stopped` is not True, the "
+"iterator will be stopped if the factory is stopped."
+msgstr ""
+"ただし、引数 `raise_on_factory_stopped` が True でない場合、factory が停止するとイテレーションも停止する。"
+
+#: of randog.factory._base.Factory.infinity_iter:9
 #: randog.factory._base.Factory.iter:4 randog.factory._base.Factory.or_none:4
 #: randog.factory._base.Factory.post_process:4
 msgid "Examples"
 msgstr ""
 
 #: of randog.factory._base.Factory.infinity_iter
-#: randog.factory._base.Factory.iter randog.factory._base.Factory.or_none
+#: randog.factory._base.Factory.iter randog.factory._base.Factory.next
+#: randog.factory._base.Factory.or_none
 #: randog.factory._base.Factory.post_process randog.factory._bool.randbool
 #: randog.factory._by_callable.by_callable
 #: randog.factory._by_iterator.by_iterator randog.factory._choice.randchoice
@@ -82,17 +90,28 @@ msgstr ""
 msgid "Parameters"
 msgstr ""
 
-#: of randog.factory._base.Factory.infinity_iter:15
-#: randog.factory._base.Factory.iter:16
+#: of randog.factory._base.Factory.infinity_iter:18
+#: randog.factory._base.Factory.iter:19
 msgid ""
 "the probability that the original factory generation value is not "
 "returned as is, but is regenerated. It affects cases where the original "
 "factory returns a value that is not completely random."
 msgstr ""
-"factory が生成した値をそのまま使用せずに再生成する確率。このオプションは factory が完全にランダムでない値を生成する場合に効果がある。"
+"factory が生成した値をそのまま使用せずに再生成する確率。このオプションは factory "
+"が完全にランダムでない値を生成する場合に効果がある。"
 
-#: of randog.factory._base.Factory.infinity_iter:18
-#: randog.factory._base.Factory.iter:22 randog.factory._base.Factory.or_none:19
+#: of randog.factory._base.Factory.infinity_iter:21
+#: randog.factory._base.Factory.iter:25
+msgid ""
+"If True, the iteration raises `FactoryStopException` in case the factory "
+"cannot generate value due to `StopIteration`. If False, the iteration "
+"simply stops in the case."
+msgstr ""
+"True を指定すると、factory が `StopIteration` によって生成を停止した場合に例外 "
+"`FactoryStopException` を発する。False を指定するか何も指定しない場合、先述のケースで単にイテレーションを停止する。"
+
+#: of randog.factory._base.Factory.infinity_iter:25
+#: randog.factory._base.Factory.iter:29 randog.factory._base.Factory.or_none:19
 #: randog.factory._bool.randbool:5 randog.factory._choice.randchoice:8
 #: randog.factory._choice.randenum:7 randog.factory._date.randdate:7
 #: randog.factory._datetime.randdatetime:10
@@ -112,7 +131,7 @@ msgstr "乱数生成に使用するインスタンス"
 msgid "Returns"
 msgstr ""
 
-#: of randog.factory._base.Factory.infinity_iter:21
+#: of randog.factory._base.Factory.infinity_iter:28
 msgid "An infinity iterator"
 msgstr "無限イテレータ"
 
@@ -128,18 +147,23 @@ msgid "Returns an iterator which serves result randomly `size` times."
 msgstr "`size` 回だけランダムに値を生成するイテレータを返す。"
 
 #: of randog.factory._base.Factory.iter:14
-msgid "the number of the iterator"
-msgstr "イテレータが値を返す回数"
+msgid ""
+"the number of the iterator. However, if the argument "
+"`raise_on_factory_stopped` is not True, fewer iterations than the "
+"specified `size` will be executed if the factory is stopped. Also, if the"
+" argument `discard` is specified, the size may be less."
+msgstr ""
+"繰り返しの回数。ただし、引数 `raise_on_factory_stopped` が True でない場合、factory が停止すると `size` より少ないイテレーションで停止する。"
+"また、引数 `discard` が指定されている場合、イテレーションの回数が少なくなる場合がある。"
 
-#: of randog.factory._base.Factory.iter:19
+#: of randog.factory._base.Factory.iter:22
 msgid ""
 "the probability that the original factory generation value is not "
 "returned as is, but is discarded. If discarded, the number of times the "
 "value is generated is less than `size`."
-msgstr ""
-"factory が生成した値をそのまま使用せずに廃棄する確率。廃棄が生じた場合、生成される数は `size` で指定した数より少なくなる"
+msgstr "factory が生成した値をそのまま使用せずに廃棄する確率。廃棄が生じた場合、生成される数は `size` で指定した数より少なくなる"
 
-#: of randog.factory._base.Factory.iter:25
+#: of randog.factory._base.Factory.iter:32
 msgid "An iterator"
 msgstr "イテレータ"
 
@@ -150,6 +174,15 @@ msgid ""
 msgstr "Factory の作成時に指定したルールに沿ってランダムに値を生成する。"
 
 #: of randog.factory._base.Factory.next:3
+msgid ""
+"If True, raises `FactoryStopException` in case the factory cannot "
+"generate value due to `StopIteration`. If False, simply raises "
+"`StopIteration`."
+msgstr ""
+"True を指定すると、factory が `StopIteration` によって生成を停止した場合に例外 "
+"`FactoryStopException` を発する。False を指定するか何も指定しない場合、先述のケースで単に StopIteration を発する。"
+
+#: of randog.factory._base.Factory.next:7
 msgid "a value generated randomly"
 msgstr "ランダムに生成された値"
 
@@ -186,6 +219,10 @@ msgstr "結果を加工する関数"
 #: of randog.factory._base.Factory.post_process:21
 msgid "A factory whose result will be modified by `post_process`."
 msgstr "生成した値を `post_process` で加工してから返す factory"
+
+#: of randog.factory._base.FactoryStopException:1
+msgid "Bases: :py:class:`Exception`"
+msgstr ""
 
 #: of randog.factory._by_callable.by_callable:1
 msgid "Return a factory generating values by specified callable."
@@ -462,8 +499,7 @@ msgstr "文字列の生成に使用する文字"
 msgid ""
 "regular expression for generated string. It cannot be used with `length` "
 "or `charset`."
-msgstr ""
-"生成される文字列が満たす正規表現。`length` や `charset` と同時に使用することはできない。"
+msgstr "生成される文字列が満たす正規表現。`length` や `charset` と同時に使用することはできない。"
 
 #: of randog.factory._time.randtime:1
 msgid "Return a factory generating random time values."
@@ -504,26 +540,4 @@ msgstr ""
 #: of randog.factory._union.union:15
 msgid "No factories are specified."
 msgstr "factory が一つも指定されていない。"
-
-#~ msgid ""
-#~ "If specified, this function is executed"
-#~ " first and its return value is "
-#~ "used as a new example. If it "
-#~ "returns a factory, it is used as"
-#~ " is. The context is passed to "
-#~ "this function. It is recommended that"
-#~ " `custom_funcs` receives `**kwargs` to "
-#~ "allow for more keyword arguments in "
-#~ "future updates. This process is also "
-#~ "used to create factories for child "
-#~ "elements of dict and list."
-#~ msgstr ""
-#~ "指定された場合、渡された例はまずこの関数に通され、その戻り値が代わりに例として使用されます。戻り値が factory "
-#~ "である場合はそのまま使用されます。context は、この関数にも渡されます。この処理は、dict や "
-#~ "list の子要素の factory "
-#~ "を作成する際にも実施されます。将来のアップデートでキーワード引数を増やせるように、`custom_funcs` は "
-#~ "`**kwargs` を受け取ることが推奨されています。"
-
-#~ msgid "the timezone information"
-#~ msgstr "生成する時刻のタイムゾーン情報"
 

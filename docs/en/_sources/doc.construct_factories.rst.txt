@@ -261,7 +261,7 @@ Values of type not provided by randog can also be generated in the context of ra
 
    >>> # define custom factory
    >>> class MailAddressFactory(randog.factory.Factory[str]):
-   ...     def next(self):
+   ...     def _next(self):
    ...         return random.randint(1, 10) * "a" + "@example.com"
 
    >>> factory = randog.factory.from_example({

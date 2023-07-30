@@ -200,12 +200,15 @@ def main():
                                     )
                                 )
                             else:
-                                while True:
-                                    generated = factory.next(
-                                        raise_on_factory_stopped=args.error_on_factory_stopped
-                                    )
-                                    if random.random() >= args.regenerate:
-                                        break
+                                try:
+                                    while True:
+                                        generated = factory.next(
+                                            raise_on_factory_stopped=args.error_on_factory_stopped
+                                        )
+                                        if random.random() >= args.regenerate:
+                                            break
+                                except StopIteration:
+                                    break
                                 if random.random() < args.discard:
                                     continue
 

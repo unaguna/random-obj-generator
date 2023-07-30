@@ -146,7 +146,14 @@ class Factory(ABC, t.Generic[T]):
         Iterator[T]
             An iterator
         """
-        return FactoryIter(self, size, regenerate=regenerate, discard=discard, rnd=rnd)
+        return FactoryIter(
+            self,
+            size,
+            regenerate=regenerate,
+            discard=discard,
+            raise_on_factory_stopped=raise_on_factory_stopped,
+            rnd=rnd,
+        )
 
     def infinity_iter(
         self,
@@ -189,7 +196,13 @@ class Factory(ABC, t.Generic[T]):
         Iterator[T]
             An infinity iterator
         """
-        return FactoryIter(self, None, regenerate=regenerate, rnd=rnd)
+        return FactoryIter(
+            self,
+            None,
+            regenerate=regenerate,
+            raise_on_factory_stopped=raise_on_factory_stopped,
+            rnd=rnd,
+        )
 
 
 class PostFactory(Factory[R], t.Generic[T, R]):
@@ -211,6 +224,7 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
     _size: t.Union[int, float]
     _regenerate_prob: float
     _discard_prob: float
+    _raise_on_factory_stopped: bool
     _count: int = 0
 
     def __init__(
@@ -220,6 +234,7 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
         *,
         regenerate: float = 0.0,
         discard: float = 0.0,
+        raise_on_factory_stopped: bool = False,
         rnd: t.Optional[Random] = None,
     ):
         self._rnd = dfor(rnd, random.Random())
@@ -239,6 +254,7 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
         self._size = size if size is not None else float("Infinity")
         self._regenerate_prob = regenerate
         self._discard_prob = discard
+        self._raise_on_factory_stopped = raise_on_factory_stopped
 
     def __next__(self) -> T:
         while True:
@@ -249,7 +265,14 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
 
             # Regenerate until break
             while True:
-                generated = self._factory.next()
+                try:
+                    generated = self._factory.next()
+                except StopIteration:
+                    if self._raise_on_factory_stopped:
+                        raise FactoryStopException()
+                    else:
+                        raise
+
                 if (
                     self._regenerate_prob <= 0
                     or self._rnd.random() >= self._regenerate_prob

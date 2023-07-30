@@ -85,6 +85,38 @@ def test__iter__raise_on_factory_stopped__true__no_error(get_factory):
     assert len(generated) == 2
 
 
+@pytest.mark.parametrize(
+    "get_factory",
+    _CASES_STOP_ITER,
+)
+def test__iter__raise_on_factory_stopped__true__error__regenerate(get_factory):
+    factory = get_factory()
+    with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
+        list(factory.iter(2, regenerate=0.99, raise_on_factory_stopped=True))
+
+
+@pytest.mark.parametrize(
+    "get_factory",
+    _CASES_STOP_ITER,
+)
+def test__iter__raise_on_factory_stopped__true__error__discard(get_factory):
+    factory = get_factory()
+    with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
+        list(factory.iter(3, discard=0.99, raise_on_factory_stopped=True))
+
+
+@pytest.mark.parametrize(
+    "get_factory",
+    _CASES_STOP_ITER,
+)
+def test__iter__raise_on_factory_stopped__true__no_error__discard(get_factory):
+    factory = get_factory()
+    generated = list(factory.iter(2, discard=0.99, raise_on_factory_stopped=True))
+
+    assert isinstance(generated, list)
+    assert len(generated) <= 2
+
+
 def test__iter__regenerate():
     list_len = 100
     factory = randog.factory.by_iterator(itertools.count(0))

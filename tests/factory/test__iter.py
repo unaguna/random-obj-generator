@@ -274,6 +274,18 @@ def test__infinity_iter__raise_on_factory_stopped__true__error(
         list(factory.infinity_iter(raise_on_factory_stopped=True))
 
 
+@pytest.mark.parametrize(
+    ("get_factory", "iter_length"),
+    _CASES_STOP_ITER,
+)
+def test__infinity_iter__raise_on_factory_stopped__true__error__regenerate(
+    get_factory, iter_length
+):
+    factory = get_factory()
+    with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
+        list(factory.infinity_iter(regenerate=0.99, raise_on_factory_stopped=True))
+
+
 def test__infinity_iter__regenerate():
     list_len = 100
     factory = randog.factory.by_iterator(itertools.count(0))

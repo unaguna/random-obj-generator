@@ -7,22 +7,23 @@ import randog.__main__
 
 
 @pytest.mark.parametrize(
-    ("options", "expected_out"),
+    ("def_file_name", "options", "expected_out"),
     [
-        (["--repeat", "4"], "0\n1\n2\n"),
-        (["--list", "4"], ""),
-        (["--repeat", "2", "--list", "2"], "[0, 1]\n"),
-        (["--csv", "4"], "0\n1\n2\n"),
-        (["--repeat", "2", "--csv", "2"], "0\n1\n2\n"),
+        ("factory_def_raise_stop.py", [], ""),
+        ("factory_def_only_3_times.py", ["--repeat", "4"], "0\n1\n2\n"),
+        ("factory_def_only_3_times.py", ["--list", "4"], ""),
+        ("factory_def_only_3_times.py", ["--repeat", "2", "--list", "2"], "[0, 1]\n"),
+        ("factory_def_only_3_times.py", ["--csv", "4"], "0\n1\n2\n"),
+        ("factory_def_only_3_times.py", ["--repeat", "2", "--csv", "2"], "0\n1\n2\n"),
     ],
 )
 def test__main__error_on_factory_stopped__error(
-    capfd, resources, options, expected_out
+    capfd, resources, def_file_name, options, expected_out
 ):
     args = [
         "randog",
         "byfile",
-        str(resources.joinpath("factory_def_only_3_times.py")),
+        str(resources.joinpath(def_file_name)),
         "--error-on-factory-stopped",
         *options,
     ]

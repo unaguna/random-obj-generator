@@ -17,7 +17,7 @@ class SubcmdDefByfile(SubcmdDef):
             Subcmd.Byfile.value,
             usage=(
                 "python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [--regenerate PROB_REGEN] "
-                "[--discard PROB_DISCARD] [--csv ROW_NUM] [common-options]"
+                "[--discard PROB_DISCARD] [--csv ROW_NUM] [--error-on-factory-stopped] [common-options]"
             ),
             description="It generates values according to factory definition files.",
             add_help=False,

@@ -34,5 +34,5 @@ class ByCallableFactory(Factory[T]):
         """
         self._callable = func
 
-    def next(self) -> T:
+    def _next(self) -> T:
         return self._callable()

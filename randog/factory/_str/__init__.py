@@ -118,7 +118,7 @@ class StrRandomFactory(Factory[str]):
                 "the charset for randstr() must not be empty if length is positive"
             )
 
-    def next(self) -> str:
+    def _next(self) -> str:
         length = self._next_length()
         return "".join(self._random.choices(self._charset, k=length))
 

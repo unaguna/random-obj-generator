@@ -62,5 +62,5 @@ class BoolRandomFactory(Factory[bool]):
                 "the probability `prob_true` must range from 0 to 1"
             )
 
-    def next(self) -> int:
+    def _next(self) -> int:
         return self._random.random() < self._prop_true

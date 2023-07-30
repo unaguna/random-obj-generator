@@ -109,7 +109,7 @@ class ChoiceRandomFactory(Factory[t.Any]):
                 "the number of weights must match the candidates"
             )
 
-    def next(self) -> t.Any:
+    def _next(self) -> t.Any:
         return self._random.choices(self._values, self._weights)[0]
 
 

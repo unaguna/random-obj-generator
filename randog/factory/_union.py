@@ -81,11 +81,11 @@ class UnionRandomFactory(Factory[t.Any]):
                 "the number of weights must match the factories"
             )
 
-    def next(self) -> t.Any:
+    def _next(self) -> t.Any:
         return self._random.choices(self._factories, self._weights)[0].next()
 
 
 class UnionRandomLazyChoiceFactory(UnionRandomFactory):
-    def next(self) -> t.Any:
+    def _next(self) -> t.Any:
         values = [f.next() for f in self._factories]
         return self._random.choices(values, self._weights)[0]

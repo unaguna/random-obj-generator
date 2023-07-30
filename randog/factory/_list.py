@@ -128,7 +128,7 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
         else:
             return self._length
 
-    def next(self) -> T:
+    def _next(self) -> T:
         try:
             return self._type(self._next_generator())
         except _StopIterationOfItem:

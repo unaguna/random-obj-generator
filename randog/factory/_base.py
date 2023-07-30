@@ -13,15 +13,34 @@ REGENERATE_PROB_MAX = float(Fraction(1023, 1024))
 
 
 class Factory(ABC, t.Generic[T]):
-    @abstractmethod
-    def next(self) -> T:
+    def next(
+        self,
+        *,
+        raise_on_factory_stopped: bool = False,
+    ) -> T:
         """Generate a value randomly according to the rules specified when assembling the factory.
+
+        Parameters
+        ----------
+        raise_on_factory_stopped : bool, default=False
+            If True, raises `FactoryStopException` in case the factory cannot generate value due to `StopIteration`.
+            If False, simply raises `StopIteration`.
 
         Returns
         -------
         T
             a value generated randomly
         """
+        try:
+            return self._next()
+        except StopIteration:
+            if raise_on_factory_stopped:
+                raise FactoryStopException()
+            else:
+                raise
+
+    @abstractmethod
+    def _next(self) -> T:
         pass
 
     def or_none(
@@ -213,7 +232,7 @@ class PostFactory(Factory[R], t.Generic[T, R]):
         self._base_factory = base_factory
         self._post_process = post_process
 
-    def next(self) -> R:
+    def _next(self) -> R:
         pre_result = self._base_factory.next()
         return self._post_process(pre_result)
 

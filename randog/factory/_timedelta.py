@@ -118,7 +118,7 @@ class TimedeltaRandomFactory(Factory[dt.timedelta]):
             raise FactoryConstructionError("empty range for randtimedelta")
         self._inner_factory = randint(self._min_by_unit, self._max_by_unit, rnd=rnd)
 
-    def next(self) -> dt.timedelta:
+    def _next(self) -> dt.timedelta:
         return self._unit * self._inner_factory.next()
 
     @classmethod

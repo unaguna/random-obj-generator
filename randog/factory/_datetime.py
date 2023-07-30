@@ -97,7 +97,7 @@ class DatetimeRandomFactory(Factory[dt.datetime]):
 
         self._range = self._max - self._min
 
-    def next(self) -> dt.datetime:
+    def _next(self) -> dt.datetime:
         weight = self._random.random()
 
         pre_result = self._min + self._range * weight

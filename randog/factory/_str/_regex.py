@@ -33,5 +33,5 @@ class StrRegexRandomFactory(Factory[str]):
         """
         self._regex = regex
 
-    def next(self) -> str:
+    def _next(self) -> str:
         return rstr.xeger(self._regex)

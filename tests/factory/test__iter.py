@@ -26,26 +26,36 @@ def test__iter():
     assert generated == list(range(10))
 
 
+# get_factory, iter_length
 _CASES_STOP_ITER = [
-    lambda: randog.factory.by_callable(_get_callable_only_2_times()),
-    lambda: randog.factory.by_iterator(iter(range(1, 3))),
-    lambda: randog.factory.randdict(
-        a=randog.factory.by_iterator(iter(range(1, 3))),
-        b=randog.factory.randint(0, 10),
+    (lambda: randog.factory.by_callable(_get_callable_only_2_times()), 2),
+    (lambda: randog.factory.by_iterator(iter(range(1, 3))), 2),
+    (
+        lambda: randog.factory.randdict(
+            a=randog.factory.by_iterator(iter(range(1, 3))),
+            b=randog.factory.randint(0, 10),
+        ),
+        2,
     ),
-    lambda: randog.factory.randlist(
-        randog.factory.by_iterator(iter(range(1, 3))),
-        randog.factory.randint(0, 10),
+    (
+        lambda: randog.factory.randlist(
+            randog.factory.by_iterator(iter(range(1, 3))),
+            randog.factory.randint(0, 10),
+        ),
+        2,
     ),
-    lambda: randog.factory.randlist(
-        randog.factory.randint(0, 10),
-        length=randog.factory.by_iterator(iter(range(1, 3))),
+    (
+        lambda: randog.factory.randlist(
+            randog.factory.randint(0, 10),
+            length=randog.factory.by_iterator(iter(range(1, 3))),
+        ),
+        2,
     ),
 ]
 
 
 @pytest.mark.parametrize(
-    "get_factory",
+    ("get_factory", "iter_length"),
     _CASES_STOP_ITER,
 )
 @pytest.mark.parametrize(
@@ -57,64 +67,74 @@ _CASES_STOP_ITER = [
         {"raise_on_factory_stopped": False},
     ],
 )
-def test__iter__stop_iteration(get_factory, options_raise_on_factory_stopped):
+def test__iter__stop_iteration(
+    get_factory, iter_length, options_raise_on_factory_stopped
+):
     factory = get_factory()
-    generated = list(factory.iter(10, **options_raise_on_factory_stopped))
-    assert len(generated) == 2
+    generated = list(factory.iter(iter_length + 5, **options_raise_on_factory_stopped))
+    assert len(generated) == iter_length
 
 
 @pytest.mark.parametrize(
-    "get_factory",
+    ("get_factory", "iter_length"),
     _CASES_STOP_ITER,
 )
-def test__iter__raise_on_factory_stopped__true__error(get_factory):
+def test__iter__raise_on_factory_stopped__true__error(get_factory, iter_length):
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
-        list(factory.iter(10, raise_on_factory_stopped=True))
+        list(factory.iter(iter_length + 5, raise_on_factory_stopped=True))
 
 
 @pytest.mark.parametrize(
-    "get_factory",
+    ("get_factory", "iter_length"),
     _CASES_STOP_ITER,
 )
-def test__iter__raise_on_factory_stopped__true__no_error(get_factory):
+def test__iter__raise_on_factory_stopped__true__no_error(get_factory, iter_length):
     factory = get_factory()
-    generated = list(factory.iter(2, raise_on_factory_stopped=True))
+    generated = list(factory.iter(iter_length, raise_on_factory_stopped=True))
 
     assert isinstance(generated, list)
-    assert len(generated) == 2
+    assert len(generated) == iter_length
 
 
 @pytest.mark.parametrize(
-    "get_factory",
+    ("get_factory", "iter_length"),
     _CASES_STOP_ITER,
 )
-def test__iter__raise_on_factory_stopped__true__error__regenerate(get_factory):
+def test__iter__raise_on_factory_stopped__true__error__regenerate(
+    get_factory, iter_length
+):
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
-        list(factory.iter(2, regenerate=0.99, raise_on_factory_stopped=True))
+        list(factory.iter(iter_length, regenerate=0.99, raise_on_factory_stopped=True))
 
 
 @pytest.mark.parametrize(
-    "get_factory",
+    ("get_factory", "iter_length"),
     _CASES_STOP_ITER,
 )
-def test__iter__raise_on_factory_stopped__true__error__discard(get_factory):
+def test__iter__raise_on_factory_stopped__true__error__discard(
+    get_factory, iter_length
+):
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
-        list(factory.iter(3, discard=0.99, raise_on_factory_stopped=True))
+        list(factory.iter(iter_length + 1, discard=0.99, raise_on_factory_stopped=True))
 
 
 @pytest.mark.parametrize(
-    "get_factory",
+    ("get_factory", "iter_length"),
     _CASES_STOP_ITER,
 )
-def test__iter__raise_on_factory_stopped__true__no_error__discard(get_factory):
+def test__iter__raise_on_factory_stopped__true__no_error__discard(
+    get_factory, iter_length
+):
     factory = get_factory()
-    generated = list(factory.iter(2, discard=0.99, raise_on_factory_stopped=True))
+    generated = list(
+        factory.iter(iter_length, discard=0.99, raise_on_factory_stopped=True)
+    )
 
     assert isinstance(generated, list)
-    assert len(generated) <= 2
+    assert len(generated) <= iter_length
 
 
 def test__iter__regenerate():
@@ -222,7 +242,7 @@ def test__infinity_iter():
 
 
 @pytest.mark.parametrize(
-    "get_factory",
+    ("get_factory", "iter_length"),
     _CASES_STOP_ITER,
 )
 @pytest.mark.parametrize(
@@ -234,17 +254,21 @@ def test__infinity_iter():
         {"raise_on_factory_stopped": False},
     ],
 )
-def test__infinity_iter__stop_iteration(get_factory, options_raise_on_factory_stopped):
+def test__infinity_iter__stop_iteration(
+    get_factory, options_raise_on_factory_stopped, iter_length
+):
     factory = get_factory()
     generated = list(factory.infinity_iter(**options_raise_on_factory_stopped))
-    assert len(generated) == 2
+    assert len(generated) == iter_length
 
 
 @pytest.mark.parametrize(
-    "get_factory",
+    ("get_factory", "iter_length"),
     _CASES_STOP_ITER,
 )
-def test__infinity_iter__raise_on_factory_stopped__true__error(get_factory):
+def test__infinity_iter__raise_on_factory_stopped__true__error(
+    get_factory, iter_length
+):
     factory = get_factory()
     with pytest.raises(randog.factory.FactoryStopException) as e_ctx:
         list(factory.infinity_iter(raise_on_factory_stopped=True))

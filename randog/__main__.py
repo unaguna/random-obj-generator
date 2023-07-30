@@ -5,7 +5,7 @@ import sys
 import typing as t
 
 import randog.factory
-from .factory import FactoryDef
+from .factory import FactoryDef, FactoryStopException
 from ._main import Args, Subcmd, get_subcmd_def
 
 
@@ -143,6 +143,7 @@ def _output_to_csv(
     fp: t.TextIO,
     regenerate: float,
     discard: float,
+    raise_on_factory_stopped: bool,
 ):
     csv_writer = csv.writer(fp, lineterminator="\n")
     csv_writer.writerows(
@@ -152,6 +153,7 @@ def _output_to_csv(
                 line_num,
                 regenerate=regenerate,
                 discard=discard,
+                raise_on_factory_stopped=raise_on_factory_stopped,
             ),
         )
     )
@@ -160,49 +162,60 @@ def _output_to_csv(
 def main():
     args = Args(sys.argv)
 
-    with _open_output_fp_only(args) as fp_only:
-        index = 0
-        for factory in _build_factories(args):
-            for r_index in range(args.repeat):
-                with _open_output_fp_numbered(args, index) as fp_numbered:
-                    index += 1
-                    # args と index に応じて出力先 fp を決定する。
-                    # args と index に応じて fp_numbered, fp_only の状態が異なるので、それを条件に使用する。
-                    if not isinstance(fp_numbered, _DummyIO):
-                        fp = fp_numbered
-                    elif not isinstance(fp_only, _DummyIO):
-                        fp = fp_only
-                    else:
-                        fp = sys.stdout
+    try:
+        with _open_output_fp_only(args) as fp_only:
+            index = 0
+            for factory in _build_factories(args):
+                for r_index in range(args.repeat):
+                    with _open_output_fp_numbered(args, index) as fp_numbered:
+                        index += 1
+                        # args と index に応じて出力先 fp を決定する。
+                        # args と index に応じて fp_numbered, fp_only の状態が異なるので、それを条件に使用する。
+                        if not isinstance(fp_numbered, _DummyIO):
+                            fp = fp_numbered
+                        elif not isinstance(fp_only, _DummyIO):
+                            fp = fp_only
+                        else:
+                            fp = sys.stdout
 
-                    # 生成処理と出力処理
-                    # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
-                    if args.csv is not None:
-                        _output_to_csv(
-                            factory,
-                            args.csv,
-                            fp,
-                            regenerate=args.regenerate,
-                            discard=args.discard,
-                        )
-                    else:
-                        if args.list is not None:
-                            generated = list(
-                                factory.iter(
-                                    args.list,
-                                    regenerate=args.regenerate,
-                                    discard=args.discard,
-                                )
+                        # 生成処理と出力処理
+                        # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
+                        if args.csv is not None:
+                            _output_to_csv(
+                                factory,
+                                args.csv,
+                                fp,
+                                regenerate=args.regenerate,
+                                discard=args.discard,
+                                raise_on_factory_stopped=args.error_on_factory_stopped,
                             )
                         else:
-                            while True:
-                                generated = factory.next()
-                                if random.random() >= args.regenerate:
-                                    break
-                            if random.random() < args.discard:
-                                continue
+                            if args.list is not None:
+                                generated = list(
+                                    factory.iter(
+                                        args.list,
+                                        regenerate=args.regenerate,
+                                        discard=args.discard,
+                                        raise_on_factory_stopped=args.error_on_factory_stopped,
+                                    )
+                                )
+                            else:
+                                while True:
+                                    generated = factory.next(
+                                        raise_on_factory_stopped=args.error_on_factory_stopped
+                                    )
+                                    if random.random() >= args.regenerate:
+                                        break
+                                if random.random() < args.discard:
+                                    continue
 
-                        _output_generated(generated, fp, args=args)
+                            _output_generated(generated, fp, args=args)
+    except FactoryStopException:
+        print(
+            "error: the factory stopped generating before the process was complete",
+            file=sys.stderr,
+        )
+        exit(1)
 
 
 if __name__ == "__main__":

@@ -58,6 +58,12 @@ class SubcmdDefByfile(SubcmdDef):
             "When using this option, it is recommended to use a factory that generates dictionaries and "
             "to define CSV_COLUMNS in the definition file to specify the fields of the CSV.",
         )
+        byfile_args_group.add_argument(
+            "--error-on-factory-stopped",
+            action="store_true",
+            help="If specified, error is occurred in case the factory cannot generate value due to StopIteration. "
+            "If not specified, the generation simply stops in the case.",
+        )
         add_common_arguments(byfile_parser)
 
         return byfile_parser

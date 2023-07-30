@@ -1,4 +1,4 @@
-from ._base import Factory, REGENERATE_PROB_MAX
+from ._base import Factory, REGENERATE_PROB_MAX, FactoryStopException
 from ._choice import ChoiceRandomFactory, randchoice, randenum
 from ._const import const
 from ._bool import BoolRandomFactory, randbool
@@ -44,5 +44,6 @@ __all__ = [
     "union",
     "DictItem",
     "FactoryDef",
+    "FactoryStopException",
     "REGENERATE_PROB_MAX",
 ]

@@ -106,7 +106,7 @@ class FloatRandomFactory(Factory[float]):
                 "the sum of probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
             )
 
-    def next(self) -> float:
+    def _next(self) -> float:
         pre_weight = self._random.random()
         pre_weight -= self._p_inf
         if pre_weight < 0:

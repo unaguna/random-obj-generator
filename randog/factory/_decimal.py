@@ -100,7 +100,7 @@ class DecimalRandomFactory(Factory[Decimal]):
         )
         self._decimal_len = dforc(lambda x: Decimal(1).scaleb(-x), decimal_len)
 
-    def next(self) -> Decimal:
+    def _next(self) -> Decimal:
         pre_value = self._factory.next()
         value = Decimal(pre_value)
 

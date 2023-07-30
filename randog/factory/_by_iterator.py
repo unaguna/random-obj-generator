@@ -34,5 +34,5 @@ class ByIteratorFactory(Factory[T]):
         """
         self._iterator = iterator
 
-    def next(self) -> T:
+    def _next(self) -> T:
         return next(self._iterator)

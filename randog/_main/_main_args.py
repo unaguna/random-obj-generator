@@ -104,6 +104,10 @@ class Args:
         else:
             return None
 
+    @property
+    def error_on_factory_stopped(self) -> bool:
+        return self.get("error_on_factory_stopped", False)
+
     def output_path_for(self, number: int) -> t.Optional[str]:
         if self._args.output is None:
             return None

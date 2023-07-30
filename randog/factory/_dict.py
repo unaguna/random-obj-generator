@@ -115,7 +115,7 @@ class DictRandomFactory(Factory[dict]):
         self._random = dfor(rnd, Random())
         self._items = items
 
-    def next(self) -> dict:
+    def _next(self) -> dict:
         result = {}
 
         for key, cond in self._items.items():

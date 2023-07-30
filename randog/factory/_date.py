@@ -75,7 +75,7 @@ class DateRandomFactory(Factory[dt.date]):
 
         self._range = (self._max - self._min).days
 
-    def next(self) -> dt.date:
+    def _next(self) -> dt.date:
         relative_days = self._random.randint(0, self._range)
         return self._min + dt.timedelta(days=relative_days)
 

@@ -76,6 +76,13 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         metavar="DESC_PATH",
         help="destination file path",
     )
+    common_opt_group.add_argument(
+        "--env",
+        metavar="VAR=VAL",
+        action="append",
+        nargs="+",
+        help="additional environment variable",
+    )
     other_opt_group.add_argument(
         "-h", "--help", action="help", help="show this help message and exit"
     )

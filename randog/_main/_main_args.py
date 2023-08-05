@@ -3,6 +3,8 @@ the package contains the Args of module execution and its builder
 """
 
 import argparse
+import itertools
+import os
 import typing as t
 
 from ._subcmd import Subcmd
@@ -37,6 +39,9 @@ class Args:
         # validate arguments for subcommands
         for subcmd in iter_subcmd_def():
             subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
+
+        # set environments
+        os.environ.update(self.env)
 
     @property
     def sub_cmd(self) -> Subcmd:
@@ -107,6 +112,21 @@ class Args:
     @property
     def error_on_factory_stopped(self) -> bool:
         return self.get("error_on_factory_stopped", False)
+
+    @property
+    def env(self) -> t.Mapping[str, str]:
+        if self._args.env is None:
+            return {}
+
+        result = {}
+        for item in itertools.chain(*self._args.env):
+            key_value = item.split("=", 1)
+            if len(key_value) <= 1:
+                result[key_value[0]] = ""
+            else:
+                key, value = key_value
+                result[key] = value
+        return result
 
     def output_path_for(self, number: int) -> t.Optional[str]:
         if self._args.output is None:

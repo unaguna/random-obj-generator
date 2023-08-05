@@ -68,6 +68,18 @@ class Args:
         return self._args.output
 
     @property
+    def output_linesep(self) -> t.Optional[str]:
+        specified = self._args.output_linesep
+        if specified is None:
+            return None
+        elif specified == "LF":
+            return "\n"
+        elif specified == "CRLF":
+            return "\r\n"
+        else:
+            raise ValueError(f"illegal linesep: {specified}")
+
+    @property
     def multiple_output_path(self) -> bool:
         if self._args.output is None:
             return False

@@ -5,6 +5,7 @@ import sys
 import typing as t
 
 import randog.factory
+from ._utils.nullsafe import dfor
 from .factory import FactoryDef, FactoryStopException
 from ._main import Args, Subcmd, get_subcmd_def
 
@@ -98,6 +99,8 @@ def _open_output_fp_only(args: Args) -> t.Union[_DummyIO, t.TextIO]:
         }
         if args.get("csv", False):
             options["newline"] = ""
+        elif args.output_linesep is not None:
+            options["newline"] = args.output_linesep
         return open(args.output_path, **options)
 
 
@@ -110,6 +113,8 @@ def _open_output_fp_numbered(args: Args, number: int) -> t.Union[_DummyIO, t.Tex
         }
         if args.get("csv", False):
             options["newline"] = ""
+        elif args.output_linesep is not None:
+            options["newline"] = args.output_linesep
         return open(args.output_path_for(number), **options)
 
 
@@ -144,8 +149,9 @@ def _output_to_csv(
     regenerate: float,
     discard: float,
     raise_on_factory_stopped: bool,
+    linesep: t.Optional[str],
 ):
-    csv_writer = csv.writer(fp, lineterminator="\n")
+    csv_writer = csv.writer(fp, lineterminator=dfor(linesep, "\n"))
     csv_writer.writerows(
         filter(
             lambda x: x is not None,
@@ -188,6 +194,7 @@ def main():
                                 regenerate=args.regenerate,
                                 discard=args.discard,
                                 raise_on_factory_stopped=args.error_on_factory_stopped,
+                                linesep=args.output_linesep,
                             )
                         else:
                             if args.list is not None:

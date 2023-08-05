@@ -77,6 +77,14 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         help="destination file path",
     )
     common_opt_group.add_argument(
+        "--output-linesep",
+        "--O-ls",
+        default=None,
+        choices=["LF", "CRLF"],
+        help="line separator for output. "
+        "This is only effective when outputting to a file with the '--output'/'-O' option.",
+    )
+    common_opt_group.add_argument(
         "--env",
         metavar="VAR=VAL",
         action="append",

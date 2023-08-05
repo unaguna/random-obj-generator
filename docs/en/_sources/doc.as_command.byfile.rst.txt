@@ -130,7 +130,7 @@ In the case, the output can be made missing by :code:`--discard` or :code:`--reg
 
     import uuid
     from datetime import datetime, timedelta
-    import random
+    import randog
 
     def timestamp_iter():
         next = datetime(2002, 1, 1, 0)
@@ -159,3 +159,44 @@ In the case, the output can be made missing by :code:`--discard` or :code:`--reg
 
 .. note::
     Skipping rows by :code:`--regenerate` will result in higher generations than the number specified by :code:`--csv`.
+
+
+Change behavior patterns by environment variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One useful idea is to allow the detailed settings of the factory definition to be changed by environment variables. For example, the following definition file allows the initial value of :code:`id` to be specified by an environment variable.
+
+.. code-block:: python
+
+    import itertools
+    import os
+    import randog
+
+    initial_id = int(
+        os.environ.get("INIT_ID", "0")
+    )
+
+    FACTORY = randog.factory.randdict(
+        id=randog.factory.by_iterator(itertools.count(initial_id)),
+        name=randog.factory.randstr(),
+        age=randog.factory.randint(0, 100),
+    )
+
+In addition to the standard shell method, the env option of randog can be used to specify environment variables. All of the following examples work the same way:
+
+.. code-block:: shell
+
+    # Can use it in bash, etc., but not in powershell
+    INIT_ID=5 python -m randog byfile factory_def.py
+
+    # Can use it in any shell
+    python -m randog byfile factory_def.py --env INIT_ID=5
+
+.. note::
+    Multiple environment variables can also be specified as follows:
+
+    .. code-block:: shell
+
+        python -m randog byfile factory_def.py --env INIT_ID=5 VAR=foo
+        python -m randog byfile factory_def.py --env INIT_ID=5 --env VAR=foo
+

@@ -6,6 +6,7 @@ from unittest.mock import patch
 import pytest
 
 import randog.__main__
+from tests.testtools.envvar import EnvVarSnapshot
 
 
 @pytest.mark.parametrize(
@@ -897,6 +898,33 @@ def test__main__csv__with_discard_repeat(capfd, tmp_path, resources):
         for i, value in enumerate(out_list_concat):
             assert i <= value
         assert len(out_list_concat) - 1 < out_list_concat[-1] < line_num * count
+
+
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        (["--env=VALUE=AAA"], "AAA"),
+        (["--env=VALUE=bbb"], "bbb"),
+        (["--env=VALUE="], ""),
+        (["--env=VALUE"], ""),
+        (["--env=VALUE=AAA", "--env=VALUE2=bbb"], "AAA"),
+        (["--env=VALUE=AAA", "--env=VALUE2="], "AAA"),
+        (["--env=VALUE=AAA", "--env=VALUE2"], "AAA"),
+    ],
+)
+def test__main__env(capfd, tmp_path, resources, options, expected):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_env.py")),
+        *options,
+    ]
+    with patch.object(sys, "argv", args), EnvVarSnapshot():
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == f"{expected}\n"
+        assert err == ""
 
 
 def test__main__byfile__help(capfd):

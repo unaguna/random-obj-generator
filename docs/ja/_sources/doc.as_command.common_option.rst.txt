@@ -63,3 +63,28 @@ On the other hand, if you want to output each repeatedly generated object separa
         python -m randog factory_def.py --repeat 3 --output './out_{:04}.txt'
 
     The rules for placeholders are the same as `the standard python format <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
+
+
+Modify environment variable
+---------------------------
+
+In particular, in byfile mode, you may want to specify environment variables for the purpose of passing values to the definition file. In bash and other shells, you can specify environment variables on a single line, such as :code:`VAR=VAL python -m randog ...`, but this is not possible in some shells, such as powershell.
+
+Therefore, randog provides an option to specify environment variables. You can specify environment variables by using :code:`--env` as follows:
+
+.. code-block:: shell
+
+    python -m randog byfile factory_def.py --env CHARSET=0123456789abcdef
+
+The above mentioned execution is useful, for example, when using a definition file such as the following:
+
+.. code-block:: python
+
+    import os
+    import randog.factory
+
+    FACTORY = randog.factory.randstr(
+        length=4,
+        # Get the value specified for charset from an environment variable
+        charset=os.environ["CHARSET"],
+    )

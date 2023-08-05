@@ -61,6 +61,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#output-format">Output format</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#output-to-file">Output to file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#iteration">Iteration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modify-environment-variable">Modify environment variable</a></li>
 </ul>
 </li>
 </ul>
@@ -156,6 +157,25 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </pre></div>
 </div>
 <p>The rules for placeholders are the same as <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">the standard python format</a>.</p>
+</div>
+</section>
+<section id="modify-environment-variable">
+<h2>Modify environment variable<a class="headerlink" href="#modify-environment-variable" title="Permalink to this heading"></a></h2>
+<p>In particular, in byfile mode, you may want to specify environment variables for the purpose of passing values to the definition file. In bash and other shells, you can specify environment variables on a single line, such as <code class="code docutils literal notranslate"><span class="pre">VAR=VAL</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">...</span></code>, but this is not possible in some shells, such as powershell.</p>
+<p>Therefore, randog provides an option to specify environment variables. You can specify environment variables by using <code class="code docutils literal notranslate"><span class="pre">--env</span></code> as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">CHARSET</span><span class="o">=</span>0123456789abcdef
+</pre></div>
+</div>
+<p>The above mentioned execution is useful, for example, when using a definition file such as the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="c1"># Get the value specified for charset from an environment variable</span>
+    <span class="n">charset</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CHARSET&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
 </div>
 </section>
 </section>

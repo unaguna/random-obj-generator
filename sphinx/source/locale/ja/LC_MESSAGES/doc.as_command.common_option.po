@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 13:53+0900\n"
+"POT-Creation-Date: 2023-08-05 14:45+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -117,4 +117,33 @@ msgstr ""
 "プレースホルダーのルールは `標準的な python のフォーマット "
 "<https://docs.python.org/ja/3/library/string.html#format-string-syntax>`_"
 " と同一です。"
+
+#: ../../source/doc.as_command.common_option.rst:69
+msgid "Modify environment variable"
+msgstr "環境変数を変更"
+
+#: ../../source/doc.as_command.common_option.rst:71
+msgid ""
+"In particular, in byfile mode, you may want to specify environment "
+"variables for the purpose of passing values to the definition file. In "
+"bash and other shells, you can specify environment variables on a single "
+"line, such as :code:`VAR=VAL python -m randog ...`, but this is not "
+"possible in some shells, such as powershell."
+msgstr ""
+"とくに byfile モードで、定義ファイルに値を受け渡す目的で環境変数を指定したいかもしれません。bash 等では :code:`VAR=VAL"
+" python -m randog ...` のように1行で環境変数を指定できますが、powershellなど一部のシェルではそれができません。"
+
+#: ../../source/doc.as_command.common_option.rst:73
+msgid ""
+"Therefore, randog provides an option to specify environment variables. "
+"You can specify environment variables by using :code:`--env` as follows:"
+msgstr ""
+"そこで、randog では環境変数を指定するオプションを用意しています。次のように :code:`--env` "
+"を使用することで環境変数を指定できます。"
+
+#: ../../source/doc.as_command.common_option.rst:79
+msgid ""
+"The above mentioned execution is useful, for example, when using a "
+"definition file such as the following:"
+msgstr "このような実行は、例えば以下のような定義ファイルを使用する際に有用です。"
 

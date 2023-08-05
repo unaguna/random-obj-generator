@@ -244,7 +244,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>欠番ありのタイムスタンプをPKにしている場合などは、生成した値の一部を破棄したい場合があるかもしれません。その場合、 <code class="code docutils literal notranslate"><span class="pre">--discard</span></code> や <code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code> を使用することで出力を欠損させることができます。例：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">randog</span>
 
 <span class="k">def</span> <span class="nf">timestamp_iter</span><span class="p">():</span>
     <span class="nb">next</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2002</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -275,6 +275,41 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p><code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code> で行を再生成させると、内部で値が生成される回数は <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> で指定した数より多くなります。</p>
+</div>
+</section>
+<section id="change-behavior-patterns-by-environment-variables">
+<h3>環境変数による動作パターンの変更<a class="headerlink" href="#change-behavior-patterns-by-environment-variables" title="この見出しへのパーマリンク"></a></h3>
+<p>factory定義の細かい設定を環境変数によって変えられるようにすることも、実用的なアイデアの一つです。例えば、以下の定義ファイルでは <code class="code docutils literal notranslate"><span class="pre">id</span></code> の初期値を環境変数で指定できます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">randog</span>
+
+<span class="n">initial_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;INIT_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">initial_id</span><span class="p">)),</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+    <span class="n">age</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>環境変数の指定には、シェルの標準的な方法のほか、randogのenvオプションを使用することができます。以下の例はいずれも同じように動作します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Can use it in bash, etc., but not in powershell</span>
+<span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+
+<span class="c1"># Can use it in any shell</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>次のように、複数の環境変数を指定することもできます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
+</pre></div>
+</div>
 </div>
 </section>
 </section>

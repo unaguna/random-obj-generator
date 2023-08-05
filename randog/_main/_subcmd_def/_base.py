@@ -2,6 +2,7 @@ import argparse
 from abc import ABC, abstractmethod
 import typing as t
 
+from .. import Linesep
 from ..._utils.type import positive_int
 from .._subcmd import Subcmd
 from .._main_args import Args
@@ -80,7 +81,7 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         "--output-linesep",
         "--O-ls",
         default=None,
-        choices=["LF", "CRLF", "CR"],
+        choices=Linesep.names(),
         help="line separator for output. "
         "This is only effective when outputting to a file with the '--output'/'-O' option.",
     )

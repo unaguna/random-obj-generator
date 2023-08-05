@@ -7,6 +7,7 @@ import itertools
 import os
 import typing as t
 
+from . import Linesep
 from ._subcmd import Subcmd
 
 
@@ -72,13 +73,9 @@ class Args:
         specified = self._args.output_linesep
         if specified is None:
             return None
-        elif specified == "LF":
-            return "\n"
-        elif specified == "CRLF":
-            return "\r\n"
-        elif specified == "CR":
-            return "\r"
-        else:
+        try:
+            return Linesep[specified].value
+        except KeyError:
             raise ValueError(f"illegal linesep: {specified}")
 
     @property

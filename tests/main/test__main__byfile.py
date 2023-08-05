@@ -830,8 +830,10 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
     [
         (["--output-linesep", "CRLF"], b"\r\n"),
         (["--output-linesep", "LF"], b"\n"),
+        (["--output-linesep", "CR"], b"\r"),
         (["--O-ls", "CRLF"], b"\r\n"),
         (["--O-ls", "LF"], b"\n"),
+        (["--O-ls", "CR"], b"\r"),
     ],
 )
 @pytest.mark.parametrize(
@@ -903,7 +905,7 @@ def test__main__error_with_illegal_linesep(capfd, tmp_path, resources, ls_option
         assert err.startswith("usage:")
         assert (
             f"byfile: error: argument --output-linesep/--O-ls: invalid choice: "
-            f"'{ls_options[1]}' (choose from 'LF', 'CRLF')" in err
+            f"'{ls_options[1]}' (choose from 'LF', 'CRLF', 'CR')" in err
         )
 
 

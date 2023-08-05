@@ -80,7 +80,7 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         "--output-linesep",
         "--O-ls",
         default=None,
-        choices=["LF", "CRLF"],
+        choices=["LF", "CRLF", "CR"],
         help="line separator for output. "
         "This is only effective when outputting to a file with the '--output'/'-O' option.",
     )

@@ -76,6 +76,8 @@ class Args:
             return "\n"
         elif specified == "CRLF":
             return "\r\n"
+        elif specified == "CR":
+            return "\r"
         else:
             raise ValueError(f"illegal linesep: {specified}")
 

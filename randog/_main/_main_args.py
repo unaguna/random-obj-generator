@@ -3,8 +3,12 @@ the package contains the Args of module execution and its builder
 """
 
 import argparse
+import codecs
+import itertools
+import os
 import typing as t
 
+from . import Linesep
 from ._subcmd import Subcmd
 
 
@@ -38,6 +42,9 @@ class Args:
         for subcmd in iter_subcmd_def():
             subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
 
+        # set environments
+        os.environ.update(self.env)
+
     @property
     def sub_cmd(self) -> Subcmd:
         return Subcmd(self._args.sub)
@@ -61,6 +68,27 @@ class Args:
     @property
     def output_path(self) -> t.Optional[str]:
         return self._args.output
+
+    @property
+    def output_encoding(self) -> t.Optional[str]:
+        specified = self._args.output_encoding
+        if specified is None or self.output_path is None:
+            return None
+        try:
+            codecs.lookup(specified)
+            return specified
+        except LookupError:
+            raise ValueError(f"illegal encoding: {specified}")
+
+    @property
+    def output_linesep(self) -> t.Optional[str]:
+        specified = self._args.output_linesep
+        if specified is None or self.output_path is None:
+            return None
+        try:
+            return Linesep[specified].value
+        except KeyError:
+            raise ValueError(f"illegal linesep: {specified}")
 
     @property
     def multiple_output_path(self) -> bool:
@@ -107,6 +135,21 @@ class Args:
     @property
     def error_on_factory_stopped(self) -> bool:
         return self.get("error_on_factory_stopped", False)
+
+    @property
+    def env(self) -> t.Mapping[str, str]:
+        if self._args.env is None:
+            return {}
+
+        result = {}
+        for item in itertools.chain(*self._args.env):
+            key_value = item.split("=", 1)
+            if len(key_value) <= 1:
+                result[key_value[0]] = ""
+            else:
+                key, value = key_value
+                result[key] = value
+        return result
 
     def output_path_for(self, number: int) -> t.Optional[str]:
         if self._args.output is None:

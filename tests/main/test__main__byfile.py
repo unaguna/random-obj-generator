@@ -6,6 +6,7 @@ from unittest.mock import patch
 import pytest
 
 import randog.__main__
+from tests.testtools.envvar import EnvVarSnapshot
 
 
 @pytest.mark.parametrize(
@@ -817,6 +818,233 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
                 assert out_fp.readline() == ""
 
 
+@pytest.mark.parametrize(
+    ("output_fmt", "output"),
+    [
+        ("out.txt", "out.txt"),
+        ("out_{}.txt", "out_0.txt"),
+    ],
+)
+@pytest.mark.parametrize("x_option", ["--output-encoding", "-X"])
+@pytest.mark.parametrize("encoding", ["utf_8", "utf_16_le", "shift_jis"])
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], "テスト\n"),
+        (["--csv=1"], "テスト\n"),
+        (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
+        (["--list=1"], "['テスト']\n"),
+        (["--repeat=1"], "テスト\n"),
+    ],
+)
+def test__main__option_output__encoding(
+    capfd,
+    tmp_path,
+    resources,
+    output_fmt,
+    output,
+    x_option,
+    encoding,
+    options,
+    expected,
+):
+    output_path_fmt = tmp_path.joinpath(output_fmt)
+    output_path = tmp_path.joinpath(output)
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_ja.py")),
+        "--output",
+        str(output_path_fmt),
+        x_option,
+        encoding,
+        *options,
+        "--output-linesep=LF",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_path, mode="rb") as out_fp:
+            assert out_fp.read(50) == expected.encode(encoding=encoding)
+
+
+@pytest.mark.parametrize(
+    ("x_options",),
+    [
+        (["--output-encoding", "AAA"],),
+        (["-X", "AAA"],),
+    ],
+)
+def test__main__option_output__error_with_illegal_encoding(
+    capfd, tmp_path, resources, x_options
+):
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_ja.py")),
+        "--output",
+        str(output_path),
+        *x_options,
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            f"byfile: error: argument --output-encoding/-X: invalid encoding value: "
+            f"'{x_options[1]}'" in err
+        )
+
+
+@pytest.mark.parametrize(
+    ("output_fmt", "output"),
+    [
+        ("out.txt", "out.txt"),
+        ("out_{}.txt", "out_0.txt"),
+    ],
+)
+@pytest.mark.parametrize(
+    ("ls_options", "ls_expected"),
+    [
+        (["--output-linesep", "CRLF"], b"\r\n"),
+        (["--output-linesep", "LF"], b"\n"),
+        (["--output-linesep", "CR"], b"\r"),
+        (["--O-ls", "CRLF"], b"\r\n"),
+        (["--O-ls", "LF"], b"\n"),
+        (["--O-ls", "CR"], b"\r"),
+    ],
+)
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], b"aaa"),
+        (["--csv=1"], b"aaa"),
+        (["--json"], b'"aaa"'),
+        (["--list=1"], b"['aaa']"),
+        (["--repeat=1"], b"aaa"),
+    ],
+)
+def test__main__option_output__linesep(
+    capfd,
+    tmp_path,
+    resources,
+    output_fmt,
+    output,
+    ls_options,
+    ls_expected,
+    options,
+    expected,
+):
+    output_path_fmt = tmp_path.joinpath(output_fmt)
+    output_path = tmp_path.joinpath(output)
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        "--output",
+        str(output_path_fmt),
+        *ls_options,
+        *options,
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        # mode="r" だと改行コードが '\n' に変換されてしまうため、mode="rb" でバイナリを取得する。
+        with open(output_path, mode="rb") as out_fp:
+            assert out_fp.read(50) == expected + ls_expected
+
+
+@pytest.mark.parametrize(
+    ("ls_options",),
+    [
+        (["--output-linesep", "CRLF"],),
+        (["--output-linesep", "LF"],),
+        (["--output-linesep", "CR"],),
+        (["--O-ls", "CRLF"],),
+        (["--O-ls", "LF"],),
+        (["--O-ls", "CR"],),
+    ],
+)
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], b"aaa"),
+        (["--csv=1"], b"aaa"),
+        (["--json"], b'"aaa"'),
+        (["--list=1"], b"['aaa']"),
+        (["--repeat=1"], b"aaa"),
+    ],
+)
+def test__main__option_output_linesep__without_output(
+    capfdbinary,
+    tmp_path,
+    resources,
+    ls_options,
+    options,
+    expected,
+):
+    # --output がないと、--output-linesep が無効である（標準出力への出力に --output-linesep は影響しない）
+
+    ls_expected = b"\n"
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        *ls_options,
+        *options,
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfdbinary.readouterr()
+        assert out == expected + ls_expected
+        assert err == b""
+
+
+@pytest.mark.parametrize(
+    ("ls_options",),
+    [
+        (["--output-linesep", "AAA"],),
+        (["--O-ls", "AAA"],),
+    ],
+)
+def test__main__option_output__error_with_illegal_linesep(
+    capfd, tmp_path, resources, ls_options
+):
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        "--output",
+        str(output_path),
+        *ls_options,
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            f"byfile: error: argument --output-linesep/--O-ls: invalid choice: "
+            f"'{ls_options[1]}' (choose from 'LF', 'CRLF', 'CR')" in err
+        )
+
+
 def test__main__csv__with_regenerate_repeat(capfd, tmp_path, resources):
     output_fmt_path = tmp_path.joinpath("out_{}.txt")
     output_paths = [tmp_path.joinpath("out_0.txt"), tmp_path.joinpath("out_1.txt")]
@@ -897,6 +1125,33 @@ def test__main__csv__with_discard_repeat(capfd, tmp_path, resources):
         for i, value in enumerate(out_list_concat):
             assert i <= value
         assert len(out_list_concat) - 1 < out_list_concat[-1] < line_num * count
+
+
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        (["--env=VALUE=AAA"], "AAA"),
+        (["--env=VALUE=bbb"], "bbb"),
+        (["--env=VALUE="], ""),
+        (["--env=VALUE"], ""),
+        (["--env=VALUE=AAA", "--env=VALUE2=bbb"], "AAA"),
+        (["--env=VALUE=AAA", "--env=VALUE2="], "AAA"),
+        (["--env=VALUE=AAA", "--env=VALUE2"], "AAA"),
+    ],
+)
+def test__main__env(capfd, tmp_path, resources, options, expected):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_env.py")),
+        *options,
+    ]
+    with patch.object(sys, "argv", args), EnvVarSnapshot():
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == f"{expected}\n"
+        assert err == ""
 
 
 def test__main__byfile__help(capfd):

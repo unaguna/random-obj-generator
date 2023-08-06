@@ -28,9 +28,23 @@ Output to file
 
     python -m randog time --output ./out.txt
 
-.. note::
-    The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option exists to be combined with the other options described below. Details will be included when describing them.
+The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option is effective when combined with the following options:
 
+- :code:`--repeat` (:code:`-r`)
+
+    See also :ref:`iteration`
+
+- :code:`--output-encoding` (:code:`-X`) or/and :code:`--output-linesep` (:code:`--O-ls`)
+
+    You can specify the encoding and newline character for output as following example:
+
+    .. code-block:: shell
+
+        # output to out.txt in UTF-16 LE with line-separator '\r\n'
+        python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
+
+
+.. _iteration:
 
 Iteration
 ---------
@@ -63,3 +77,28 @@ On the other hand, if you want to output each repeatedly generated object separa
         python -m randog factory_def.py --repeat 3 --output './out_{:04}.txt'
 
     The rules for placeholders are the same as `the standard python format <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
+
+
+Modify environment variable
+---------------------------
+
+In particular, in byfile mode, you may want to specify environment variables for the purpose of passing values to the definition file. In bash and other shells, you can specify environment variables on a single line, such as :code:`VAR=VAL python -m randog ...`, but this is not possible in some shells, such as powershell.
+
+Therefore, randog provides an option to specify environment variables. You can specify environment variables by using :code:`--env` as follows:
+
+.. code-block:: shell
+
+    python -m randog byfile factory_def.py --env CHARSET=0123456789abcdef
+
+The above mentioned execution is useful, for example, when using a definition file such as the following:
+
+.. code-block:: python
+
+    import os
+    import randog.factory
+
+    FACTORY = randog.factory.randstr(
+        length=4,
+        # Get the value specified for charset from an environment variable
+        charset=os.environ["CHARSET"],
+    )

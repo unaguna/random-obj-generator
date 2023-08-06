@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 13:53+0900\n"
+"POT-Creation-Date: 2023-08-06 16:27+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -69,19 +69,38 @@ msgid ""
 "following example."
 msgstr "以下の例のように :code:`--output` オプションを使用することで、結果をファイル出力することができます。"
 
-#: ../../source/doc.as_command.common_option.rst:32
+#: ../../source/doc.as_command.common_option.rst:31
 msgid ""
 "The above example is not very practical, since the same thing can be done"
-" using the standard redirection feature of shell. This option exists to "
-"be combined with the other options described below. Details will be "
-"included when describing them."
-msgstr "シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。このオプションは他のオプションと組み合わせて使用するために存在します。詳細はそれらの説明に併記します。"
+" using the standard redirection feature of shell. This option is "
+"effective when combined with the following options:"
+msgstr "シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。このオプションは、下記のオプションと組み合わせることで効果を発揮します。"
 
-#: ../../source/doc.as_command.common_option.rst:36
+#: ../../source/doc.as_command.common_option.rst:33
+msgid ":code:`--repeat` (:code:`-r`)"
+msgstr ""
+
+#: ../../source/doc.as_command.common_option.rst:35
+msgid "See also :ref:`iteration`"
+msgstr ":ref:`iteration` を参照"
+
+#: ../../source/doc.as_command.common_option.rst:37
+msgid ""
+":code:`--output-encoding` (:code:`-X`) or/and :code:`--output-linesep` "
+"(:code:`--O-ls`)"
+msgstr ""
+
+#: ../../source/doc.as_command.common_option.rst:39
+msgid ""
+"You can specify the encoding and newline character for output as "
+"following example:"
+msgstr "下記の例のように、出力時のエンコードと改行文字を指定できます。"
+
+#: ../../source/doc.as_command.common_option.rst:50
 msgid "Iteration"
 msgstr "繰り返し"
 
-#: ../../source/doc.as_command.common_option.rst:38
+#: ../../source/doc.as_command.common_option.rst:52
 msgid ""
 "There are two types of repeat generation options: :code:`--list` "
 "(:code:`-L`) and :code:`--repeat` (:code:`-r`)."
@@ -89,19 +108,19 @@ msgstr ""
 "繰り返し値を生成するオプションには、 :code:`--list` (:code:`-L`) と :code:`--repeat` "
 "(:code:`-r`) があります。"
 
-#: ../../source/doc.as_command.common_option.rst:40
+#: ../../source/doc.as_command.common_option.rst:54
 msgid ""
 "If you want to output repeatedly generated objects in a single list, use "
 ":code:`--list` as follows:"
 msgstr "繰り返し生成した値を1つのリストにまとめて出力したい場合は、以下のように :code:`--list` オプションを使用します。"
 
-#: ../../source/doc.as_command.common_option.rst:47
+#: ../../source/doc.as_command.common_option.rst:61
 msgid ""
 "On the other hand, if you want to output each repeatedly generated object"
 " separately, use :code:`--repeat` as follows:"
 msgstr "一方で、繰り返し生成した値を1つずつ個別に出力したい場合、以下のように :code:`--repeat` オプションを使用します。"
 
-#: ../../source/doc.as_command.common_option.rst:55
+#: ../../source/doc.as_command.common_option.rst:69
 msgid ""
 "If you want to output to different files one at a time using "
 ":code:`--repeat`, use :code:`--output` with a placeholder as follows:"
@@ -109,7 +128,7 @@ msgstr ""
 ":code:`--repeat` を使用して生成した値を別々のファイルへ1つずつ出力したい場合、以下のようにプレースホルダーとともに "
 ":code:`--output` オプションを使用します。"
 
-#: ../../source/doc.as_command.common_option.rst:65
+#: ../../source/doc.as_command.common_option.rst:79
 msgid ""
 "The rules for placeholders are the same as `the standard python format "
 "<https://docs.python.org/3/library/string.html#format-string-syntax>`_."
@@ -117,4 +136,33 @@ msgstr ""
 "プレースホルダーのルールは `標準的な python のフォーマット "
 "<https://docs.python.org/ja/3/library/string.html#format-string-syntax>`_"
 " と同一です。"
+
+#: ../../source/doc.as_command.common_option.rst:83
+msgid "Modify environment variable"
+msgstr "環境変数を変更"
+
+#: ../../source/doc.as_command.common_option.rst:85
+msgid ""
+"In particular, in byfile mode, you may want to specify environment "
+"variables for the purpose of passing values to the definition file. In "
+"bash and other shells, you can specify environment variables on a single "
+"line, such as :code:`VAR=VAL python -m randog ...`, but this is not "
+"possible in some shells, such as powershell."
+msgstr ""
+"とくに byfile モードで、定義ファイルに値を受け渡す目的で環境変数を指定したいかもしれません。bash 等では :code:`VAR=VAL"
+" python -m randog ...` のように1行で環境変数を指定できますが、powershellなど一部のシェルではそれができません。"
+
+#: ../../source/doc.as_command.common_option.rst:87
+msgid ""
+"Therefore, randog provides an option to specify environment variables. "
+"You can specify environment variables by using :code:`--env` as follows:"
+msgstr ""
+"そこで、randog では環境変数を指定するオプションを用意しています。次のように :code:`--env` "
+"を使用することで環境変数を指定できます。"
+
+#: ../../source/doc.as_command.common_option.rst:93
+msgid ""
+"The above mentioned execution is useful, for example, when using a "
+"definition file such as the following:"
+msgstr "このような実行は、例えば以下のような定義ファイルを使用する際に有用です。"
 

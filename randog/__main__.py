@@ -1,11 +1,11 @@
 import csv
 import json
+import os
 import random
 import sys
 import typing as t
 
 import randog.factory
-from ._utils.nullsafe import dfor
 from .factory import FactoryDef, FactoryStopException
 from ._main import Args, Subcmd, get_subcmd_def
 
@@ -151,7 +151,17 @@ def _output_to_csv(
     raise_on_factory_stopped: bool,
     linesep: t.Optional[str],
 ):
-    csv_writer = csv.writer(fp, lineterminator=dfor(linesep, "\n"))
+    writer_options = {}
+    if fp in (sys.stdout, sys.stderr):
+        # windows で "\r\n" にすると、標準出力時に改行が "\r\r\n" に変換されてしまう。
+        # よって、windows で改行を "\r\n" にしたい場合も、標準出力時はここには　"\n" を指定する。
+        writer_options["lineterminator"] = "\n"
+    elif linesep is None:
+        writer_options["lineterminator"] = os.linesep
+    else:
+        writer_options["lineterminator"] = linesep
+
+    csv_writer = csv.writer(fp, **writer_options)
     csv_writer.writerows(
         filter(
             lambda x: x is not None,

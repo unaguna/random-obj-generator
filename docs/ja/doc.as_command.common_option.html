@@ -129,13 +129,26 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p>シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。このオプションは他のオプションと組み合わせて使用するために存在します。詳細はそれらの説明に併記します。</p>
+<p>シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。このオプションは、下記のオプションと組み合わせることで効果を発揮します。</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>)</p>
+<blockquote>
+<div><p><a class="reference internal" href="#iteration"><span class="std std-ref">繰り返し</span></a> を参照</p>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) or/and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>)</p>
+<blockquote>
+<div><p>下記の例のように、出力時のエンコードと改行文字を指定できます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
+</pre></div>
 </div>
+</div></blockquote>
+</li>
+</ul>
 </section>
 <section id="iteration">
-<h2>繰り返し<a class="headerlink" href="#iteration" title="この見出しへのパーマリンク"></a></h2>
+<span id="id1"></span><h2>繰り返し<a class="headerlink" href="#iteration" title="この見出しへのパーマリンク"></a></h2>
 <p>繰り返し値を生成するオプションには、 <code class="code docutils literal notranslate"><span class="pre">--list</span></code> (<code class="code docutils literal notranslate"><span class="pre">-L</span></code>) と <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>) があります。</p>
 <p>繰り返し生成した値を1つのリストにまとめて出力したい場合は、以下のように <code class="code docutils literal notranslate"><span class="pre">--list</span></code> オプションを使用します。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate ONE list which contains 3 objects; each element conforms to factory_def.py.</span>

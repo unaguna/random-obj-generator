@@ -1,3 +1,4 @@
+import codecs
 import datetime as dt
 from .. import timedelta_util
 
@@ -45,3 +46,11 @@ def positive_timedelta(value):
     if result <= dt.timedelta(0):
         raise ValueError("must be positive")
     return timedelta_util.from_str(value)
+
+
+def encoding(value):
+    try:
+        codecs.lookup(value)
+    except LookupError as e:
+        raise ValueError(*e.args)
+    return value

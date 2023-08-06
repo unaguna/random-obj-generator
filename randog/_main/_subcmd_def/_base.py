@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 import typing as t
 
 from .. import Linesep
-from ..._utils.type import positive_int
+from ..._utils.type import positive_int, encoding
 from .._subcmd import Subcmd
 from .._main_args import Args
 
@@ -76,6 +76,15 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         "-O",
         metavar="DESC_PATH",
         help="destination file path",
+    )
+    common_opt_group.add_argument(
+        "--output-encoding",
+        "-X",
+        metavar="ENCODING",
+        default=None,
+        type=encoding,
+        help="encoding for output. "
+        "This is only effective when outputting to a file with the '--output'/'-O' option.",
     )
     common_opt_group.add_argument(
         "--output-linesep",

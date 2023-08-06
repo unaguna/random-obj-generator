@@ -71,7 +71,7 @@ class Args:
     @property
     def output_linesep(self) -> t.Optional[str]:
         specified = self._args.output_linesep
-        if specified is None:
+        if specified is None or self.output_path is None:
             return None
         try:
             return Linesep[specified].value

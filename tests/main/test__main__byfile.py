@@ -1,5 +1,6 @@
 import itertools
 import json
+import os
 import sys
 from unittest.mock import patch
 
@@ -878,6 +879,53 @@ def test__main__option_output__linesep(
         # mode="r" だと改行コードが '\n' に変換されてしまうため、mode="rb" でバイナリを取得する。
         with open(output_path, mode="rb") as out_fp:
             assert out_fp.read(50) == expected + ls_expected
+
+
+@pytest.mark.parametrize(
+    ("ls_options",),
+    [
+        (["--output-linesep", "CRLF"],),
+        (["--output-linesep", "LF"],),
+        (["--output-linesep", "CR"],),
+        (["--O-ls", "CRLF"],),
+        (["--O-ls", "LF"],),
+        (["--O-ls", "CR"],),
+    ],
+)
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], b"aaa"),
+        (["--csv=1"], b"aaa"),
+        (["--json"], b'"aaa"'),
+        (["--list=1"], b"['aaa']"),
+        (["--repeat=1"], b"aaa"),
+    ],
+)
+def test__main__option_output_linesep__without_output(
+    capfdbinary,
+    tmp_path,
+    resources,
+    ls_options,
+    options,
+    expected,
+):
+    # --output がないと、--output-linesep が無効である（標準出力への出力に --output-linesep は影響しない）
+
+    ls_expected = b"\n"
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        *ls_options,
+        *options,
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfdbinary.readouterr()
+        assert out == expected + ls_expected
+        assert err == b""
 
 
 @pytest.mark.parametrize(

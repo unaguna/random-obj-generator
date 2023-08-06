@@ -1,6 +1,5 @@
 import itertools
 import json
-import os
 import sys
 from unittest.mock import patch
 
@@ -817,6 +816,92 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
                     i = repeat_i * line_num + row_i
                     assert out_fp.readline() == f"{i},aaa,2019-10-14\n"
                 assert out_fp.readline() == ""
+
+
+@pytest.mark.parametrize(
+    ("output_fmt", "output"),
+    [
+        ("out.txt", "out.txt"),
+        ("out_{}.txt", "out_0.txt"),
+    ],
+)
+@pytest.mark.parametrize("x_option", ["--output-encoding", "-X"])
+@pytest.mark.parametrize("encoding", ["utf_8", "utf_16_le", "shift_jis"])
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], "テスト\n"),
+        (["--csv=1"], "テスト\n"),
+        (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
+        (["--list=1"], "['テスト']\n"),
+        (["--repeat=1"], "テスト\n"),
+    ],
+)
+def test__main__option_output__encoding(
+    capfd,
+    tmp_path,
+    resources,
+    output_fmt,
+    output,
+    x_option,
+    encoding,
+    options,
+    expected,
+):
+    output_path_fmt = tmp_path.joinpath(output_fmt)
+    output_path = tmp_path.joinpath(output)
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_ja.py")),
+        "--output",
+        str(output_path_fmt),
+        x_option,
+        encoding,
+        *options,
+        "--output-linesep=LF",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_path, mode="rb") as out_fp:
+            assert out_fp.read(50) == expected.encode(encoding=encoding)
+
+
+@pytest.mark.parametrize(
+    ("x_options",),
+    [
+        (["--output-encoding", "AAA"],),
+        (["-X", "AAA"],),
+    ],
+)
+def test__main__option_output__error_with_illegal_encoding(
+    capfd, tmp_path, resources, x_options
+):
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_ja.py")),
+        "--output",
+        str(output_path),
+        *x_options,
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            f"byfile: error: argument --output-encoding/-X: invalid encoding value: "
+            f"'{x_options[1]}'" in err
+        )
 
 
 @pytest.mark.parametrize(

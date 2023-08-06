@@ -3,6 +3,7 @@ the package contains the Args of module execution and its builder
 """
 
 import argparse
+import codecs
 import itertools
 import os
 import typing as t
@@ -67,6 +68,17 @@ class Args:
     @property
     def output_path(self) -> t.Optional[str]:
         return self._args.output
+
+    @property
+    def output_encoding(self) -> t.Optional[str]:
+        specified = self._args.output_encoding
+        if specified is None or self.output_path is None:
+            return None
+        try:
+            codecs.lookup(specified)
+            return specified
+        except LookupError:
+            raise ValueError(f"illegal encoding: {specified}")
 
     @property
     def output_linesep(self) -> t.Optional[str]:

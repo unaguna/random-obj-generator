@@ -97,10 +97,15 @@ def _open_output_fp_only(args: Args) -> t.Union[_DummyIO, t.TextIO]:
         options = {
             "mode": "wt",
         }
+
         if args.get("csv", False):
             options["newline"] = ""
         elif args.output_linesep is not None:
             options["newline"] = args.output_linesep
+
+        if args.output_encoding is not None:
+            options["encoding"] = args.output_encoding
+
         return open(args.output_path, **options)
 
 
@@ -111,10 +116,15 @@ def _open_output_fp_numbered(args: Args, number: int) -> t.Union[_DummyIO, t.Tex
         options = {
             "mode": "wt",
         }
+
         if args.get("csv", False):
             options["newline"] = ""
         elif args.output_linesep is not None:
             options["newline"] = args.output_linesep
+
+        if args.output_encoding is not None:
+            options["encoding"] = args.output_encoding
+
         return open(args.output_path_for(number), **options)
 
 

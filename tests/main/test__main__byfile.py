@@ -841,6 +841,7 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
     [
         ([], b"aaa"),
         (["--csv=1"], b"aaa"),
+        (["--json"], b'"aaa"'),
         (["--list=1"], b"['aaa']"),
         (["--repeat=1"], b"aaa"),
     ],

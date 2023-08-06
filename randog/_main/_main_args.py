@@ -7,6 +7,7 @@ import itertools
 import os
 import typing as t
 
+from . import Linesep
 from ._subcmd import Subcmd
 
 
@@ -66,6 +67,16 @@ class Args:
     @property
     def output_path(self) -> t.Optional[str]:
         return self._args.output
+
+    @property
+    def output_linesep(self) -> t.Optional[str]:
+        specified = self._args.output_linesep
+        if specified is None or self.output_path is None:
+            return None
+        try:
+            return Linesep[specified].value
+        except KeyError:
+            raise ValueError(f"illegal linesep: {specified}")
 
     @property
     def multiple_output_path(self) -> bool:

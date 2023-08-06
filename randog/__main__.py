@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 import random
 import sys
 import typing as t
@@ -98,6 +99,8 @@ def _open_output_fp_only(args: Args) -> t.Union[_DummyIO, t.TextIO]:
         }
         if args.get("csv", False):
             options["newline"] = ""
+        elif args.output_linesep is not None:
+            options["newline"] = args.output_linesep
         return open(args.output_path, **options)
 
 
@@ -110,6 +113,8 @@ def _open_output_fp_numbered(args: Args, number: int) -> t.Union[_DummyIO, t.Tex
         }
         if args.get("csv", False):
             options["newline"] = ""
+        elif args.output_linesep is not None:
+            options["newline"] = args.output_linesep
         return open(args.output_path_for(number), **options)
 
 
@@ -144,8 +149,19 @@ def _output_to_csv(
     regenerate: float,
     discard: float,
     raise_on_factory_stopped: bool,
+    linesep: t.Optional[str],
 ):
-    csv_writer = csv.writer(fp, lineterminator="\n")
+    writer_options = {}
+    if fp in (sys.stdout, sys.stderr):
+        # windows で "\r\n" にすると、標準出力時に改行が "\r\r\n" に変換されてしまう。
+        # よって、windows で改行を "\r\n" にしたい場合も、標準出力時はここには　"\n" を指定する。
+        writer_options["lineterminator"] = "\n"
+    elif linesep is None:
+        writer_options["lineterminator"] = os.linesep
+    else:
+        writer_options["lineterminator"] = linesep
+
+    csv_writer = csv.writer(fp, **writer_options)
     csv_writer.writerows(
         filter(
             lambda x: x is not None,
@@ -188,6 +204,7 @@ def main():
                                 regenerate=args.regenerate,
                                 discard=args.discard,
                                 raise_on_factory_stopped=args.error_on_factory_stopped,
+                                linesep=args.output_linesep,
                             )
                         else:
                             if args.list is not None:

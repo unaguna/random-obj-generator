@@ -28,9 +28,23 @@ Output to file
 
     python -m randog time --output ./out.txt
 
-.. note::
-    The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option exists to be combined with the other options described below. Details will be included when describing them.
+The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option is effective when combined with the following options:
 
+- :code:`--repeat` (:code:`-r`)
+
+    See also :ref:`iteration`
+
+- :code:`--output-encoding` (:code:`-X`) or/and :code:`--output-linesep` (:code:`--O-ls`)
+
+    You can specify the encoding and newline character for output as following example:
+
+    .. code-block:: shell
+
+        # output to out.txt in UTF-16 LE with line-separator '\r\n'
+        python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
+
+
+.. _iteration:
 
 Iteration
 ---------

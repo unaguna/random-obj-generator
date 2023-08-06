@@ -128,13 +128,26 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option exists to be combined with the other options described below. Details will be included when describing them.</p>
+<p>The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option is effective when combined with the following options:</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>)</p>
+<blockquote>
+<div><p>See also <a class="reference internal" href="#iteration"><span class="std std-ref">Iteration</span></a></p>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) or/and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>)</p>
+<blockquote>
+<div><p>You can specify the encoding and newline character for output as following example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
+</pre></div>
 </div>
+</div></blockquote>
+</li>
+</ul>
 </section>
 <section id="iteration">
-<h2>Iteration<a class="headerlink" href="#iteration" title="Permalink to this heading"></a></h2>
+<span id="id1"></span><h2>Iteration<a class="headerlink" href="#iteration" title="Permalink to this heading"></a></h2>
 <p>There are two types of repeat generation options: <code class="code docutils literal notranslate"><span class="pre">--list</span></code> (<code class="code docutils literal notranslate"><span class="pre">-L</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>).</p>
 <p>If you want to output repeatedly generated objects in a single list, use <code class="code docutils literal notranslate"><span class="pre">--list</span></code> as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate ONE list which contains 3 objects; each element conforms to factory_def.py.</span>

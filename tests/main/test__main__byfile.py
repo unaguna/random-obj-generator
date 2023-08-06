@@ -845,7 +845,7 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
         (["--repeat=1"], b"aaa"),
     ],
 )
-def test__main__csv__option_output__linesep(
+def test__main__option_output__linesep(
     capfd,
     tmp_path,
     resources,
@@ -886,7 +886,9 @@ def test__main__csv__option_output__linesep(
         (["--O-ls", "AAA"],),
     ],
 )
-def test__main__error_with_illegal_linesep(capfd, tmp_path, resources, ls_options):
+def test__main__option_output__error_with_illegal_linesep(
+    capfd, tmp_path, resources, ls_options
+):
     output_path = tmp_path.joinpath("out.txt")
     args = [
         "randog",

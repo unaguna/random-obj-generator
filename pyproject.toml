@@ -27,3 +27,12 @@ markers = [
     "require_rstr: mark a test that requires rstr.",
     "without_rstr: mark a test that is skipped if rstr is installed.",
 ]
+
+[tool.coverage.run]
+branch = true
+source = [
+    "randog",
+]
+
+[tool.coverage.report]
+show_missing = true

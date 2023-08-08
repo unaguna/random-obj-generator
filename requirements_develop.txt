@@ -1,5 +1,7 @@
 ###### dependent for develop ######
 black
+pytest
+pytest-cov
 
 ###### dependent for publish ######
 setuptools

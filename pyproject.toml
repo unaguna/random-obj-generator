@@ -19,3 +19,10 @@ exclude = '''
   | conftest.py
 )
 '''
+
+[tool.pytest.ini_options]
+markers = [
+    "require_sqlalchemy: mark a test that requires SQLAlchemy.",
+    "require_rstr: mark a test that requires rstr.",
+    "without_rstr: mark a test that is skipped if rstr is installed.",
+]

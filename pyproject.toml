@@ -21,6 +21,7 @@ exclude = '''
 '''
 
 [tool.pytest.ini_options]
+addopts = "--doctest-modules --doctest-glob='*.rst' --ignore=tests/resources"
 markers = [
     "require_sqlalchemy: mark a test that requires SQLAlchemy.",
     "require_rstr: mark a test that requires rstr.",

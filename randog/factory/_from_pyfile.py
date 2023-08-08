@@ -62,7 +62,7 @@ def _from_pyfile(fp: t.IO, filename: t.Union[str, PathLike]) -> FactoryDef:
 
     d = types.ModuleType("factory")
     d.randog = randog
-    d.__file__ = filename
+    d.__file__ = str(filename)
     try:
         exec(compile(fp.read(), filename, "exec"), d.__dict__)
     except OSError as e:

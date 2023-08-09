@@ -1,5 +1,11 @@
 [flake8]
-max-line-length = 88
+max-line-length = 880
 extend-ignore = E203
 per-file-ignores =
     __init__.py:F401
+    tests/*:E721,E731
+exclude =
+    .tox,
+    __pycache__,
+    tests/resources
+

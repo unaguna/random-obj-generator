@@ -34,7 +34,7 @@ def test__main__error_on_factory_stopped(
         out, err = capfd.readouterr()
         assert out == expected_out
         assert (
-            f"error: the factory stopped generating before the process was complete"
+            "error: the factory stopped generating before the process was complete"
             in err
         )
 

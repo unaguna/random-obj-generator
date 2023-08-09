@@ -53,7 +53,7 @@ class SubcmdDefString(SubcmdDef):
 
         if regex is not None:
             try:
-                import rstr
+                import rstr  # noqa: F401
             except ImportError:
                 subparser.error(
                     "argument --regex: package 'rstr' is required to use --regex"

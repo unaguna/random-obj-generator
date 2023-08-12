@@ -20,14 +20,18 @@ class Args:
 
         parser = argparse.ArgumentParser(
             prog="randog",
-            description="It generates values randomly according to the specified mode and arguments.",
+            description="It generates values randomly according to the specified mode "
+            "and arguments.",
         )
         subparsers = parser.add_subparsers(
             required=True,
             dest="sub",
             metavar="MODE",
-            help=f"mode of value generation; candidates: {', '.join(map(lambda c: c.value, Subcmd))}. "
-            "For more information, see the command 'randog MODE --help'.",
+            help=(
+                "mode of value generation; candidates: "
+                f"{', '.join(map(lambda c: c.value, Subcmd))}. "
+                "For more information, see the command 'randog MODE --help'."
+            ),
         )
 
         # create subcommands and add them to the ArgumentParser

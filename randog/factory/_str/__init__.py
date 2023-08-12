@@ -45,7 +45,8 @@ def randstr(
     charset : str, optional
         characters to be used
     regex : str, optional
-        regular expression for generated string. It cannot be used with `length` or `charset`.
+        regular expression for generated string.
+        It cannot be used with `length` or `charset`.
     rnd : Random, optional
         random number generator to be used
 

@@ -3,12 +3,13 @@ from ._construct import factory as factory_from_model, factory_from_column
 
 
 def custom(example, **kwargs):
-    """custom_func for `randog.factory.from_example` to generate sqlalchemy-derived objects
+    """custom_func for `randog.factory.from_example`
+    to generate sqlalchemy-derived objects
 
     This function is an add-on for `randog.factory.from_example`.
 
-    Specify this function as `custom_func` if you want to create a factory that generates sqlalchemy-derived objects in
-    `from_example`.
+    Specify this function as `custom_func` if you want to create a factory
+    that generates sqlalchemy-derived objects in `from_example`.
 
     Examples
     --------
@@ -26,7 +27,8 @@ def custom(example, **kwargs):
     ...     name = Column(String)
     >>>
     >>> # specify `randog.sqlalchemy.custom` as `custom_func`
-    >>> factory = randog.factory.from_example(User, custom_func=randog.sqlalchemy.custom)
+    >>> factory = randog.factory.from_example(User,
+    ...                                       custom_func=randog.sqlalchemy.custom)
     >>> generated = factory.next()
     """
     if kwargs.get("context") is not None:

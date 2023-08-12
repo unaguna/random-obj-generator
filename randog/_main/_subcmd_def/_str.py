@@ -14,7 +14,10 @@ class SubcmdDefString(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         str_parser = subparsers.add_parser(
             Subcmd.String.value,
-            usage="python -m randog str [--length LENGTH] [--charset CHARSET] [--regex REGEX] [common-options]",
+            usage=(
+                "python -m randog str [--length LENGTH] [--charset CHARSET] "
+                "[--regex REGEX] [common-options]"
+            ),
             description="It generates values of type str.",
             add_help=False,
         )
@@ -24,8 +27,11 @@ class SubcmdDefString(SubcmdDef):
             type=non_negative_int_range,
             default=None,
             metavar="LENGTH",
-            help="the length of generated strings. "
-            "You can specify an integer such as '--length 5' or a range such as '--length 3:8'.",
+            help=(
+                "the length of generated strings. "
+                "You can specify an integer such as '--length 5' or a range such as "
+                "'--length 3:8'."
+            ),
         )
         str_args_group.add_argument(
             "--charset",
@@ -39,7 +45,10 @@ class SubcmdDefString(SubcmdDef):
             type=str,
             default=None,
             metavar="REGEX",
-            help="the regular expression for generated string. It cannot be used with `--length` or `--charset`.",
+            help=(
+                "the regular expression for generated string. "
+                "It cannot be used with `--length` or `--charset`."
+            ),
         )
         add_common_arguments(str_parser)
 

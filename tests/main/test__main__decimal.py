@@ -369,8 +369,8 @@ def test__main__decimal__error_with_negative_repeat(capfd, resources, option, le
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"decimal: error: argument --repeat/-r: invalid positive_int value: '{length}'"
-            in err
+            "decimal: error: argument --repeat/-r: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 
@@ -427,8 +427,8 @@ def test__main__decimal__error_with_negative_list(capfd, resources, option, leng
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"decimal: error: argument --list/-L: invalid positive_int value: '{length}'"
-            in err
+            "decimal: error: argument --list/-L: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 

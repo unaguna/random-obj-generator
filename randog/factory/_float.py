@@ -103,7 +103,8 @@ class FloatRandomFactory(Factory[float]):
             )
         if self._p_inf + self._n_inf + self._nan > 1.0:
             raise FactoryConstructionError(
-                "the sum of probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
+                "the sum of probabilities `p_inf`, `n_inf`, and `nan` "
+                "must range from 0 to 1"
             )
 
     def _next(self) -> float:

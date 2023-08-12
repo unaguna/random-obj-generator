@@ -48,7 +48,8 @@ def to_iso(
     exclude_milliseconds : bool
         If it is True, the microsecond part is excluded.
     point_char : str
-        the point character. For example, if "," is specified, 500 milliseconds would be "PT0,5S".
+        the point character.
+        For example, if "," is specified, 500 milliseconds would be "PT0,5S".
 
     Returns
     -------
@@ -89,7 +90,8 @@ def to_iso(
 
 
 FROM_ISO_REGEX = re.compile(
-    r"^(-?)P(?:(-?\d+(?:\.\d+)?)D)?(?:T(?:(-?\d+(?:\.\d+)?)H)?(?:(-?\d+(?:\.\d+)?)M)?(?:(-?\d+(?:\.\d+)?)S)?)?$"
+    r"^(-?)P(?:(-?\d+(?:\.\d+)?)D)?(?:T(?:(-?\d+(?:\.\d+)?)H)?(?:(-?\d+(?:\.\d+)?)M)?"
+    r"(?:(-?\d+(?:\.\d+)?)S)?)?$"
 )
 
 
@@ -125,7 +127,8 @@ def from_iso(
     value : str
         the string of the ISO-8601 format
     returns_none_by_fmt_error : bool
-        if True is specified, when the specified string is illegal, returns None instead of raising an exception.
+        if True is specified, when the specified string is illegal,
+        returns None instead of raising an exception.
 
     Returns
     -------
@@ -208,7 +211,7 @@ def from_str(value: str) -> dt.timedelta:
     >>>
     >>> assert timedelta_util.from_str("1h30m") == timedelta(hours=1, minutes=30)
     >>> assert timedelta_util.from_str("1d2h3m4s5ms6us") == timedelta(
-    ...             days=1, hours=2, minutes=3, seconds=4, milliseconds=5, microseconds=6)
+    ...         days=1, hours=2, minutes=3, seconds=4, milliseconds=5, microseconds=6)
 
     Parameters
     ----------

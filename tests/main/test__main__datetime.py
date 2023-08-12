@@ -211,8 +211,8 @@ def test__main__datetime__error_with_negative_repeat(capfd, resources, option, l
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"datetime: error: argument --repeat/-r: invalid positive_int value: '{length}'"
-            in err
+            "datetime: error: argument --repeat/-r: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 
@@ -272,8 +272,8 @@ def test__main__datetime__error_with_negative_list(capfd, resources, option, len
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"datetime: error: argument --list/-L: invalid positive_int value: '{length}'"
-            in err
+            "datetime: error: argument --list/-L: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 

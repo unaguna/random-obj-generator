@@ -18,12 +18,14 @@ class Factory(ABC, t.Generic[T]):
         *,
         raise_on_factory_stopped: bool = False,
     ) -> T:
-        """Generate a value randomly according to the rules specified when assembling the factory.
+        """Generate a value randomly according to the rules specified
+        when assembling the factory.
 
         Parameters
         ----------
         raise_on_factory_stopped : bool, default=False
-            If True, raises `FactoryStopException` in case the factory cannot generate value due to `StopIteration`.
+            If True, raises `FactoryStopException`
+            in case the factory cannot generate value due to `StopIteration`.
             If False, simply raises `StopIteration`.
 
         Returns
@@ -67,8 +69,10 @@ class Factory(ABC, t.Generic[T]):
             Probability that the result is None
         lazy_choice : bool, optional
             If it is True, when generating a value,
-            first generate value with the base factory and then decides whether to adopt it or None.
-            Otherwise, it first decides whether to return None or generate a value and return it,
+            first generate value with the base factory and then decides
+            whether to adopt it or None.
+            Otherwise, it first decides whether to return None or generate a value
+            and return it,
             and then generates a value only if it is returned.
         rnd : Random, optional
             random number generator to be used
@@ -145,17 +149,22 @@ class Factory(ABC, t.Generic[T]):
         size : int
             the number of the iterator.
             However, if the argument `raise_on_factory_stopped` is not True,
-            fewer iterations than the specified `size` will be executed if the factory is stopped.
+            fewer iterations than the specified `size` will be executed
+            if the factory is stopped.
             Also, if the argument `discard` is specified, the size may be less.
         regenerate : float, default=0.0
-            the probability that the original factory generation value is not returned as is, but is regenerated.
-            It affects cases where the original factory returns a value that is not completely random.
+            the probability that the original factory generation value is not returned
+            as is, but is regenerated.
+            It affects cases where the original factory returns a value
+            that is not completely random.
         discard : float, default=0.0
-            the probability that the original factory generation value is not returned as is, but is discarded.
-            If discarded, the number of times the value is generated is less than `size`.
+            the probability that the original factory generation value is not returned
+            as is, but is discarded.
+            If discarded, the number of times the value is generated is less than
+            `size`.
         raise_on_factory_stopped : bool, default=False
-            If True, the iteration raises `FactoryStopException` in case the factory cannot generate value due to
-            `StopIteration`.
+            If True, the iteration raises `FactoryStopException` in case the factory
+            cannot generate value due to `StopIteration`.
             If False, the iteration simply stops in the case.
         rnd : Random, optional
             random number generator to be used
@@ -201,11 +210,13 @@ class Factory(ABC, t.Generic[T]):
         Parameters
         ----------
         regenerate : float, default=0.0
-            the probability that the original factory generation value is not returned as is, but is regenerated.
-            It affects cases where the original factory returns a value that is not completely random.
+            the probability that the original factory generation value is not returned
+            as is, but is regenerated.
+            It affects cases where the original factory returns a value that is not
+            completely random.
         raise_on_factory_stopped : bool, default=False
-            If True, the iteration raises `FactoryStopException` in case the factory cannot generate value due to
-            `StopIteration`.
+            If True, the iteration raises `FactoryStopException` in case the factory
+            cannot generate value due to `StopIteration`.
             If False, the iteration simply stops in the case.
         rnd : Random, optional
             random number generator to be used
@@ -294,7 +305,8 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
                 ):
                     break
 
-            # Probabilistically, discard the value generated this time and proceed to the next one
+            # Probabilistically,
+            # discard the value generated this time and proceed to the next one
             if self._discard_prob > 0 and self._rnd.random() < self._discard_prob:
                 continue
 

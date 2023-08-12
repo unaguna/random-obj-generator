@@ -83,13 +83,15 @@ def _load_factory_module(
     factory = getattr(module, FACTORY_ATTR_NAME)
     if not isinstance(factory, Factory):
         raise AttributeError(
-            f"attribute '{FACTORY_ATTR_NAME}' of factory file '{filename}' is not a factory"
+            f"attribute '{FACTORY_ATTR_NAME}' "
+            f"of factory file '{filename}' is not a factory"
         )
 
     csv_columns = getattr(module, CSV_COL_ATTR_NAME, None)
     if csv_columns is not None and not isinstance(csv_columns, t.Sequence):
         raise AttributeError(
-            f"attribute '{CSV_COL_ATTR_NAME}' of factory file '{filename}' MUST be None or a sequence of strings"
+            f"attribute '{CSV_COL_ATTR_NAME}' "
+            f"of factory file '{filename}' MUST be None or a sequence of strings"
         )
 
     return FactoryDef(

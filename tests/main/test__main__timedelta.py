@@ -142,8 +142,8 @@ def test__main__timedelta__error_unit_unfit_to_min_max(capfd, unit, minimum, max
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            "timedelta: error: argument --unit: there is no multiple of the unit value between MINIMUM and MAXIMUM"
-            in err
+            "timedelta: error: argument --unit: "
+            "there is no multiple of the unit value between MINIMUM and MAXIMUM" in err
         )
 
 
@@ -263,8 +263,8 @@ def test__main__timedelta__error_with_negative_repeat(capfd, resources, option, 
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"timedelta: error: argument --repeat/-r: invalid positive_int value: '{length}'"
-            in err
+            "timedelta: error: argument --repeat/-r: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 
@@ -325,8 +325,8 @@ def test__main__timedelta__error_with_negative_list(capfd, resources, option, le
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"timedelta: error: argument --list/-L: invalid positive_int value: '{length}'"
-            in err
+            "timedelta: error: argument --list/-L: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 

@@ -14,8 +14,10 @@ class SubcmdDefFloat(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         float_parser = subparsers.add_parser(
             Subcmd.Float.value,
-            usage="python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] "
-            "[common-options]",
+            usage=(
+                "python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] "
+                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]"
+            ),
             description="It generates values of type float.",
             add_help=False,
         )
@@ -25,16 +27,22 @@ class SubcmdDefFloat(SubcmdDef):
             type=float,
             nargs="?",
             metavar="MINIMUM",
-            help="the minimum value. "
-            "If not specified, the behavior is left to the specification of randog.factory.randfloat.",
+            help=(
+                "the minimum value. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randfloat."
+            ),
         )
         float_args_group.add_argument(
             "maximum",
             type=float,
             nargs="?",
             metavar="MAXIMUM",
-            help="the maximum value. "
-            "If not specified, the behavior is left to the specification of randog.factory.randfloat.",
+            help=(
+                "the maximum value. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randfloat."
+            ),
         )
         float_args_group.add_argument(
             "--p-inf",

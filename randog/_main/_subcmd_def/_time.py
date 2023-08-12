@@ -14,7 +14,10 @@ class SubcmdDefTime(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         time_parser = subparsers.add_parser(
             Subcmd.Time.value,
-            usage="python -m randog time [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] [common-options]",
+            usage=(
+                "python -m randog time [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] "
+                "[common-options]"
+            ),
             description="It generates values of type datetime.time.",
             add_help=False,
         )
@@ -24,29 +27,41 @@ class SubcmdDefTime(SubcmdDef):
             type=time,
             nargs="?",
             metavar="MINIMUM",
-            help="the minimum value with the ISO-8601 format. "
-            "If not specified, the behavior is left to the specification of randog.factory.randtime.",
+            help=(
+                "the minimum value with the ISO-8601 format. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randtime."
+            ),
         )
         time_args_group.add_argument(
             "maximum",
             type=time,
             nargs="?",
             metavar="MAXIMUM",
-            help="the maximum value with the ISO-8601 format. "
-            "If not specified, the behavior is left to the specification of randog.factory.randtime.",
+            help=(
+                "the maximum value with the ISO-8601 format. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randtime."
+            ),
         )
         group_date_fmt = time_args_group.add_mutually_exclusive_group()
         group_date_fmt.add_argument(
             "--iso",
             action="store_true",
-            help="if specified, it outputs generated object with ISO-8601 format"
-            "Since the str of datetime.time is identical to the iso-8601 format, this option is meaningless.",
+            help=(
+                "if specified, it outputs generated object with ISO-8601 format"
+                "Since the str of datetime.time is identical to the iso-8601 format, "
+                "this option is meaningless."
+            ),
         )
         group_date_fmt.add_argument(
             "--fmt",
             dest="format",
             metavar="FORMAT",
-            help="if specified, it outputs generated object with the specified format, such as '%%H:%%M:%%S.%%f'",
+            help=(
+                "if specified, it outputs generated object with the specified format, "
+                "such as '%%H:%%M:%%S.%%f'"
+            ),
         )
         add_common_arguments(time_parser)
 

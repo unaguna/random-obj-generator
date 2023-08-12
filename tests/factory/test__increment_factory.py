@@ -76,8 +76,8 @@ def test__increment__error_when_initial_value_is_lower_than_1(initial_value):
     e = e_ctx.value
 
     assert (
-        e.message
-        == "arguments of increment(initial_value, maximum) must satisfy 1 <= initial_value <= maximum"
+        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        "1 <= initial_value <= maximum"
     )
 
 
@@ -88,8 +88,8 @@ def test__increment__error_when_maximum_is_lower_than_1(maximum):
     e = e_ctx.value
 
     assert (
-        e.message
-        == "arguments of increment(initial_value, maximum) must satisfy 1 <= initial_value <= maximum"
+        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        "1 <= initial_value <= maximum"
     )
 
 
@@ -102,6 +102,6 @@ def test__increment__error_when_maximum_is_lower_than_initial_value(
     e = e_ctx.value
 
     assert (
-        e.message
-        == "arguments of increment(initial_value, maximum) must satisfy 1 <= initial_value <= maximum"
+        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        "1 <= initial_value <= maximum"
     )

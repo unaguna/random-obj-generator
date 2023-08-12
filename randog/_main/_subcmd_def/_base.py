@@ -44,7 +44,8 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         type=positive_int,
         help=(
             "repeat generation a specified number of times. "
-            "The results are output one by one; if you want them as a single list, use --list instead."
+            "The results are output one by one; if you want them as a single list, "
+            "use --list instead."
         ),
     )
     common_opt_group.add_argument(
@@ -84,7 +85,8 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         default=None,
         type=encoding,
         help="encoding for output. "
-        "This is only effective when outputting to a file with the '--output'/'-O' option.",
+        "This is only effective when outputting to a file with the '--output'/'-O' "
+        "option.",
     )
     common_opt_group.add_argument(
         "--output-linesep",
@@ -92,7 +94,8 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         default=None,
         choices=Linesep.names(),
         help="line separator for output. "
-        "This is only effective when outputting to a file with the '--output'/'-O' option.",
+        "This is only effective when outputting to a file with the '--output'/'-O' "
+        "option.",
     )
     common_opt_group.add_argument(
         "--env",

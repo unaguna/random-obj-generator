@@ -24,8 +24,10 @@ def randtime(
     maximum : time, optional
         the maximum
     tzinfo : tzinfo | None, optional
-        If specified, the tzinfo of result will be fixed to this value (False means no specification).
-        When it fixes aware datetime to aware, the time is corrected. Otherwise, only the tzinfo is changed.
+        If specified, the tzinfo of result will be fixed to this value
+        (False means no specification).
+        When it fixes aware datetime to aware, the time is corrected.
+        Otherwise, only the tzinfo is changed.
     rnd : Random, optional
         random number generator to be used
 

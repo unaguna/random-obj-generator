@@ -128,7 +128,6 @@ class TimedeltaRandomFactory(Factory[dt.timedelta]):
         maximum: t.Optional[dt.timedelta] = None,
         unit: t.Optional[dt.timedelta] = None,
     ) -> t.Tuple[dt.timedelta, dt.timedelta, dt.timedelta]:
-
         if minimum is not None and maximum is not None:
             if unit is None:
                 unit = calc_unit(minimum, maximum)

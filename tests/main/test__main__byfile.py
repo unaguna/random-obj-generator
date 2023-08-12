@@ -92,8 +92,8 @@ def test__main__error_with_negative_repeat(capfd, resources, option, length):
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"byfile: error: argument --repeat/-r: invalid positive_int value: '{length}'"
-            in err
+            "byfile: error: argument --repeat/-r: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 
@@ -424,8 +424,8 @@ def test__main__regenerate__error_when_illegal_probability2(
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            "byfile: error: argument --regenerate: must be lower than or equal to 1023/1024"
-            in err
+            "byfile: error: argument --regenerate: "
+            "must be lower than or equal to 1023/1024" in err
         )
 
 

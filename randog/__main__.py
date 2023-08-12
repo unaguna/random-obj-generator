@@ -185,6 +185,64 @@ def _output_to_csv(
     )
 
 
+class _Discarded(Exception):
+    pass
+
+
+def _generate_according_args(
+    args: Args,
+    factory: randog.factory.Factory,
+) -> t.Tuple[t.Any, t.Literal["generated", "stop_iter", "discarded"]]:
+    """generated a value according arguments
+
+    This method generates values assuming it is not a csv output.
+
+    Parameters
+    ----------
+    args
+        the arguments
+    factory
+        the factory
+
+    Returns
+    -------
+    Tuple[Any, Literal["generated", "stop_iter", "discarded"]]
+        the generated value and a return type
+
+    Raises
+    ------
+    RuntimeError
+        When CSV output is specified.
+        This method generates values assuming it is not a csv output.
+    """
+    if args.csv:
+        raise RuntimeError("cannot use this method if --csv is specified")
+
+    if args.list is not None:
+        generated = list(
+            factory.iter(
+                args.list,
+                regenerate=args.regenerate,
+                discard=args.discard,
+                raise_on_factory_stopped=args.error_on_factory_stopped,
+            )
+        )
+    else:
+        try:
+            while True:
+                generated = factory.next(
+                    raise_on_factory_stopped=args.error_on_factory_stopped
+                )
+                if random.random() >= args.regenerate:
+                    break
+        except StopIteration:
+            return None, "stop_iter"
+        if random.random() < args.discard:
+            return None, "discarded"
+
+    return generated, "generated"
+
+
 def main():
     args = Args(sys.argv)
 
@@ -217,29 +275,16 @@ def main():
                                 linesep=args.output_linesep,
                             )
                         else:
-                            if args.list is not None:
-                                generated = list(
-                                    factory.iter(
-                                        args.list,
-                                        regenerate=args.regenerate,
-                                        discard=args.discard,
-                                        raise_on_factory_stopped=args.error_on_factory_stopped,
-                                    )
-                                )
-                            else:
-                                try:
-                                    while True:
-                                        generated = factory.next(
-                                            raise_on_factory_stopped=args.error_on_factory_stopped
-                                        )
-                                        if random.random() >= args.regenerate:
-                                            break
-                                except StopIteration:
-                                    break
-                                if random.random() < args.discard:
-                                    continue
+                            generated, gen_result = _generate_according_args(
+                                args, factory
+                            )
 
-                            _output_generated(generated, fp, args=args)
+                            if gen_result == "stop_iter":
+                                break
+                            elif gen_result == "discarded":
+                                continue
+                            else:
+                                _output_generated(generated, fp, args=args)
     except FactoryStopException:
         print(
             "error: the factory stopped generating before the process was complete",

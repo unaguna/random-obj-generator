@@ -195,5 +195,6 @@ def test__random_datetime__error_when_naive_and_aware(minimum, maximum):
 
     assert (
         e.message
-        == "cannot define range for randdatetime with a naive datetime and an aware datetime"
+        == "cannot define range for randdatetime with a naive datetime and an aware "
+        "datetime"
     )

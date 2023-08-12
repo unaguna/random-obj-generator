@@ -151,7 +151,7 @@ def test__from_example_context__from_example__multi_custom_func__first_factory()
     custom_func2.assert_not_called()
 
 
-def test__from_example_context__from_example__multi_custom_func__first_customized_example():
+def test__from_example_context__from_example__multi_custom_func__1st_customized_expl():
     expected_example = 1
     custom_func1 = MagicMock(
         side_effect=lambda _, *, context, **kwargs: context.terminate_custom_chain()
@@ -214,7 +214,7 @@ def test__from_example_context__from_example__multi_custom_func__second_factory(
     assert custom_func2.call_args.kwargs["context"].current_example == "child_example"
 
 
-def test__from_example_context__from_example__multi_custom_func__second_customized_example():
+def test__from_example_context__from_example__multi_custom_func__2nd_customized_expl():
     expected_example = 1
     custom_func1 = MagicMock(return_value=NotImplemented)
     custom_func2 = MagicMock(
@@ -304,7 +304,7 @@ def test__from_example_context__recursive__multi_custom_func__first_factory():
     custom_func2.assert_not_called()
 
 
-def test__from_example_context__recursive__multi_custom_func__first_customized_example():
+def test__from_example_context__recursive__multi_custom_func__1st_customized_expl():
     expected_example = 1
     custom_func1 = MagicMock(
         side_effect=lambda _, *, context, **kwargs: context.terminate_custom_chain()
@@ -370,7 +370,7 @@ def test__from_example_context__recursive__multi_custom_func__second_factory():
     assert custom_func2.call_args.kwargs["context"].current_example == expected_example
 
 
-def test__from_example_context__recursive__multi_custom_func__second_customized_example():
+def test__from_example_context__recursive__multi_custom_func__2nd_customized_expl():
     expected_example = 1
     custom_func1 = MagicMock(return_value=NotImplemented)
     custom_func2 = MagicMock(

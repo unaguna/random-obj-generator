@@ -35,6 +35,44 @@ def test__main__output_name__def_file_name__factory_count(capfd, tmp_path, resou
             assert out_fp.readline() == ""
 
 
+@pytest.mark.parametrize(
+    ("arguments", "expected"),
+    [
+        (["bool", "1.0"], "True"),
+        (["int", "3", "3"], "3"),
+        (["float", "3", "3"], "3.0"),
+        (["str", "--length", "3", "--charset", "a"], "aaa"),
+        (["date", "2022-01-02", "2022-01-02"], "2022-01-02"),
+        (["time", "11:22:33", "11:22:33"], "11:22:33"),
+    ],
+)
+def test__main__output_name__def_file_name__factory_count__without_byfile(
+    capfd,
+    tmp_path,
+    resources,
+    arguments,
+    expected,
+):
+    output_fmt_path = tmp_path.joinpath("out_{factory_count}_{def_file}.txt")
+    output_paths = tmp_path.joinpath("out_0_.txt")
+    args = [
+        "randog",
+        *arguments,
+        "--output",
+        str(output_fmt_path),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_paths, mode="r") as out_fp:
+            assert out_fp.readline() == f"{expected}\n"
+            assert out_fp.readline() == ""
+
+
 def test__main__output_name__repeat__def_file_name(capfd, tmp_path, resources):
     output_fmt_path = tmp_path.joinpath("out_{def_file}.txt")
     output_paths = [

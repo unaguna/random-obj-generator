@@ -6,7 +6,7 @@ from unittest.mock import patch
 import pytest
 
 import randog.__main__
-from tests.testtools.envvar import EnvVarSnapshot
+from testtools.envvar import EnvVarSnapshot
 
 
 @pytest.mark.parametrize(

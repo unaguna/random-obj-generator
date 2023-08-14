@@ -46,7 +46,6 @@ def __without_rstr():
 def __get_version_of_sqlalchemy() -> t.Optional[str]:
     try:
         import sqlalchemy
-
         return sqlalchemy.__version__
     except (ModuleNotFoundError, AttributeError):
         return None
@@ -55,7 +54,6 @@ def __get_version_of_sqlalchemy() -> t.Optional[str]:
 def __exists_rstr() -> bool:
     try:
         import rstr
-
         return True
     except (ModuleNotFoundError, AttributeError):
         return False

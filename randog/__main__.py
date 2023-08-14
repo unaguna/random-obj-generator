@@ -95,7 +95,11 @@ class _DummyIO:
 
 
 def _open_output_fp(
-    args: Args, number: int, def_file: str
+    args: Args,
+    number: int,
+    *,
+    def_file: str,
+    repeat_count: int,
 ) -> t.Union[_DummyIO, t.TextIO]:
     if args.output_path is None:
         return _DummyIO()
@@ -116,6 +120,7 @@ def _open_output_fp(
             args.output_path_for(
                 number,
                 def_file=def_file,
+                repeat_count=repeat_count,
             ),
             **options,
         )
@@ -247,6 +252,7 @@ def main():
                     args,
                     index,
                     def_file=def_file,
+                    repeat_count=r_index,
                 ) as fp_opened:
                     index += 1
                     # args に応じて出力先 fp を決定する。

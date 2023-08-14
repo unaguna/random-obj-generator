@@ -1,6 +1,8 @@
 import sys
 from unittest.mock import patch
 
+import pytest
+
 import randog.__main__
 
 
@@ -65,3 +67,55 @@ def test__main__output_name__repeat__def_file_name(capfd, tmp_path, resources):
             assert out_fp.readline() == "bbb\n"
             assert out_fp.readline() == "bbb\n"
             assert out_fp.readline() == ""
+
+
+@pytest.mark.parametrize(
+    ("output_files", "repeat_options"),
+    [
+        (
+            [
+                ("out_factory_def_0.txt", "aaa"),
+                ("out_factory_def_1.txt", "aaa"),
+                ("out_factory_def_bbb_0.txt", "bbb"),
+                ("out_factory_def_bbb_1.txt", "bbb"),
+            ],
+            ["--repeat=2"],
+        ),
+        (
+            [
+                ("out_factory_def_0.txt", "aaa"),
+                ("out_factory_def_bbb_0.txt", "bbb"),
+            ],
+            [],
+        ),
+    ],
+)
+def test__main__output_name__def_file__repeat_count(
+    capfd,
+    tmp_path,
+    resources,
+    output_files,
+    repeat_options,
+):
+    output_fmt_path = tmp_path.joinpath("out_{def_file}_{repeat_count}.txt")
+    output_files = list((tmp_path.joinpath(f), exp) for f, exp in output_files)
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        str(resources.joinpath("factory_def_bbb.py")),
+        "--output",
+        str(output_fmt_path),
+        *repeat_options,
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        for output_path, expected in output_files:
+            with open(output_path, mode="r") as out_fp:
+                assert out_fp.readline() == f"{expected}\n"
+                assert out_fp.readline() == ""

@@ -148,13 +148,16 @@ class Args:
                 result[key] = value
         return result
 
-    def output_path_for(self, number: int, def_file: str) -> t.Optional[str]:
+    def output_path_for(
+        self, number: int, *, def_file: str, repeat_count: int
+    ) -> t.Optional[str]:
         if self._args.output is None:
             return None
         else:
             return self._args.output.format(
                 number,
                 def_file=def_file,
+                repeat_count=repeat_count,
             )
 
     def get(self, key: str, default: t.Any = None) -> t.Any:

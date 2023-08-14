@@ -10,11 +10,13 @@ from .factory import FactoryDef, FactoryStopException
 from ._main import Args, Subcmd, get_subcmd_def
 
 
-def _build_factories(args: Args) -> t.Iterator[t.Tuple[str, randog.factory.Factory]]:
+def _build_factories(
+    args: Args,
+) -> t.Iterator[t.Tuple[int, str, randog.factory.Factory]]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
 
     if args.sub_cmd == Subcmd.Byfile:
-        for filepath in args.factories:
+        for factory_count, filepath in enumerate(args.factories):
             if filepath == "-":
                 def_file_name = ""
                 factory_def = randog.factory.from_pyfile(sys.stdin, full_response=True)
@@ -29,10 +31,10 @@ def _build_factories(args: Args) -> t.Iterator[t.Tuple[str, randog.factory.Facto
             if post_process is not None:
                 factory = factory.post_process(post_process)
 
-            yield def_file_name, factory
+            yield factory_count, def_file_name, factory
     else:
         iargs, kwargs = subcmd_def.build_args(args)
-        yield "", subcmd_def.get_factory_constructor()(*iargs, **kwargs)
+        yield 0, "", subcmd_def.get_factory_constructor()(*iargs, **kwargs)
 
 
 def _get_csv_field(pre_value: t.Mapping, col) -> t.Any:
@@ -100,6 +102,7 @@ def _open_output_fp(
     *,
     def_file: str,
     repeat_count: int,
+    factory_count: int,
 ) -> t.Union[_DummyIO, t.TextIO]:
     if args.output_path is None:
         return _DummyIO()
@@ -121,6 +124,7 @@ def _open_output_fp(
                 number,
                 def_file=def_file,
                 repeat_count=repeat_count,
+                factory_count=factory_count,
             ),
             **options,
         )
@@ -246,13 +250,14 @@ def main():
 
     try:
         index = 0
-        for def_file, factory in _build_factories(args):
+        for factory_count, def_file, factory in _build_factories(args):
             for r_index in range(args.repeat):
                 with _open_output_fp(
                     args,
                     index,
                     def_file=def_file,
                     repeat_count=r_index,
+                    factory_count=factory_count,
                 ) as fp_opened:
                     index += 1
                     # args に応じて出力先 fp を決定する。

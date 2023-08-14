@@ -6,11 +6,11 @@ import pytest
 import randog.__main__
 
 
-def test__main__output_name__def_file_name(capfd, tmp_path, resources):
-    output_fmt_path = tmp_path.joinpath("out_{def_file}.txt")
+def test__main__output_name__def_file_name__factory_count(capfd, tmp_path, resources):
+    output_fmt_path = tmp_path.joinpath("out_{factory_count}_{def_file}.txt")
     output_paths = [
-        tmp_path.joinpath("out_factory_def.txt"),
-        tmp_path.joinpath("out_factory_def_bbb.txt"),
+        tmp_path.joinpath("out_0_factory_def.txt"),
+        tmp_path.joinpath("out_1_factory_def_bbb.txt"),
     ]
     args = [
         "randog",

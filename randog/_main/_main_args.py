@@ -95,13 +95,6 @@ class Args:
             raise ValueError(f"illegal linesep: {specified}")
 
     @property
-    def multiple_output_path(self) -> bool:
-        if self._args.output is None:
-            return False
-        else:
-            return self.output_path_for(1) != self.output_path_for(2)
-
-    @property
     def iso(self) -> bool:
         if hasattr(self._args, "iso"):
             return self._args.iso
@@ -155,11 +148,14 @@ class Args:
                 result[key] = value
         return result
 
-    def output_path_for(self, number: int) -> t.Optional[str]:
+    def output_path_for(self, number: int, def_file: str) -> t.Optional[str]:
         if self._args.output is None:
             return None
         else:
-            return self._args.output.format(number)
+            return self._args.output.format(
+                number,
+                def_file=def_file,
+            )
 
     def get(self, key: str, default: t.Any = None) -> t.Any:
         if hasattr(self._args, key):

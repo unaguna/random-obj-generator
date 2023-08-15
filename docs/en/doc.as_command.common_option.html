@@ -127,10 +127,14 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p><code class="code docutils literal notranslate"><span class="pre">--output</span></code> option can be used to output to a file, as in the following example.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
 
+<span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
+
 <span class="c1"># {now} will be replaced by the current time</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out_<span class="o">{</span>now:%Y%m%d%H%M%S<span class="o">}</span>.txt
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
 </pre></div>
 </div>
+<p>As above example, You can specify the <a class="reference external" href="https://docs.python.org/3/library/codecs.html#standard-encodings">encoding</a> and newline character for output with options <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>).</p>
 <p>As the example above also uses {now}, the following placeholders can be used with <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">format specification</a>.</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -158,12 +162,12 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </dd>
 </dl>
 </li>
+<li><dl class="simple">
+<dt>(environment variables):</dt><dd><p>Environment variables can be used as placeholders, such as <code class="code docutils literal notranslate"><span class="pre">{HOME}</span></code>.</p>
+</dd>
+</dl>
+</li>
 </ul>
-<p>As following example, You can specify the encoding and newline character for output with options <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>).</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
-</pre></div>
-</div>
 </section>
 <section id="iteration">
 <span id="id1"></span><h2>Iteration<a class="headerlink" href="#iteration" title="Permalink to this heading"></a></h2>

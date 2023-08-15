@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-15 15:11+0900\n"
+"POT-Creation-Date: 2023-08-15 15:32+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -69,7 +69,19 @@ msgid ""
 "following example."
 msgstr "以下の例のように :code:`--output` オプションを使用することで、結果をファイル出力することができます。"
 
-#: ../../source/doc.as_command.common_option.rst:36
+#: ../../source/doc.as_command.common_option.rst:40
+msgid ""
+"As above example, You can specify the `encoding "
+"<https://docs.python.org/3/library/codecs.html#standard-encodings>`_ and "
+"newline character for output with options :code:`--output-encoding` "
+"(:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`)."
+msgstr ""
+"上の例のように、オプション :code:`--output-encoding` (:code:`-X`) や :code:`--output-"
+"linesep` (:code:`--O-ls`) を使用することで、出力時の `エンコード "
+"<https://docs.python.org/ja/3/library/codecs.html#standard-encodings>`_ "
+"と改行文字を指定できます。"
+
+#: ../../source/doc.as_command.common_option.rst:43
 msgid ""
 "As the example above also uses {now}, the following placeholders can be "
 "used with `format specification "
@@ -79,11 +91,11 @@ msgstr ""
 "<https://docs.python.org/ja/3/library/string.html#format-string-syntax>`_"
 " も使用できます)。"
 
-#: ../../source/doc.as_command.common_option.rst:39
+#: ../../source/doc.as_command.common_option.rst:46
 msgid ":code:`{0}` (int):"
 msgstr ""
 
-#: ../../source/doc.as_command.common_option.rst:39
+#: ../../source/doc.as_command.common_option.rst:46
 msgid ""
 "Serial number, which is a sequential number when the :code:`--repeat` "
 "option is used or when multiple definition files are used in order in "
@@ -92,60 +104,59 @@ msgstr ""
 "通し番号。:code:`--repeat` オプションを使う場合や byfile "
 "モードで複数の定義ファイルを順番に使用する場合、連番になる。一度しか使用しないなら :code:`{}` でもよい。"
 
-#: ../../source/doc.as_command.common_option.rst:42
+#: ../../source/doc.as_command.common_option.rst:49
 msgid ":code:`{def_file}` (str):"
 msgstr ""
 
-#: ../../source/doc.as_command.common_option.rst:42
+#: ../../source/doc.as_command.common_option.rst:49
 msgid ""
 "The name of the definition file used in byfile mode; however, the "
 "trailing .py is removed. It is replaced by an empty string except in "
 "byfile mode."
 msgstr "byfile モードで使用している定義ファイル名。ただし、末尾の .py は除去される。byfile モード以外では空文字列に置き換えられる。"
 
-#: ../../source/doc.as_command.common_option.rst:45
+#: ../../source/doc.as_command.common_option.rst:52
 msgid ":code:`{repeat_count}` (int):"
 msgstr ""
 
-#: ../../source/doc.as_command.common_option.rst:45
+#: ../../source/doc.as_command.common_option.rst:52
 msgid ""
 "Sequential numbers for repeating with the :code:`--repeat` option. If "
 ":code:`--repeat` is not used, it is replaced by 0."
 msgstr ":code:`--repeat` オプションで繰り返す際の連番。:code:`--repeat` を使用しない場合は 0 に置き換えられる。"
 
-#: ../../source/doc.as_command.common_option.rst:48
+#: ../../source/doc.as_command.common_option.rst:55
 msgid ":code:`{factory_count}` (int):"
 msgstr ""
 
-#: ../../source/doc.as_command.common_option.rst:48
+#: ../../source/doc.as_command.common_option.rst:55
 msgid ""
 "Sequential number assigned to each definition file when using multiple "
 "definition files in byfile mode. If in except in byfile mode, it is "
 "replaced by 0."
 msgstr "byfile モードで複数の定義ファイルを使用する際に定義ファイルごとに付けられる連番。byfile モード以外の場合は 0 に置き換えられる。"
 
-#: ../../source/doc.as_command.common_option.rst:52
+#: ../../source/doc.as_command.common_option.rst:58
 msgid ":code:`{now}` (datetime.datetime):"
 msgstr ""
 
-#: ../../source/doc.as_command.common_option.rst:51
+#: ../../source/doc.as_command.common_option.rst:58
 msgid "Current datetime."
 msgstr "現在日時。"
 
-#: ../../source/doc.as_command.common_option.rst:54
-msgid ""
-"As following example, You can specify the encoding and newline character "
-"for output with options :code:`--output-encoding` (:code:`-X`) and :code"
-":`--output-linesep` (:code:`--O-ls`)."
-msgstr ""
-"下記の例のように、オプション :code:`--output-encoding` (:code:`-X`) や :code:`--output-"
-"linesep` (:code:`--O-ls`) を使用することで、出力時のエンコードと改行文字を指定できます。"
+#: ../../source/doc.as_command.common_option.rst:62
+msgid "(environment variables):"
+msgstr "(環境変数)"
 
-#: ../../source/doc.as_command.common_option.rst:65
+#: ../../source/doc.as_command.common_option.rst:61
+msgid "Environment variables can be used as placeholders, such as :code:`{HOME}`."
+msgstr ":code:`{HOME}` のように環境変数をプレースホルダーとして使用できる。"
+
+#: ../../source/doc.as_command.common_option.rst:67
 msgid "Iteration"
 msgstr "繰り返し"
 
-#: ../../source/doc.as_command.common_option.rst:67
+#: ../../source/doc.as_command.common_option.rst:69
 msgid ""
 "There are two types of repeat generation options: :code:`--list` "
 "(:code:`-L`) and :code:`--repeat` (:code:`-r`)."
@@ -153,19 +164,19 @@ msgstr ""
 "繰り返し値を生成するオプションには、 :code:`--list` (:code:`-L`) と :code:`--repeat` "
 "(:code:`-r`) があります。"
 
-#: ../../source/doc.as_command.common_option.rst:69
+#: ../../source/doc.as_command.common_option.rst:71
 msgid ""
 "If you want to output repeatedly generated objects in a single list, use "
 ":code:`--list` as follows:"
 msgstr "繰り返し生成した値を1つのリストにまとめて出力したい場合は、以下のように :code:`--list` オプションを使用します。"
 
-#: ../../source/doc.as_command.common_option.rst:76
+#: ../../source/doc.as_command.common_option.rst:78
 msgid ""
 "On the other hand, if you want to output each repeatedly generated object"
 " separately, use :code:`--repeat` as follows:"
 msgstr "一方で、繰り返し生成した値を1つずつ個別に出力したい場合、以下のように :code:`--repeat` オプションを使用します。"
 
-#: ../../source/doc.as_command.common_option.rst:84
+#: ../../source/doc.as_command.common_option.rst:86
 msgid ""
 "If you want to output to different files one at a time using "
 ":code:`--repeat`, use :code:`--output` with a placeholder as follows:"
@@ -173,7 +184,7 @@ msgstr ""
 ":code:`--repeat` を使用して生成した値を別々のファイルへ1つずつ出力したい場合、以下のようにプレースホルダーとともに "
 ":code:`--output` オプションを使用します。"
 
-#: ../../source/doc.as_command.common_option.rst:94
+#: ../../source/doc.as_command.common_option.rst:96
 msgid ""
 "The rules for placeholders are the same as `the standard python format "
 "<https://docs.python.org/3/library/string.html#format-string-syntax>`_."
@@ -182,15 +193,15 @@ msgstr ""
 "<https://docs.python.org/ja/3/library/string.html#format-string-syntax>`_"
 " と同一です。"
 
-#: ../../source/doc.as_command.common_option.rst:96
+#: ../../source/doc.as_command.common_option.rst:98
 msgid "See :ref:`output_file` for available placeholders."
 msgstr "使用できるプレースホルダーについては :ref:`output_file` を参照してください。"
 
-#: ../../source/doc.as_command.common_option.rst:100
+#: ../../source/doc.as_command.common_option.rst:102
 msgid "Modify environment variable"
 msgstr "環境変数を変更"
 
-#: ../../source/doc.as_command.common_option.rst:102
+#: ../../source/doc.as_command.common_option.rst:104
 msgid ""
 "In particular, in byfile mode, you may want to specify environment "
 "variables for the purpose of passing values to the definition file. In "
@@ -201,7 +212,7 @@ msgstr ""
 "とくに byfile モードで、定義ファイルに値を受け渡す目的で環境変数を指定したいかもしれません。bash 等では :code:`VAR=VAL"
 " python -m randog ...` のように1行で環境変数を指定できますが、powershellなど一部のシェルではそれができません。"
 
-#: ../../source/doc.as_command.common_option.rst:104
+#: ../../source/doc.as_command.common_option.rst:106
 msgid ""
 "Therefore, randog provides an option to specify environment variables. "
 "You can specify environment variables by using :code:`--env` as follows:"
@@ -209,7 +220,7 @@ msgstr ""
 "そこで、randog では環境変数を指定するオプションを用意しています。次のように :code:`--env` "
 "を使用することで環境変数を指定できます。"
 
-#: ../../source/doc.as_command.common_option.rst:110
+#: ../../source/doc.as_command.common_option.rst:112
 msgid ""
 "The above mentioned execution is useful, for example, when using a "
 "definition file such as the following:"

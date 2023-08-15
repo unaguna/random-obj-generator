@@ -30,8 +30,15 @@ Output to file
 
     python -m randog time --output ./out.txt
 
+    # output to out.txt in UTF-16 LE with line-separator '\r\n'
+    python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
+
     # {now} will be replaced by the current time
-    python -m randog time --output ./out_{now:%Y%m%d%H%M%S}.txt
+    python -m randog time --output './out_{now:%Y%m%d%H%M%S}.txt'
+
+
+As above example, You can specify the `encoding <https://docs.python.org/3/library/codecs.html#standard-encodings>`_ and newline character for output with options :code:`--output-encoding` (:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`).
+
 
 As the example above also uses {now}, the following placeholders can be used with `format specification <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
 
@@ -50,13 +57,8 @@ As the example above also uses {now}, the following placeholders can be used wit
 - :code:`{now}` (datetime.datetime):
     Current datetime.
 
-
-As following example, You can specify the encoding and newline character for output with options :code:`--output-encoding` (:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`).
-
-.. code-block:: shell
-
-    # output to out.txt in UTF-16 LE with line-separator '\r\n'
-    python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
+- (environment variables):
+    Environment variables can be used as placeholders, such as :code:`{HOME}`.
 
 
 .. _iteration:

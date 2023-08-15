@@ -258,3 +258,27 @@ def test__main__output__env(capfd, tmp_path, resources):
         with open(output_path, mode="r") as out_fp:
             assert out_fp.readline() == "aaa\n"
             assert out_fp.readline() == ""
+
+
+def test__main__output__env__with_env_option(capfd, tmp_path, resources):
+    output_fmt_path = tmp_path.joinpath("out_{FOO}.txt")
+    output_path = tmp_path.joinpath("out_testing.txt")
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        "--output",
+        str(output_fmt_path),
+        "--env=FOO=testing",
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_path, mode="r") as out_fp:
+            assert out_fp.readline() == "aaa\n"
+            assert out_fp.readline() == ""

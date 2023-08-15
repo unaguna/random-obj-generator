@@ -19,6 +19,8 @@ For example:
     python -m randog time --repr
 
 
+.. _output_file:
+
 Output to file
 --------------
 
@@ -28,20 +30,33 @@ Output to file
 
     python -m randog time --output ./out.txt
 
-The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option is effective when combined with the following options:
+    # {now} will be replaced by the current time
+    python -m randog time --output ./out_{now:%Y%m%d%H%M%S}.txt
 
-- :code:`--repeat` (:code:`-r`)
+As the example above also uses {now}, the following placeholders can be used with `format specification <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
 
-    See also :ref:`iteration`
+- :code:`{0}` (int):
+    Serial number, which is a sequential number when the :code:`--repeat` option is used or when multiple definition files are used in order in byfile mode. If used only once, :code:`{}` is also acceptable.
 
-- :code:`--output-encoding` (:code:`-X`) or/and :code:`--output-linesep` (:code:`--O-ls`)
+- :code:`{def_file}` (str):
+    The name of the definition file used in byfile mode; however, the trailing .py is removed. It is replaced by an empty string except in byfile mode.
 
-    You can specify the encoding and newline character for output as following example:
+- :code:`{repeat_count}` (int):
+    Sequential numbers for repeating with the :code:`--repeat` option. If :code:`--repeat` is not used, it is replaced by 0.
 
-    .. code-block:: shell
+- :code:`{factory_count}` (int):
+    Sequential number assigned to each definition file when using multiple definition files in byfile mode. If in except in byfile mode, it is replaced by 0.
 
-        # output to out.txt in UTF-16 LE with line-separator '\r\n'
-        python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
+- :code:`{now}` (datetime.datetime):
+    Current datetime.
+
+
+As following example, You can specify the encoding and newline character for output with options :code:`--output-encoding` (:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`).
+
+.. code-block:: shell
+
+    # output to out.txt in UTF-16 LE with line-separator '\r\n'
+    python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
 
 
 .. _iteration:
@@ -77,6 +92,8 @@ On the other hand, if you want to output each repeatedly generated object separa
         python -m randog factory_def.py --repeat 3 --output './out_{:04}.txt'
 
     The rules for placeholders are the same as `the standard python format <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
+
+    See :ref:`output_file` for available placeholders.
 
 
 Modify environment variable

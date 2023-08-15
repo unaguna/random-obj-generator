@@ -124,28 +124,47 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="output-to-file">
-<h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
+<span id="output-file"></span><h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
 <p>以下の例のように <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用することで、結果をファイル出力することができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+
+<span class="c1"># {now} will be replaced by the current time</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out_<span class="o">{</span>now:%Y%m%d%H%M%S<span class="o">}</span>.txt
 </pre></div>
 </div>
-<p>シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。このオプションは、下記のオプションと組み合わせることで効果を発揮します。</p>
-<ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>)</p>
-<blockquote>
-<div><p><a class="reference internal" href="#iteration"><span class="std std-ref">繰り返し</span></a> を参照</p>
-</div></blockquote>
+<p>上の例で {now} を使用しているように、下記のプレースホルダーを使用できます (<a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-string-syntax">書式指定子</a> も使用できます)。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{0}</span></code> (int):</dt><dd><p>通し番号。<code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> オプションを使う場合や byfile モードで複数の定義ファイルを順番に使用する場合、連番になる。一度しか使用しないなら <code class="code docutils literal notranslate"><span class="pre">{}</span></code> でもよい。</p>
+</dd>
+</dl>
 </li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) or/and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>)</p>
-<blockquote>
-<div><p>下記の例のように、出力時のエンコードと改行文字を指定できます。</p>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{def_file}</span></code> (str):</dt><dd><p>byfile モードで使用している定義ファイル名。ただし、末尾の .py は除去される。byfile モード以外では空文字列に置き換えられる。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{repeat_count}</span></code> (int):</dt><dd><p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> オプションで繰り返す際の連番。<code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> を使用しない場合は 0 に置き換えられる。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{factory_count}</span></code> (int):</dt><dd><p>byfile モードで複数の定義ファイルを使用する際に定義ファイルごとに付けられる連番。byfile モード以外の場合は 0 に置き換えられる。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{now}</span></code> (datetime.datetime):</dt><dd><p>現在日時。</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>下記の例のように、オプション <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) や <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>) を使用することで、出力時のエンコードと改行文字を指定できます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
 </pre></div>
 </div>
-</div></blockquote>
-</li>
-</ul>
 </section>
 <section id="iteration">
 <span id="id1"></span><h2>繰り返し<a class="headerlink" href="#iteration" title="この見出しへのパーマリンク"></a></h2>
@@ -171,6 +190,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </pre></div>
 </div>
 <p>プレースホルダーのルールは <a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-string-syntax">標準的な python のフォーマット</a> と同一です。</p>
+<p>使用できるプレースホルダーについては <a class="reference internal" href="#output-file"><span class="std std-ref">ファイル出力</span></a> を参照してください。</p>
 </div>
 </section>
 <section id="modify-environment-variable">

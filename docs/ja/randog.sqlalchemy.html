@@ -129,7 +129,8 @@
 <span class="gp">... </span>    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># specify `randog.sqlalchemy.custom` as `custom_func`</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">custom_func</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">custom</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="n">User</span><span class="p">,</span>
+<span class="gp">... </span>                                      <span class="n">custom_func</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">custom</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 </pre></div>
 </div>

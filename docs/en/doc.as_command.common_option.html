@@ -123,28 +123,47 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="output-to-file">
-<h2>Output to file<a class="headerlink" href="#output-to-file" title="Permalink to this heading"></a></h2>
+<span id="output-file"></span><h2>Output to file<a class="headerlink" href="#output-to-file" title="Permalink to this heading"></a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">--output</span></code> option can be used to output to a file, as in the following example.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+
+<span class="c1"># {now} will be replaced by the current time</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out_<span class="o">{</span>now:%Y%m%d%H%M%S<span class="o">}</span>.txt
 </pre></div>
 </div>
-<p>The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option is effective when combined with the following options:</p>
-<ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>)</p>
-<blockquote>
-<div><p>See also <a class="reference internal" href="#iteration"><span class="std std-ref">Iteration</span></a></p>
-</div></blockquote>
+<p>As the example above also uses {now}, the following placeholders can be used with <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">format specification</a>.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{0}</span></code> (int):</dt><dd><p>Serial number, which is a sequential number when the <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> option is used or when multiple definition files are used in order in byfile mode. If used only once, <code class="code docutils literal notranslate"><span class="pre">{}</span></code> is also acceptable.</p>
+</dd>
+</dl>
 </li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) or/and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>)</p>
-<blockquote>
-<div><p>You can specify the encoding and newline character for output as following example:</p>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{def_file}</span></code> (str):</dt><dd><p>The name of the definition file used in byfile mode; however, the trailing .py is removed. It is replaced by an empty string except in byfile mode.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{repeat_count}</span></code> (int):</dt><dd><p>Sequential numbers for repeating with the <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> option. If <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> is not used, it is replaced by 0.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{factory_count}</span></code> (int):</dt><dd><p>Sequential number assigned to each definition file when using multiple definition files in byfile mode. If in except in byfile mode, it is replaced by 0.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{now}</span></code> (datetime.datetime):</dt><dd><p>Current datetime.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>As following example, You can specify the encoding and newline character for output with options <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>).</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
 </pre></div>
 </div>
-</div></blockquote>
-</li>
-</ul>
 </section>
 <section id="iteration">
 <span id="id1"></span><h2>Iteration<a class="headerlink" href="#iteration" title="Permalink to this heading"></a></h2>
@@ -170,6 +189,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </pre></div>
 </div>
 <p>The rules for placeholders are the same as <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">the standard python format</a>.</p>
+<p>See <a class="reference internal" href="#output-file"><span class="std std-ref">Output to file</span></a> for available placeholders.</p>
 </div>
 </section>
 <section id="modify-environment-variable">

@@ -1,4 +1,5 @@
 import csv
+import datetime
 import json
 import os
 import random
@@ -10,14 +11,20 @@ from .factory import FactoryDef, FactoryStopException
 from ._main import Args, Subcmd, get_subcmd_def
 
 
-def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
+def _build_factories(
+    args: Args,
+) -> t.Iterator[t.Tuple[int, str, randog.factory.Factory]]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
 
     if args.sub_cmd == Subcmd.Byfile:
-        for filepath in args.factories:
+        for factory_count, filepath in enumerate(args.factories):
             if filepath == "-":
+                def_file_name = ""
                 factory_def = randog.factory.from_pyfile(sys.stdin, full_response=True)
             else:
+                def_file_name = os.path.basename(filepath)
+                if def_file_name.endswith(".py"):
+                    def_file_name = def_file_name[:-3]
                 factory_def = randog.factory.from_pyfile(filepath, full_response=True)
             factory = factory_def.factory
 
@@ -25,10 +32,10 @@ def _build_factories(args: Args) -> t.Iterator[randog.factory.Factory]:
             if post_process is not None:
                 factory = factory.post_process(post_process)
 
-            yield factory
+            yield factory_count, def_file_name, factory
     else:
         iargs, kwargs = subcmd_def.build_args(args)
-        yield subcmd_def.get_factory_constructor()(*iargs, **kwargs)
+        yield 0, "", subcmd_def.get_factory_constructor()(*iargs, **kwargs)
 
 
 def _get_csv_field(pre_value: t.Mapping, col) -> t.Any:
@@ -90,13 +97,35 @@ class _DummyIO:
         pass
 
 
-def _open_output_fp_only(args: Args) -> t.Union[_DummyIO, t.TextIO]:
-    if args.output_path is None or args.multiple_output_path:
+def _open_output_fp(
+    args: Args,
+    number: int,
+    *,
+    def_file: str,
+    repeat_count: int,
+    factory_count: int,
+    now: datetime.datetime,
+    already_written_files: t.MutableSet[str],
+) -> t.Union[_DummyIO, t.TextIO]:
+    output_path = args.output_path_for(
+        number,
+        def_file=def_file,
+        repeat_count=repeat_count,
+        factory_count=factory_count,
+        now=now,
+        env=os.environ,
+    )
+
+    if output_path is None:
         return _DummyIO()
     else:
-        options = {
-            "mode": "wt",
-        }
+        options = {}
+
+        if output_path in already_written_files:
+            options["mode"] = "at"
+        else:
+            options["mode"] = "wt"
+            already_written_files.add(output_path)
 
         if args.get("csv", False):
             options["newline"] = ""
@@ -106,26 +135,7 @@ def _open_output_fp_only(args: Args) -> t.Union[_DummyIO, t.TextIO]:
         if args.output_encoding is not None:
             options["encoding"] = args.output_encoding
 
-        return open(args.output_path, **options)
-
-
-def _open_output_fp_numbered(args: Args, number: int) -> t.Union[_DummyIO, t.TextIO]:
-    if args.output_path is None or not args.multiple_output_path:
-        return _DummyIO()
-    else:
-        options = {
-            "mode": "wt",
-        }
-
-        if args.get("csv", False):
-            options["newline"] = ""
-        elif args.output_linesep is not None:
-            options["newline"] = args.output_linesep
-
-        if args.output_encoding is not None:
-            options["encoding"] = args.output_encoding
-
-        return open(args.output_path_for(number), **options)
+        return open(output_path, **options)
 
 
 def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
@@ -245,46 +255,50 @@ def _generate_according_args(
 
 def main():
     args = Args(sys.argv)
+    now = datetime.datetime.now()
+    already_written_files = set()
 
     try:
-        with _open_output_fp_only(args) as fp_only:
-            index = 0
-            for factory in _build_factories(args):
-                for r_index in range(args.repeat):
-                    with _open_output_fp_numbered(args, index) as fp_numbered:
-                        index += 1
-                        # args と index に応じて出力先 fp を決定する。
-                        # args と index に応じて fp_numbered, fp_only の状態が異なるので、それを条件に使用する。
-                        if not isinstance(fp_numbered, _DummyIO):
-                            fp = fp_numbered
-                        elif not isinstance(fp_only, _DummyIO):
-                            fp = fp_only
-                        else:
-                            fp = sys.stdout
+        index = 0
+        for factory_count, def_file, factory in _build_factories(args):
+            for r_index in range(args.repeat):
+                with _open_output_fp(
+                    args,
+                    index,
+                    def_file=def_file,
+                    repeat_count=r_index,
+                    factory_count=factory_count,
+                    now=now,
+                    already_written_files=already_written_files,
+                ) as fp_opened:
+                    index += 1
+                    # args に応じて出力先 fp を決定する。
+                    if not isinstance(fp_opened, _DummyIO):
+                        fp = fp_opened
+                    else:
+                        fp = sys.stdout
 
-                        # 生成処理と出力処理
-                        # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
-                        if args.csv is not None:
-                            _output_to_csv(
-                                factory,
-                                args.csv,
-                                fp,
-                                regenerate=args.regenerate,
-                                discard=args.discard,
-                                raise_on_factory_stopped=args.error_on_factory_stopped,
-                                linesep=args.output_linesep,
-                            )
-                        else:
-                            generated, gen_result = _generate_according_args(
-                                args, factory
-                            )
+                    # 生成処理と出力処理
+                    # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
+                    if args.csv is not None:
+                        _output_to_csv(
+                            factory,
+                            args.csv,
+                            fp,
+                            regenerate=args.regenerate,
+                            discard=args.discard,
+                            raise_on_factory_stopped=args.error_on_factory_stopped,
+                            linesep=args.output_linesep,
+                        )
+                    else:
+                        generated, gen_result = _generate_according_args(args, factory)
 
-                            if gen_result == "stop_iter":
-                                break
-                            elif gen_result == "discarded":
-                                continue
-                            else:
-                                _output_generated(generated, fp, args=args)
+                        if gen_result == "stop_iter":
+                            break
+                        elif gen_result == "discarded":
+                            continue
+                        else:
+                            _output_generated(generated, fp, args=args)
     except FactoryStopException:
         print(
             "error: the factory stopped generating before the process was complete",

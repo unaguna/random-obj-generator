@@ -1,3 +1,4 @@
+import glob
 import sys
 from unittest.mock import patch
 
@@ -157,3 +158,29 @@ def test__main__output_name__def_file__repeat_count(
             with open(output_path, mode="r") as out_fp:
                 assert out_fp.readline() == f"{expected}\n"
                 assert out_fp.readline() == ""
+
+
+def test__main__output_name__now(capfd, tmp_path, resources):
+    output_fmt_path = tmp_path.joinpath("out_{now:%Y%m%d%H%M%S}.txt")
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        str(resources.joinpath("factory_def_bbb.py")),
+        "--output",
+        str(output_fmt_path),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        output_paths = glob.glob(str(tmp_path.joinpath("out_*.txt")))
+
+        assert len(output_paths) == 1
+        with open(output_paths[0], mode="r") as out_fp:
+            assert out_fp.readline() == "aaa\n"
+            assert out_fp.readline() == "bbb\n"
+            assert out_fp.readline() == ""

@@ -1,4 +1,5 @@
 import csv
+import datetime
 import json
 import os
 import random
@@ -103,6 +104,7 @@ def _open_output_fp(
     def_file: str,
     repeat_count: int,
     factory_count: int,
+    now: datetime.datetime,
 ) -> t.Union[_DummyIO, t.TextIO]:
     if args.output_path is None:
         return _DummyIO()
@@ -125,6 +127,7 @@ def _open_output_fp(
                 def_file=def_file,
                 repeat_count=repeat_count,
                 factory_count=factory_count,
+                now=now,
             ),
             **options,
         )
@@ -247,6 +250,7 @@ def _generate_according_args(
 
 def main():
     args = Args(sys.argv)
+    now = datetime.datetime.now()
 
     try:
         index = 0
@@ -258,6 +262,7 @@ def main():
                     def_file=def_file,
                     repeat_count=r_index,
                     factory_count=factory_count,
+                    now=now,
                 ) as fp_opened:
                     index += 1
                     # args に応じて出力先 fp を決定する。

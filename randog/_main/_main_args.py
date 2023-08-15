@@ -4,6 +4,7 @@ the package contains the Args of module execution and its builder
 
 import argparse
 import codecs
+import datetime
 import itertools
 import os
 import typing as t
@@ -149,7 +150,13 @@ class Args:
         return result
 
     def output_path_for(
-        self, number: int, *, def_file: str, repeat_count: int, factory_count: int
+        self,
+        number: int,
+        *,
+        def_file: str,
+        repeat_count: int,
+        factory_count: int,
+        now: datetime.datetime,
     ) -> t.Optional[str]:
         if self._args.output is None:
             return None
@@ -159,6 +166,7 @@ class Args:
                 def_file=def_file,
                 repeat_count=repeat_count,
                 factory_count=factory_count,
+                now=now,
             )
 
     def get(self, key: str, default: t.Any = None) -> t.Any:

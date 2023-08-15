@@ -157,6 +157,7 @@ class Args:
         repeat_count: int,
         factory_count: int,
         now: datetime.datetime,
+        env: t.Mapping[str, str],
     ) -> t.Optional[str]:
         if self._args.output is None:
             return None
@@ -167,6 +168,7 @@ class Args:
                 repeat_count=repeat_count,
                 factory_count=factory_count,
                 now=now,
+                **env,
             )
 
     def get(self, key: str, default: t.Any = None) -> t.Any:

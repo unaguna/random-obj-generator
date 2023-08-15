@@ -113,6 +113,7 @@ def _open_output_fp(
         repeat_count=repeat_count,
         factory_count=factory_count,
         now=now,
+        env=os.environ,
     )
 
     if output_path is None:

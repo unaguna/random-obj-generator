@@ -145,9 +145,10 @@ def test__main__output_name__repeat__def_file_name(capfd, tmp_path, resources):
 
 
 @pytest.mark.parametrize(
-    ("output_files", "repeat_options"),
+    ("output_fmt", "output_files", "repeat_options"),
     [
         (
+            "out_{def_file}_{repeat_count}.txt",
             [
                 ("out_factory_def_0.txt", "aaa"),
                 ("out_factory_def_1.txt", "aaa"),
@@ -157,11 +158,22 @@ def test__main__output_name__repeat__def_file_name(capfd, tmp_path, resources):
             ["--repeat=2"],
         ),
         (
+            "out_{def_file}_{repeat_count}.txt",
             [
                 ("out_factory_def_0.txt", "aaa"),
                 ("out_factory_def_bbb_0.txt", "bbb"),
             ],
             [],
+        ),
+        (
+            "out_{def_file}_{repeat_count:02}.txt",
+            [
+                ("out_factory_def_00.txt", "aaa"),
+                ("out_factory_def_01.txt", "aaa"),
+                ("out_factory_def_bbb_00.txt", "bbb"),
+                ("out_factory_def_bbb_01.txt", "bbb"),
+            ],
+            ["--repeat=2"],
         ),
     ],
 )
@@ -169,10 +181,11 @@ def test__main__output_name__def_file__repeat_count(
     capfd,
     tmp_path,
     resources,
+    output_fmt,
     output_files,
     repeat_options,
 ):
-    output_fmt_path = tmp_path.joinpath("out_{def_file}_{repeat_count}.txt")
+    output_fmt_path = tmp_path.joinpath(output_fmt)
     output_files = list((tmp_path.joinpath(f), exp) for f, exp in output_files)
     args = [
         "randog",

@@ -105,13 +105,26 @@ def _open_output_fp(
     repeat_count: int,
     factory_count: int,
     now: datetime.datetime,
+    already_written_files: t.MutableSet[str],
 ) -> t.Union[_DummyIO, t.TextIO]:
-    if args.output_path is None:
+    output_path = args.output_path_for(
+        number,
+        def_file=def_file,
+        repeat_count=repeat_count,
+        factory_count=factory_count,
+        now=now,
+    )
+
+    if output_path is None:
         return _DummyIO()
     else:
-        options = {
-            "mode": "at",
-        }
+        options = {}
+
+        if output_path in already_written_files:
+            options["mode"] = "at"
+        else:
+            options["mode"] = "wt"
+            already_written_files.add(output_path)
 
         if args.get("csv", False):
             options["newline"] = ""
@@ -121,16 +134,7 @@ def _open_output_fp(
         if args.output_encoding is not None:
             options["encoding"] = args.output_encoding
 
-        return open(
-            args.output_path_for(
-                number,
-                def_file=def_file,
-                repeat_count=repeat_count,
-                factory_count=factory_count,
-                now=now,
-            ),
-            **options,
-        )
+        return open(output_path, **options)
 
 
 def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
@@ -251,6 +255,7 @@ def _generate_according_args(
 def main():
     args = Args(sys.argv)
     now = datetime.datetime.now()
+    already_written_files = set()
 
     try:
         index = 0
@@ -263,6 +268,7 @@ def main():
                     repeat_count=r_index,
                     factory_count=factory_count,
                     now=now,
+                    already_written_files=already_written_files,
                 ) as fp_opened:
                     index += 1
                     # args に応じて出力先 fp を決定する。

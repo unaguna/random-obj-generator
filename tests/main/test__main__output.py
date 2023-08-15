@@ -7,6 +7,41 @@ import pytest
 import randog.__main__
 
 
+def _make_exist_file(filepath):
+    with open(filepath, mode="xt") as fp:
+        fp.write("This file must be overwritten.\n")
+
+
+def test__main__output__overwrite_exist_file(capfd, tmp_path, resources):
+    output_fmt_path = tmp_path.joinpath("out.txt")
+    output_path = output_fmt_path
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        str(resources.joinpath("factory_def_bbb.py")),
+        "--output",
+        str(output_fmt_path),
+        "--repeat=2",
+    ]
+
+    _make_exist_file(output_path)
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_path, mode="r") as out_fp:
+            assert out_fp.readline() == "aaa\n"
+            assert out_fp.readline() == "aaa\n"
+            assert out_fp.readline() == "bbb\n"
+            assert out_fp.readline() == "bbb\n"
+            assert out_fp.readline() == ""
+
+
 def test__main__output_name__def_file_name__factory_count(capfd, tmp_path, resources):
     output_fmt_path = tmp_path.joinpath("out_{factory_count}_{def_file}.txt")
     output_paths = [

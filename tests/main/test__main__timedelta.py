@@ -198,6 +198,12 @@ def test__main__timedelta__option_json(capfd, arg, expected):
         ("1h20m40ms", ["--fmt", "%H:%M:%S.%f"], "01:20:00.040000"),
         ("1h20m", ["--iso", "--json"], '"PT1H20M"'),
         ("10d1h20m", ["--fmt", "%tH:%M:%S", "--json"], '"241:20:00"'),
+        # with --list
+        ("1h20m", ["--list=2", "--iso"], "['PT1H20M', 'PT1H20M']"),
+        ("1h20m", ["--list=1", "--fmt", "%D %H:%M:%S"], "['0 01:20:00']"),
+        # with --list and --json
+        ("1h20m", ["--list=2", "--json", "--iso"], '["PT1H20M", "PT1H20M"]'),
+        ("1h20m", ["--list=1", "--json", "--fmt", "%D %H:%M:%S"], '["0 01:20:00"]'),
     ],
 )
 def test__main__timedelta__option_datetime_fmt(capfd, arg, options, expected):

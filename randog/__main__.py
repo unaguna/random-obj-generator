@@ -35,7 +35,12 @@ def _build_factories(
             yield factory_count, def_file_name, factory
     else:
         iargs, kwargs = subcmd_def.build_args(args)
-        yield 0, "", subcmd_def.get_factory_constructor()(*iargs, **kwargs)
+        factory = subcmd_def.get_factory_constructor()(*iargs, **kwargs)
+        if args.iso:
+            factory = factory.post_process(lambda x: x.isoformat())
+        elif args.format:
+            factory = factory.post_process(lambda x: format(x, args.format))
+        yield 0, "", factory
 
 
 def _get_csv_field(pre_value: t.Mapping, col) -> t.Any:
@@ -142,24 +147,10 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
     if args.output_fmt == "repr":
         print(repr(generated), file=fp)
     elif args.output_fmt == "json":
-        json.dump(generated, fp, default=_json_default(args))
+        json.dump(generated, fp, default=str)
         fp.write("\n")
     else:
-        if args.iso and hasattr(generated, "isoformat"):
-            print(generated.isoformat(), file=fp)
-        elif args.format:
-            print(generated.__format__(args.format), file=fp)
-        else:
-            print(generated, file=fp)
-
-
-def _json_default(args: Args):
-    if args.iso:
-        return lambda v: v.isoformat()
-    elif args.format:
-        return lambda v: v.__format__(args.format)
-    else:
-        return str
+        print(generated, file=fp)
 
 
 def _output_to_csv(

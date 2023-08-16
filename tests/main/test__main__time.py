@@ -127,6 +127,12 @@ def test__main__time__option_json(capfd, arg, expected):
         ("00:00", ["--iso"], "00:00:00"),
         ("03:04:05", ["--fmt", "%H:%M:%S"], "03:04:05"),
         ("03:04:05", ["--fmt", "%H:%M:%S.%f"], "03:04:05.000000"),
+        # with --list
+        ("03:04:05", ["--list=2", "--iso"], "['03:04:05', '03:04:05']"),
+        ("03:04:05", ["--list=1", "--fmt", "a%H:%M:%S"], "['a03:04:05']"),
+        # with --list and --json
+        ("03:04:05", ["--list=2", "--json", "--iso"], '["03:04:05", "03:04:05"]'),
+        ("03:04:05", ["--list=1", "--json", "--fmt", "a%H:%M:%S"], '["a03:04:05"]'),
     ],
 )
 def test__main__time__option_time_fmt(capfd, arg, options, expected):

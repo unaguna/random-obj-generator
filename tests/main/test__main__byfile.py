@@ -6,6 +6,7 @@ from unittest.mock import patch
 import pytest
 
 import randog.__main__
+from randog.exceptions import RandogCmdWarning
 from tests.testtools.envvar import EnvVarSnapshot
 
 
@@ -671,8 +672,6 @@ def test__main__error_duplicate_format(capfd, resources, options):
         ("factory_def_dict.py", 1, "0,aaa,2019-10-14\n"),
         ("factory_def_dict_without_col.py", 1, "0,aaa,2019-10-14\n"),
         ("factory_def_list.py", 1, "0,aaa,2019-10-14\n"),
-        ("factory_def.py", 1, "aaa\n"),
-        ("factory_def_date.py", 1, "2019-10-14\n"),
         # Test for multiple lines of output
         ("factory_def_dict.py", 2, "0,aaa,2019-10-14\n1,aaa,2019-10-14\n"),
         (
@@ -697,6 +696,51 @@ def test__main__csv(capfd, resources, def_file, line_num, expected):
 
     with patch.object(sys, "argv", args):
         randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == expected
+        assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("def_file", "line_num", "expected", "warning_msg"),
+    [
+        (
+            "factory_def.py",
+            1,
+            "aaa\n",
+            "--csv is recommended for only collections (such as dict, list, tuple, "
+            "etc.); In CSV output, one generated value is treated as one row, so the "
+            "result is the same as --repeat except for collections.",
+        ),
+        (
+            "factory_def_date.py",
+            1,
+            "2019-10-14\n",
+            "--csv is recommended for only collections (such as dict, list, tuple, "
+            "etc.); In CSV output, one generated value is treated as one row, so the "
+            "result is the same as --repeat except for collections.",
+        ),
+    ],
+)
+def test__main__csv__with_warning(
+    capfd, resources, def_file, line_num, expected, warning_msg
+):
+    args = [
+        "randog",
+        "byfile",
+        "--csv",
+        str(line_num),
+        str(resources.joinpath(def_file)),
+    ]
+
+    with patch.object(sys, "argv", args):
+        with pytest.warns(RandogCmdWarning) as w_ctx:
+            randog.__main__.main()
+
+        assert len(w_ctx.list) == 1
+        assert len(w_ctx.list[0].message.args) == 1
+        assert w_ctx.list[0].message.args[0] == warning_msg
 
         out, err = capfd.readouterr()
         assert out == expected

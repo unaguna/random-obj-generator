@@ -5,8 +5,10 @@ import os
 import random
 import sys
 import typing as t
+import warnings
 
 import randog.factory
+from .exceptions import RandogCmdWarning, apply_formatwarning
 from .factory import FactoryDef, FactoryStopException
 from ._main import Args, Subcmd, get_subcmd_def
 
@@ -86,7 +88,13 @@ def _gen_post_function(
                 ):
                     return pre_value
                 else:
-                    # TODO: 警告
+                    warnings.warn(
+                        "--csv is recommended for only collections (such as "
+                        "dict, list, tuple, etc.); "
+                        "In CSV output, one generated value is treated as one row, "
+                        "so the result is the same as --repeat except for collections.",
+                        RandogCmdWarning,
+                    )
                     return [pre_value]
 
         return _post_function
@@ -245,6 +253,8 @@ def _generate_according_args(
 
 
 def main():
+    apply_formatwarning()
+
     args = Args(sys.argv)
     now = datetime.datetime.now()
     already_written_files = set()

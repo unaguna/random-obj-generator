@@ -6,7 +6,7 @@ from unittest.mock import patch
 import pytest
 
 import randog.__main__
-from randog.exceptions import RandogCmdWarning
+from randog import RandogCmdWarning
 from tests.testtools.envvar import EnvVarSnapshot
 
 

@@ -8,7 +8,7 @@ import typing as t
 import warnings
 
 import randog.factory
-from ..exceptions import RandogCmdWarning, apply_formatwarning
+from ._warning import RandogCmdWarning, apply_formatwarning
 from ..factory import FactoryDef, FactoryStopException
 from . import Args, Subcmd, get_subcmd_def
 

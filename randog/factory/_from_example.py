@@ -140,10 +140,6 @@ class FromExampleContext:
         return self._custom_chain_length
 
     @property
-    def warned_too_long_custom_chain(self) -> bool:
-        return self._warned_too_long_custom_chain
-
-    @property
     def path(self) -> t.Tuple[t.Any, ...]:
         return self._path
 
@@ -172,6 +168,13 @@ class FromExampleContext:
     @property
     def signal_terminate_custom(self) -> bool:
         return self._signal_terminate_custom
+
+    def set_warned_too_long_custom_chain(self):
+        self._warned_too_long_custom_chain = True
+
+    @property
+    def warned_too_long_custom_chain(self) -> bool:
+        return self._warned_too_long_custom_chain
 
     def from_example(self, example: t.Any) -> Factory:
         return from_example(
@@ -246,20 +249,6 @@ class ContextFactory:
             rnd=context.rnd,
             custom_chain_length=context.custom_chain_length + 1,
             warned_too_long_custom_chain=False,
-            examples_stack=context.examples,
-        )
-
-    @classmethod
-    def set_warned_too_long_custom_chain(
-        cls,
-        context: FromExampleContext,
-    ) -> "FromExampleContext":
-        return FromExampleContext(
-            path=context.path,
-            custom_func=context.custom_funcs,
-            rnd=context.rnd,
-            custom_chain_length=context.custom_chain_length + 1,
-            warned_too_long_custom_chain=True,
             examples_stack=context.examples,
         )
 
@@ -354,7 +343,7 @@ def from_example(
                     "because custom_func was executed more than the specified number "
                     "of times during the generation of a single value in from_example."
                 )
-            context = ContextFactory.set_warned_too_long_custom_chain(context)
+                context.set_warned_too_long_custom_chain()
             break
 
         context = ContextFactory.count_up_custom(context)

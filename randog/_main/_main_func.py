@@ -81,7 +81,23 @@ def _gen_post_function(
                 if pre_value is None:
                     return None
                 elif isinstance(pre_value, t.Mapping):
-                    # TODO: 警告
+                    # Why msg_part is defined:
+                    #   Consider the possibility that future modifications will allow
+                    #   users to reach here in other than byfile mode,
+                    #   and branch the error message.
+                    msg_part = (
+                        " in the definition file"
+                        if args.sub_cmd is Subcmd.Byfile
+                        else ""
+                    )
+                    warnings.warn(
+                        f"Since CSV_COLUMNS is not defined{msg_part}, "
+                        "the fields are inserted in the order returned by the "
+                        "dictionary; In this case, fields may not be aligned "
+                        "depending on the FACTORY definition, "
+                        "so it is recommended to define CSV_COLUMNS.",
+                        RandogCmdWarning,
+                    )
                     return list(pre_value.values())
                 elif isinstance(pre_value, t.Sequence) and not isinstance(
                     pre_value, str

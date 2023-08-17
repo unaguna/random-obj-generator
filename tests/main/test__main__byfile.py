@@ -721,6 +721,16 @@ def test__main__csv(capfd, resources, def_file, line_num, expected):
             "etc.); In CSV output, one generated value is treated as one row, so the "
             "result is the same as --repeat except for collections.",
         ),
+        (
+            "factory_def_dict_without_col.py",
+            1,
+            "0,aaa,2019-10-14\n",
+            "Since CSV_COLUMNS is not defined in the definition file, "
+            "the fields are inserted in the order returned by the "
+            "dictionary; In this case, fields may not be aligned "
+            "depending on the FACTORY definition, "
+            "so it is recommended to define CSV_COLUMNS.",
+        ),
     ],
 )
 def test__main__csv__with_warning(

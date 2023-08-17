@@ -722,6 +722,15 @@ def test__main__csv(capfd, resources, def_file, line_num, expected):
             "result is the same as --repeat except for collections.",
         ),
         (
+            "factory_def_useless_col.py",
+            1,
+            "aaa\n",
+            "--csv is recommended for only collections (such as dict, list, tuple, "
+            "etc.); In CSV output, one generated value is treated as one row, so the "
+            "result is the same as --repeat except for collections; "
+            "CSV_COLUMNS in the definition file is ignored.",
+        ),
+        (
             "factory_def_dict_without_col.py",
             1,
             "0,aaa,2019-10-14\n",

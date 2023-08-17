@@ -69,10 +69,19 @@ def _gen_post_function(
                         _get_csv_field(pre_value, col)
                         for col in factory_def.csv_columns
                     ]
-                elif isinstance(pre_value, t.Sequence):
+                elif isinstance(pre_value, t.Sequence) and not isinstance(
+                    pre_value, str
+                ):
                     return pre_value
                 else:
-                    # TODO: 警告
+                    warnings.warn(
+                        "--csv is recommended for only collections (such as "
+                        "dict, list, tuple, etc.); "
+                        "In CSV output, one generated value is treated as one row, "
+                        "so the result is the same as --repeat except for collections; "
+                        "CSV_COLUMNS in the definition file is ignored.",
+                        RandogCmdWarning,
+                    )
                     return [pre_value]
 
         else:

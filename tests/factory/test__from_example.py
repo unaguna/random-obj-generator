@@ -412,6 +412,7 @@ def test__from_example__custom_func__logging_infinity_loop(caplog):
     value = factory.next()
 
     assert len(caplog.records) == 1
+    assert caplog.records[0].name == "randog.factory"
     assert caplog.records[0].levelname == "WARNING"
     assert caplog.records[0].message == (
         "The application of custom_func in this generation was stopped "

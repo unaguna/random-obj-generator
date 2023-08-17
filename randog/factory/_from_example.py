@@ -349,7 +349,7 @@ def from_example(
         # Limit the number of customizations to avoid infinite loops
         if context.custom_chain_length >= 32:
             if not context.warned_too_long_custom_chain:
-                logger.warn(
+                logger.warning(
                     "The application of custom_func in this generation was stopped "
                     "because custom_func was executed more than the specified number "
                     "of times during the generation of a single value in from_example."

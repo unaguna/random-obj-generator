@@ -3,6 +3,9 @@ import logging
 
 def get_logger(name: str = "") -> logging.Logger:
     if name is None or len(name) == 0:
-        return logging.getLogger("randog")
+        logger = logging.getLogger("randog")
     else:
-        return logging.getLogger(f"randog.{name}")
+        logger = logging.getLogger(f"randog.{name}")
+
+    logger.addHandler(logging.NullHandler())
+    return logger

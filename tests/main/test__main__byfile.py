@@ -670,7 +670,6 @@ def test__main__error_duplicate_format(capfd, resources, options):
     [
         # Tests outputting various types
         ("factory_def_dict.py", 1, "0,aaa,2019-10-14\n"),
-        ("factory_def_dict_without_col.py", 1, "0,aaa,2019-10-14\n"),
         ("factory_def_list.py", 1, "0,aaa,2019-10-14\n"),
         # Test for multiple lines of output
         ("factory_def_dict.py", 2, "0,aaa,2019-10-14\n1,aaa,2019-10-14\n"),

@@ -25,6 +25,7 @@ from . import (
     const,
 )
 from ._timedelta import calc_unit
+from ._logging import logger
 from ..exceptions import FactoryConstructionError
 
 import randog
@@ -105,6 +106,7 @@ _FACTORY_CONSTRUCTOR_BY_EXAMPLE: t.Dict[
 
 class FromExampleContext:
     _custom_chain_length: int
+    _warned_too_long_custom_chain: bool
     _path: t.Tuple[t.Any, ...]
     _custom_funcs: t.Sequence["_CustomFunc"]
     _rnd: t.Optional[Random]
@@ -119,6 +121,7 @@ class FromExampleContext:
         rnd: t.Optional[Random],
         examples_stack: t.Tuple[t.Any, ...],
         custom_chain_length: int = 0,
+        warned_too_long_custom_chain: bool = False,
     ):
         self._path = path
         if custom_func is None:
@@ -130,10 +133,15 @@ class FromExampleContext:
         self._rnd = rnd
         self._example_stacks = examples_stack
         self._custom_chain_length = custom_chain_length
+        self._warned_too_long_custom_chain = warned_too_long_custom_chain
 
     @property
     def custom_chain_length(self) -> int:
         return self._custom_chain_length
+
+    @property
+    def warned_too_long_custom_chain(self) -> bool:
+        return self._warned_too_long_custom_chain
 
     @property
     def path(self) -> t.Tuple[t.Any, ...]:
@@ -237,6 +245,21 @@ class ContextFactory:
             custom_func=context.custom_funcs,
             rnd=context.rnd,
             custom_chain_length=context.custom_chain_length + 1,
+            warned_too_long_custom_chain=False,
+            examples_stack=context.examples,
+        )
+
+    @classmethod
+    def set_warned_too_long_custom_chain(
+        cls,
+        context: FromExampleContext,
+    ) -> "FromExampleContext":
+        return FromExampleContext(
+            path=context.path,
+            custom_func=context.custom_funcs,
+            rnd=context.rnd,
+            custom_chain_length=context.custom_chain_length + 1,
+            warned_too_long_custom_chain=True,
             examples_stack=context.examples,
         )
 
@@ -250,6 +273,7 @@ class ContextFactory:
             custom_func=context.custom_funcs,
             rnd=context.rnd,
             custom_chain_length=context.custom_chain_length,
+            warned_too_long_custom_chain=context.warned_too_long_custom_chain,
             examples_stack=context.examples,
         )
 
@@ -324,7 +348,13 @@ def from_example(
 
         # Limit the number of customizations to avoid infinite loops
         if context.custom_chain_length >= 32:
-            # TODO: ログ出力
+            if not context.warned_too_long_custom_chain:
+                logger.warn(
+                    "The application of custom_func in this generation was stopped "
+                    "because custom_func was executed more than the specified number "
+                    "of times during the generation of a single value in from_example."
+                )
+            context = ContextFactory.set_warned_too_long_custom_chain(context)
             break
 
         context = ContextFactory.count_up_custom(context)

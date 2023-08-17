@@ -404,6 +404,23 @@ def test__from_example__custom_func():
     assert value.get("c") is True
 
 
+def test__from_example__custom_func__logging_infinity_loop(caplog):
+    def _custom_func(example, *, context, **kwargs):
+        return example + 1
+
+    factory = randog.factory.from_example(0, custom_func=_custom_func)
+    value = factory.next()
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "WARNING"
+    assert caplog.records[0].message == (
+        "The application of custom_func in this generation was stopped "
+        "because custom_func was executed more than the specified number "
+        "of times during the generation of a single value in from_example."
+    )
+    assert isinstance(value, int)
+
+
 def test__from_example__custom_func__context_key():
     def _custom_func(
         example,

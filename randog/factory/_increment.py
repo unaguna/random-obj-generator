@@ -2,6 +2,7 @@ import math
 from random import Random
 import typing as t
 
+from ._logging import logger
 from ._base import Factory
 from ._by_iterator import by_iterator
 from ..exceptions import FactoryConstructionError
@@ -53,4 +54,5 @@ def _increment(initial_value: int, maximum: int) -> t.Iterator[int]:
         next_value += 1
 
         if next_value > maximum:
+            logger.debug("increment() has reached its maximum value and resumes from 1")
             next_value = 1

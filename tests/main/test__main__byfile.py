@@ -1,6 +1,7 @@
 import itertools
 import json
 import sys
+import warnings
 from unittest.mock import patch
 
 import pytest
@@ -8,6 +9,10 @@ import pytest
 import randog.__main__
 from randog import RandogCmdWarning
 from tests.testtools.envvar import EnvVarSnapshot
+
+
+class _DummyWarning(Warning):
+    pass
 
 
 @pytest.mark.parametrize(
@@ -702,6 +707,14 @@ def test__main__csv(capfd, resources, def_file, line_num, expected):
 
 
 @pytest.mark.parametrize(
+    ("hide_warning", "q_options"),
+    [
+        (False, []),
+        (True, ["--quiet"]),
+        (True, ["-q"]),
+    ],
+)
+@pytest.mark.parametrize(
     ("def_file", "line_num", "expected", "warning_msg"),
     [
         (
@@ -742,7 +755,7 @@ def test__main__csv(capfd, resources, def_file, line_num, expected):
     ],
 )
 def test__main__csv__with_warning(
-    capfd, resources, def_file, line_num, expected, warning_msg
+    capfd, resources, hide_warning, q_options, def_file, line_num, expected, warning_msg
 ):
     args = [
         "randog",
@@ -750,15 +763,23 @@ def test__main__csv__with_warning(
         "--csv",
         str(line_num),
         str(resources.joinpath(def_file)),
+        *q_options,
     ]
 
     with patch.object(sys, "argv", args):
-        with pytest.warns(RandogCmdWarning) as w_ctx:
+        with pytest.warns((RandogCmdWarning, _DummyWarning)) as w_ctx:
+            warnings.warn("dummy for test", _DummyWarning)
             randog.__main__.main()
 
-        assert len(w_ctx.list) == 1
-        assert len(w_ctx.list[0].message.args) == 1
-        assert w_ctx.list[0].message.args[0] == warning_msg
+        if hide_warning:
+            assert len(w_ctx.list) == 1
+            assert isinstance(w_ctx.list[0].message, _DummyWarning)
+        else:
+            assert len(w_ctx.list) == 2
+            assert isinstance(w_ctx.list[0].message, _DummyWarning)
+            assert isinstance(w_ctx.list[1].message, RandogCmdWarning)
+            assert len(w_ctx.list[1].message.args) == 1
+            assert w_ctx.list[1].message.args[0] == warning_msg
 
         out, err = capfd.readouterr()
         assert out == expected

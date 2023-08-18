@@ -98,6 +98,15 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         "option.",
     )
     common_opt_group.add_argument(
+        "--quiet",
+        "-q",
+        action="store_true",
+        help=(
+            "hide warnings of randog. "
+            "If you want to hide all warnings, use -W option of python."
+        ),
+    )
+    common_opt_group.add_argument(
         "--env",
         metavar="VAR=VAL",
         action="append",

@@ -8,9 +8,11 @@ import datetime
 import itertools
 import os
 import typing as t
+import warnings
 
 from . import Linesep
 from ._subcmd import Subcmd
+from ._warning import RandogCmdWarning
 
 
 class Args:
@@ -46,6 +48,10 @@ class Args:
         # validate arguments for subcommands
         for subcmd in iter_subcmd_def():
             subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
+
+        # setup warning
+        if self.hide_randog_warnings:
+            warnings.simplefilter("ignore", RandogCmdWarning)
 
         # set environments
         os.environ.update(self.env)
@@ -133,6 +139,10 @@ class Args:
     @property
     def error_on_factory_stopped(self) -> bool:
         return self.get("error_on_factory_stopped", False)
+
+    @property
+    def hide_randog_warnings(self) -> bool:
+        return self.get("quiet", False)
 
     @property
     def env(self) -> t.Mapping[str, str]:

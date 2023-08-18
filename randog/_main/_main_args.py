@@ -6,6 +6,7 @@ import argparse
 import codecs
 import datetime
 import itertools
+import logging
 import os
 import typing as t
 import warnings
@@ -13,6 +14,7 @@ import warnings
 from . import Linesep
 from ._subcmd import Subcmd
 from ._warning import RandogCmdWarning
+from ._logging import logger, CmdLogFormatter
 
 
 class Args:
@@ -45,6 +47,18 @@ class Args:
         # parse the arguments
         self._args = parser.parse_args(argv[1:])
 
+        # setup logging
+        if self.log_stderr:
+            root_logger = logging.getLogger()
+            root_logger.setLevel(self.log_stderr)
+            handler = logging.StreamHandler()
+            handler.formatter = CmdLogFormatter("%(levelname)s: %(message)s")
+            root_logger.addHandler(handler)
+        else:
+            root_logger = logging.getLogger()
+            root_logger.setLevel("WARNING")
+            root_logger.addHandler(logging.NullHandler())
+
         # validate arguments for subcommands
         for subcmd in iter_subcmd_def():
             subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
@@ -55,6 +69,8 @@ class Args:
 
         # set environments
         os.environ.update(self.env)
+
+        logger.info(f"run randog with args: {argv[1:]}")
 
     @property
     def sub_cmd(self) -> Subcmd:
@@ -143,6 +159,10 @@ class Args:
     @property
     def hide_randog_warnings(self) -> bool:
         return self.get("quiet", False)
+
+    @property
+    def log_stderr(self) -> t.Optional[str]:
+        return self.get("log_stderr", None)
 
     @property
     def env(self) -> t.Mapping[str, str]:

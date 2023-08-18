@@ -8,6 +8,7 @@ import typing as t
 import warnings
 
 import randog.factory
+from ._logging import logger
 from ._warning import RandogCmdWarning, apply_formatwarning
 from ..factory import FactoryDef, FactoryStopException
 from . import Args, Subcmd, get_subcmd_def
@@ -173,6 +174,8 @@ def _open_output_fp(
         if args.output_encoding is not None:
             options["encoding"] = args.output_encoding
 
+        logger.debug(f"open file: {output_path}")
+
         return open(output_path, **options)
 
 
@@ -316,6 +319,10 @@ def main():
                             raise_on_factory_stopped=args.error_on_factory_stopped,
                             linesep=args.output_linesep,
                         )
+                        logger.debug(
+                            "output to CSV; "
+                            f"factory_count={factory_count}, repeat_count={r_index}"
+                        )
                     else:
                         generated, gen_result = _generate_according_args(args, factory)
 
@@ -325,6 +332,10 @@ def main():
                             continue
                         else:
                             _output_generated(generated, fp, args=args)
+                            logger.debug(
+                                "output generated; "
+                                f"factory_count={factory_count}, repeat_count={r_index}"
+                            )
     except FactoryStopException:
         print(
             "error: the factory stopped generating before the process was complete",

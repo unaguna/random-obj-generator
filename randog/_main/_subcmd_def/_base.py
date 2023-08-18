@@ -107,6 +107,12 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         ),
     )
     common_opt_group.add_argument(
+        "--log-stderr",
+        default=None,
+        choices=("CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"),
+        help="output logs of specified level or more stronger into standard error.",
+    )
+    common_opt_group.add_argument(
         "--env",
         metavar="VAR=VAL",
         action="append",

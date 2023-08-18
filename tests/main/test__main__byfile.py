@@ -914,7 +914,7 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
     ("options", "expected"),
     [
         ([], "テスト\n"),
-        (["--csv=1"], "テスト\n"),
+        (["--csv=1", "--quiet"], "テスト\n"),
         (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
         (["--list=1"], "['テスト']\n"),
         (["--repeat=1"], "テスト\n"),
@@ -1009,7 +1009,7 @@ def test__main__option_output__error_with_illegal_encoding(
     ("options", "expected"),
     [
         ([], b"aaa"),
-        (["--csv=1"], b"aaa"),
+        (["--csv=1", "--quiet"], b"aaa"),
         (["--json"], b'"aaa"'),
         (["--list=1"], b"['aaa']"),
         (["--repeat=1"], b"aaa"),
@@ -1064,7 +1064,7 @@ def test__main__option_output__linesep(
     ("options", "expected"),
     [
         ([], b"aaa"),
-        (["--csv=1"], b"aaa"),
+        (["--csv=1", "--quiet"], b"aaa"),
         (["--json"], b'"aaa"'),
         (["--list=1"], b"['aaa']"),
         (["--repeat=1"], b"aaa"),
@@ -1148,7 +1148,8 @@ def test__main__csv__with_regenerate_repeat(capfd, tmp_path, resources):
     ]
 
     with patch.object(sys, "argv", args):
-        randog.__main__.main()
+        with pytest.warns(RandogCmdWarning, match="--csv *"):
+            randog.__main__.main()
 
         out, err = capfd.readouterr()
         assert out == ""
@@ -1189,7 +1190,8 @@ def test__main__csv__with_discard_repeat(capfd, tmp_path, resources):
     ]
 
     with patch.object(sys, "argv", args):
-        randog.__main__.main()
+        with pytest.warns(RandogCmdWarning, match="--csv *"):
+            randog.__main__.main()
 
         out, err = capfd.readouterr()
         assert out == ""

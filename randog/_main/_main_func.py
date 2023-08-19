@@ -312,6 +312,7 @@ def _setup_primary_configuration(args: Args):
                 f"{'; '.join(get_message_recursive(e))}",
                 file=sys.stderr,
             )
+            exit(1)
     else:
         apply_default_logging_config()
 

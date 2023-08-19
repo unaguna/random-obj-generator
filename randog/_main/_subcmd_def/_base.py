@@ -117,7 +117,7 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         "--log",
         metavar="LOGGING_CONFIG_PATH",
         default=None,
-        help="logging configuration file (JSON)",
+        help="logging configuration file (JSON or YAML)",
     )
     common_opt_group.add_argument(
         "--env",

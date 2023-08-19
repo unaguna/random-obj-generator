@@ -6,17 +6,19 @@ import argparse
 import codecs
 import datetime
 import itertools
-import json
-import logging
-import logging.config
 import os
 import typing as t
 import warnings
 
 from . import Linesep
+from ._logging import (
+    logger,
+    apply_stderr_logging_config,
+    apply_logging_config_file,
+    apply_default_logging_config,
+)
 from ._subcmd import Subcmd
 from ._warning import RandogCmdWarning
-from ._logging import logger, CmdLogFormatter
 from .._utils.exceptions import get_message_recursive
 
 
@@ -52,31 +54,17 @@ class Args:
 
         # setup logging
         if self.log_stderr:
-            root_logger = logging.getLogger()
-            root_logger.setLevel(self.log_stderr)
-            handler = logging.StreamHandler()
-            handler.formatter = CmdLogFormatter("%(levelname)s: %(message)s")
-            root_logger.addHandler(handler)
+            apply_stderr_logging_config(self.log_stderr)
         elif self.log_config_file:
             try:
-                with open(self.log_config_file, mode="rt") as fp:
-                    config = json.load(fp)
-            except Exception as e:
-                parser.error(
-                    "failed to open the logging configure file; "
-                    f"{'; '.join(get_message_recursive(e))}"
-                )
-            try:
-                logging.config.dictConfig(config)
+                apply_logging_config_file(self.log_config_file)
             except Exception as e:
                 parser.error(
                     "failed to apply the logging configure file; "
                     f"{'; '.join(get_message_recursive(e))}"
                 )
         else:
-            root_logger = logging.getLogger()
-            root_logger.setLevel("WARNING")
-            root_logger.addHandler(logging.NullHandler())
+            apply_default_logging_config()
 
         # validate arguments for subcommands
         for subcmd in iter_subcmd_def():

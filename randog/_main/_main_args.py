@@ -23,6 +23,8 @@ from .._utils.exceptions import get_message_recursive
 
 
 class Args:
+    """Argument object when using randog as command"""
+
     _args: argparse.Namespace
 
     def __init__(self, argv: t.Sequence[str]):
@@ -52,6 +54,32 @@ class Args:
         # parse the arguments
         self._args = parser.parse_args(argv[1:])
 
+        # setup logging, etc.
+        self._setup_primary_configuration(parser=parser)
+
+        # validate arguments for subcommands
+        for subcmd in iter_subcmd_def():
+            subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
+
+        # set environments
+        os.environ.update(self.env)
+
+        logger.info(f"run randog with args: {argv[1:]}")
+
+    def _setup_primary_configuration(self, *, parser: argparse.ArgumentParser):
+        """Setup primary python configuration
+
+        It performs a setup that should be performed as soon as the arguments are
+        determined in accordance with the python specification.
+
+        This method should be executed once and only once when randog is run as command.
+
+        Parameters
+        ----------
+        parser:
+            the argument parser to handle errors
+        """
+
         # setup logging
         if self.log_stderr:
             apply_stderr_logging_config(self.log_stderr)
@@ -66,18 +94,9 @@ class Args:
         else:
             apply_default_logging_config()
 
-        # validate arguments for subcommands
-        for subcmd in iter_subcmd_def():
-            subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
-
         # setup warning
         if self.hide_randog_warnings:
             warnings.simplefilter("ignore", RandogCmdWarning)
-
-        # set environments
-        os.environ.update(self.env)
-
-        logger.info(f"run randog with args: {argv[1:]}")
 
     @property
     def sub_cmd(self) -> Subcmd:

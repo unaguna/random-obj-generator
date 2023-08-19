@@ -312,6 +312,18 @@ def _setup_primary_configuration(args: Args):
                 f"{'; '.join(get_message_recursive(e))}",
                 file=sys.stderr,
             )
+            # If yaml is missed, warn about it, as that might cause Exception
+            try:
+                import yaml
+
+                assert yaml is not None
+            except ModuleNotFoundError:
+                print(
+                    "error: Are you trying to use YAML format logging configuration? "
+                    "If you want to use YAML format configuration files, "
+                    "PyYAML must be installed.",
+                    file=sys.stderr,
+                )
             exit(1)
     else:
         apply_default_logging_config()

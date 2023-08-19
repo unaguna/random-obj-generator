@@ -1,0 +1,15 @@
+version: 1
+formatters:
+  fmt_default:
+    format: "%(asctime)s\t%(levelname)s\t%(name)s\t%(message)s"
+handlers:
+  console:
+    class: "logging.StreamHandler"
+    formatter: "fmt_default"
+    level: "INFO"
+loggers:
+  randog:
+    level: "INFO"
+    propagate: false
+    handlers:
+      - "console"

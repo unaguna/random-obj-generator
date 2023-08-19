@@ -26,6 +26,8 @@ markers = [
     "require_sqlalchemy: mark a test that requires SQLAlchemy.",
     "require_rstr: mark a test that requires rstr.",
     "without_rstr: mark a test that is skipped if rstr is installed.",
+    "require_yaml: mark a test that requires yaml.",
+    "without_yaml: mark a test that is skipped if yaml is installed.",
 ]
 
 [tool.coverage.run]

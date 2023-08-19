@@ -88,6 +88,48 @@ def test__main__logging__apply_config_file(resources, capfd, mode_options):
         assert "DEBUG:" not in err
 
 
+@pytest.mark.require_yaml
+@pytest.mark.parametrize(("mode_options",), _PARAM_MODE_OPTIONS)
+def test__main__logging__apply_config_file_yaml(resources, capfd, mode_options):
+    if isinstance(mode_options, t.Callable):
+        mode_options = mode_options(resources)
+    config_file = resources.joinpath("logging_conf_stderr.yaml")
+    args = ["randog", *mode_options, "--log", str(config_file)]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out != ""
+        assert "\tINFO\trandog.cmd\trun randog with args:" in err
+        assert "DEBUG:" not in err
+
+
+@pytest.mark.without_yaml
+@pytest.mark.parametrize(("mode_options",), _PARAM_MODE_OPTIONS)
+def test__main__logging__apply_config_file_yaml__without_yaml(
+    resources, capfd, mode_options
+):
+    if isinstance(mode_options, t.Callable):
+        mode_options = mode_options(resources)
+    config_file = resources.joinpath("logging_conf_stderr.yaml")
+    args = ["randog", *mode_options, "--log", str(config_file)]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "error: failed to apply the logging configure file; JSONDecodeError: "
+            in err
+        )
+        assert (
+            "error: Are you trying to use YAML format logging configuration? "
+            "If you want to use YAML format configuration files, "
+            "PyYAML must be installed." in err
+        )
+
+
 @pytest.mark.parametrize(("mode_options",), _PARAM_MODE_OPTIONS)
 def test__main__logging__apply_config_file__error_when_missing(
     resources, capfd, mode_options
@@ -127,7 +169,7 @@ def test__main__logging__apply_config_file__error_when_illegal_json(
 
         out, err = capfd.readouterr()
         assert out == ""
-        assert "failed to apply the logging configure file; JSONDecodeError: " in err
+        assert "failed to apply the logging configure file; " in err
 
 
 @pytest.mark.parametrize(("mode_options",), _PARAM_MODE_OPTIONS)

@@ -30,6 +30,13 @@ def apply_stderr_logging_config(level: str):
 
 
 def apply_logging_config_file(config_file: t.Union[str, os.PathLike]):
-    with open(config_file, mode="rt") as fp:
-        config = json.load(fp)
+    try:
+        import yaml
+
+        with open(config_file, mode="rt") as fp:
+            config = yaml.load(fp, yaml.Loader)
+    except ModuleNotFoundError:
+        with open(config_file, mode="rt") as fp:
+            config = json.load(fp)
+
     logging.config.dictConfig(config)

@@ -121,3 +121,53 @@ The above mentioned execution is useful, for example, when using a definition fi
         # Get the value specified for charset from an environment variable
         charset=os.environ["CHARSET"],
     )
+
+
+Logging
+-------
+
+By default, all logs are ignored, including those by randog (exceptions are noted below), but can be configured to output log.
+
+.. warning::
+    This is an experimental feature. It may be removed or significantly changed in the future.
+
+For log output, you can use one of the following options:
+
+- :code:`--log-stderr <LEVEL>`:
+    Outputs logs of the specified level or higher to standard error output.
+- :code:`--log <LOGGING_CONFIG_PATH>`:
+    Uses the specified log configuration file. The file must be in JSON or YAML format and must adhere to `configuration dictionary schema <https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema>`_.
+
+If you wish to make detailed settings for each logger in the configuration file, you can do so for the loggers with the following names:
+
+- :code:`randog`: the root of loggers used by randog
+    - :code:`randog.cmd`: a logger used by randog command execution
+    - :code:`randog.factory`: a logger used in factory generation or other features of factories
+    - (increase loggers as appropriate)
+- (loggers used by other modules)
+
+.. note::
+    `Warnings <https://docs.python.org/3/library/warnings.html>`_ are set up through a different mechanism than logging. See also :ref:`warning`.
+
+.. note::
+    In fact, error messages during command execution also use logging. You can override the error message output setting during command execution by specifying :code:`disable_existing_loggers: true` in the log configuration file. (Although the default value of disable_existing_loggers is true in the standard library specification, the standard error output setting for randog command execution is only overridden if disable_existing_loggers is explicitly set to true.)
+
+    .. warning::
+        This means that if you specify :code:`disable_existing_loggers: true`, error messages may not be displayed on abnormal termination, depending on the setting.
+
+.. _warning:
+
+Warning
+-------
+
+By default, `warnings <https://docs.python.org/3/library/warnings.html>`_ are output to standard error output, but it can be configured.
+
+.. warning::
+    This is an experimental feature. It may be removed or significantly changed in the future.
+
+You can hide warnings of randog by using the option :code:`--quiet`/:code:`-q`. If you wish to hide all warnings, use python's :code:`-W` option; See also `here <https://docs.python.org/3/using/cmdline.html#cmdoption-W>`_.
+
+.. note::
+    It should be possible to hide only randog warnings with :code:`-W` in the spec, but `there seems to be a problem <https://github.com/python/cpython/issues/66733>`_. Use :code:`--quiet`/:code:`-q` of randog.
+
+    Incidentally, the category of warnings that randog command execution produces is :code:`randog.RandogCmdWarning`.

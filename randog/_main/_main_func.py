@@ -308,7 +308,7 @@ def _setup_primary_configuration(args: Args):
             apply_logging_config_file(args.log_config_file)
         except Exception as e:
             print(
-                "failed to apply the logging configure file; "
+                "error: failed to apply the logging configure file; "
                 f"{'; '.join(get_message_recursive(e))}",
                 file=sys.stderr,
             )

@@ -102,7 +102,10 @@ def test__main__logging__apply_config_file__error_when_missing(
 
         out, err = capfd.readouterr()
         assert out == ""
-        assert "failed to apply the logging configure file; FileNotFoundError: " in err
+        assert (
+            "error: failed to apply the logging configure file; FileNotFoundError: "
+            in err
+        )
 
 
 @pytest.mark.parametrize(("mode_options",), _PARAM_MODE_OPTIONS)

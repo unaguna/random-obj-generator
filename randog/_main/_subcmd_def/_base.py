@@ -115,6 +115,7 @@ def add_common_arguments(parser: argparse.ArgumentParser):
     )
     group_logging.add_argument(
         "--log",
+        metavar="LOGGING_CONFIG_PATH",
         default=None,
         help="logging configuration file (JSON)",
     )

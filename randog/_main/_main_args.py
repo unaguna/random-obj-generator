@@ -6,7 +6,9 @@ import argparse
 import codecs
 import datetime
 import itertools
+import json
 import logging
+import logging.config
 import os
 import typing as t
 import warnings
@@ -15,6 +17,7 @@ from . import Linesep
 from ._subcmd import Subcmd
 from ._warning import RandogCmdWarning
 from ._logging import logger, CmdLogFormatter
+from .._utils.exceptions import get_message_recursive
 
 
 class Args:
@@ -54,6 +57,22 @@ class Args:
             handler = logging.StreamHandler()
             handler.formatter = CmdLogFormatter("%(levelname)s: %(message)s")
             root_logger.addHandler(handler)
+        elif self.log_config_file:
+            try:
+                with open(self.log_config_file, mode="rt") as fp:
+                    config = json.load(fp)
+            except Exception as e:
+                parser.error(
+                    "failed to open the logging configure file; "
+                    f"{'; '.join(get_message_recursive(e))}"
+                )
+            try:
+                logging.config.dictConfig(config)
+            except Exception as e:
+                parser.error(
+                    "failed to apply the logging configure file; "
+                    f"{'; '.join(get_message_recursive(e))}"
+                )
         else:
             root_logger = logging.getLogger()
             root_logger.setLevel("WARNING")
@@ -163,6 +182,10 @@ class Args:
     @property
     def log_stderr(self) -> t.Optional[str]:
         return self.get("log_stderr", None)
+
+    @property
+    def log_config_file(self) -> t.Optional[str]:
+        return self.get("log", None)
 
     @property
     def env(self) -> t.Mapping[str, str]:

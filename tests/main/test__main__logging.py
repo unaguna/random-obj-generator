@@ -1,3 +1,4 @@
+import json
 import sys
 import typing as t
 from unittest.mock import patch
@@ -70,3 +71,52 @@ def test__main__logging__stderr__error_when_illegal_level(
         assert out == ""
         assert err.startswith("usage:")
         assert "error: argument --log-stderr: invalid choice: 'AAA'" in err
+
+
+@pytest.mark.parametrize(("mode_options",), _PARAM_MODE_OPTIONS)
+def test__main__logging__apply_config_file(resources, capfd, mode_options):
+    if isinstance(mode_options, t.Callable):
+        mode_options = mode_options(resources)
+    config_file = resources.joinpath("logging_conf_stderr.json")
+    args = ["randog", *mode_options, "--log", str(config_file)]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out != ""
+        assert "\tINFO\trandog.cmd\trun randog with args:" in err
+        assert "DEBUG:" not in err
+
+
+@pytest.mark.parametrize(("mode_options",), _PARAM_MODE_OPTIONS)
+def test__main__logging__apply_config_file__log_file(
+    resources, tmp_path, capfd, mode_options
+):
+    if isinstance(mode_options, t.Callable):
+        mode_options = mode_options(resources)
+    config_tmp_file = resources.joinpath("logging_conf_stderr.json")
+    config_file = tmp_path.joinpath("logging_config.json")
+    log_file = tmp_path.joinpath("testcase.log")
+
+    # Preparation: Create config file
+    with open(config_tmp_file, mode="rt") as fp:
+        config_dict = json.load(fp)
+    config_dict["handlers"]["console"] = {
+        "class": "logging.FileHandler",
+        "filename": str(log_file),
+        "formatter": "fmt_default",
+        "level": "INFO",
+    }
+    with open(config_file, mode="wt") as fp:
+        json.dump(config_dict, fp)
+
+    args = ["randog", *mode_options, "--log", str(config_file)]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out != ""
+        assert err == ""
+
+        with open(log_file, mode="rt") as fp:
+            assert "\tINFO\trandog.cmd\trun randog with args:" in fp.readline()

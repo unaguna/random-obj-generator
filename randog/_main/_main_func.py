@@ -8,8 +8,14 @@ import typing as t
 import warnings
 
 import randog.factory
-from ._logging import logger
+from ._logging import (
+    logger,
+    apply_stderr_logging_config,
+    apply_logging_config_file,
+    apply_default_logging_config,
+)
 from ._warning import RandogCmdWarning, apply_formatwarning
+from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryDef, FactoryStopException
 from . import Args, Subcmd, get_subcmd_def
 
@@ -280,12 +286,53 @@ def _generate_according_args(
     return generated, "generated"
 
 
+def _setup_primary_configuration(args: Args):
+    """Setup primary python configuration
+
+    It performs a setup that should be performed as soon as the arguments are
+    determined in accordance with the python specification.
+
+    This method should be executed once and only once when randog is run as command.
+
+    Parameters
+    ----------
+    args:
+        arguments of command execution
+    """
+
+    # setup logging
+    if args.log_stderr:
+        apply_stderr_logging_config(args.log_stderr)
+    elif args.log_config_file:
+        try:
+            apply_logging_config_file(args.log_config_file)
+        except Exception as e:
+            print(
+                "failed to apply the logging configure file; "
+                f"{'; '.join(get_message_recursive(e))}",
+                file=sys.stderr,
+            )
+    else:
+        apply_default_logging_config()
+
+    # setup warning
+    if args.hide_randog_warnings:
+        warnings.simplefilter("ignore", RandogCmdWarning)
+
+
 def main():
     apply_formatwarning()
 
     args = Args(sys.argv)
     now = datetime.datetime.now()
     already_written_files = set()
+
+    _setup_primary_configuration(args)
+
+    # set environments
+    os.environ.update(args.env)
+
+    logger.info(f"run randog with args: {args.commanded_args}")
 
     try:
         index = 0

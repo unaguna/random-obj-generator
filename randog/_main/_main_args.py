@@ -6,29 +6,22 @@ import argparse
 import codecs
 import datetime
 import itertools
-import os
 import typing as t
-import warnings
 
 from . import Linesep
-from ._logging import (
-    logger,
-    apply_stderr_logging_config,
-    apply_logging_config_file,
-    apply_default_logging_config,
-)
 from ._subcmd import Subcmd
-from ._warning import RandogCmdWarning
-from .._utils.exceptions import get_message_recursive
 
 
 class Args:
     """Argument object when using randog as command"""
 
     _args: argparse.Namespace
+    _commanded_args: t.Sequence[str]
 
     def __init__(self, argv: t.Sequence[str]):
         from ._subcmd_def import iter_subcmd_def
+
+        self._commanded_args = argv[1:]
 
         parser = argparse.ArgumentParser(
             prog="randog",
@@ -52,51 +45,15 @@ class Args:
             subcmd_parsers[subcmd.cmd()] = subcmd.add_parser(subparsers)
 
         # parse the arguments
-        self._args = parser.parse_args(argv[1:])
-
-        # setup logging, etc.
-        self._setup_primary_configuration(parser=parser)
+        self._args = parser.parse_args(self.commanded_args)
 
         # validate arguments for subcommands
         for subcmd in iter_subcmd_def():
             subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
 
-        # set environments
-        os.environ.update(self.env)
-
-        logger.info(f"run randog with args: {argv[1:]}")
-
-    def _setup_primary_configuration(self, *, parser: argparse.ArgumentParser):
-        """Setup primary python configuration
-
-        It performs a setup that should be performed as soon as the arguments are
-        determined in accordance with the python specification.
-
-        This method should be executed once and only once when randog is run as command.
-
-        Parameters
-        ----------
-        parser:
-            the argument parser to handle errors
-        """
-
-        # setup logging
-        if self.log_stderr:
-            apply_stderr_logging_config(self.log_stderr)
-        elif self.log_config_file:
-            try:
-                apply_logging_config_file(self.log_config_file)
-            except Exception as e:
-                parser.error(
-                    "failed to apply the logging configure file; "
-                    f"{'; '.join(get_message_recursive(e))}"
-                )
-        else:
-            apply_default_logging_config()
-
-        # setup warning
-        if self.hide_randog_warnings:
-            warnings.simplefilter("ignore", RandogCmdWarning)
+    @property
+    def commanded_args(self) -> t.Sequence[str]:
+        return self._commanded_args
 
     @property
     def sub_cmd(self) -> Subcmd:

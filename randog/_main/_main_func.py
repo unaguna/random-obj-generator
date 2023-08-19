@@ -307,10 +307,9 @@ def _setup_primary_configuration(args: Args):
         try:
             apply_logging_config_file(args.log_config_file)
         except Exception as e:
-            print(
-                "error: failed to apply the logging configure file; "
+            logger.error(
+                "failed to apply the logging configure file; "
                 f"{'; '.join(get_message_recursive(e))}",
-                file=sys.stderr,
             )
             # If yaml is missed, warn about it, as that might cause Exception
             try:
@@ -318,11 +317,10 @@ def _setup_primary_configuration(args: Args):
 
                 assert yaml is not None
             except ModuleNotFoundError:
-                print(
-                    "error: Are you trying to use YAML format logging configuration? "
+                logger.error(
+                    "Are you trying to use YAML format logging configuration? "
                     "If you want to use YAML format configuration files, "
-                    "PyYAML must be installed.",
-                    file=sys.stderr,
+                    "PyYAML must be installed."
                 )
             exit(1)
     else:
@@ -397,8 +395,8 @@ def main():
                                 f"factory_count={factory_count}, repeat_count={r_index}"
                             )
     except FactoryStopException:
-        print(
-            "error: the factory stopped generating before the process was complete",
-            file=sys.stderr,
-        )
+        logger.error("the factory stopped generating before the process was complete")
+        exit(1)
+    except Exception as e:
+        logger.error("; ".join(get_message_recursive(e)), exc_info=e)
         exit(1)

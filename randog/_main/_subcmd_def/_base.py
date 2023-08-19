@@ -110,7 +110,7 @@ def add_common_arguments(parser: argparse.ArgumentParser):
     group_logging.add_argument(
         "--log-stderr",
         default=None,
-        choices=("CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"),
+        choices=("ERROR", "WARNING", "INFO", "DEBUG"),
         help="output logs of specified level or more stronger into standard error.",
     )
     group_logging.add_argument(

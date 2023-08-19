@@ -26,7 +26,6 @@ _PARAM_MODE_OPTIONS = [
 @pytest.mark.parametrize(
     ("log_options", "include_info", "include_debug"),
     [
-        (["--log-stderr=CRITICAL"], False, False),
         (["--log-stderr=ERROR"], False, False),
         (["--log-stderr=WARNING"], False, False),
         (["--log-stderr=INFO"], True, False),
@@ -234,3 +233,68 @@ def test__main__logging__apply_config_file__log_file(
 
         with open(log_file, mode="rt") as fp:
             assert "\tINFO\trandog.cmd\trun randog with args:" in fp.readline()
+
+
+@pytest.mark.parametrize(
+    ("disable_existing_loggers", "should_output_to_stderr"),
+    [
+        (None, True),  # disable_existing_loggers is not explicitly specified
+        (False, True),
+        (True, False),
+    ],
+)
+def test__main__logging__apply_config_file__error_is_output_to_stderr(
+    resources, tmp_path, capfd, disable_existing_loggers, should_output_to_stderr
+):
+    """
+
+    Case 1:
+    Even if logging conf file is applied, error is output into stderr
+    if disable_existing_loggers is not explicitly True.
+
+    Case 2:
+    Error is not output into stderr
+    if logging conf file claims disable_existing_loggers.
+    """
+
+    factory_def = resources.joinpath("__dummy_factory_def.py")
+    config_tmp_file = resources.joinpath("logging_conf_stderr.json")
+    config_file = tmp_path.joinpath("logging_config.json")
+    log_file = tmp_path.joinpath("testcase.log")
+
+    # Preparation: Create config file
+    with open(config_tmp_file, mode="rt") as fp:
+        config_dict = json.load(fp)
+    config_dict["handlers"]["console"] = {
+        "class": "logging.FileHandler",
+        "filename": str(log_file),
+        "formatter": "fmt_default",
+        "level": "INFO",
+    }
+    if disable_existing_loggers is not None:
+        config_dict["disable_existing_loggers"] = disable_existing_loggers
+    with open(config_file, mode="wt") as fp:
+        json.dump(config_dict, fp)
+
+    args = ["randog", "byfile", str(factory_def), "--log", str(config_file)]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        if should_output_to_stderr:
+            assert (
+                "error: FileNotFoundError: [Errno 2] No such file or directory: " in err
+            )
+            assert "Traceback" not in err
+        else:
+            assert err == ""
+
+        with open(log_file, mode="rt") as fp:
+            assert "INFO\t" in fp.readline()
+            assert (
+                "ERROR\trandog.cmd\tFileNotFoundError: "
+                "[Errno 2] No such file or directory: " in fp.readline()
+            )
+            assert "Traceback" in fp.readline()

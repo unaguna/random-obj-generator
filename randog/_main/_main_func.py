@@ -37,7 +37,7 @@ def _build_factories(
                 factory_def = randog.factory.from_pyfile(filepath, full_response=True)
             factory = factory_def.factory
 
-            post_process = _gen_post_function(args, factory_def)
+            post_process = _gen_post_function_for_byfile_mode(args, factory_def)
             if post_process is not None:
                 factory = factory.post_process(post_process)
 
@@ -46,9 +46,13 @@ def _build_factories(
         iargs, kwargs = subcmd_def.build_args(args)
         factory = subcmd_def.get_factory_constructor()(*iargs, **kwargs)
         if args.iso:
-            factory = factory.post_process(lambda x: x.isoformat())
+            factory = factory.post_process(
+                lambda x: x.isoformat() if x is not None else None
+            )
         elif args.format:
-            factory = factory.post_process(lambda x: format(x, args.format))
+            factory = factory.post_process(
+                lambda x: format(x, args.format) if x is not None else None
+            )
         yield 0, "", factory
 
 
@@ -59,10 +63,15 @@ def _get_csv_field(pre_value: t.Mapping, col) -> t.Any:
         return pre_value.get(col)
 
 
-def _gen_post_function(
+def _gen_post_function_for_byfile_mode(
     args: Args, factory_def: FactoryDef
 ) -> t.Optional[t.Callable[[t.Any], t.Any]]:
-    """args に応じて、factory_def.factory に適用する post_process 関数を作成する。"""
+    """args に応じて、factory_def.factory に適用する post_process 関数を作成する。
+
+    この関数は、byfile モードでのみ使用する。
+    """
+    if args.sub_cmd is not Subcmd.Byfile:
+        raise RuntimeError("internal error; Unexpected function call")
 
     # CSV 出力の場合、CSVの行 (Sequence[Any]) を生成するような post_process を作成する。
     if args.get("csv", False):

@@ -44,7 +44,8 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         type=positive_int,
         help=(
             "repeat generation a specified number of times. "
-            "The results are output one by one; if you want them as a single list, use --list instead."
+            "The results are output one by one; if you want them as a single list, "
+            "use --list instead."
         ),
     )
     common_opt_group.add_argument(
@@ -84,7 +85,8 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         default=None,
         type=encoding,
         help="encoding for output. "
-        "This is only effective when outputting to a file with the '--output'/'-O' option.",
+        "This is only effective when outputting to a file with the '--output'/'-O' "
+        "option.",
     )
     common_opt_group.add_argument(
         "--output-linesep",
@@ -92,7 +94,30 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         default=None,
         choices=Linesep.names(),
         help="line separator for output. "
-        "This is only effective when outputting to a file with the '--output'/'-O' option.",
+        "This is only effective when outputting to a file with the '--output'/'-O' "
+        "option.",
+    )
+    common_opt_group.add_argument(
+        "--quiet",
+        "-q",
+        action="store_true",
+        help=(
+            "hide warnings of randog. "
+            "If you want to hide all warnings, use -W option of python."
+        ),
+    )
+    group_logging = common_opt_group.add_mutually_exclusive_group()
+    group_logging.add_argument(
+        "--log-stderr",
+        default=None,
+        choices=("ERROR", "WARNING", "INFO", "DEBUG"),
+        help="output logs of specified level or more stronger into standard error.",
+    )
+    group_logging.add_argument(
+        "--log",
+        metavar="LOGGING_CONFIG_PATH",
+        default=None,
+        help="logging configuration file (JSON or YAML)",
     )
     common_opt_group.add_argument(
         "--env",

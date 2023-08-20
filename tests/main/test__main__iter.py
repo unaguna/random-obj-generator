@@ -13,8 +13,12 @@ import randog.__main__
         ("factory_def_only_3_times.py", ["--repeat", "4"], "0\n1\n2\n"),
         ("factory_def_only_3_times.py", ["--list", "4"], ""),
         ("factory_def_only_3_times.py", ["--repeat", "2", "--list", "2"], "[0, 1]\n"),
-        ("factory_def_only_3_times.py", ["--csv", "4"], "0\n1\n2\n"),
-        ("factory_def_only_3_times.py", ["--repeat", "2", "--csv", "2"], "0\n1\n2\n"),
+        ("factory_def_only_3_times.py", ["--csv", "4", "--quiet"], "0\n1\n2\n"),
+        (
+            "factory_def_only_3_times.py",
+            ["--repeat", "2", "--csv", "2", "--quiet"],
+            "0\n1\n2\n",
+        ),
     ],
 )
 def test__main__error_on_factory_stopped(
@@ -34,7 +38,7 @@ def test__main__error_on_factory_stopped(
         out, err = capfd.readouterr()
         assert out == expected_out
         assert (
-            f"error: the factory stopped generating before the process was complete"
+            "error: the factory stopped generating before the process was complete"
             in err
         )
 
@@ -50,8 +54,12 @@ def test__main__error_on_factory_stopped(
             ["--repeat", "2", "--list", "2"],
             "[0, 1]\n[2]\n",
         ),
-        ("factory_def_only_3_times.py", ["--csv", "4"], "0\n1\n2\n"),
-        ("factory_def_only_3_times.py", ["--repeat", "2", "--csv", "2"], "0\n1\n2\n"),
+        ("factory_def_only_3_times.py", ["--csv", "4", "--quiet"], "0\n1\n2\n"),
+        (
+            "factory_def_only_3_times.py",
+            ["--repeat", "2", "--csv", "2", "--quiet"],
+            "0\n1\n2\n",
+        ),
     ],
 )
 def test__main__without_error_on_factory_stopped(
@@ -81,8 +89,12 @@ def test__main__without_error_on_factory_stopped(
             ["--repeat", "3", "--list", "1"],
             "[0]\n[1]\n[2]\n",
         ),
-        ("factory_def_sequential.py", ["--csv", "3"], "0\n1\n2\n"),
-        ("factory_def_sequential.py", ["--repeat", "3", "--csv", "1"], "0\n1\n2\n"),
+        ("factory_def_sequential.py", ["--csv", "3", "--quiet"], "0\n1\n2\n"),
+        (
+            "factory_def_sequential.py",
+            ["--repeat", "3", "--csv", "1", "--quiet"],
+            "0\n1\n2\n",
+        ),
         ("factory_def_only_3_times.py", ["--repeat", "3"], "0\n1\n2\n"),
         ("factory_def_only_3_times.py", ["--list", "3"], "[0, 1, 2]\n"),
         (
@@ -90,8 +102,12 @@ def test__main__without_error_on_factory_stopped(
             ["--repeat", "3", "--list", "1"],
             "[0]\n[1]\n[2]\n",
         ),
-        ("factory_def_only_3_times.py", ["--csv", "3"], "0\n1\n2\n"),
-        ("factory_def_only_3_times.py", ["--repeat", "3", "--csv", "1"], "0\n1\n2\n"),
+        ("factory_def_only_3_times.py", ["--csv", "3", "--quiet"], "0\n1\n2\n"),
+        (
+            "factory_def_only_3_times.py",
+            ["--repeat", "3", "--csv", "1", "--quiet"],
+            "0\n1\n2\n",
+        ),
     ],
 )
 def test__main__error_on_factory_stopped__no_error_with_enough_long_factory(

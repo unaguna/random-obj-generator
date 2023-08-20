@@ -16,6 +16,7 @@ def const(
     value : Any
         the value
     rnd : Random, optional
-        It is not normally used, but it can be accepted as an argument to match other Factory construction functions.
+        It is not normally used, but it can be accepted as an argument
+        to match other Factory construction functions.
     """
     return randchoice(value, rnd=rnd)

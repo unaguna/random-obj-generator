@@ -210,7 +210,7 @@ def test__main__str__option_repeat(capfd, resources, option, count):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == f"aa\n" * count
+        assert out == "aa\n" * count
         assert err == ""
 
 
@@ -310,7 +310,7 @@ def test__main__str__option_output(capfd, tmp_path, resources):
         assert err == ""
 
         with open(output_path, mode="r") as out_fp:
-            assert out_fp.readline() == f"aa\n"
+            assert out_fp.readline() == "aa\n"
             assert out_fp.readline() == ""
 
 
@@ -336,7 +336,7 @@ def test__main__str__option_output__option_repeat(capfd, tmp_path, resources):
 
         with open(output_path, mode="r") as out_fp:
             for _ in range(count):
-                assert out_fp.readline() == f"aa\n"
+                assert out_fp.readline() == "aa\n"
             assert out_fp.readline() == ""
 
 
@@ -363,7 +363,7 @@ def test__main__str__option_output__option_repeat__separate(capfd, tmp_path, res
 
         for i in range(count):
             with open(output_paths[i], mode="r") as out_fp:
-                assert out_fp.readline() == f"aa\n"
+                assert out_fp.readline() == "aa\n"
                 assert out_fp.readline() == ""
 
 

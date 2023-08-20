@@ -14,8 +14,11 @@ class SubcmdDefDecimal(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         decimal_parser = subparsers.add_parser(
             Subcmd.Decimal.value,
-            usage="python -m randog decimal [MINIMUM MAXIMUM] [--decimal-len DECIMAL_LENGTH] "
-            "[--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]",
+            usage=(
+                "python -m randog decimal [MINIMUM MAXIMUM] "
+                "[--decimal-len DECIMAL_LENGTH] [--p-inf PROB_P_INF] "
+                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]"
+            ),
             description="It generates values of type decimal.Decimal.",
             add_help=False,
         )
@@ -25,16 +28,22 @@ class SubcmdDefDecimal(SubcmdDef):
             type=float,
             nargs="?",
             metavar="MINIMUM",
-            help="the minimum value. "
-            "If not specified, the behavior is left to the specification of randog.factory.randdecimal.",
+            help=(
+                "the minimum value. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randdecimal."
+            ),
         )
         decimal_args_group.add_argument(
             "maximum",
             type=float,
             nargs="?",
             metavar="MAXIMUM",
-            help="the maximum value. "
-            "If not specified, the behavior is left to the specification of randog.factory.randdecimal.",
+            help=(
+                "the maximum value. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randdecimal."
+            ),
         )
         decimal_args_group.add_argument(
             "--decimal-len",

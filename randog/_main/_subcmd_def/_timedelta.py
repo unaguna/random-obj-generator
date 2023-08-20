@@ -17,9 +17,15 @@ class SubcmdDefTimedelta(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         timedelta_parser = subparsers.add_parser(
             Subcmd.Timedelta.value,
-            usage="python -m randog timedelta [MINIMUM MAXIMUM] [--unit UNIT] [--iso | --fmt FORMAT] [common-options]",
-            description="It generates values of type datetime.timedelta. "
-            "This mode uses the simple format to represent timedelta; such as '30d', '1h30m' and '1d20h30m40s'",
+            usage=(
+                "python -m randog timedelta [MINIMUM MAXIMUM] [--unit UNIT] "
+                "[--iso | --fmt FORMAT] [common-options]"
+            ),
+            description=(
+                "It generates values of type datetime.timedelta. "
+                "This mode uses the simple format to represent timedelta; "
+                "such as '30d', '1h30m' and '1d20h30m40s'"
+            ),
             add_help=False,
         )
         timedelta_args_group = timedelta_parser.add_argument_group("arguments")
@@ -28,23 +34,32 @@ class SubcmdDefTimedelta(SubcmdDef):
             type=timedelta,
             nargs="?",
             metavar="MINIMUM",
-            help="the minimum value with the simple format such as '1d20h30m40s'. "
-            "If not specified, the behavior is left to the specification of randog.factory.randtimedelta.",
+            help=(
+                "the minimum value with the simple format such as '1d20h30m40s'. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randtimedelta."
+            ),
         )
         timedelta_args_group.add_argument(
             "maximum",
             type=timedelta,
             nargs="?",
             metavar="MAXIMUM",
-            help="the maximum value with the simple format such as '1d20h30m40s'. "
-            "If not specified, the behavior is left to the specification of randog.factory.randtimedelta.",
+            help=(
+                "the maximum value with the simple format such as '1d20h30m40s'. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randtimedelta."
+            ),
         )
         timedelta_args_group.add_argument(
             "--unit",
             type=positive_timedelta,
             metavar="UNIT",
-            help="the minimum unit of generated values. "
-            "If not specified, the behavior is left to the specification of randog.factory.randtimedelta.",
+            help=(
+                "the minimum unit of generated values. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randtimedelta."
+            ),
         )
         group_date_fmt = timedelta_args_group.add_mutually_exclusive_group()
         group_date_fmt.add_argument(
@@ -79,7 +94,8 @@ class SubcmdDefTimedelta(SubcmdDef):
             max_by_unit = math.floor(maximum / unit)
             if min_by_unit > max_by_unit:
                 subparser.error(
-                    "argument --unit: there is no multiple of the unit value between MINIMUM and MAXIMUM"
+                    "argument --unit: "
+                    "there is no multiple of the unit value between MINIMUM and MAXIMUM"
                 )
 
         if args.output_fmt == "repr" and args.iso:

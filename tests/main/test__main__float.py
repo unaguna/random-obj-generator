@@ -309,8 +309,8 @@ def test__main__float__error_with_negative_repeat(capfd, resources, option, leng
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"float: error: argument --repeat/-r: invalid positive_int value: '{length}'"
-            in err
+            "float: error: argument --repeat/-r: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 

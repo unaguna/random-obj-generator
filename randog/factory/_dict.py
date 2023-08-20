@@ -13,7 +13,8 @@ _item_tuple = t.Tuple[Factory, float]
 @dataclass
 class DictItem:
     """
-    A rule for generating values corresponding to a key in the random generation of dict.
+    A rule for generating values corresponding to a key in the random generation of
+    dict.
     """
 
     factory: Factory
@@ -65,7 +66,8 @@ def randdict(
     Parameters
     ----------
     items : Mapping
-        the factories of each key. If `items_dict` is specified, `items` will be ignored.
+        the factories of each key.
+        If `items_dict` is specified, `items` will be ignored.
     items_dict: Mapping
         the factories of each key. Use when keyword arguments cannot be specified.
     rnd : Random, optional
@@ -85,7 +87,8 @@ def randdict(
             non_factory_item_keys.append(str(key))
     if len(non_factory_item_keys) > 0:
         raise FactoryConstructionError(
-            f"randdict received non-factory object for item: {', '.join(non_factory_item_keys)}"
+            "randdict received non-factory object for item: "
+            f"{', '.join(non_factory_item_keys)}"
         )
 
     return DictRandomFactory(items_normalized, rnd=rnd)

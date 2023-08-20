@@ -14,7 +14,10 @@ class SubcmdDefDatetime(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         datetime_parser = subparsers.add_parser(
             Subcmd.Datetime.value,
-            usage="python -m randog datetime [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] [common-options]",
+            usage=(
+                "python -m randog datetime [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] "
+                "[common-options]"
+            ),
             description="It generates values of type datetime.datetime.",
             add_help=False,
         )
@@ -24,16 +27,22 @@ class SubcmdDefDatetime(SubcmdDef):
             type=datetime,
             nargs="?",
             metavar="MINIMUM",
-            help="the minimum value with the ISO-8601 format. "
-            "If not specified, the behavior is left to the specification of randog.factory.randdatetime.",
+            help=(
+                "the minimum value with the ISO-8601 format. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randdatetime."
+            ),
         )
         datetime_args_group.add_argument(
             "maximum",
             type=datetime,
             nargs="?",
             metavar="MAXIMUM",
-            help="the maximum value with the ISO-8601 format. "
-            "If not specified, the behavior is left to the specification of randog.factory.randdatetime.",
+            help=(
+                "the maximum value with the ISO-8601 format. "
+                "If not specified, the behavior is left to the specification of "
+                "randog.factory.randdatetime."
+            ),
         )
         group_date_fmt = datetime_args_group.add_mutually_exclusive_group()
         group_date_fmt.add_argument(

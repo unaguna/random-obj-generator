@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>共通オプション &mdash; random-obj-generator 0.10.0 ドキュメント</title>
+  <title>共通オプション &mdash; random-obj-generator 0.11.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.10.0
+                0.11.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -63,6 +63,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#output-to-file">ファイル出力</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#iteration">繰り返し</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modify-environment-variable">環境変数を変更</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logging">ログ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#warning">警告</a></li>
 </ul>
 </li>
 </ul>
@@ -70,6 +72,7 @@
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#details-of-modes">各モードの詳細</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="doc.logging.html">ログ出力</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
@@ -124,26 +127,49 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="output-to-file">
-<h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
+<span id="output-file"></span><h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
 <p>以下の例のように <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用することで、結果をファイル出力することができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
-</pre></div>
-</div>
-<p>シェルのリダイレクト機能を使用することで同様のことができるため、上の例はあまり実用的ではありません。このオプションは、下記のオプションと組み合わせることで効果を発揮します。</p>
-<ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>)</p>
-<blockquote>
-<div><p><a class="reference internal" href="#iteration"><span class="std std-ref">繰り返し</span></a> を参照</p>
-</div></blockquote>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) or/and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>)</p>
-<blockquote>
-<div><p>下記の例のように、出力時のエンコードと改行文字を指定できます。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
+
+<span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
+
+<span class="c1"># {now} will be replaced by the current time</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
 </pre></div>
 </div>
-</div></blockquote>
+<p>上の例のように、オプション <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) や <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>) を使用することで、出力時の <a class="reference external" href="https://docs.python.org/ja/3/library/codecs.html#standard-encodings">エンコード</a> と改行文字を指定できます。</p>
+<p>上の例で {now} を使用しているように、下記のプレースホルダーを使用できます (<a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-string-syntax">書式指定子</a> も使用できます)。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{0}</span></code> (int):</dt><dd><p>通し番号。<code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> オプションを使う場合や byfile モードで複数の定義ファイルを順番に使用する場合、連番になる。一度しか使用しないなら <code class="code docutils literal notranslate"><span class="pre">{}</span></code> でもよい。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{def_file}</span></code> (str):</dt><dd><p>byfile モードで使用している定義ファイル名。ただし、末尾の .py は除去される。byfile モード以外では空文字列に置き換えられる。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{repeat_count}</span></code> (int):</dt><dd><p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> オプションで繰り返す際の連番。<code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> を使用しない場合は 0 に置き換えられる。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{factory_count}</span></code> (int):</dt><dd><p>byfile モードで複数の定義ファイルを使用する際に定義ファイルごとに付けられる連番。byfile モード以外の場合は 0 に置き換えられる。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{now}</span></code> (datetime.datetime):</dt><dd><p>現在日時。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>(環境変数)</dt><dd><p><code class="code docutils literal notranslate"><span class="pre">{HOME}</span></code> のように環境変数をプレースホルダーとして使用できる。</p>
+</dd>
+</dl>
 </li>
 </ul>
 </section>
@@ -171,6 +197,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </pre></div>
 </div>
 <p>プレースホルダーのルールは <a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-string-syntax">標準的な python のフォーマット</a> と同一です。</p>
+<p>使用できるプレースホルダーについては <a class="reference internal" href="#output-file"><span class="std std-ref">ファイル出力</span></a> を参照してください。</p>
 </div>
 </section>
 <section id="modify-environment-variable">
@@ -190,6 +217,58 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
     <span class="n">charset</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CHARSET&quot;</span><span class="p">],</span>
 <span class="p">)</span>
 </pre></div>
+</div>
+</section>
+<section id="logging">
+<h2>ログ<a class="headerlink" href="#logging" title="この見出しへのパーマリンク"></a></h2>
+<p>デフォルトでは randog が出力するものも含めてすべてのログが無視されます (例外は後述) が、ログ出力するように設定することができます。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。</p>
+</div>
+<p>ログ出力について、以下のオプションのいずれか1つを使用できます。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--log-stderr</span> <span class="pre">&lt;LEVEL&gt;</span></code>:</dt><dd><p>指定したレベル以上のログを標準エラー出力へ出力します。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--log</span> <span class="pre">&lt;LOGGING_CONFIG_PATH&gt;</span></code>:</dt><dd><p>指定したログ設定ファイルを使用します。ファイルは JSON もしくは YAML 形式で、<a class="reference external" href="https://docs.python.org/ja/3/library/logging.config.html#configuration-dictionary-schema">configuration dictionary schema</a> に従う必要があります。</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>YAML 形式の設定ファイルを使用する場合、<a class="reference external" href="https://pypi.org/project/PyYAML/">PyYAML</a> をあらかじめインストールしておく必要があります。</p>
+</div>
+<p>設定ファイルを書くにあたって、randog が使用するロガーの情報が必要かもしれません。その場合は、ロギングについてコマンド実行に限定せず記載している <a class="reference internal" href="doc.logging.html"><span class="doc">ログ出力</span></a> をご覧ください。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><a class="reference external" href="https://docs.python.org/ja/3/library/warnings.html">警告</a> はログとは別の仕組みで設定します。<a class="reference internal" href="#warning"><span class="std std-ref">警告</span></a> を参照してください。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>実は、コマンド実行中のエラーメッセージも logging を使用しています。ログ設定ファイルに <code class="code docutils literal notranslate"><span class="pre">disable_existing_loggers:</span> <span class="pre">true</span></code> を指定することで、コマンド実行中のエラーメッセージ出力設定を上書きできます。(標準ライブラリの仕様では disable_existing_loggers のデフォルト値が true ですが、randog のコマンド実行時の標準エラー出力設定については <code class="code docutils literal notranslate"><span class="pre">disable_existing_loggers</span></code> を明示的に true にした場合にのみ上書きします。)</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>つまり、<code class="code docutils literal notranslate"><span class="pre">disable_existing_loggers:</span> <span class="pre">true</span></code> を指定すると、設定次第では異常終了時のエラーメッセージが表示されなくなるということです。</p>
+</div>
+</div>
+</section>
+<section id="warning">
+<span id="id2"></span><h2>警告<a class="headerlink" href="#warning" title="この見出しへのパーマリンク"></a></h2>
+<p>デフォルトで、<a class="reference external" href="https://docs.python.org/ja/3/library/warnings.html">警告</a> は標準エラー出力に出力されますが、設定を変えることができます。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。</p>
+</div>
+<p>randog の警告は <code class="code docutils literal notranslate"><span class="pre">--quiet</span></code>/<code class="code docutils literal notranslate"><span class="pre">-q</span></code> オプションで非表示にできます。すべての警告を非表示にしたい場合は python の <code class="code docutils literal notranslate"><span class="pre">-W</span></code> オプションを使用してください (<a class="reference external" href="https://docs.python.org/ja/3/using/cmdline.html#cmdoption-W">こちら</a> を参照)。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>randogの警告のみを <code class="code docutils literal notranslate"><span class="pre">-W</span></code> で非表示にすることも仕様上はできるはずですが、<a class="reference external" href="https://github.com/python/cpython/issues/66733">問題があるようです</a>。randog の <code class="code docutils literal notranslate"><span class="pre">--quiet</span></code>/<code class="code docutils literal notranslate"><span class="pre">-q</span></code> を使用してください。</p>
+<p>ちなみに、randog のコマンド実行が出す警告のカテゴリは <code class="code docutils literal notranslate"><span class="pre">randog.RandogCmdWarning</span></code> です。</p>
 </div>
 </section>
 </section>

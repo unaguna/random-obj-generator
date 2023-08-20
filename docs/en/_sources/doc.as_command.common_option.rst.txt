@@ -19,6 +19,8 @@ For example:
     python -m randog time --repr
 
 
+.. _output_file:
+
 Output to file
 --------------
 
@@ -28,20 +30,35 @@ Output to file
 
     python -m randog time --output ./out.txt
 
-The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option is effective when combined with the following options:
+    # output to out.txt in UTF-16 LE with line-separator '\r\n'
+    python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
 
-- :code:`--repeat` (:code:`-r`)
+    # {now} will be replaced by the current time
+    python -m randog time --output './out_{now:%Y%m%d%H%M%S}.txt'
 
-    See also :ref:`iteration`
 
-- :code:`--output-encoding` (:code:`-X`) or/and :code:`--output-linesep` (:code:`--O-ls`)
+As above example, You can specify the `encoding <https://docs.python.org/3/library/codecs.html#standard-encodings>`_ and newline character for output with options :code:`--output-encoding` (:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`).
 
-    You can specify the encoding and newline character for output as following example:
 
-    .. code-block:: shell
+As the example above also uses {now}, the following placeholders can be used with `format specification <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
 
-        # output to out.txt in UTF-16 LE with line-separator '\r\n'
-        python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
+- :code:`{0}` (int):
+    Serial number, which is a sequential number when the :code:`--repeat` option is used or when multiple definition files are used in order in byfile mode. If used only once, :code:`{}` is also acceptable.
+
+- :code:`{def_file}` (str):
+    The name of the definition file used in byfile mode; however, the trailing .py is removed. It is replaced by an empty string except in byfile mode.
+
+- :code:`{repeat_count}` (int):
+    Sequential numbers for repeating with the :code:`--repeat` option. If :code:`--repeat` is not used, it is replaced by 0.
+
+- :code:`{factory_count}` (int):
+    Sequential number assigned to each definition file when using multiple definition files in byfile mode. If in except in byfile mode, it is replaced by 0.
+
+- :code:`{now}` (datetime.datetime):
+    Current datetime.
+
+- (environment variables):
+    Environment variables can be used as placeholders, such as :code:`{HOME}`.
 
 
 .. _iteration:
@@ -78,6 +95,8 @@ On the other hand, if you want to output each repeatedly generated object separa
 
     The rules for placeholders are the same as `the standard python format <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
 
+    See :ref:`output_file` for available placeholders.
+
 
 Modify environment variable
 ---------------------------
@@ -102,3 +121,50 @@ The above mentioned execution is useful, for example, when using a definition fi
         # Get the value specified for charset from an environment variable
         charset=os.environ["CHARSET"],
     )
+
+
+Logging
+-------
+
+By default, all logs are ignored, including those by randog (exceptions are noted below), but can be configured to output log.
+
+.. warning::
+    This is an experimental feature. It may be removed or significantly changed in the future.
+
+For log output, you can use one of the following options:
+
+- :code:`--log-stderr <LEVEL>`:
+    Outputs logs of the specified level or higher to standard error output.
+- :code:`--log <LOGGING_CONFIG_PATH>`:
+    Uses the specified log configuration file. The file must be in JSON or YAML format and must adhere to `configuration dictionary schema <https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema>`_.
+
+.. warning::
+    To use YAML format configuration files, `PyYAML <https://pypi.org/project/PyYAML/>`_ must be installed.
+
+In writing the configuration file, you may need information on the loggers used by randog. If so, please refer to :doc:`doc.logging`, which describes logging without limiting it to command execution.
+
+.. note::
+    `Warnings <https://docs.python.org/3/library/warnings.html>`_ are set up through a different mechanism than logging. See also :ref:`warning`.
+
+.. note::
+    In fact, error messages during command execution also use logging. You can override the error message output setting during command execution by specifying :code:`disable_existing_loggers: true` in the log configuration file. (Although the default value of disable_existing_loggers is true in the standard library specification, the standard error output setting for randog command execution is only overridden if disable_existing_loggers is explicitly set to true.)
+
+    .. warning::
+        This means that if you specify :code:`disable_existing_loggers: true`, error messages may not be displayed on abnormal termination, depending on the setting.
+
+.. _warning:
+
+Warning
+-------
+
+By default, `warnings <https://docs.python.org/3/library/warnings.html>`_ are output to standard error output, but it can be configured.
+
+.. warning::
+    This is an experimental feature. It may be removed or significantly changed in the future.
+
+You can hide warnings of randog by using the option :code:`--quiet`/:code:`-q`. If you wish to hide all warnings, use python's :code:`-W` option; See also `here <https://docs.python.org/3/using/cmdline.html#cmdoption-W>`_.
+
+.. note::
+    It should be possible to hide only randog warnings with :code:`-W` in the spec, but `there seems to be a problem <https://github.com/python/cpython/issues/66733>`_. Use :code:`--quiet`/:code:`-q` of randog.
+
+    Incidentally, the category of warnings that randog command execution produces is :code:`randog.RandogCmdWarning`.

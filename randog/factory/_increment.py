@@ -2,6 +2,7 @@ import math
 from random import Random
 import typing as t
 
+from ._logging import logger
 from ._base import Factory
 from ._by_iterator import by_iterator
 from ..exceptions import FactoryConstructionError
@@ -20,10 +21,12 @@ def increment(
     initial_value : int, optional
         the first value
     maximum : int, optional
-        the maximum value. If the generated value reaches the maximum value, 1 is generated next.
+        the maximum value. If the generated value reaches the maximum value,
+        1 is generated next.
         If the maximum value is not specified, it is not reset to 1.
     rnd : Random, optional
-        It is not normally used, but it can be accepted as an argument to match other Factory construction functions.
+        It is not normally used, but it can be accepted as an argument
+        to match other Factory construction functions.
 
     Raises
     ------
@@ -37,7 +40,8 @@ def increment(
 
     if not (1 <= initial_value <= maximum):
         raise FactoryConstructionError(
-            "arguments of increment(initial_value, maximum) must satisfy 1 <= initial_value <= maximum"
+            "arguments of increment(initial_value, maximum) must satisfy "
+            "1 <= initial_value <= maximum"
         )
 
     return by_iterator(_increment(initial_value, maximum))
@@ -50,4 +54,5 @@ def _increment(initial_value: int, maximum: int) -> t.Iterator[int]:
         next_value += 1
 
         if next_value > maximum:
+            logger.debug("increment() has reached its maximum value and resumes from 1")
             next_value = 1

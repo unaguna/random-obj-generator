@@ -25,6 +25,7 @@ from . import (
     const,
 )
 from ._timedelta import calc_unit
+from ._logging import logger
 from ..exceptions import FactoryConstructionError
 
 import randog
@@ -105,6 +106,7 @@ _FACTORY_CONSTRUCTOR_BY_EXAMPLE: t.Dict[
 
 class FromExampleContext:
     _custom_chain_length: int
+    _warned_too_long_custom_chain: bool
     _path: t.Tuple[t.Any, ...]
     _custom_funcs: t.Sequence["_CustomFunc"]
     _rnd: t.Optional[Random]
@@ -119,6 +121,7 @@ class FromExampleContext:
         rnd: t.Optional[Random],
         examples_stack: t.Tuple[t.Any, ...],
         custom_chain_length: int = 0,
+        warned_too_long_custom_chain: bool = False,
     ):
         self._path = path
         if custom_func is None:
@@ -130,6 +133,7 @@ class FromExampleContext:
         self._rnd = rnd
         self._example_stacks = examples_stack
         self._custom_chain_length = custom_chain_length
+        self._warned_too_long_custom_chain = warned_too_long_custom_chain
 
     @property
     def custom_chain_length(self) -> int:
@@ -164,6 +168,13 @@ class FromExampleContext:
     @property
     def signal_terminate_custom(self) -> bool:
         return self._signal_terminate_custom
+
+    def set_warned_too_long_custom_chain(self):
+        self._warned_too_long_custom_chain = True
+
+    @property
+    def warned_too_long_custom_chain(self) -> bool:
+        return self._warned_too_long_custom_chain
 
     def from_example(self, example: t.Any) -> Factory:
         return from_example(
@@ -237,6 +248,7 @@ class ContextFactory:
             custom_func=context.custom_funcs,
             rnd=context.rnd,
             custom_chain_length=context.custom_chain_length + 1,
+            warned_too_long_custom_chain=False,
             examples_stack=context.examples,
         )
 
@@ -250,6 +262,7 @@ class ContextFactory:
             custom_func=context.custom_funcs,
             rnd=context.rnd,
             custom_chain_length=context.custom_chain_length,
+            warned_too_long_custom_chain=context.warned_too_long_custom_chain,
             examples_stack=context.examples,
         )
 
@@ -280,14 +293,20 @@ def from_example(
     example : Any
         the type or the example
     custom_func : Callable | Sequence[Callable]
-        If specified, this function is executed first and its return value is used as a new example.
+        If specified, this function is executed first and
+        its return value is used as a new example.
         If it returns a factory, it is used as is.
-        If it returns `NotImplemented`, `from_example` behaves as if `custom_func` was not specified.
+        If it returns `NotImplemented`, `from_example` behaves
+        as if `custom_func` was not specified.
         The context is passed to this function.
-        Multiple functions may be specified for `custom_func`, and if multiple functions are specified,
-        they are executed in sequence until a value other than NotImplemented is returned.
-        This sequence of processing is also used to create factories for child elements of dict and list.
-        It is recommended that `custom_func` receives `**kwargs` to allow for more keyword arguments in future updates.
+        Multiple functions may be specified for `custom_func`,
+        and if multiple functions are specified,
+        they are executed in sequence until a value
+        other than NotImplemented is returned.
+        This sequence of processing is also used to create factories
+        for child elements of dict and list.
+        It is recommended that `custom_func` receives `**kwargs`
+        to allow for more keyword arguments in future updates.
     rnd : Random, optional
         random number generator to be used
     context : FromExampleContext, optional
@@ -318,7 +337,13 @@ def from_example(
 
         # Limit the number of customizations to avoid infinite loops
         if context.custom_chain_length >= 32:
-            # TODO: ログ出力
+            if not context.warned_too_long_custom_chain:
+                logger.warning(
+                    "The application of custom_func in this generation was stopped "
+                    "because custom_func was executed more than the specified number "
+                    "of times during the generation of a single value in from_example."
+                )
+                context.set_warned_too_long_custom_chain()
             break
 
         context = ContextFactory.count_up_custom(context)
@@ -339,7 +364,8 @@ def from_example(
             # reset signals from custom_func if the example is not customized
             context = ContextFactory.reset_signals(context)
         else:
-            # If customization by custom_funcs is not performed, no further customization is chained.
+            # If customization by custom_funcs is not performed,
+            # no further customization is chained.
             break
 
     if isinstance(example, randog.Example):

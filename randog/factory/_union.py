@@ -24,7 +24,8 @@ def union(
     lazy_choice : bool, optional
         If it is True, when generating a value,
         first generate values with all factories and then decide which of them to adopt.
-        Otherwise, it first decides which factory to adopt, and then generates a value using only that factory.
+        Otherwise, it first decides which factory to adopt,
+        and then generates a value using only that factory.
     rnd : Random, optional
         random number generator to be used
 

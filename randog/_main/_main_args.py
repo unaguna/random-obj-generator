@@ -4,8 +4,8 @@ the package contains the Args of module execution and its builder
 
 import argparse
 import codecs
+import datetime
 import itertools
-import os
 import typing as t
 
 from . import Linesep
@@ -13,21 +13,30 @@ from ._subcmd import Subcmd
 
 
 class Args:
+    """Argument object when using randog as command"""
+
     _args: argparse.Namespace
+    _commanded_args: t.Sequence[str]
 
     def __init__(self, argv: t.Sequence[str]):
         from ._subcmd_def import iter_subcmd_def
 
+        self._commanded_args = argv[1:]
+
         parser = argparse.ArgumentParser(
             prog="randog",
-            description="It generates values randomly according to the specified mode and arguments.",
+            description="It generates values randomly according to the specified mode "
+            "and arguments.",
         )
         subparsers = parser.add_subparsers(
             required=True,
             dest="sub",
             metavar="MODE",
-            help=f"mode of value generation; candidates: {', '.join(map(lambda c: c.value, Subcmd))}. "
-            "For more information, see the command 'randog MODE --help'.",
+            help=(
+                "mode of value generation; candidates: "
+                f"{', '.join(map(lambda c: c.value, Subcmd))}. "
+                "For more information, see the command 'randog MODE --help'."
+            ),
         )
 
         # create subcommands and add them to the ArgumentParser
@@ -36,14 +45,15 @@ class Args:
             subcmd_parsers[subcmd.cmd()] = subcmd.add_parser(subparsers)
 
         # parse the arguments
-        self._args = parser.parse_args(argv[1:])
+        self._args = parser.parse_args(self.commanded_args)
 
         # validate arguments for subcommands
         for subcmd in iter_subcmd_def():
             subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
 
-        # set environments
-        os.environ.update(self.env)
+    @property
+    def commanded_args(self) -> t.Sequence[str]:
+        return self._commanded_args
 
     @property
     def sub_cmd(self) -> Subcmd:
@@ -91,13 +101,6 @@ class Args:
             raise ValueError(f"illegal linesep: {specified}")
 
     @property
-    def multiple_output_path(self) -> bool:
-        if self._args.output is None:
-            return False
-        else:
-            return self.output_path_for(1) != self.output_path_for(2)
-
-    @property
     def iso(self) -> bool:
         if hasattr(self._args, "iso"):
             return self._args.iso
@@ -137,6 +140,18 @@ class Args:
         return self.get("error_on_factory_stopped", False)
 
     @property
+    def hide_randog_warnings(self) -> bool:
+        return self.get("quiet", False)
+
+    @property
+    def log_stderr(self) -> t.Optional[str]:
+        return self.get("log_stderr", None)
+
+    @property
+    def log_config_file(self) -> t.Optional[str]:
+        return self.get("log", None)
+
+    @property
     def env(self) -> t.Mapping[str, str]:
         if self._args.env is None:
             return {}
@@ -151,11 +166,27 @@ class Args:
                 result[key] = value
         return result
 
-    def output_path_for(self, number: int) -> t.Optional[str]:
+    def output_path_for(
+        self,
+        number: int,
+        *,
+        def_file: str,
+        repeat_count: int,
+        factory_count: int,
+        now: datetime.datetime,
+        env: t.Mapping[str, str],
+    ) -> t.Optional[str]:
         if self._args.output is None:
             return None
         else:
-            return self._args.output.format(number)
+            return self._args.output.format(
+                number,
+                def_file=def_file,
+                repeat_count=repeat_count,
+                factory_count=factory_count,
+                now=now,
+                **env,
+            )
 
     def get(self, key: str, default: t.Any = None) -> t.Any:
         if hasattr(self._args, key):

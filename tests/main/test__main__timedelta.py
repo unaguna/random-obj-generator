@@ -142,8 +142,8 @@ def test__main__timedelta__error_unit_unfit_to_min_max(capfd, unit, minimum, max
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            "timedelta: error: argument --unit: there is no multiple of the unit value between MINIMUM and MAXIMUM"
-            in err
+            "timedelta: error: argument --unit: "
+            "there is no multiple of the unit value between MINIMUM and MAXIMUM" in err
         )
 
 
@@ -198,6 +198,12 @@ def test__main__timedelta__option_json(capfd, arg, expected):
         ("1h20m40ms", ["--fmt", "%H:%M:%S.%f"], "01:20:00.040000"),
         ("1h20m", ["--iso", "--json"], '"PT1H20M"'),
         ("10d1h20m", ["--fmt", "%tH:%M:%S", "--json"], '"241:20:00"'),
+        # with --list
+        ("1h20m", ["--list=2", "--iso"], "['PT1H20M', 'PT1H20M']"),
+        ("1h20m", ["--list=1", "--fmt", "%D %H:%M:%S"], "['0 01:20:00']"),
+        # with --list and --json
+        ("1h20m", ["--list=2", "--json", "--iso"], '["PT1H20M", "PT1H20M"]'),
+        ("1h20m", ["--list=1", "--json", "--fmt", "%D %H:%M:%S"], '["0 01:20:00"]'),
     ],
 )
 def test__main__timedelta__option_datetime_fmt(capfd, arg, options, expected):
@@ -263,8 +269,8 @@ def test__main__timedelta__error_with_negative_repeat(capfd, resources, option, 
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"timedelta: error: argument --repeat/-r: invalid positive_int value: '{length}'"
-            in err
+            "timedelta: error: argument --repeat/-r: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 
@@ -325,8 +331,8 @@ def test__main__timedelta__error_with_negative_list(capfd, resources, option, le
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"timedelta: error: argument --list/-L: invalid positive_int value: '{length}'"
-            in err
+            "timedelta: error: argument --list/-L: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 

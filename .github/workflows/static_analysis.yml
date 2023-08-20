@@ -1,6 +1,9 @@
 name: StaticAnalysis
 
-on: [push]
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ "develop" ]
 
 permissions:
   contents: read

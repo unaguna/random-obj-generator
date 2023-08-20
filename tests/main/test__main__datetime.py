@@ -126,6 +126,28 @@ def test__main__datetime__option_json(capfd, arg, expected):
             "2020/01/02 03:04:05.000000",
         ),
         ("2020-01-02T03:04:05", ["--fmt", "%m/%d/%Y"], "01/02/2020"),
+        # with --list
+        (
+            "2020-01-02T03:04:05",
+            ["--list=2", "--iso"],
+            "['2020-01-02T03:04:05', '2020-01-02T03:04:05']",
+        ),
+        (
+            "2020-01-02T03:04:05",
+            ["--list=1", "--fmt", "%Y/%m/%d %H:%M:%S"],
+            "['2020/01/02 03:04:05']",
+        ),
+        # with --list and --json
+        (
+            "2020-01-02T03:04:05",
+            ["--list=2", "--json", "--iso"],
+            '["2020-01-02T03:04:05", "2020-01-02T03:04:05"]',
+        ),
+        (
+            "2020-01-02T03:04:05",
+            ["--list=1", "--json", "--fmt", "%Y/%m/%d %H:%M:%S"],
+            '["2020/01/02 03:04:05"]',
+        ),
     ],
 )
 def test__main__datetime__option_datetime_fmt(capfd, arg, options, expected):
@@ -211,8 +233,8 @@ def test__main__datetime__error_with_negative_repeat(capfd, resources, option, l
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"datetime: error: argument --repeat/-r: invalid positive_int value: '{length}'"
-            in err
+            "datetime: error: argument --repeat/-r: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 
@@ -272,8 +294,8 @@ def test__main__datetime__error_with_negative_list(capfd, resources, option, len
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"datetime: error: argument --list/-L: invalid positive_int value: '{length}'"
-            in err
+            "datetime: error: argument --list/-L: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 

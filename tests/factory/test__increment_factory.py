@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 
 import randog.factory
@@ -41,32 +43,63 @@ def test__increment__initial_value(initial_value, expected):
 
 
 @pytest.mark.parametrize(
-    ("maximum", "expected"), ((None, (1, 2, 3)), (3, (1, 2, 3)), (2, (1, 2, 1)))
+    ("maximum", "expected", "resume"),
+    (
+        (None, (1, 2, 3), False),
+        (3, (1, 2, 3), False),
+        (2, (1, 2, 1), True),
+    ),
 )
-def test__increment__maximum(maximum, expected):
+def test__increment__maximum(maximum, expected, resume, caplog):
+    caplog.set_level(logging.DEBUG)
     factory = randog.factory.increment(maximum=maximum)
 
     values = (*factory.iter(3),)
 
     assert values == expected
 
+    # assert logging
+    if resume:
+        assert len(caplog.record_tuples) == 1
+        assert caplog.record_tuples[0] == (
+            "randog.factory",
+            logging.DEBUG,
+            "increment() has reached its maximum value and resumes from 1",
+        )
+    else:
+        assert len(caplog.records) == 0
+
 
 @pytest.mark.parametrize(
-    ("initial_value", "maximum", "expected"),
+    ("initial_value", "maximum", "expected", "resume"),
     (
-        (None, None, (1, 2, 3)),
-        (1, None, (1, 2, 3)),
-        (None, 3, (1, 2, 3)),
-        (4, 5, (4, 5, 1)),
-        (5, 5, (5, 1, 2)),
+        (None, None, (1, 2, 3), False),
+        (1, None, (1, 2, 3), False),
+        (None, 3, (1, 2, 3), False),
+        (4, 5, (4, 5, 1), True),
+        (5, 5, (5, 1, 2), True),
     ),
 )
-def test__increment__initial_value__maximum(initial_value, maximum, expected):
+def test__increment__initial_value__maximum(
+    initial_value, maximum, expected, resume, caplog
+):
+    caplog.set_level(logging.DEBUG)
     factory = randog.factory.increment(initial_value, maximum)
 
     values = (*factory.iter(3),)
 
     assert values == expected
+
+    # assert logging
+    if resume:
+        assert len(caplog.record_tuples) == 1
+        assert caplog.record_tuples[0] == (
+            "randog.factory",
+            logging.DEBUG,
+            "increment() has reached its maximum value and resumes from 1",
+        )
+    else:
+        assert len(caplog.records) == 0
 
 
 @pytest.mark.parametrize("initial_value", (-1, 0))
@@ -76,8 +109,8 @@ def test__increment__error_when_initial_value_is_lower_than_1(initial_value):
     e = e_ctx.value
 
     assert (
-        e.message
-        == "arguments of increment(initial_value, maximum) must satisfy 1 <= initial_value <= maximum"
+        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        "1 <= initial_value <= maximum"
     )
 
 
@@ -88,8 +121,8 @@ def test__increment__error_when_maximum_is_lower_than_1(maximum):
     e = e_ctx.value
 
     assert (
-        e.message
-        == "arguments of increment(initial_value, maximum) must satisfy 1 <= initial_value <= maximum"
+        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        "1 <= initial_value <= maximum"
     )
 
 
@@ -102,6 +135,6 @@ def test__increment__error_when_maximum_is_lower_than_initial_value(
     e = e_ctx.value
 
     assert (
-        e.message
-        == "arguments of increment(initial_value, maximum) must satisfy 1 <= initial_value <= maximum"
+        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        "1 <= initial_value <= maximum"
     )

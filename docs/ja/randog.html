@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>randog package &mdash; random-obj-generator 0.10.0 ドキュメント</title>
+  <title>randog package &mdash; random-obj-generator 0.11.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.10.0
+                0.11.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -56,6 +56,7 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.logging.html">ログ出力</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">randog package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#subpackages-and-submodules">Subpackages and submodules</a><ul>
@@ -71,6 +72,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#randog.Example"><code class="docutils literal notranslate"><span class="pre">Example</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#randog.RandogCmdWarning"><code class="docutils literal notranslate"><span class="pre">RandogCmdWarning</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -143,6 +145,13 @@
 <dt class="sig sig-object py" id="randog.Example">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">randog.</span></span><span class="sig-name descname"><span class="pre">Example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">objs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#randog.Example" title="この定義へのパーマリンク"></a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="randog.RandogCmdWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">randog.</span></span><span class="sig-name descname"><span class="pre">RandogCmdWarning</span></span><a class="headerlink" href="#randog.RandogCmdWarning" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">FutureWarning</span></code></p>
+<p>コマンド実行中に出される警告</p>
 </dd></dl>
 
 </section>

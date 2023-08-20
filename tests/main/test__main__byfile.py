@@ -1,12 +1,18 @@
 import itertools
 import json
 import sys
+import warnings
 from unittest.mock import patch
 
 import pytest
 
 import randog.__main__
+from randog import RandogCmdWarning
 from tests.testtools.envvar import EnvVarSnapshot
+
+
+class _DummyWarning(Warning):
+    pass
 
 
 @pytest.mark.parametrize(
@@ -92,8 +98,8 @@ def test__main__error_with_negative_repeat(capfd, resources, option, length):
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            f"byfile: error: argument --repeat/-r: invalid positive_int value: '{length}'"
-            in err
+            "byfile: error: argument --repeat/-r: invalid positive_int value: "
+            f"'{length}'" in err
         )
 
 
@@ -424,8 +430,8 @@ def test__main__regenerate__error_when_illegal_probability2(
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            "byfile: error: argument --regenerate: must be lower than or equal to 1023/1024"
-            in err
+            "byfile: error: argument --regenerate: "
+            "must be lower than or equal to 1023/1024" in err
         )
 
 
@@ -669,10 +675,7 @@ def test__main__error_duplicate_format(capfd, resources, options):
     [
         # Tests outputting various types
         ("factory_def_dict.py", 1, "0,aaa,2019-10-14\n"),
-        ("factory_def_dict_without_col.py", 1, "0,aaa,2019-10-14\n"),
         ("factory_def_list.py", 1, "0,aaa,2019-10-14\n"),
-        ("factory_def.py", 1, "aaa\n"),
-        ("factory_def_date.py", 1, "2019-10-14\n"),
         # Test for multiple lines of output
         ("factory_def_dict.py", 2, "0,aaa,2019-10-14\n1,aaa,2019-10-14\n"),
         (
@@ -697,6 +700,86 @@ def test__main__csv(capfd, resources, def_file, line_num, expected):
 
     with patch.object(sys, "argv", args):
         randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == expected
+        assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("hide_warning", "q_options"),
+    [
+        (False, []),
+        (True, ["--quiet"]),
+        (True, ["-q"]),
+    ],
+)
+@pytest.mark.parametrize(
+    ("def_file", "line_num", "expected", "warning_msg"),
+    [
+        (
+            "factory_def.py",
+            1,
+            "aaa\n",
+            "--csv is recommended for only collections (such as dict, list, tuple, "
+            "etc.); In CSV output, one generated value is treated as one row, so the "
+            "result is the same as --repeat except for collections.",
+        ),
+        (
+            "factory_def_date.py",
+            1,
+            "2019-10-14\n",
+            "--csv is recommended for only collections (such as dict, list, tuple, "
+            "etc.); In CSV output, one generated value is treated as one row, so the "
+            "result is the same as --repeat except for collections.",
+        ),
+        (
+            "factory_def_useless_col.py",
+            1,
+            "aaa\n",
+            "--csv is recommended for only collections (such as dict, list, tuple, "
+            "etc.); In CSV output, one generated value is treated as one row, so the "
+            "result is the same as --repeat except for collections; "
+            "CSV_COLUMNS in the definition file is ignored.",
+        ),
+        (
+            "factory_def_dict_without_col.py",
+            1,
+            "0,aaa,2019-10-14\n",
+            "Since CSV_COLUMNS is not defined in the definition file, "
+            "the fields are inserted in the order returned by the "
+            "dictionary; In this case, fields may not be aligned "
+            "depending on the FACTORY definition, "
+            "so it is recommended to define CSV_COLUMNS.",
+        ),
+    ],
+)
+def test__main__csv__with_warning(
+    capfd, resources, hide_warning, q_options, def_file, line_num, expected, warning_msg
+):
+    args = [
+        "randog",
+        "byfile",
+        "--csv",
+        str(line_num),
+        str(resources.joinpath(def_file)),
+        *q_options,
+    ]
+
+    with patch.object(sys, "argv", args):
+        with pytest.warns((RandogCmdWarning, _DummyWarning)) as w_ctx:
+            warnings.warn("dummy for test", _DummyWarning)
+            randog.__main__.main()
+
+        if hide_warning:
+            assert len(w_ctx.list) == 1
+            assert isinstance(w_ctx.list[0].message, _DummyWarning)
+        else:
+            assert len(w_ctx.list) == 2
+            assert isinstance(w_ctx.list[0].message, _DummyWarning)
+            assert isinstance(w_ctx.list[1].message, RandogCmdWarning)
+            assert len(w_ctx.list[1].message.args) == 1
+            assert w_ctx.list[1].message.args[0] == warning_msg
 
         out, err = capfd.readouterr()
         assert out == expected
@@ -831,7 +914,7 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
     ("options", "expected"),
     [
         ([], "テスト\n"),
-        (["--csv=1"], "テスト\n"),
+        (["--csv=1", "--quiet"], "テスト\n"),
         (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
         (["--list=1"], "['テスト']\n"),
         (["--repeat=1"], "テスト\n"),
@@ -926,7 +1009,7 @@ def test__main__option_output__error_with_illegal_encoding(
     ("options", "expected"),
     [
         ([], b"aaa"),
-        (["--csv=1"], b"aaa"),
+        (["--csv=1", "--quiet"], b"aaa"),
         (["--json"], b'"aaa"'),
         (["--list=1"], b"['aaa']"),
         (["--repeat=1"], b"aaa"),
@@ -981,7 +1064,7 @@ def test__main__option_output__linesep(
     ("options", "expected"),
     [
         ([], b"aaa"),
-        (["--csv=1"], b"aaa"),
+        (["--csv=1", "--quiet"], b"aaa"),
         (["--json"], b'"aaa"'),
         (["--list=1"], b"['aaa']"),
         (["--repeat=1"], b"aaa"),
@@ -1065,7 +1148,8 @@ def test__main__csv__with_regenerate_repeat(capfd, tmp_path, resources):
     ]
 
     with patch.object(sys, "argv", args):
-        randog.__main__.main()
+        with pytest.warns(RandogCmdWarning, match="--csv *"):
+            randog.__main__.main()
 
         out, err = capfd.readouterr()
         assert out == ""
@@ -1106,7 +1190,8 @@ def test__main__csv__with_discard_repeat(capfd, tmp_path, resources):
     ]
 
     with patch.object(sys, "argv", args):
-        randog.__main__.main()
+        with pytest.warns(RandogCmdWarning, match="--csv *"):
+            randog.__main__.main()
 
         out, err = capfd.readouterr()
         assert out == ""

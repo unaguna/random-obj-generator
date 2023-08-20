@@ -16,8 +16,9 @@ class SubcmdDefByfile(SubcmdDef):
         byfile_parser = subparsers.add_parser(
             Subcmd.Byfile.value,
             usage=(
-                "python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] [--regenerate PROB_REGEN] "
-                "[--discard PROB_DISCARD] [--csv ROW_NUM] [--error-on-factory-stopped] [common-options]"
+                "python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] "
+                "[--regenerate PROB_REGEN] [--discard PROB_DISCARD] [--csv ROW_NUM] "
+                "[--error-on-factory-stopped] [common-options]"
             ),
             description="It generates values according to factory definition files.",
             add_help=False,
@@ -35,8 +36,10 @@ class SubcmdDefByfile(SubcmdDef):
             type=probability,
             default=0.0,
             help=(
-                "the probability that the factory generation value is not returned as is, but is regenerated. "
-                "It affects cases where the original factory returns a value that is not completely random."
+                "the probability that the factory generation value is not returned as "
+                "is, but is regenerated. "
+                "It affects cases where the original factory returns a value "
+                "that is not completely random."
             ),
         )
         byfile_args_group.add_argument(
@@ -45,7 +48,8 @@ class SubcmdDefByfile(SubcmdDef):
             type=probability,
             default=0.0,
             help=(
-                "the probability that the factory generation value is not returned as is, but is discarded. "
+                "the probability that the factory generation value is not returned as "
+                "is, but is discarded. "
                 "If discarded, the number of times the value is generated is less than "
                 "'--repeat'/'-r' or '--list'/'-L' or '--csv'."
             ),
@@ -54,15 +58,21 @@ class SubcmdDefByfile(SubcmdDef):
             "--csv",
             metavar="ROW_NUM",
             type=positive_int,
-            help="if specified, it outputs generated ROW_NUM objects as CSV. "
-            "When using this option, it is recommended to use a factory that generates dictionaries and "
-            "to define CSV_COLUMNS in the definition file to specify the fields of the CSV.",
+            help=(
+                "if specified, it outputs generated ROW_NUM objects as CSV. "
+                "When using this option, it is recommended to use a factory "
+                "that generates dictionaries and to define CSV_COLUMNS in the "
+                "definition file to specify the fields of the CSV."
+            ),
         )
         byfile_args_group.add_argument(
             "--error-on-factory-stopped",
             action="store_true",
-            help="If specified, error is occurred in case the factory cannot generate value due to StopIteration. "
-            "If not specified, the generation simply stops in the case.",
+            help=(
+                "If specified, error is occurred in case the factory cannot generate "
+                "value due to StopIteration. "
+                "If not specified, the generation simply stops in the case."
+            ),
         )
         add_common_arguments(byfile_parser)
 

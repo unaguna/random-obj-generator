@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Common Options &mdash; random-obj-generator 0.10.0 documentation</title>
+  <title>Common Options &mdash; random-obj-generator 0.11.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.10.0
+                0.11.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -62,6 +62,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#output-to-file">Output to file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#iteration">Iteration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modify-environment-variable">Modify environment variable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#warning">Warning</a></li>
 </ul>
 </li>
 </ul>
@@ -69,6 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#details-of-modes">Details of Modes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="doc.logging.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
@@ -123,26 +126,49 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="output-to-file">
-<h2>Output to file<a class="headerlink" href="#output-to-file" title="Permalink to this heading"></a></h2>
+<span id="output-file"></span><h2>Output to file<a class="headerlink" href="#output-to-file" title="Permalink to this heading"></a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">--output</span></code> option can be used to output to a file, as in the following example.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
-</pre></div>
-</div>
-<p>The above example is not very practical, since the same thing can be done using the standard redirection feature of shell. This option is effective when combined with the following options:</p>
-<ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>)</p>
-<blockquote>
-<div><p>See also <a class="reference internal" href="#iteration"><span class="std std-ref">Iteration</span></a></p>
-</div></blockquote>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) or/and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>)</p>
-<blockquote>
-<div><p>You can specify the encoding and newline character for output as following example:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
+
+<span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
+
+<span class="c1"># {now} will be replaced by the current time</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
 </pre></div>
 </div>
-</div></blockquote>
+<p>As above example, You can specify the <a class="reference external" href="https://docs.python.org/3/library/codecs.html#standard-encodings">encoding</a> and newline character for output with options <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>).</p>
+<p>As the example above also uses {now}, the following placeholders can be used with <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">format specification</a>.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{0}</span></code> (int):</dt><dd><p>Serial number, which is a sequential number when the <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> option is used or when multiple definition files are used in order in byfile mode. If used only once, <code class="code docutils literal notranslate"><span class="pre">{}</span></code> is also acceptable.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{def_file}</span></code> (str):</dt><dd><p>The name of the definition file used in byfile mode; however, the trailing .py is removed. It is replaced by an empty string except in byfile mode.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{repeat_count}</span></code> (int):</dt><dd><p>Sequential numbers for repeating with the <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> option. If <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> is not used, it is replaced by 0.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{factory_count}</span></code> (int):</dt><dd><p>Sequential number assigned to each definition file when using multiple definition files in byfile mode. If in except in byfile mode, it is replaced by 0.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">{now}</span></code> (datetime.datetime):</dt><dd><p>Current datetime.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>(environment variables):</dt><dd><p>Environment variables can be used as placeholders, such as <code class="code docutils literal notranslate"><span class="pre">{HOME}</span></code>.</p>
+</dd>
+</dl>
 </li>
 </ul>
 </section>
@@ -170,6 +196,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </pre></div>
 </div>
 <p>The rules for placeholders are the same as <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">the standard python format</a>.</p>
+<p>See <a class="reference internal" href="#output-file"><span class="std std-ref">Output to file</span></a> for available placeholders.</p>
 </div>
 </section>
 <section id="modify-environment-variable">
@@ -189,6 +216,58 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
     <span class="n">charset</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CHARSET&quot;</span><span class="p">],</span>
 <span class="p">)</span>
 </pre></div>
+</div>
+</section>
+<section id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this heading"></a></h2>
+<p>By default, all logs are ignored, including those by randog (exceptions are noted below), but can be configured to output log.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is an experimental feature. It may be removed or significantly changed in the future.</p>
+</div>
+<p>For log output, you can use one of the following options:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--log-stderr</span> <span class="pre">&lt;LEVEL&gt;</span></code>:</dt><dd><p>Outputs logs of the specified level or higher to standard error output.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">--log</span> <span class="pre">&lt;LOGGING_CONFIG_PATH&gt;</span></code>:</dt><dd><p>Uses the specified log configuration file. The file must be in JSON or YAML format and must adhere to <a class="reference external" href="https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema">configuration dictionary schema</a>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To use YAML format configuration files, <a class="reference external" href="https://pypi.org/project/PyYAML/">PyYAML</a> must be installed.</p>
+</div>
+<p>In writing the configuration file, you may need information on the loggers used by randog. If so, please refer to <a class="reference internal" href="doc.logging.html"><span class="doc">Logging</span></a>, which describes logging without limiting it to command execution.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference external" href="https://docs.python.org/3/library/warnings.html">Warnings</a> are set up through a different mechanism than logging. See also <a class="reference internal" href="#warning"><span class="std std-ref">Warning</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In fact, error messages during command execution also use logging. You can override the error message output setting during command execution by specifying <code class="code docutils literal notranslate"><span class="pre">disable_existing_loggers:</span> <span class="pre">true</span></code> in the log configuration file. (Although the default value of disable_existing_loggers is true in the standard library specification, the standard error output setting for randog command execution is only overridden if disable_existing_loggers is explicitly set to true.)</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This means that if you specify <code class="code docutils literal notranslate"><span class="pre">disable_existing_loggers:</span> <span class="pre">true</span></code>, error messages may not be displayed on abnormal termination, depending on the setting.</p>
+</div>
+</div>
+</section>
+<section id="warning">
+<span id="id2"></span><h2>Warning<a class="headerlink" href="#warning" title="Permalink to this heading"></a></h2>
+<p>By default, <a class="reference external" href="https://docs.python.org/3/library/warnings.html">warnings</a> are output to standard error output, but it can be configured.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is an experimental feature. It may be removed or significantly changed in the future.</p>
+</div>
+<p>You can hide warnings of randog by using the option <code class="code docutils literal notranslate"><span class="pre">--quiet</span></code>/<code class="code docutils literal notranslate"><span class="pre">-q</span></code>. If you wish to hide all warnings, use python’s <code class="code docutils literal notranslate"><span class="pre">-W</span></code> option; See also <a class="reference external" href="https://docs.python.org/3/using/cmdline.html#cmdoption-W">here</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It should be possible to hide only randog warnings with <code class="code docutils literal notranslate"><span class="pre">-W</span></code> in the spec, but <a class="reference external" href="https://github.com/python/cpython/issues/66733">there seems to be a problem</a>. Use <code class="code docutils literal notranslate"><span class="pre">--quiet</span></code>/<code class="code docutils literal notranslate"><span class="pre">-q</span></code> of randog.</p>
+<p>Incidentally, the category of warnings that randog command execution produces is <code class="code docutils literal notranslate"><span class="pre">randog.RandogCmdWarning</span></code>.</p>
 </div>
 </section>
 </section>

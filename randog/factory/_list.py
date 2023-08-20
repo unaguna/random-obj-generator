@@ -20,10 +20,12 @@ def randlist(
     Parameters
     ----------
     items : Factory
-        the factories of each item. If `items_list` is specified, `items` will be ignored.
+        the factories of each item.
+        If `items_list` is specified, `items` will be ignored.
     length : int|Factory[int], optional
         length of generated list.
-        If not specified, the length of generated list will be equals to the number of `items`.
+        If not specified,
+        the length of generated list will be equals to the number of `items`.
     type : type, default=list
         the type of generated object
     rnd : Random, optional
@@ -66,7 +68,8 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
             the factories of each item
         length : int|Factory[int], optional
             length of generated list.
-            If not specified, the length of generated list will be equals to the number of `items`.
+            If not specified,
+            the length of generated list will be equals to the number of `items`.
         type : type, default=list
             the type of generated object
         rnd : Random, optional
@@ -89,12 +92,14 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
         ]
         if len(non_factory_item_indexes) > 0:
             raise FactoryConstructionError(
-                f"randlist received non-factory object for item: index {', '.join(non_factory_item_indexes)}"
+                "randlist received non-factory object for item: "
+                f"index {', '.join(non_factory_item_indexes)}"
             )
 
         if isinstance(self._length, Factory) and len(self._factories) == 0:
             raise FactoryConstructionError(
-                "the factory of element must be given to randlist() if length is at random"
+                "the factory of element must be given to randlist() "
+                "if length is at random"
             )
         if (
             not isinstance(self._length, Factory)
@@ -102,7 +107,8 @@ class ListRandomFactory(Factory[list], t.Generic[T]):
             and len(self._factories) == 0
         ):
             raise FactoryConstructionError(
-                "the factory of element must be given to randlist() if length is positive"
+                "the factory of element must be given to randlist() "
+                "if length is positive"
             )
 
     def _factory_generator(self, length) -> t.Iterator[Factory]:

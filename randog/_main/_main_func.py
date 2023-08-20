@@ -46,9 +46,13 @@ def _build_factories(
         iargs, kwargs = subcmd_def.build_args(args)
         factory = subcmd_def.get_factory_constructor()(*iargs, **kwargs)
         if args.iso:
-            factory = factory.post_process(lambda x: x.isoformat())
+            factory = factory.post_process(
+                lambda x: x.isoformat() if x is not None else None
+            )
         elif args.format:
-            factory = factory.post_process(lambda x: format(x, args.format))
+            factory = factory.post_process(
+                lambda x: format(x, args.format) if x is not None else None
+            )
         yield 0, "", factory
 
 

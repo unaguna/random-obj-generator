@@ -141,13 +141,7 @@ For log output, you can use one of the following options:
 .. warning::
     To use YAML format configuration files, `PyYAML <https://pypi.org/project/PyYAML/>`_ must be installed.
 
-If you wish to make detailed settings for each logger in the configuration file, you can do so for the loggers with the following names:
-
-- :code:`randog`: the root of loggers used by randog
-    - :code:`randog.cmd`: a logger used by randog command execution
-    - :code:`randog.factory`: a logger used in factory generation or other features of factories
-    - (increase loggers as appropriate)
-- (loggers used by other modules)
+In writing the configuration file, you may need information on the loggers used by randog. If so, please refer to :doc:`doc.logging`, which describes logging without limiting it to command execution.
 
 .. note::
     `Warnings <https://docs.python.org/3/library/warnings.html>`_ are set up through a different mechanism than logging. See also :ref:`warning`.

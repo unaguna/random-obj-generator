@@ -12,6 +12,7 @@ random-obj-generator
    doc.use_factories
    doc.external_def
    doc.as_command
+   doc.logging
    doc.tips
 
    randog

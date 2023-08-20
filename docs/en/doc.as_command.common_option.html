@@ -71,6 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#details-of-modes">Details of Modes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="doc.logging.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
@@ -241,19 +242,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p class="admonition-title">Warning</p>
 <p>To use YAML format configuration files, <a class="reference external" href="https://pypi.org/project/PyYAML/">PyYAML</a> must be installed.</p>
 </div>
-<p>If you wish to make detailed settings for each logger in the configuration file, you can do so for the loggers with the following names:</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">randog</span></code>: the root of loggers used by randog</dt><dd><ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">randog.cmd</span></code>: a logger used by randog command execution</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">randog.factory</span></code>: a logger used in factory generation or other features of factories</p></li>
-<li><p>(increase loggers as appropriate)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>(loggers used by other modules)</p></li>
-</ul>
+<p>In writing the configuration file, you may need information on the loggers used by randog. If so, please refer to <a class="reference internal" href="doc.logging.html"><span class="doc">Logging</span></a>, which describes logging without limiting it to command execution.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference external" href="https://docs.python.org/3/library/warnings.html">Warnings</a> are set up through a different mechanism than logging. See also <a class="reference internal" href="#warning"><span class="std std-ref">Warning</span></a>.</p>

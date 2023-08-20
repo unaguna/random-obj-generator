@@ -72,6 +72,7 @@
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#details-of-modes">各モードの詳細</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="doc.logging.html">ログ出力</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
 </ul>
@@ -242,19 +243,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p class="admonition-title">警告</p>
 <p>YAML 形式の設定ファイルを使用する場合、<a class="reference external" href="https://pypi.org/project/PyYAML/">PyYAML</a> をあらかじめインストールしておく必要があります。</p>
 </div>
-<p>設定ファイルで logger ごとに細かく設定したい場合、下記の名前の logger に対して設定できます。</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">randog</span></code>: randog で使用する logger の root</dt><dd><ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">randog.cmd</span></code>: randog をコマンドとして実行する際に使用される logger</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">randog.factory</span></code>: factory の生成や factory の機能で使用される logger</p></li>
-<li><p>(適宜 logger を追加する)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>(他のモジュールで使用される logger)</p></li>
-</ul>
+<p>設定ファイルを書くにあたって、randog が使用するロガーの情報が必要かもしれません。その場合は、ロギングについてコマンド実行に限定せず記載している <a class="reference internal" href="doc.logging.html"><span class="doc">ログ出力</span></a> をご覧ください。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p><a class="reference external" href="https://docs.python.org/ja/3/library/warnings.html">警告</a> はログとは別の仕組みで設定します。<a class="reference internal" href="#warning"><span class="std std-ref">警告</span></a> を参照してください。</p>

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-19 21:51+0900\n"
+"POT-Creation-Date: 2023-08-20 15:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -237,7 +237,7 @@ msgid ""
 msgstr "デフォルトでは randog が出力するものも含めてすべてのログが無視されます (例外は後述) が、ログ出力するように設定することができます。"
 
 #: ../../source/doc.as_command.common_option.rst:132
-#: ../../source/doc.as_command.common_option.rst:166
+#: ../../source/doc.as_command.common_option.rst:169
 msgid ""
 "This is an experimental feature. It may be removed or significantly "
 "changed in the future."
@@ -270,36 +270,44 @@ msgstr ""
 "schema <https://docs.python.org/ja/3/library/logging.config.html"
 "#configuration-dictionary-schema>`_ に従う必要があります。"
 
-#: ../../source/doc.as_command.common_option.rst:141
+#: ../../source/doc.as_command.common_option.rst:142
+msgid ""
+"To use YAML format configuration files, `PyYAML "
+"<https://pypi.org/project/PyYAML/>`_ must be installed."
+msgstr ""
+"YAML 形式の設定ファイルを使用する場合、`PyYAML "
+"<https://pypi.org/project/PyYAML/>`_ をあらかじめインストールしておく必要があります。"
+
+#: ../../source/doc.as_command.common_option.rst:144
 msgid ""
 "If you wish to make detailed settings for each logger in the "
 "configuration file, you can do so for the loggers with the following "
 "names:"
 msgstr "設定ファイルで logger ごとに細かく設定したい場合、下記の名前の logger に対して設定できます。"
 
-#: ../../source/doc.as_command.common_option.rst:145
+#: ../../source/doc.as_command.common_option.rst:148
 msgid ":code:`randog`: the root of loggers used by randog"
 msgstr ":code:`randog`: randog で使用する logger の root"
 
-#: ../../source/doc.as_command.common_option.rst:144
+#: ../../source/doc.as_command.common_option.rst:147
 msgid ":code:`randog.cmd`: a logger used by randog command execution"
 msgstr ":code:`randog.cmd`: randog をコマンドとして実行する際に使用される logger"
 
-#: ../../source/doc.as_command.common_option.rst:145
+#: ../../source/doc.as_command.common_option.rst:148
 msgid ""
 ":code:`randog.factory`: a logger used in factory generation or other "
 "features of factories"
 msgstr ":code:`randog.factory`: factory の生成や factory の機能で使用される logger"
 
-#: ../../source/doc.as_command.common_option.rst:146
+#: ../../source/doc.as_command.common_option.rst:149
 msgid "(increase loggers as appropriate)"
 msgstr "(適宜 logger を追加する)"
 
-#: ../../source/doc.as_command.common_option.rst:147
+#: ../../source/doc.as_command.common_option.rst:150
 msgid "(loggers used by other modules)"
 msgstr "(他のモジュールで使用される logger)"
 
-#: ../../source/doc.as_command.common_option.rst:150
+#: ../../source/doc.as_command.common_option.rst:153
 msgid ""
 "`Warnings <https://docs.python.org/3/library/warnings.html>`_ are set up "
 "through a different mechanism than logging. See also :ref:`warning`."
@@ -307,7 +315,7 @@ msgstr ""
 "`警告 <https://docs.python.org/ja/3/library/warnings.html>`_ "
 "はログとは別の仕組みで設定します。:ref:`warning` を参照してください。"
 
-#: ../../source/doc.as_command.common_option.rst:153
+#: ../../source/doc.as_command.common_option.rst:156
 msgid ""
 "In fact, error messages during command execution also use logging. You "
 "can override the error message output setting during command execution by"
@@ -323,7 +331,7 @@ msgstr ""
 "disable_existing_loggers のデフォルト値が true ですが、randog のコマンド実行時の標準エラー出力設定については"
 " :code:`disable_existing_loggers` を明示的に true にした場合にのみ上書きします。)"
 
-#: ../../source/doc.as_command.common_option.rst:156
+#: ../../source/doc.as_command.common_option.rst:159
 msgid ""
 "This means that if you specify :code:`disable_existing_loggers: true`, "
 "error messages may not be displayed on abnormal termination, depending on"
@@ -332,11 +340,11 @@ msgstr ""
 "つまり、:code:`disable_existing_loggers: true` "
 "を指定すると、設定次第では異常終了時のエラーメッセージが表示されなくなるということです。"
 
-#: ../../source/doc.as_command.common_option.rst:161
+#: ../../source/doc.as_command.common_option.rst:164
 msgid "Warning"
 msgstr "警告"
 
-#: ../../source/doc.as_command.common_option.rst:163
+#: ../../source/doc.as_command.common_option.rst:166
 msgid ""
 "By default, `warnings <https://docs.python.org/3/library/warnings.html>`_"
 " are output to standard error output, but it can be configured."
@@ -344,7 +352,7 @@ msgstr ""
 "デフォルトで、`警告 <https://docs.python.org/ja/3/library/warnings.html>`_ "
 "は標準エラー出力に出力されますが、設定を変えることができます。"
 
-#: ../../source/doc.as_command.common_option.rst:168
+#: ../../source/doc.as_command.common_option.rst:171
 msgid ""
 "You can hide warnings of randog by using the option "
 ":code:`--quiet`/:code:`-q`. If you wish to hide all warnings, use "
@@ -355,7 +363,7 @@ msgstr ""
 "python の :code:`-W` オプションを使用してください (`こちら "
 "<https://docs.python.org/ja/3/using/cmdline.html#cmdoption-W>`_ を参照)。"
 
-#: ../../source/doc.as_command.common_option.rst:171
+#: ../../source/doc.as_command.common_option.rst:174
 msgid ""
 "It should be possible to hide only randog warnings with :code:`-W` in the"
 " spec, but `there seems to be a problem "
@@ -366,7 +374,7 @@ msgstr ""
 "<https://github.com/python/cpython/issues/66733>`_。randog の "
 ":code:`--quiet`/:code:`-q` を使用してください。"
 
-#: ../../source/doc.as_command.common_option.rst:173
+#: ../../source/doc.as_command.common_option.rst:176
 msgid ""
 "Incidentally, the category of warnings that randog command execution "
 "produces is :code:`randog.RandogCmdWarning`."

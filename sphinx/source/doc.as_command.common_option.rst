@@ -138,6 +138,9 @@ For log output, you can use one of the following options:
 - :code:`--log <LOGGING_CONFIG_PATH>`:
     Uses the specified log configuration file. The file must be in JSON or YAML format and must adhere to `configuration dictionary schema <https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema>`_.
 
+.. warning::
+    To use YAML format configuration files, `PyYAML <https://pypi.org/project/PyYAML/>`_ must be installed.
+
 If you wish to make detailed settings for each logger in the configuration file, you can do so for the loggers with the following names:
 
 - :code:`randog`: the root of loggers used by randog

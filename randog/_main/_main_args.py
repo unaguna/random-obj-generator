@@ -6,7 +6,6 @@ import argparse
 import codecs
 import datetime
 import itertools
-import os
 import typing as t
 
 from . import Linesep
@@ -14,10 +13,15 @@ from ._subcmd import Subcmd
 
 
 class Args:
+    """Argument object when using randog as command"""
+
     _args: argparse.Namespace
+    _commanded_args: t.Sequence[str]
 
     def __init__(self, argv: t.Sequence[str]):
         from ._subcmd_def import iter_subcmd_def
+
+        self._commanded_args = argv[1:]
 
         parser = argparse.ArgumentParser(
             prog="randog",
@@ -41,14 +45,15 @@ class Args:
             subcmd_parsers[subcmd.cmd()] = subcmd.add_parser(subparsers)
 
         # parse the arguments
-        self._args = parser.parse_args(argv[1:])
+        self._args = parser.parse_args(self.commanded_args)
 
         # validate arguments for subcommands
         for subcmd in iter_subcmd_def():
             subcmd.validate_parser(self, subcmd_parsers[subcmd.cmd()])
 
-        # set environments
-        os.environ.update(self.env)
+    @property
+    def commanded_args(self) -> t.Sequence[str]:
+        return self._commanded_args
 
     @property
     def sub_cmd(self) -> Subcmd:
@@ -133,6 +138,18 @@ class Args:
     @property
     def error_on_factory_stopped(self) -> bool:
         return self.get("error_on_factory_stopped", False)
+
+    @property
+    def hide_randog_warnings(self) -> bool:
+        return self.get("quiet", False)
+
+    @property
+    def log_stderr(self) -> t.Optional[str]:
+        return self.get("log_stderr", None)
+
+    @property
+    def log_config_file(self) -> t.Optional[str]:
+        return self.get("log", None)
 
     @property
     def env(self) -> t.Mapping[str, str]:

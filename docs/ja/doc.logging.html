@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ログ出力 &mdash; random-obj-generator 0.10.0 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Tips (使い方)" href="doc.tips.html" />
+    <link rel="prev" title="byfile モード" href="doc.as_command.byfile.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+              <div class="version">
+                0.10.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ログ出力</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ログ出力</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.logging.html"
+            >English</option>
+            <option value="../ja/doc.logging.html"
+                selected
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="logging">
+<h1>ログ出力<a class="headerlink" href="#logging" title="この見出しへのパーマリンク"></a></h1>
+<p>randog は、<a class="reference external" href="https://docs.python.org/ja/3/library/logging.html">python が提供する標準的な方法</a> でログを記録します。そのため、記録されたログのストリーム出力やファイル出力は、あなたが標準的な方法で設定できます。<a class="reference external" href="https://docs.python.org/ja/3/library/logging.html">ライブラリのドキュメント</a> や <a class="reference external" href="https://docs.python.org/3/howto/logging.html">HOWTO</a> も参照してください。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>randogをコマンドとして実行する際にログを出力する方法は、<a class="reference external" href="doc.as_command.common_option.html#logging">こちら</a> をご覧ください。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>randog のログ出力はあまり豊富でないため、あまり情報を得られないかもしれません。今後徐々に改善する予定です。</p>
+</div>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="この見出しへのパーマリンク"></a></h2>
+<p>randog は下記のロガーを使用します。</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">randog</span></code>: randog で使用する logger の root</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">randog.cmd</span></code>: randog をコマンドとして実行する際に使用される logger</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">randog.factory</span></code>: factory の生成や factory の機能で使用される logger</p></li>
+<li><p>(適宜 logger を追加する)</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>randog のログを取得する場合、ロガー <code class="code docutils literal notranslate"><span class="pre">randog</span></code> やルートロガー <code class="code docutils literal notranslate"><span class="pre">root</span></code> にハンドラを設定することをお勧めします。今後ロガーを増やすかもしれないため、子ロガーごとに設定すると想定外の取捨選択をする可能性があるためです。</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.as_command.byfile.html" class="btn btn-neutral float-left" title="byfile モード" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.tips.html" class="btn btn-neutral float-right" title="Tips (使い方)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

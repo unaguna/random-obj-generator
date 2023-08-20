@@ -12,6 +12,10 @@ def pytest_runtest_setup(item):
         __require_rstr()
     for _ in item.iter_markers(name="without_rstr"):
         __without_rstr()
+    for _ in item.iter_markers(name="require_yaml"):
+        __require_yaml()
+    for _ in item.iter_markers(name="without_yaml"):
+        __without_yaml()
 
 
 def __require_sqlalchemy(*variants: t.Literal[1, 2]):
@@ -43,9 +47,20 @@ def __without_rstr():
         pytest.skip(reason="rstr is installed")
 
 
+def __require_yaml():
+    if not __exists_yaml():
+        pytest.skip(reason="need yaml")
+
+
+def __without_yaml():
+    if __exists_yaml():
+        pytest.skip(reason="yaml is installed")
+
+
 def __get_version_of_sqlalchemy() -> t.Optional[str]:
     try:
         import sqlalchemy
+
         return sqlalchemy.__version__
     except (ModuleNotFoundError, AttributeError):
         return None
@@ -54,6 +69,16 @@ def __get_version_of_sqlalchemy() -> t.Optional[str]:
 def __exists_rstr() -> bool:
     try:
         import rstr
+
+        return True
+    except (ModuleNotFoundError, AttributeError):
+        return False
+
+
+def __exists_yaml() -> bool:
+    try:
+        import yaml
+
         return True
     except (ModuleNotFoundError, AttributeError):
         return False

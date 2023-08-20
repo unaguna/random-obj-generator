@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-20 16:14+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.logging.rst:2
+msgid "Logging"
+msgstr "ログ出力"
+
+#: ../../source/doc.logging.rst:4
+msgid ""
+"randog logs in `the standard way provided by python "
+"<https://docs.python.org/3/library/logging.html>`_. Therefore, you can "
+"configure the stream and file output of the logs in the standard way. See"
+" also `library docs <https://docs.python.org/3/library/logging.html>`_ or"
+" `HOWTO <https://docs.python.org/3/howto/logging.html>`_."
+msgstr ""
+"randog は、`python "
+"が提供する標準的な方法 <https://docs.python.org/ja/3/library/logging.html>`_ "
+"でログを記録します。そのため、記録されたログのストリーム出力やファイル出力は、あなたが標準的な方法で設定できます。"
+"`ライブラリのドキュメント <https://docs.python.org/ja/3/library/logging.html>`_ や "
+"`HOWTO <https://docs.python.org/3/howto/logging.html>`_ も参照してください。"
+
+#: ../../source/doc.logging.rst:7
+msgid ""
+"For information on how to output logs when running randog as a command, "
+"please read `here <doc.as_command.common_option.html#logging>`_."
+msgstr ""
+"randogをコマンドとして実行する際にログを出力する方法は、"
+"`こちら <doc.as_command.common_option.html#logging>`_ をご覧ください。"
+
+#: ../../source/doc.logging.rst:10
+msgid ""
+"randog's log output is not very extensive and may not be very "
+"informative. We plan to gradually improve it in the future."
+msgstr ""
+"randog のログ出力はあまり豊富でないため、あまり情報を得られないかもしれません。"
+"今後徐々に改善する予定です。"
+
+#: ../../source/doc.logging.rst:13
+msgid "API"
+msgstr ""
+
+#: ../../source/doc.logging.rst:15
+msgid "randog uses the following loggers:"
+msgstr "randog は下記のロガーを使用します。"
+
+#: ../../source/doc.logging.rst:17
+msgid ":code:`randog`: the root of loggers used by randog"
+msgstr ":code:`randog`: randog で使用する logger の root"
+
+#: ../../source/doc.logging.rst:19
+msgid ":code:`randog.cmd`: a logger used by randog command execution"
+msgstr ":code:`randog.cmd`: randog をコマンドとして実行する際に使用される logger"
+
+#: ../../source/doc.logging.rst:21
+msgid ""
+":code:`randog.factory`: a logger used in factory generation or other "
+"features of factories"
+msgstr ":code:`randog.factory`: factory の生成や factory の機能で使用される logger"
+
+#: ../../source/doc.logging.rst:23
+msgid "(increase loggers as appropriate)"
+msgstr "(適宜 logger を追加する)"
+
+#: ../../source/doc.logging.rst:26
+msgid ""
+"When logging randog, it is recommended that a handler be set up for the "
+"logger :code:`randog` or the root logger :code:`root`. This is because "
+"more loggers may be added in the future, and setting a handler for each "
+"child logger may cause unexpected selection and discard."
+msgstr ""
+"randog のログを取得する場合、ロガー :code:`randog` やルートロガー :code:`root` "
+"にハンドラを設定することをお勧めします。今後ロガーを増やすかもしれないため、子ロガーごとに設定すると想定外の取捨選択をする可能性があるためです。"
+

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-15 15:32+0900\n"
+"POT-Creation-Date: 2023-08-20 16:14+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -225,4 +225,157 @@ msgid ""
 "The above mentioned execution is useful, for example, when using a "
 "definition file such as the following:"
 msgstr "このような実行は、例えば以下のような定義ファイルを使用する際に有用です。"
+
+#: ../../source/doc.as_command.common_option.rst:127
+msgid "Logging"
+msgstr "ログ"
+
+#: ../../source/doc.as_command.common_option.rst:129
+msgid ""
+"By default, all logs are ignored, including those by randog (exceptions "
+"are noted below), but can be configured to output log."
+msgstr "デフォルトでは randog が出力するものも含めてすべてのログが無視されます (例外は後述) が、ログ出力するように設定することができます。"
+
+#: ../../source/doc.as_command.common_option.rst:132
+#: ../../source/doc.as_command.common_option.rst:163
+msgid ""
+"This is an experimental feature. It may be removed or significantly "
+"changed in the future."
+msgstr "これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。"
+
+#: ../../source/doc.as_command.common_option.rst:134
+msgid "For log output, you can use one of the following options:"
+msgstr "ログ出力について、以下のオプションのいずれか1つを使用できます。"
+
+#: ../../source/doc.as_command.common_option.rst:136
+msgid ":code:`--log-stderr <LEVEL>`:"
+msgstr ""
+
+#: ../../source/doc.as_command.common_option.rst:137
+msgid "Outputs logs of the specified level or higher to standard error output."
+msgstr "指定したレベル以上のログを標準エラー出力へ出力します。"
+
+#: ../../source/doc.as_command.common_option.rst:139
+msgid ":code:`--log <LOGGING_CONFIG_PATH>`:"
+msgstr ""
+
+#: ../../source/doc.as_command.common_option.rst:139
+msgid ""
+"Uses the specified log configuration file. The file must be in JSON or "
+"YAML format and must adhere to `configuration dictionary schema "
+"<https://docs.python.org/3/library/logging.config.html#configuration-"
+"dictionary-schema>`_."
+msgstr ""
+"指定したログ設定ファイルを使用します。ファイルは JSON もしくは YAML 形式で、`configuration dictionary "
+"schema <https://docs.python.org/ja/3/library/logging.config.html"
+"#configuration-dictionary-schema>`_ に従う必要があります。"
+
+#: ../../source/doc.as_command.common_option.rst:142
+msgid ""
+"To use YAML format configuration files, `PyYAML "
+"<https://pypi.org/project/PyYAML/>`_ must be installed."
+msgstr ""
+"YAML 形式の設定ファイルを使用する場合、`PyYAML <https://pypi.org/project/PyYAML/>`_ "
+"をあらかじめインストールしておく必要があります。"
+
+#: ../../source/doc.as_command.common_option.rst:144
+msgid ""
+"In writing the configuration file, you may need information on the "
+"loggers used by randog. If so, please refer to :doc:`doc.logging`, which "
+"describes logging without limiting it to command execution."
+msgstr ""
+"設定ファイルを書くにあたって、randog "
+"が使用するロガーの情報が必要かもしれません。その場合は、ロギングについてコマンド実行に限定せず記載している "
+":doc:`doc.logging` をご覧ください。"
+
+#: ../../source/doc.as_command.common_option.rst:147
+msgid ""
+"`Warnings <https://docs.python.org/3/library/warnings.html>`_ are set up "
+"through a different mechanism than logging. See also :ref:`warning`."
+msgstr ""
+"`警告 <https://docs.python.org/ja/3/library/warnings.html>`_ "
+"はログとは別の仕組みで設定します。:ref:`warning` を参照してください。"
+
+#: ../../source/doc.as_command.common_option.rst:150
+msgid ""
+"In fact, error messages during command execution also use logging. You "
+"can override the error message output setting during command execution by"
+" specifying :code:`disable_existing_loggers: true` in the log "
+"configuration file. (Although the default value of "
+"disable_existing_loggers is true in the standard library specification, "
+"the standard error output setting for randog command execution is only "
+"overridden if disable_existing_loggers is explicitly set to true.)"
+msgstr ""
+"実は、コマンド実行中のエラーメッセージも logging を使用しています。ログ設定ファイルに "
+":code:`disable_existing_loggers: true` "
+"を指定することで、コマンド実行中のエラーメッセージ出力設定を上書きできます。(標準ライブラリの仕様では "
+"disable_existing_loggers のデフォルト値が true ですが、randog のコマンド実行時の標準エラー出力設定については"
+" :code:`disable_existing_loggers` を明示的に true にした場合にのみ上書きします。)"
+
+#: ../../source/doc.as_command.common_option.rst:153
+msgid ""
+"This means that if you specify :code:`disable_existing_loggers: true`, "
+"error messages may not be displayed on abnormal termination, depending on"
+" the setting."
+msgstr ""
+"つまり、:code:`disable_existing_loggers: true` "
+"を指定すると、設定次第では異常終了時のエラーメッセージが表示されなくなるということです。"
+
+#: ../../source/doc.as_command.common_option.rst:158
+msgid "Warning"
+msgstr "警告"
+
+#: ../../source/doc.as_command.common_option.rst:160
+msgid ""
+"By default, `warnings <https://docs.python.org/3/library/warnings.html>`_"
+" are output to standard error output, but it can be configured."
+msgstr ""
+"デフォルトで、`警告 <https://docs.python.org/ja/3/library/warnings.html>`_ "
+"は標準エラー出力に出力されますが、設定を変えることができます。"
+
+#: ../../source/doc.as_command.common_option.rst:165
+msgid ""
+"You can hide warnings of randog by using the option "
+":code:`--quiet`/:code:`-q`. If you wish to hide all warnings, use "
+"python's :code:`-W` option; See also `here "
+"<https://docs.python.org/3/using/cmdline.html#cmdoption-W>`_."
+msgstr ""
+"randog の警告は :code:`--quiet`/:code:`-q` オプションで非表示にできます。すべての警告を非表示にしたい場合は "
+"python の :code:`-W` オプションを使用してください (`こちら "
+"<https://docs.python.org/ja/3/using/cmdline.html#cmdoption-W>`_ を参照)。"
+
+#: ../../source/doc.as_command.common_option.rst:168
+msgid ""
+"It should be possible to hide only randog warnings with :code:`-W` in the"
+" spec, but `there seems to be a problem "
+"<https://github.com/python/cpython/issues/66733>`_. Use "
+":code:`--quiet`/:code:`-q` of randog."
+msgstr ""
+"randogの警告のみを :code:`-W` で非表示にすることも仕様上はできるはずですが、`問題があるようです "
+"<https://github.com/python/cpython/issues/66733>`_。randog の "
+":code:`--quiet`/:code:`-q` を使用してください。"
+
+#: ../../source/doc.as_command.common_option.rst:170
+msgid ""
+"Incidentally, the category of warnings that randog command execution "
+"produces is :code:`randog.RandogCmdWarning`."
+msgstr "ちなみに、randog のコマンド実行が出す警告のカテゴリは :code:`randog.RandogCmdWarning` です。"
+
+#~ msgid ":code:`randog`: the root of loggers used by randog"
+#~ msgstr ":code:`randog`: randog で使用する logger の root"
+
+#~ msgid ":code:`randog.cmd`: a logger used by randog command execution"
+#~ msgstr ":code:`randog.cmd`: randog をコマンドとして実行する際に使用される logger"
+
+#~ msgid ""
+#~ ":code:`randog.factory`: a logger used in "
+#~ "factory generation or other features of"
+#~ " factories"
+#~ msgstr ":code:`randog.factory`: factory の生成や factory の機能で使用される logger"
+
+#~ msgid "(increase loggers as appropriate)"
+#~ msgstr "(適宜 logger を追加する)"
+
+#~ msgid "(loggers used by other modules)"
+#~ msgstr "(他のモジュールで使用される logger)"
 

@@ -34,6 +34,26 @@ _DATETIME_REGEX = re.compile(
 
 
 def datetime(value) -> t.Union[dt.datetime, dt.timedelta]:
+    """datetime include expression type of datetime+timedelta or timedelta
+
+    This function accepts according inputs:
+
+    - ISO-8601 (YYYY-mm-ddTHH:MM:SS, YYYY-mm-ddTHH:MM:SS.ffffff, ...)
+    - YYYY-mm-dd HH:MM:SS, YYYY-mm-dd HH:MM:SS.ffffff, ...
+    - now
+    - timedelta simple expr (1h, +30m, -1h20m, ...)
+    - datetime+timedelta (now+1h, YYYY-mm-ddTHH:MM:SS+30m, ...)
+
+    Parameters
+    ----------
+    value
+        string value
+
+    Returns
+    -------
+    datetime | timedelta
+        parsed value
+    """
     found = _DATETIME_REGEX.match(value)
 
     if not found or value == "":

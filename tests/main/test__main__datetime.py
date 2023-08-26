@@ -555,6 +555,31 @@ def test__main__datetime__suger(
         assert err == ""
 
 
+@pytest.mark.parametrize(
+    ("params",),
+    [
+        (["2020-01-02T03:04:06", "2020-01-02T03:04:05"],),
+        (["2020-01-02T03:04:06", "-1s"],),
+        (["+1s", "2020-01-02T03:04:05"],),
+        (["+1s", "-1s"],),
+    ],
+)
+def test__main__datetime__suger__error_by_inverse_range(
+    capfd,
+    params,
+):
+    args = ["randog", "datetime", *params]
+
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "datetime: error: arguments must satisfy MINIMUM <= MAXIMUM" in err
+
+
 def test__main__datetime__help(capfd):
     args = ["randog", "datetime", "--help"]
     with patch.object(sys, "argv", args):

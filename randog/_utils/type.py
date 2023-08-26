@@ -1,5 +1,7 @@
 import codecs
 import datetime as dt
+import re
+
 from .. import timedelta_util
 
 
@@ -25,8 +27,31 @@ def probability(value):
         raise ValueError("must be in the range [0, 1]")
 
 
+_DATETIME_REGEX = re.compile(
+    r"^(\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?)?|now)(.*)$"
+)
+
+
 def datetime(value):
-    return dt.datetime.fromisoformat(value)
+    found = _DATETIME_REGEX.match(value)
+
+    if not found:
+        raise ValueError(f"failed to parse datetime: {value}")
+
+    base_str = found.group(1)
+    shift_str = found.group(2)
+
+    if base_str == "now":
+        base = dt.datetime.now()
+    else:
+        base = dt.datetime.fromisoformat(base_str)
+
+    if shift_str != "":
+        shift = timedelta_util.from_str(shift_str)
+    else:
+        shift = dt.timedelta(0)
+
+    return base + shift
 
 
 def time(value):

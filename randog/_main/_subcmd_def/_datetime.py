@@ -1,4 +1,5 @@
 import argparse
+import datetime as dt
 import typing as t
 
 import randog.factory
@@ -79,7 +80,43 @@ class SubcmdDefDatetime(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (args.get("minimum"), args.get("maximum")), {}
+        minimum, maximum = _normalize_min_max(args.get("minimum"), args.get("maximum"))
+
+        return (minimum, maximum), {}
 
     def get_factory_constructor(self) -> t.Callable:
         return randog.factory.randdatetime
+
+
+def _normalize_min_max(
+    arg0: t.Union[dt.datetime, dt.timedelta, None],
+    arg1: t.Union[dt.datetime, dt.timedelta, None],
+) -> t.Tuple[t.Optional[dt.datetime], t.Optional[dt.datetime]]:
+    minimum: t.Optional[dt.datetime]
+    maximum: t.Optional[dt.datetime]
+
+    now = dt.datetime.now()
+    if None not in (arg0, arg1):
+        if isinstance(arg0, dt.timedelta) and isinstance(arg1, dt.timedelta):
+            minimum = now + arg0
+            maximum = now + arg1
+        elif isinstance(arg0, dt.timedelta):
+            minimum = arg1 + arg0
+            maximum = arg1
+        elif isinstance(arg1, dt.timedelta):
+            minimum = arg0
+            maximum = arg0 + arg1
+        else:
+            minimum = arg0
+            maximum = arg1
+    elif arg0 is not None:
+        if isinstance(arg0, dt.timedelta):
+            minimum, maximum = sorted((now, now + arg0))
+        else:
+            minimum = arg0
+            maximum = None
+    else:
+        minimum = None
+        maximum = None
+
+    return minimum, maximum

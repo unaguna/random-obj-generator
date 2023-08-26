@@ -156,6 +156,8 @@ def from_iso(
 
 def to_str(
     value: dt.timedelta,
+    *,
+    explicit_sign: bool = False,
 ) -> str:
     """Convert timedelta into the simple format
 
@@ -163,6 +165,8 @@ def to_str(
     ----------
     value : timedelta
         the timedelta object
+    explicit_sign : bool, default=False
+        if true, even if the value is not negative, the result will start with "+"
 
     Returns
     -------
@@ -173,7 +177,10 @@ def to_str(
         result = "-"
         value = -1 * value
     else:
-        result = ""
+        if explicit_sign:
+            result = "+"
+        else:
+            result = ""
 
     value_tuple = TimedeltaTuple.of(value)
 

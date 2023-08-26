@@ -504,7 +504,7 @@ class _FuzzyNow:
             _FuzzyNow() + timedelta(hours=1),
         ),
         (
-            ["-1h30m"],
+            ["--", "-1h30m"],
             _FuzzyNow() - timedelta(hours=1, minutes=30),
             _FuzzyNow(),
         ),
@@ -519,17 +519,17 @@ class _FuzzyNow:
             _FuzzyNow() - timedelta(hours=2) + timedelta(hours=1),
         ),
         (
-            ["-1h30m", "2022-01-01T10:00:00"],
+            ["--", "-1h30m", "2022-01-01T10:00:00"],
             datetime(2022, 1, 1, 8, 30),
             datetime(2022, 1, 1, 10),
         ),
         (
-            ["-1h30m", "now+2h"],
+            ["--", "-1h30m", "now+2h"],
             _FuzzyNow() + timedelta(hours=2) - timedelta(hours=1, minutes=30),
             _FuzzyNow() + timedelta(hours=2),
         ),
         (
-            ["-2h30m", "+1h30m"],
+            ["--", "-2h30m", "+1h30m"],
             _FuzzyNow() - timedelta(hours=2, minutes=30),
             _FuzzyNow() + timedelta(hours=1, minutes=30),
         ),
@@ -559,9 +559,9 @@ def test__main__datetime__suger(
     ("params",),
     [
         (["2020-01-02T03:04:06", "2020-01-02T03:04:05"],),
-        (["2020-01-02T03:04:06", "-1s"],),
+        (["--", "2020-01-02T03:04:06", "-1s"],),
         (["+1s", "2020-01-02T03:04:05"],),
-        (["+1s", "-1s"],),
+        (["--", "+1s", "-1s"],),
     ],
 )
 def test__main__datetime__suger__error_by_inverse_range(

@@ -1,6 +1,7 @@
 import codecs
 import datetime as dt
 import re
+import typing as t
 
 from .. import timedelta_util
 
@@ -28,20 +29,22 @@ def probability(value):
 
 
 _DATETIME_REGEX = re.compile(
-    r"^(\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?)?|now)(.*)$"
+    r"^(\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?)?|now)?(.*)$"
 )
 
 
-def datetime(value):
+def datetime(value) -> t.Union[dt.datetime, dt.timedelta]:
     found = _DATETIME_REGEX.match(value)
 
-    if not found:
+    if not found or value == "":
         raise ValueError(f"failed to parse datetime: {value}")
 
     base_str = found.group(1)
     shift_str = found.group(2)
 
-    if base_str == "now":
+    if base_str is None:
+        base = None
+    elif base_str == "now":
         base = dt.datetime.now()
     else:
         base = dt.datetime.fromisoformat(base_str)
@@ -51,7 +54,10 @@ def datetime(value):
     else:
         shift = dt.timedelta(0)
 
-    return base + shift
+    if base is None:
+        return shift
+    else:
+        return base + shift
 
 
 def time(value):

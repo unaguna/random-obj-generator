@@ -58,7 +58,7 @@ def test__main__time__min_max__range(capfd, minimum, maximum, expected_condition
 
 @pytest.mark.parametrize(
     "minimum",
-    ["1", "a", "-"],
+    ["1", "a", "-", "01:00:00+a"],
 )
 def test__main__time__error_when_illegal_min(capfd, minimum):
     args = ["randog", "time", minimum, "03:04:05"]
@@ -74,7 +74,7 @@ def test__main__time__error_when_illegal_min(capfd, minimum):
 
 @pytest.mark.parametrize(
     "maximum",
-    ["1", "a", "-"],
+    ["1", "a", "-", "01:00:00+a"],
 )
 def test__main__time__error_when_illegal_max(capfd, maximum):
     args = ["randog", "time", "03:04:05", maximum]

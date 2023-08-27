@@ -40,7 +40,7 @@ def test__main__datetime__min_max(capfd, arg, expected):
 
 @pytest.mark.parametrize(
     "minimum",
-    ["1", "a", "-"],
+    ["1", "a", "-", "2020-01-02T03:04:05+a"],
 )
 def test__main__datetime__error_when_illegal_min(capfd, minimum):
     args = ["randog", "datetime", minimum, "2020-01-02T03:04:05"]
@@ -56,7 +56,7 @@ def test__main__datetime__error_when_illegal_min(capfd, minimum):
 
 @pytest.mark.parametrize(
     "maximum",
-    ["1", "a", "-"],
+    ["1", "a", "-", "2020-01-02T03:04:05+a"],
 )
 def test__main__datetime__error_when_illegal_max(capfd, maximum):
     args = ["randog", "datetime", "2020-01-02T03:04:05", maximum]
@@ -535,7 +535,7 @@ class _FuzzyNow:
         ),
     ],
 )
-@patch("randog.factory.randdatetime", return_value=randog.factory.const(1))
+@patch("randog.factory.randdatetime", side_effect=randog.factory.randdatetime)
 def test__main__datetime__suger(
     mock_func: mock.MagicMock,
     capfd,
@@ -551,7 +551,7 @@ def test__main__datetime__suger(
         mock_func.assert_called_once_with(expected_start, expected_end)
 
         out, err = capfd.readouterr()
-        assert out == "1\n"
+        assert re.match(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{6})?\n$", out)
         assert err == ""
 
 

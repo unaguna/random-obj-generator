@@ -1,11 +1,13 @@
 import datetime as dt
 import re
 import sys
+from unittest import mock
 from unittest.mock import patch
 
 import pytest
 
 import randog.__main__
+from randog import timedelta_util
 
 
 def test__main__time__without_min_max(capfd):
@@ -56,7 +58,7 @@ def test__main__time__min_max__range(capfd, minimum, maximum, expected_condition
 
 @pytest.mark.parametrize(
     "minimum",
-    ["1", "a", "-"],
+    ["1", "a", "-", "01:00:00+a"],
 )
 def test__main__time__error_when_illegal_min(capfd, minimum):
     args = ["randog", "time", minimum, "03:04:05"]
@@ -72,7 +74,7 @@ def test__main__time__error_when_illegal_min(capfd, minimum):
 
 @pytest.mark.parametrize(
     "maximum",
-    ["1", "a", "-"],
+    ["1", "a", "-", "01:00:00+a"],
 )
 def test__main__time__error_when_illegal_max(capfd, maximum):
     args = ["randog", "time", "03:04:05", maximum]
@@ -390,6 +392,143 @@ def test__main__time__error_duplicate_format(capfd, resources, options):
         assert out == ""
         assert err.startswith("usage:")
         assert "not allowed with argument" in err
+
+
+class _FuzzyNow:
+    radius: dt.timedelta
+    shift: dt.timedelta
+
+    def __init__(self, *, shift=dt.timedelta(0), radius=dt.timedelta(seconds=1)):
+        self.radius = radius
+        self.shift = shift
+
+        if radius < dt.timedelta(0):
+            raise ValueError("radius must not be negative")
+
+    def __repr__(self):
+        result = "now"
+
+        if self.shift != dt.timedelta(0):
+            result += timedelta_util.to_str(self.shift, explicit_sign=True)
+        if self.radius != dt.timedelta(0):
+            result += " +- " + timedelta_util.to_str(self.radius)
+
+        return f"Fuzzy({result})"
+
+    def __eq__(self, other):
+        now = dt.datetime.now()
+        self_as_dt = now + self.shift
+        sub = self_as_dt - dt.datetime.combine(self_as_dt.date(), other)
+        return -self.radius <= sub <= self.radius or (
+            sub <= self.radius - dt.timedelta(days=1)
+            or sub >= dt.timedelta(days=1) - self.radius
+        )
+
+    def __add__(self, other):
+        if isinstance(other, dt.timedelta):
+            return _FuzzyNow(shift=self.shift + other, radius=self.radius)
+        else:
+            return NotImplemented
+
+    def __sub__(self, other):
+        if isinstance(other, dt.timedelta):
+            return self + (-other)
+        else:
+            return NotImplemented
+
+
+@pytest.mark.parametrize(
+    ("params", "expected_start", "expected_end"),
+    [
+        (["01:00:00", "02:00:00"], dt.time(1), dt.time(2)),
+        (["02:00:00", "01:00:00"], dt.time(2), dt.time(1)),
+        (["now", "now"], _FuzzyNow(), _FuzzyNow()),
+        (
+            ["now-1h", "now+1h"],
+            _FuzzyNow() - dt.timedelta(hours=1),
+            _FuzzyNow() + dt.timedelta(hours=1),
+        ),
+        (
+            ["now-1h2m", "now+1h2m"],
+            _FuzzyNow() - dt.timedelta(hours=1, minutes=2),
+            _FuzzyNow() + dt.timedelta(hours=1, minutes=2),
+        ),
+        (
+            ["now-1h+2m", "now+1h+2m"],
+            _FuzzyNow() - dt.timedelta(minutes=58),
+            _FuzzyNow() + dt.timedelta(hours=1, minutes=2),
+        ),
+        (["10:00:00-1h", "10:00:00+1h"], dt.time(9), dt.time(11)),
+        (
+            ["10:00:00.120-1h2m", "10:00:00.120+1h2m"],
+            dt.time(8, 58, 0, 120000),
+            dt.time(11, 2, 0, 120000),
+        ),
+        (
+            ["10:00:00.000001-1h+2m", "10:00:00.000001+1h+2m"],
+            dt.time(9, 2, 0, 1),
+            dt.time(11, 2, 0, 1),
+        ),
+        (
+            ["+1h"],
+            _FuzzyNow(),
+            _FuzzyNow() + dt.timedelta(hours=1),
+        ),
+        (
+            ["--", "-1h30m"],
+            _FuzzyNow() - dt.timedelta(hours=1, minutes=30),
+            _FuzzyNow(),
+        ),
+        (["10:00:00", "+1h"], dt.time(10), dt.time(11)),
+        (["10:00:00", "+23h"], dt.time(10), dt.time(9)),
+        (["--", "10:00:00", "-1h"], dt.time(10), dt.time(9)),
+        (
+            ["now-2h", "+1h"],
+            _FuzzyNow() - dt.timedelta(hours=2),
+            _FuzzyNow() - dt.timedelta(hours=2) + dt.timedelta(hours=1),
+        ),
+        (["--", "-1h30m", "10:00:00"], dt.time(8, 30), dt.time(10)),
+        (["--", "+1h30m", "10:00:00"], dt.time(11, 30), dt.time(10)),
+        (
+            ["--", "-1h30m", "now+2h"],
+            _FuzzyNow() + dt.timedelta(hours=2) - dt.timedelta(hours=1, minutes=30),
+            _FuzzyNow() + dt.timedelta(hours=2),
+        ),
+        (
+            ["--", "now+2h", "-1h30m"],
+            _FuzzyNow() + dt.timedelta(hours=2),
+            _FuzzyNow() + dt.timedelta(hours=2) - dt.timedelta(hours=1, minutes=30),
+        ),
+        (
+            ["--", "-2h30m", "+1h30m"],
+            _FuzzyNow() - dt.timedelta(hours=2, minutes=30),
+            _FuzzyNow() + dt.timedelta(hours=1, minutes=30),
+        ),
+        (
+            ["--", "+1h30m", "-2h30m"],
+            _FuzzyNow() + dt.timedelta(hours=1, minutes=30),
+            _FuzzyNow() - dt.timedelta(hours=2, minutes=30),
+        ),
+    ],
+)
+@patch("randog.factory.randtime", side_effect=randog.factory.randtime)
+def test__main__time__suger(
+    mock_func: mock.MagicMock,
+    capfd,
+    params,
+    expected_start,
+    expected_end,
+):
+    args = ["randog", "time", *params]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        mock_func.assert_called_once_with(expected_start, expected_end)
+
+        out, err = capfd.readouterr()
+        assert re.match(r"^\d{2}:\d{2}:\d{2}(?:\.\d{6})?\n$", out)
+        assert err == ""
 
 
 def test__main__time__help(capfd):

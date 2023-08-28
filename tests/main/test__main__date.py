@@ -39,7 +39,17 @@ def test__main__date__min_max(capfd, arg, expected):
 
 @pytest.mark.parametrize(
     "minimum",
-    ["1", "a", "-"],
+    [
+        "1",
+        "a",
+        "-",
+        "2022-01-01+1h",
+        "2022-01-01+1d1s",
+        "today+1h",
+        "today+1d1s",
+        "1h",
+        "1d1s",
+    ],
 )
 def test__main__date__error_when_illegal_min(capfd, minimum):
     args = ["randog", "date", minimum, "2020-01-02"]
@@ -55,7 +65,17 @@ def test__main__date__error_when_illegal_min(capfd, minimum):
 
 @pytest.mark.parametrize(
     "maximum",
-    ["1", "a", "-"],
+    [
+        "1",
+        "a",
+        "-",
+        "2022-01-01+1h",
+        "2022-01-01+1d1s",
+        "today+1h",
+        "today+1d1s",
+        "1h",
+        "1d1s",
+    ],
 )
 def test__main__date__error_when_illegal_max(capfd, maximum):
     args = ["randog", "date", "2020-01-02", maximum]
@@ -504,6 +524,31 @@ def test__main__datetime__suger(
         out, err = capfd.readouterr()
         assert re.match(r"^\d{4}-\d{2}-\d{2}\n$", out)
         assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("params",),
+    [
+        (["2020-01-02", "2020-01-01"],),
+        (["--", "2020-01-02", "-1d"],),
+        (["+1d", "2020-01-02"],),
+        (["--", "+1d", "-1d"],),
+    ],
+)
+def test__main__date__suger__error_by_inverse_range(
+    capfd,
+    params,
+):
+    args = ["randog", "date", *params]
+
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "date: error: arguments must satisfy MINIMUM <= MAXIMUM" in err
 
 
 def test__main__date__help(capfd):

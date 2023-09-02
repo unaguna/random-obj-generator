@@ -60,7 +60,7 @@ CSV_COL_ATTR_NAME = "CSV_COLUMNS"
 def _from_pyfile(fp: t.IO, filename: t.Union[str, PathLike]) -> FactoryDef:
     import randog
 
-    d = types.ModuleType("factory")
+    d = types.ModuleType("__randog__")
     d.randog = randog
     d.__file__ = str(filename)
     try:

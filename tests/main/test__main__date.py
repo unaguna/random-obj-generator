@@ -49,6 +49,10 @@ def test__main__date__min_max(capfd, arg, expected):
         "today+1d1s",
         "1h",
         "1d1s",
+        "today1d",
+        "2d",
+        "today0",
+        "0",
     ],
 )
 def test__main__date__error_when_illegal_min(capfd, minimum):
@@ -75,6 +79,10 @@ def test__main__date__error_when_illegal_min(capfd, minimum):
         "today+1d1s",
         "1h",
         "1d1s",
+        "today1d",
+        "2d",
+        "today0",
+        "0",
     ],
 )
 def test__main__date__error_when_illegal_max(capfd, maximum):
@@ -449,6 +457,7 @@ class _FuzzyNow:
     [
         (["2022-01-01", "2022-01-02"], dt.date(2022, 1, 1), dt.date(2022, 1, 2)),
         (["today", "today"], _FuzzyNow(), _FuzzyNow()),
+        (["today-0", "today+0"], _FuzzyNow(), _FuzzyNow()),
         (
             ["today-1d", "today+1d"],
             _FuzzyNow() - dt.timedelta(days=1),

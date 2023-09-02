@@ -58,7 +58,16 @@ def test__main__time__min_max__range(capfd, minimum, maximum, expected_condition
 
 @pytest.mark.parametrize(
     "minimum",
-    ["1", "a", "-", "01:00:00+a"],
+    [
+        "1",
+        "a",
+        "-",
+        "01:00:00+a",
+        "now1h",
+        "2h",
+        "now0",
+        "0",
+    ],
 )
 def test__main__time__error_when_illegal_min(capfd, minimum):
     args = ["randog", "time", minimum, "03:04:05"]
@@ -74,7 +83,16 @@ def test__main__time__error_when_illegal_min(capfd, minimum):
 
 @pytest.mark.parametrize(
     "maximum",
-    ["1", "a", "-", "01:00:00+a"],
+    [
+        "1",
+        "a",
+        "-",
+        "01:00:00+a",
+        "now1h",
+        "2h",
+        "now0",
+        "0",
+    ],
 )
 def test__main__time__error_when_illegal_max(capfd, maximum):
     args = ["randog", "time", "03:04:05", maximum]
@@ -443,6 +461,7 @@ class _FuzzyNow:
         (["01:00:00", "02:00:00"], dt.time(1), dt.time(2)),
         (["02:00:00", "01:00:00"], dt.time(2), dt.time(1)),
         (["now", "now"], _FuzzyNow(), _FuzzyNow()),
+        (["now-0", "now+0"], _FuzzyNow(), _FuzzyNow()),
         (
             ["now-1h", "now+1h"],
             _FuzzyNow() - dt.timedelta(hours=1),

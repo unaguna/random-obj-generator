@@ -55,7 +55,7 @@ For example, see the definition file below:
     import os
     import randog
 
-    CSV_COLUMNS = ["uuid", "name", "age"]
+    CSV_COLUMNS = ["id", "name"]
 
     # other python file can import and reuse this
     def create_factory(initial_id):

@@ -129,8 +129,58 @@ def time(value):
         return (base + shift).time()
 
 
+_DATE_REGEX = re.compile(r"^(\d{4}-\d{2}-\d{2}|today)?(.*)$")
+
+
 def date(value):
-    return dt.date.fromisoformat(value)
+    """date include expression type of date+timedelta or timedelta
+
+    This function accepts according inputs:
+
+    - ISO-8601 (YYYY-mm-dd, ...)
+    - today
+    - timedelta simple expr (+1d, ...)
+    - date+timedelta (today+1d, YYYY-mm-dd-2d, ...)
+
+    Parameters
+    ----------
+    value
+        string value
+
+    Returns
+    -------
+    date | timedelta
+        parsed value
+    """
+    found = _DATE_REGEX.match(value)
+
+    if not found or value == "":
+        raise ValueError(f"failed to parse date: {value}")
+
+    base_str = found.group(1)
+    shift_str = found.group(2)
+
+    if base_str is None:
+        base = None
+    elif base_str == "today":
+        base = dt.date.today()
+    else:
+        base = dt.date.fromisoformat(base_str)
+
+    if shift_str != "":
+        shift = timedelta_util.from_str(shift_str)
+        if shift % dt.timedelta(days=1) != dt.timedelta(0):
+            raise ValueError(
+                f"failed to parse date: {value}; "
+                "timedelta part must be divided by a day"
+            )
+    else:
+        shift = dt.timedelta(0)
+
+    if base is None:
+        return shift
+    else:
+        return base + shift
 
 
 def timedelta(value):

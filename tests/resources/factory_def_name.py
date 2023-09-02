@@ -1,3 +1,5 @@
 import randog
 
-FACTORY = randog.factory.const(__name__)
+
+if __name__ == "__randog__":
+    FACTORY = randog.factory.const(__name__)

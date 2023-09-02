@@ -21,6 +21,9 @@ The external definition file is written as follows, in python code, so that the 
 .. note::
     In factory definition file, :code:`import randog` can be omitted.
 
+    .. warning::
+        As discussed below, :code:`import randog` cannot be omitted if the factory definition file is used as python code other than in from_pyfile or byfile mode.
+
 .. note::
     :code:`CSV_COLUMNS` is used when executing randog as command in byfile mode. See also :doc:`doc.as_command.byfile`.
 
@@ -38,3 +41,41 @@ If you save this file under the name :code:`factory_def.py`, you can use it in y
 
 .. seealso::
     The definition file can also be used when executing randog as command in byfile mode such as :code:`python -m randog byfile ./factory_def.py`. See also :doc:`doc.as_command.byfile`.
+
+
+.. _importable_definition_files:
+
+Importable definition files
+---------------------------
+
+Since the definition file is written in python, it can be imported from other python files, but there are some points to note if it is intended to be imported.
+
+For example, see the definition file below:
+
+.. code-block:: python
+
+    import os
+    import randog
+
+    CSV_COLUMNS = ["id", "name"]
+
+    # other python file can import and reuse this
+    def create_factory(initial_id):
+        return randog.factory.randdict(
+            id=randog.factory.increment(initial_id),
+            name=randog.factory.randstr(),
+        )
+
+    if __name__ == "__randog__":
+        initial_id = int(os.environ["INITIAL_ID"])
+        FACTORY = create_factory(initial_id)
+
+The following points are noted in this definition file to make it importable:
+
+- write :code:`import randog`; This can only be omitted when this file is executed directly in from_pyfile or byfile mode of command execution, not when it is imported.
+
+- write the process that should not be executed at import in :code:`if __name__ == "__randog__"`; If this is not done, and the environment variable INITIAL_ID is not set or contains non-numbers when imported, an exception will be raised and the python code importing this file will not be executable.
+
+    - You can avoid it by other means, such as proper handling of exceptions. Choose the method appropriate to your situation.
+
+

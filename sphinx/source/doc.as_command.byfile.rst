@@ -200,3 +200,6 @@ In addition to the standard shell method, the env option of randog can be used t
         python -m randog byfile factory_def.py --env INIT_ID=5 VAR=foo
         python -m randog byfile factory_def.py --env INIT_ID=5 --env VAR=foo
 
+.. note::
+
+    If you want to make the definition file importable, it may be better to implement the reading of environment variables in :code:`if __name__ == "__randog__"`. See :ref:`importable_definition_files` for details.

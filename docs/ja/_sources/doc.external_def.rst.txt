@@ -43,6 +43,8 @@ If you save this file under the name :code:`factory_def.py`, you can use it in y
     The definition file can also be used when executing randog as command in byfile mode such as :code:`python -m randog byfile ./factory_def.py`. See also :doc:`doc.as_command.byfile`.
 
 
+.. _importable_definition_files:
+
 Importable definition files
 ---------------------------
 

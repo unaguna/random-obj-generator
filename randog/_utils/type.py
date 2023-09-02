@@ -29,7 +29,7 @@ def probability(value):
 
 
 _DATETIME_REGEX = re.compile(
-    r"^(\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?)?|now)?(.*)$"
+    r"^(\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?)?|now)?([-+].+)?$"
 )
 
 
@@ -69,10 +69,10 @@ def datetime(value) -> t.Union[dt.datetime, dt.timedelta]:
     else:
         base = dt.datetime.fromisoformat(base_str)
 
-    if shift_str != "":
-        shift = timedelta_util.from_str(shift_str)
-    else:
+    if shift_str is None or shift_str == "":
         shift = dt.timedelta(0)
+    else:
+        shift = timedelta_util.from_str(shift_str)
 
     if base is None:
         return shift
@@ -80,7 +80,7 @@ def datetime(value) -> t.Union[dt.datetime, dt.timedelta]:
         return base + shift
 
 
-_TIME_REGEX = re.compile(r"^(\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?|now)?(.*)$")
+_TIME_REGEX = re.compile(r"^(\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?|now)?([-+].+)?$")
 
 
 def time(value):
@@ -118,10 +118,10 @@ def time(value):
     else:
         base = dt.datetime.combine(dt.date.today(), dt.time.fromisoformat(base_str))
 
-    if shift_str != "":
-        shift = timedelta_util.from_str(shift_str)
-    else:
+    if shift_str is None or shift_str == "":
         shift = dt.timedelta(0)
+    else:
+        shift = timedelta_util.from_str(shift_str)
 
     if base is None:
         return shift
@@ -129,7 +129,7 @@ def time(value):
         return (base + shift).time()
 
 
-_DATE_REGEX = re.compile(r"^(\d{4}-\d{2}-\d{2}|today)?(.*)$")
+_DATE_REGEX = re.compile(r"^(\d{4}-\d{2}-\d{2}|today)?([-+].+)?$")
 
 
 def date(value):
@@ -167,15 +167,15 @@ def date(value):
     else:
         base = dt.date.fromisoformat(base_str)
 
-    if shift_str != "":
+    if shift_str is None or shift_str == "":
+        shift = dt.timedelta(0)
+    else:
         shift = timedelta_util.from_str(shift_str)
         if shift % dt.timedelta(days=1) != dt.timedelta(0):
             raise ValueError(
                 f"failed to parse date: {value}; "
                 "timedelta part must be divided by a day"
             )
-    else:
-        shift = dt.timedelta(0)
 
     if base is None:
         return shift

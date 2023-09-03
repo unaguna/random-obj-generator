@@ -12,10 +12,10 @@ Arguments and Options
 ---------------------
 
 - :code:`MINIMUM` (optional):
-    - the minimum value with the `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_. If not specified, the behavior is left to the specification of `randdatetime <randog.factory.html#randog.factory.randdatetime>`_.
+    - the minimum value; see also :ref:`here <datetime-min-max-expression>`. If not specified, the behavior is left to the specification of `randdatetime <randog.factory.html#randog.factory.randdatetime>`_.
 
 - :code:`MAXIMUM` (optional):
-    - the maximum value with the `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_. If not specified, the behavior is left to the specification of `randdatetime <randog.factory.html#randog.factory.randdatetime>`_.
+    - the maximum value; see also :ref:`here <datetime-min-max-expression>`. If not specified, the behavior is left to the specification of `randdatetime <randog.factory.html#randog.factory.randdatetime>`_.
 
 - :code:`--iso` (optional):
     - if specified, it outputs generated object with `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_.
@@ -25,6 +25,36 @@ Arguments and Options
 
 - :code:`common-options`
     - :doc:`common options <doc.as_command.common_option>`
+
+
+.. _datetime-min-max-expression:
+
+Expression of MINIMUM and MAXIMUM
+---------------------------------
+
+You can specify the arguments :code:`MINIMUM` and :code:`MAXIMUM` with following expressions:
+
+- :code:`now`: it means current datetime
+
+- `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_, such as :code:`2022-01-01T00:00:00.000000`, :code:`2022-01-01T00:00:00`, or, :code:`2022-01-01`.
+
+- datetime combined with :ref:`simple format of timedelta <timedelta-simple-format>`, such as :code:`now+2h`, or, :code:`2022-01-01-1h30m`.
+
+- :ref:`simple format of timedelta <timedelta-simple-format>` (datetime term is omitted), such as :code:`+2h`:, or, :code:`-30m`
+
+  - If the other (MAXIMUM or MINIMUM) is specified with datetime term, it means the other plus the timedelta.
+  - If the other (MAXIMUM or MINIMUM) is fully omitted or datetime term of the other is omitted, it means :code:`now` plus the timedelta.
+
+.. note::
+    A simple expression such as :code:`-30m` can be used, but since it begins with :code:`-`, it is interpreted as an optional argument and will cause an error. To avoid this, it must be specified after :code:`--`, as in the following example.
+
+    .. code-block:: shell
+
+        # valid (example for usage with --repeat)
+        python -m randog datetime --repeat 10 -- -30m +30m
+
+        # invalid (unknown option -30m)
+        python -m randog datetime --repeat 10 -30m +30m
 
 
 Examples
@@ -42,6 +72,19 @@ You can specify a range of values to be generated, as in the following example:
 
     # generates a value between 2021-01-01T00:00:00 and 2021-01-01T12:00:00
     python -m randog datetime 2021-01-01 2021-01-01T12:00:00
+
+    # generates a value between yesterday and tomorrow
+    python -m randog datetime -- -1d +1d
+
+    # generates a value between 7 days ago and now
+    python -m randog datetime -- -7d
+
+    # generates a value between now and 1 hour later
+    python -m randog datetime +1h
+
+.. note::
+
+    See :ref:`datetime-min-max-expression` for expressions such as :code:`+1d`.
 
 By default, the output is in the standard python format, but you can change the output format to the format specified in `the form of strftime or strptime <https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes>`_ or `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as follows:
 

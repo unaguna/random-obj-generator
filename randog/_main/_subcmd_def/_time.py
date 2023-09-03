@@ -29,8 +29,18 @@ class SubcmdDefTime(SubcmdDef):
             nargs="?",
             metavar="MINIMUM",
             help=(
-                "the minimum value with the ISO-8601 format. "
-                "If not specified, the behavior is left to the specification of "
+                "the minimum value. "
+                "In addition to ISO-8601 format, 'now', which indicates the time "
+                "of execution, can also be used. "
+                "The time can also be expressed by adding the timedelta to the "
+                "time, for example, 'now+12h' or '12:00:00-42m'. "
+                "If the time term is omitted, e.g., '-12h', "
+                "then the MINIMUM is the MAXIMUM plus the specified timedelta. "
+                "However, if the time term is omitted in MAXIMUM or MAXIMUM itself "
+                "is omitted, then the MINIMUM is the current time plus the "
+                "specified timedelta. "
+                "If both MINIMUM and MAXIMUM are omitted completely, "
+                "the behavior is left to the specification of "
                 "randog.factory.randtime."
             ),
         )
@@ -40,8 +50,18 @@ class SubcmdDefTime(SubcmdDef):
             nargs="?",
             metavar="MAXIMUM",
             help=(
-                "the maximum value with the ISO-8601 format. "
-                "If not specified, the behavior is left to the specification of "
+                "the maximum value. "
+                "In addition to ISO-8601 format, 'now', which indicates the time "
+                "of execution, can also be used. "
+                "The time can also be expressed by adding the timedelta to the "
+                "time, for example, 'now+12h' or '12:00:00-42m'. "
+                "If the time term is omitted, e.g., '+12h', "
+                "then the MAXIMUM is the MINIMUM plus the specified timedelta. "
+                "However, if the time term is omitted in MINIMUM or MINIMUM itself "
+                "is omitted, then the MAXIMUM is the current time plus the "
+                "specified timedelta. "
+                "If both MINIMUM and MAXIMUM are omitted completely, "
+                "the behavior is left to the specification of "
                 "randog.factory.randtime."
             ),
         )

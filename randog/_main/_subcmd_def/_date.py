@@ -29,8 +29,18 @@ class SubcmdDefDate(SubcmdDef):
             nargs="?",
             metavar="MINIMUM",
             help=(
-                "the minimum value with the ISO-8601 format. "
-                "If not specified, the behavior is left to the specification of "
+                "the minimum value. "
+                "In addition to ISO-8601 format, 'today', which indicates the date "
+                "of execution, can also be used. "
+                "The date can also be expressed by adding the timedelta to the "
+                "date, for example, 'today+2d' or '2022-01-01-30d'. "
+                "If the date term is omitted, e.g., '-7d', "
+                "then the MINIMUM is the MAXIMUM plus the specified timedelta. "
+                "However, if the date term is omitted in MAXIMUM or MAXIMUM itself "
+                "is omitted, then the MINIMUM is the current date plus the "
+                "specified timedelta. "
+                "If both MINIMUM and MAXIMUM are omitted completely, "
+                "the behavior is left to the specification of "
                 "randog.factory.randdate."
             ),
         )
@@ -40,8 +50,18 @@ class SubcmdDefDate(SubcmdDef):
             nargs="?",
             metavar="MAXIMUM",
             help=(
-                "the maximum value with the ISO-8601 format. "
-                "If not specified, the behavior is left to the specification of "
+                "the maximum value. "
+                "In addition to ISO-8601 format, 'today', which indicates the date "
+                "of execution, can also be used. "
+                "The date can also be expressed by adding the timedelta to the "
+                "date, for example, 'today+2d' or '2022-01-01-30d'. "
+                "If the date term is omitted, e.g., '+7d', "
+                "then the MAXIMUM is the MINIMUM plus the specified timedelta. "
+                "However, if the date term is omitted in MINIMUM or MINIMUM itself "
+                "is omitted, then the MAXIMUM is the current date plus the "
+                "specified timedelta. "
+                "If both MINIMUM and MAXIMUM are omitted completely, "
+                "the behavior is left to the specification of "
                 "randog.factory.randdate."
             ),
         )

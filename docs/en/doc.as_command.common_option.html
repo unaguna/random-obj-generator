@@ -228,12 +228,12 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>For log output, you can use one of the following options:</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--log-stderr</span> <span class="pre">&lt;LEVEL&gt;</span></code>:</dt><dd><p>Outputs logs of the specified level or higher to standard error output.</p>
+<dt><code class="code docutils literal notranslate"><span class="pre">--log-stderr</span> <span class="pre">&lt;LEVEL&gt;</span></code>:</dt><dd><p>Outputs logs of the specified level or higher to standard error output. The default setting is to omit traceback, but adding “-full” to end of a level, such as <code class="code docutils literal notranslate"><span class="pre">--log-stderr</span> <span class="pre">ERROR-full</span></code>, will also output a traceback, such as when an exception occurs.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--log</span> <span class="pre">&lt;LOGGING_CONFIG_PATH&gt;</span></code>:</dt><dd><p>Uses the specified log configuration file. The file must be in JSON or YAML format and must adhere to <a class="reference external" href="https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema">configuration dictionary schema</a>.</p>
+<dt><code class="code docutils literal notranslate"><span class="pre">--log</span> <span class="pre">&lt;LOGGING_CONFIG_PATH&gt;</span></code>:</dt><dd><p>Uses the specified log configuration file. The file must be in JSON or YAML format and must adhere to <a class="reference external" href="https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema">configuration dictionary schema</a>. Unlike <code class="code docutils literal notranslate"><span class="pre">--log-stderr</span></code>, traceback is not omitted.</p>
 </dd>
 </dl>
 </li>

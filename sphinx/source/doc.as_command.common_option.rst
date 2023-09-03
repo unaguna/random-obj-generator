@@ -134,9 +134,9 @@ By default, all logs are ignored, including those by randog (exceptions are note
 For log output, you can use one of the following options:
 
 - :code:`--log-stderr <LEVEL>`:
-    Outputs logs of the specified level or higher to standard error output.
+    Outputs logs of the specified level or higher to standard error output. The default setting is to omit traceback, but adding "-full" to end of a level, such as :code:`--log-stderr ERROR-full`, will also output a traceback, such as when an exception occurs.
 - :code:`--log <LOGGING_CONFIG_PATH>`:
-    Uses the specified log configuration file. The file must be in JSON or YAML format and must adhere to `configuration dictionary schema <https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema>`_.
+    Uses the specified log configuration file. The file must be in JSON or YAML format and must adhere to `configuration dictionary schema <https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema>`_. Unlike :code:`--log-stderr`, traceback is not omitted.
 
 .. warning::
     To use YAML format configuration files, `PyYAML <https://pypi.org/project/PyYAML/>`_ must be installed.

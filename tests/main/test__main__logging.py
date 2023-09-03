@@ -60,7 +60,6 @@ def test__main__logging__stderr(
         # TODO: WARNING や ERROR のログを全モードで出すようになったらそのアサーションも追加する。
 
 
-# TODO: pytest.mark.parametrize で複数回実行する間に logging error が生じるため、試験を保留している。
 @pytest.mark.parametrize(
     ("def_filename",),
     [

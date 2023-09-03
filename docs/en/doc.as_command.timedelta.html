@@ -127,21 +127,21 @@
 <ul class="simple">
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>the minimum value with the simple format; see also <a class="reference internal" href="#simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
+<li><p>the minimum value with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>the maximum value with the simple format; see also <a class="reference internal" href="#simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
+<li><p>the maximum value with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">--unit</span> <span class="pre">UNIT</span></code> (optional):</dt><dd><ul>
-<li><p>the minimum unit of generated values with the simple format; see also <a class="reference internal" href="#simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
+<li><p>the minimum unit of generated values with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -185,7 +185,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s
 </pre></div>
 </div>
-<p>By default, the output is in <a class="reference internal" href="#simple-format"><span class="std std-ref">the simple format</span></a>, but you can change the output format to the format specified in <a class="reference internal" href="#format-codes"><span class="std std-ref">the format codes</span></a> or <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a> by specifying options as follows:</p>
+<p>By default, the output is in <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">the simple format</span></a>, but you can change the output format to the format specified in <a class="reference internal" href="#format-codes"><span class="std std-ref">the format codes</span></a> or <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a> by specifying options as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--iso
 
@@ -205,7 +205,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="simple-format">
-<span id="id4"></span><h2>Simple Format<a class="headerlink" href="#simple-format" title="Permalink to this heading"></a></h2>
+<span id="timedelta-simple-format"></span><h2>Simple Format<a class="headerlink" href="#simple-format" title="Permalink to this heading"></a></h2>
 <p>In this mode, duration is represented in a proprietary format, such as <code class="code docutils literal notranslate"><span class="pre">1h30m</span></code> or <code class="code docutils literal notranslate"><span class="pre">1d2h3m4s5ms6us</span></code>.</p>
 <p>This format expresses duration by concatenating one or more of the following elements:</p>
 <table class="docutils align-default">
@@ -249,7 +249,7 @@ This is because python’s timedelta does not manage units larger than days and 
 </div>
 </section>
 <section id="format-codes">
-<span id="id5"></span><h2>Format codes<a class="headerlink" href="#format-codes" title="Permalink to this heading"></a></h2>
+<span id="id4"></span><h2>Format codes<a class="headerlink" href="#format-codes" title="Permalink to this heading"></a></h2>
 <p>Python timedelta has no format codes defined, but in this mode, you can use proprietary format codes:</p>
 <table class="docutils align-default">
 <thead>

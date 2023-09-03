@@ -65,6 +65,7 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.decimal.html">decimal Mode</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">datetime Mode</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#arguments-and-options">Arguments and Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expression-of-minimum-and-maximum">Expression of MINIMUM and MAXIMUM</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
@@ -125,14 +126,14 @@
 <ul class="simple">
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>the minimum value with the <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randdatetime">randdatetime</a>.</p></li>
+<li><p>the minimum value; see also <a class="reference internal" href="#datetime-min-max-expression"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randdatetime">randdatetime</a>.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>the maximum value with the <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randdatetime">randdatetime</a>.</p></li>
+<li><p>the maximum value; see also <a class="reference internal" href="#datetime-min-max-expression"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randdatetime">randdatetime</a>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -160,6 +161,32 @@
 </li>
 </ul>
 </section>
+<section id="expression-of-minimum-and-maximum">
+<span id="datetime-min-max-expression"></span><h2>Expression of MINIMUM and MAXIMUM<a class="headerlink" href="#expression-of-minimum-and-maximum" title="Permalink to this heading"></a></h2>
+<p>You can specify the arguments <code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> and <code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> with following expressions:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">now</span></code>: it means current datetime</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a>, such as <code class="code docutils literal notranslate"><span class="pre">2022-01-01T00:00:00.000000</span></code>, <code class="code docutils literal notranslate"><span class="pre">2022-01-01T00:00:00</span></code>, or, <code class="code docutils literal notranslate"><span class="pre">2022-01-01</span></code>.</p></li>
+<li><p>datetime combined with <a class="reference internal" href="doc.as_command.timedelta.html#timedelta-simple-format"><span class="std std-ref">simple format of timedelta</span></a>, such as <code class="code docutils literal notranslate"><span class="pre">now+2h</span></code>, or, <code class="code docutils literal notranslate"><span class="pre">2022-01-01-1h30m</span></code>.</p></li>
+<li><p><a class="reference internal" href="doc.as_command.timedelta.html#timedelta-simple-format"><span class="std std-ref">simple format of timedelta</span></a> (datetime term is omitted), such as <code class="code docutils literal notranslate"><span class="pre">+2h</span></code>:, or, <code class="code docutils literal notranslate"><span class="pre">-30m</span></code></p>
+<ul>
+<li><p>If the other (MAXIMUM or MINIMUM) is specified with datetime term, it means the other plus the timedelta.</p></li>
+<li><p>If the other (MAXIMUM or MINIMUM) is fully omitted or datetime term of the other is omitted, it means <code class="code docutils literal notranslate"><span class="pre">now</span></code> plus the timedelta.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A simple expression such as <code class="code docutils literal notranslate"><span class="pre">-30m</span></code> can be used, but since it begins with <code class="code docutils literal notranslate"><span class="pre">-</span></code>, it is interpreted as an optional argument and will cause an error. To avoid this, it must be specified after <code class="code docutils literal notranslate"><span class="pre">--</span></code>, as in the following example.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># valid (example for usage with --repeat)</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>datetime<span class="w"> </span>--repeat<span class="w"> </span><span class="m">10</span><span class="w"> </span>--<span class="w"> </span>-30m<span class="w"> </span>+30m
+
+<span class="c1"># invalid (unknown option -30m)</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>datetime<span class="w"> </span>--repeat<span class="w"> </span><span class="m">10</span><span class="w"> </span>-30m<span class="w"> </span>+30m
+</pre></div>
+</div>
+</div>
+</section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <p>The simplest example is the following, which outputs a datetime value.</p>
@@ -169,7 +196,20 @@
 <p>You can specify a range of values to be generated, as in the following example:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value between 2021-01-01T00:00:00 and 2021-01-01T12:00:00</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>datetime<span class="w"> </span><span class="m">2021</span>-01-01<span class="w"> </span><span class="m">2021</span>-01-01T12:00:00
+
+<span class="c1"># generates a value between yesterday and tomorrow</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>datetime<span class="w"> </span>--<span class="w"> </span>-1d<span class="w"> </span>+1d
+
+<span class="c1"># generates a value between 7 days ago and now</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>datetime<span class="w"> </span>--<span class="w"> </span>-7d
+
+<span class="c1"># generates a value between now and 1 hour later</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>datetime<span class="w"> </span>+1h
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See <a class="reference internal" href="#datetime-min-max-expression"><span class="std std-ref">Expression of MINIMUM and MAXIMUM</span></a> for expressions such as <code class="code docutils literal notranslate"><span class="pre">+1d</span></code>.</p>
 </div>
 <p>By default, the output is in the standard python format, but you can change the output format to the format specified in <a class="reference external" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes">the form of strftime or strptime</a> or <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a> by specifying options as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>

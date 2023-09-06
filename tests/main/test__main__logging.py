@@ -1,4 +1,5 @@
 import json
+import logging
 import sys
 import typing as t
 from unittest.mock import patch
@@ -30,6 +31,10 @@ _PARAM_MODE_OPTIONS = [
         (["--log-stderr=WARNING"], False, False),
         (["--log-stderr=INFO"], True, False),
         (["--log-stderr=DEBUG"], True, True),
+        (["--log-stderr=ERROR-full"], False, False),
+        (["--log-stderr=WARNING-full"], False, False),
+        (["--log-stderr=INFO-full"], True, False),
+        (["--log-stderr=DEBUG-full"], True, True),
     ],
 )
 def test__main__logging__stderr(
@@ -53,6 +58,54 @@ def test__main__logging__stderr(
             assert "debug:" not in err
 
         # TODO: WARNING や ERROR のログを全モードで出すようになったらそのアサーションも追加する。
+
+
+@pytest.mark.parametrize(
+    ("def_filename",),
+    [
+        ("factory_def_error_on_def.py",),
+        ("factory_def_error_on_generation.py",),
+    ],
+)
+@pytest.mark.parametrize(
+    ("log_options", "include_traceback"),
+    [
+        (["--log-stderr=ERROR"], False),
+        (["--log-stderr=WARNING"], False),
+        (["--log-stderr=INFO"], False),
+        (["--log-stderr=DEBUG"], False),
+        (["--log-stderr=ERROR-full"], True),
+        (["--log-stderr=WARNING-full"], True),
+        (["--log-stderr=INFO-full"], True),
+        (["--log-stderr=DEBUG-full"], True),
+    ],
+)
+def test__main__logging__stderr_include_traceback(
+    resources,
+    capfd,
+    def_filename,
+    log_options,
+    include_traceback,
+):
+    # clear handlers defined by main() in the previous testcase.
+    # Skipping this will leave the handler to output with traceback,
+    # which will affect the test.
+    for logger_name in logging.root.manager.loggerDict:
+        logging.getLogger(logger_name).handlers.clear()
+    logging.getLogger().handlers.clear()
+
+    args = ["randog", "byfile", str(resources.joinpath(def_filename)), *log_options]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert "error: " in err
+        if include_traceback:
+            assert "Traceback" in err
+        else:
+            assert "Traceback" not in err
 
 
 @pytest.mark.parametrize(("mode_options",), _PARAM_MODE_OPTIONS)

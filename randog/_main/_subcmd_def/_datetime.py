@@ -1,4 +1,5 @@
 import argparse
+import datetime as dt
 import typing as t
 
 import randog.factory
@@ -28,8 +29,18 @@ class SubcmdDefDatetime(SubcmdDef):
             nargs="?",
             metavar="MINIMUM",
             help=(
-                "the minimum value with the ISO-8601 format. "
-                "If not specified, the behavior is left to the specification of "
+                "the minimum value. "
+                "In addition to ISO-8601 format, 'now', which indicates the datetime "
+                "of execution, can also be used. "
+                "The datetime can also be expressed by adding the timedelta to the "
+                "datetime, for example, 'now+12h' or '2022-01-01-30d'. "
+                "If the datetime term is omitted, e.g., '-12h', "
+                "then the MINIMUM is the MAXIMUM plus the specified timedelta. "
+                "However, if the datetime term is omitted in MAXIMUM or MAXIMUM itself "
+                "is omitted, then the MINIMUM is the current datetime plus the "
+                "specified timedelta. "
+                "If both MINIMUM and MAXIMUM are omitted completely, "
+                "the behavior is left to the specification of "
                 "randog.factory.randdatetime."
             ),
         )
@@ -39,8 +50,18 @@ class SubcmdDefDatetime(SubcmdDef):
             nargs="?",
             metavar="MAXIMUM",
             help=(
-                "the maximum value with the ISO-8601 format. "
-                "If not specified, the behavior is left to the specification of "
+                "the maximum value. "
+                "In addition to ISO-8601 format, 'now', which indicates the datetime "
+                "of execution, can also be used. "
+                "The datetime can also be expressed by adding the timedelta to the "
+                "datetime, for example, 'now+12h' or '2022-01-01-30d'. "
+                "If the datetime term is omitted, e.g., '+12h', "
+                "then the MAXIMUM is the MINIMUM plus the specified timedelta. "
+                "However, if the datetime term is omitted in MINIMUM or MINIMUM itself "
+                "is omitted, then the MAXIMUM is the current datetime plus the "
+                "specified timedelta. "
+                "If both MINIMUM and MAXIMUM are omitted completely, "
+                "the behavior is left to the specification of "
                 "randog.factory.randdatetime."
             ),
         )
@@ -79,7 +100,43 @@ class SubcmdDefDatetime(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (args.get("minimum"), args.get("maximum")), {}
+        minimum, maximum = _normalize_min_max(args.get("minimum"), args.get("maximum"))
+
+        return (minimum, maximum), {}
 
     def get_factory_constructor(self) -> t.Callable:
         return randog.factory.randdatetime
+
+
+def _normalize_min_max(
+    arg0: t.Union[dt.datetime, dt.timedelta, None],
+    arg1: t.Union[dt.datetime, dt.timedelta, None],
+) -> t.Tuple[t.Optional[dt.datetime], t.Optional[dt.datetime]]:
+    minimum: t.Optional[dt.datetime]
+    maximum: t.Optional[dt.datetime]
+
+    now = dt.datetime.now()
+    if None not in (arg0, arg1):
+        if isinstance(arg0, dt.timedelta) and isinstance(arg1, dt.timedelta):
+            minimum = now + arg0
+            maximum = now + arg1
+        elif isinstance(arg0, dt.timedelta):
+            minimum = arg1 + arg0
+            maximum = arg1
+        elif isinstance(arg1, dt.timedelta):
+            minimum = arg0
+            maximum = arg0 + arg1
+        else:
+            minimum = arg0
+            maximum = arg1
+    elif arg0 is not None:
+        if isinstance(arg0, dt.timedelta):
+            minimum, maximum = sorted((now, now + arg0))
+        else:
+            minimum = arg0
+            maximum = None
+    else:
+        minimum = None
+        maximum = None
+
+    return minimum, maximum

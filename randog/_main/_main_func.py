@@ -1,5 +1,6 @@
 import csv
 import datetime
+import itertools
 import json
 import os
 import random
@@ -8,6 +9,7 @@ import typing as t
 import warnings
 
 import randog.factory
+from . import Args, Subcmd, get_subcmd_def
 from ._logging import (
     logger,
     apply_stderr_logging_config,
@@ -17,7 +19,6 @@ from ._logging import (
 from ._warning import RandogCmdWarning, apply_formatwarning
 from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryDef, FactoryStopException
-from . import Args, Subcmd, get_subcmd_def
 
 
 def _build_factories(
@@ -44,7 +45,12 @@ def _build_factories(
             yield factory_count, def_file_name, factory
     else:
         iargs, kwargs = subcmd_def.build_args(args)
-        factory = subcmd_def.get_factory_constructor()(*iargs, **kwargs)
+        construct_factory = subcmd_def.get_factory_constructor()
+        logger.debug(
+            "construct factory: %s",
+            _repr_function_call(construct_factory, iargs, kwargs),
+        )
+        factory = construct_factory(*iargs, **kwargs)
         if args.iso:
             factory = factory.post_process(
                 lambda x: x.isoformat() if x is not None else None
@@ -311,7 +317,7 @@ def _setup_primary_configuration(args: Args):
 
     # setup logging
     if args.log_stderr:
-        apply_stderr_logging_config(args.log_stderr)
+        apply_stderr_logging_config(args.log_stderr, args.log_stderr_is_full)
     elif args.log_config_file:
         try:
             apply_logging_config_file(args.log_config_file)
@@ -409,3 +415,18 @@ def main():
     except Exception as e:
         logger.error("; ".join(get_message_recursive(e)), exc_info=e)
         exit(1)
+
+
+def _repr_function_call(
+    func_name: t.Union[str, t.Callable],
+    args: t.Sequence[t.Any],
+    kwargs: t.Mapping[str, t.Any],
+) -> str:
+    if not isinstance(func_name, str):
+        func_name = getattr(func_name, "__name__", "function")
+
+    args_str = itertools.chain(
+        (repr(arg) for arg in args),
+        (f"{key}={repr(value)}" for key, value in kwargs.items()),
+    )
+    return f"{func_name}({', '.join(args_str)})"

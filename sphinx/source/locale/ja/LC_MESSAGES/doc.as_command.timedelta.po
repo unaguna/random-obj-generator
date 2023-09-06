@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-16 20:28+0900\n"
+"POT-Creation-Date: 2023-09-03 16:39+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -39,10 +39,12 @@ msgid ":code:`MINIMUM` (optional):"
 msgstr ""
 
 #: ../../source/doc.as_command.timedelta.rst:15
+#, fuzzy
 msgid ""
-"the minimum value with the simple format; see also :ref:`here <simple-"
-"format>`. If not specified, the behavior is left to the specification of "
-"`randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_."
+"the minimum value with the simple format; see also :ref:`here <timedelta-"
+"simple-format>`. If not specified, the behavior is left to the "
+"specification of `randtimedelta "
+"<randog.factory.html#randog.factory.randtimedelta>`_."
 msgstr ""
 "最小値を :ref:`簡易書式 <simple-format>` で指定する。指定がない場合の動作は、`randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_ の仕様に準ずる。"
@@ -52,10 +54,12 @@ msgid ":code:`MAXIMUM` (optional):"
 msgstr ""
 
 #: ../../source/doc.as_command.timedelta.rst:18
+#, fuzzy
 msgid ""
-"the maximum value with the simple format; see also :ref:`here <simple-"
-"format>`. If not specified, the behavior is left to the specification of "
-"`randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_."
+"the maximum value with the simple format; see also :ref:`here <timedelta-"
+"simple-format>`. If not specified, the behavior is left to the "
+"specification of `randtimedelta "
+"<randog.factory.html#randog.factory.randtimedelta>`_."
 msgstr ""
 "最大値を :ref:`簡易書式 <simple-format>` で指定する。指定がない場合の動作は、`randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_ の仕様に準ずる。"
@@ -65,10 +69,11 @@ msgid ":code:`--unit UNIT` (optional):"
 msgstr ""
 
 #: ../../source/doc.as_command.timedelta.rst:21
+#, fuzzy
 msgid ""
 "the minimum unit of generated values with the simple format; see also "
-":ref:`here <simple-format>`. If not specified, the behavior is left to "
-"the specification of `randtimedelta "
+":ref:`here <timedelta-simple-format>`. If not specified, the behavior is "
+"left to the specification of `randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_."
 msgstr ""
 "生成される値の最小単位を :ref:`簡易書式 <simple-format>` で指定する。指定がない場合の動作は、`randtimedelta"
@@ -124,10 +129,11 @@ msgid ""
 msgstr "生成される値の最小単位を指定しない場合、適当な長さに調整されます。多くの場合は次のように手動で指定する必要でしょう。"
 
 #: ../../source/doc.as_command.timedelta.rst:56
+#, fuzzy
 msgid ""
-"By default, the output is in :ref:`the simple format <simple-format>`, "
-"but you can change the output format to the format specified in :ref:`the"
-" format codes <format-codes>` or `ISO-8601 format "
+"By default, the output is in :ref:`the simple format <timedelta-simple-"
+"format>`, but you can change the output format to the format specified in"
+" :ref:`the format codes <format-codes>` or `ISO-8601 format "
 "<https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as "
 "follows:"
 msgstr ""
@@ -225,16 +231,13 @@ msgstr ""
 
 #: ../../source/doc.as_command.timedelta.rst
 msgid "Zero. It is same as :code:`0d`, :code:`0h`, :code:`0s`, and so on."
-msgstr ""
-"ゼロ。:code:`0d`, :code:`0h`, :code:`0s` "
-"等と同じ経過時間を表します。"
+msgstr "ゼロ。:code:`0d`, :code:`0h`, :code:`0s` 等と同じ経過時間を表します。"
 
 #: ../../source/doc.as_command.timedelta.rst
 msgid ""
 "In the case of zero, the unit is meaningless, so the notation without "
 "unit is also allowed."
-msgstr ""
-"ゼロの場合は単位が意味を成さないため、単位なしの表記も認められています。"
+msgstr "ゼロの場合は単位が意味を成さないため、単位なしの表記も認められています。"
 
 #: ../../source/doc.as_command.timedelta.rst:119
 #: ../../source/doc.as_command.timedelta.rst:179

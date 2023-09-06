@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>共通オプション &mdash; random-obj-generator 0.11.0 ドキュメント</title>
+  <title>共通オプション &mdash; random-obj-generator 0.12.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.11.0
+                0.12.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -229,12 +229,12 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>ログ出力について、以下のオプションのいずれか1つを使用できます。</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--log-stderr</span> <span class="pre">&lt;LEVEL&gt;</span></code>:</dt><dd><p>指定したレベル以上のログを標準エラー出力へ出力します。</p>
+<dt><code class="code docutils literal notranslate"><span class="pre">--log-stderr</span> <span class="pre">&lt;LEVEL&gt;</span></code>:</dt><dd><p>指定したレベル以上のログを標準エラー出力へ出力します。デフォルトではトレースバックを省略するよう設定されますが、<code class="code docutils literal notranslate"><span class="pre">--log-stderr</span> <span class="pre">ERROR-full</span></code> のようにレベルの後ろに &quot;-full&quot; をつけると、例外が発生した場合などのトレースバックも出力されます。</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--log</span> <span class="pre">&lt;LOGGING_CONFIG_PATH&gt;</span></code>:</dt><dd><p>指定したログ設定ファイルを使用します。ファイルは JSON もしくは YAML 形式で、<a class="reference external" href="https://docs.python.org/ja/3/library/logging.config.html#configuration-dictionary-schema">configuration dictionary schema</a> に従う必要があります。</p>
+<dt><code class="code docutils literal notranslate"><span class="pre">--log</span> <span class="pre">&lt;LOGGING_CONFIG_PATH&gt;</span></code>:</dt><dd><p>指定したログ設定ファイルを使用します。ファイルは JSON もしくは YAML 形式で、<a class="reference external" href="https://docs.python.org/ja/3/library/logging.config.html#configuration-dictionary-schema">configuration dictionary schema</a> に従う必要があります。<code class="code docutils literal notranslate"><span class="pre">--log-stderr</span></code> とは異なり、トレースバックは省略されません。</p>
 </dd>
 </dl>
 </li>

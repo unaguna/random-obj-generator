@@ -110,8 +110,21 @@ def add_common_arguments(parser: argparse.ArgumentParser):
     group_logging.add_argument(
         "--log-stderr",
         default=None,
-        choices=("ERROR", "WARNING", "INFO", "DEBUG"),
-        help="output logs of specified level or more stronger into standard error.",
+        choices=(
+            "ERROR",
+            "WARNING",
+            "INFO",
+            "DEBUG",
+            "ERROR-full",
+            "WARNING-full",
+            "INFO-full",
+            "DEBUG-full",
+        ),
+        help=(
+            "output logs of specified level or more stronger into standard error. "
+            "If '*-full' is specified, "
+            "traceback is also output when an exception occurs, etc."
+        ),
     )
     group_logging.add_argument(
         "--log",

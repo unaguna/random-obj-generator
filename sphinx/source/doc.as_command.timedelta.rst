@@ -12,13 +12,13 @@ Arguments and Options
 ---------------------
 
 - :code:`MINIMUM` (optional):
-    - the minimum value with the simple format; see also :ref:`here <simple-format>`. If not specified, the behavior is left to the specification of `randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_.
+    - the minimum value with the simple format; see also :ref:`here <timedelta-simple-format>`. If not specified, the behavior is left to the specification of `randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_.
 
 - :code:`MAXIMUM` (optional):
-    - the maximum value with the simple format; see also :ref:`here <simple-format>`. If not specified, the behavior is left to the specification of `randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_.
+    - the maximum value with the simple format; see also :ref:`here <timedelta-simple-format>`. If not specified, the behavior is left to the specification of `randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_.
 
 - :code:`--unit UNIT` (optional):
-    - the minimum unit of generated values with the simple format; see also :ref:`here <simple-format>`. If not specified, the behavior is left to the specification of `randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_.
+    - the minimum unit of generated values with the simple format; see also :ref:`here <timedelta-simple-format>`. If not specified, the behavior is left to the specification of `randtimedelta <randog.factory.html#randog.factory.randtimedelta>`_.
 
 - :code:`--iso` (optional):
     - if specified, it outputs generated object with `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_.
@@ -53,7 +53,7 @@ If the minimum unit is not specified, it will be adjusted to the appropriate len
     # generates a value between 0 day and 1 day with minimum unit 1 second
     python -m randog timedelta 0 1d --unit 1s
 
-By default, the output is in :ref:`the simple format <simple-format>`, but you can change the output format to the format specified in :ref:`the format codes <format-codes>` or `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as follows:
+By default, the output is in :ref:`the simple format <timedelta-simple-format>`, but you can change the output format to the format specified in :ref:`the format codes <format-codes>` or `ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as follows:
 
 .. code-block:: shell
 
@@ -76,7 +76,7 @@ Most likely, you will not be satisfied with just one generated, so you will prob
     python -m randog timedelta -L 10 --json --iso
 
 
-.. _simple-format:
+.. _timedelta-simple-format:
 
 Simple Format
 -------------

@@ -1,11 +1,13 @@
-import datetime
+import datetime as dt
 import re
 import sys
+from unittest import mock
 from unittest.mock import patch
 
 import pytest
 
 import randog.__main__
+from randog import timedelta_util
 
 
 def test__main__date__without_min_max(capfd):
@@ -37,7 +39,21 @@ def test__main__date__min_max(capfd, arg, expected):
 
 @pytest.mark.parametrize(
     "minimum",
-    ["1", "a", "-"],
+    [
+        "1",
+        "a",
+        "-",
+        "2022-01-01+1h",
+        "2022-01-01+1d1s",
+        "today+1h",
+        "today+1d1s",
+        "1h",
+        "1d1s",
+        "today1d",
+        "2d",
+        "today0",
+        "0",
+    ],
 )
 def test__main__date__error_when_illegal_min(capfd, minimum):
     args = ["randog", "date", minimum, "2020-01-02"]
@@ -53,7 +69,21 @@ def test__main__date__error_when_illegal_min(capfd, minimum):
 
 @pytest.mark.parametrize(
     "maximum",
-    ["1", "a", "-"],
+    [
+        "1",
+        "a",
+        "-",
+        "2022-01-01+1h",
+        "2022-01-01+1d1s",
+        "today+1h",
+        "today+1d1s",
+        "1h",
+        "1d1s",
+        "today1d",
+        "2d",
+        "today0",
+        "0",
+    ],
 )
 def test__main__date__error_when_illegal_max(capfd, maximum):
     args = ["randog", "date", "2020-01-02", maximum]
@@ -214,7 +244,7 @@ def test__main__date__error_with_negative_repeat(capfd, resources, option, lengt
 @pytest.mark.parametrize(
     ("arg", "expected"),
     [
-        ("2020-01-02", datetime.date(2020, 1, 2)),
+        ("2020-01-02", dt.date(2020, 1, 2)),
     ],
 )
 @pytest.mark.parametrize(
@@ -377,6 +407,157 @@ def test__main__date__error_duplicate_format(capfd, resources, options):
         assert out == ""
         assert err.startswith("usage:")
         assert "not allowed with argument" in err
+
+
+class _FuzzyNow:
+    radius: dt.timedelta
+    shift: dt.timedelta
+
+    def __init__(self, *, shift=dt.timedelta(0), radius=dt.timedelta(0)):
+        self.radius = radius
+        self.shift = shift
+
+        if radius < dt.timedelta(0):
+            raise ValueError("radius must not be negative")
+
+    def __repr__(self):
+        result = "today"
+
+        if self.shift != dt.timedelta(0):
+            result += timedelta_util.to_str(self.shift, explicit_sign=True)
+        if self.radius != dt.timedelta(0):
+            result += " +- " + timedelta_util.to_str(self.radius)
+
+        return f"Fuzzy({result})"
+
+    def __eq__(self, other):
+        today = dt.date.today()
+        self_as_date = today + self.shift
+        sub = self_as_date - other
+        return -self.radius <= sub <= self.radius or (
+            sub <= self.radius - dt.timedelta(days=1)
+            or sub >= dt.timedelta(days=1) - self.radius
+        )
+
+    def __add__(self, other):
+        if isinstance(other, dt.timedelta):
+            return _FuzzyNow(shift=self.shift + other, radius=self.radius)
+        else:
+            return NotImplemented
+
+    def __sub__(self, other):
+        if isinstance(other, dt.timedelta):
+            return self + (-other)
+        else:
+            return NotImplemented
+
+
+@pytest.mark.parametrize(
+    ("params", "expected_start", "expected_end"),
+    [
+        (["2022-01-01", "2022-01-02"], dt.date(2022, 1, 1), dt.date(2022, 1, 2)),
+        (["today", "today"], _FuzzyNow(), _FuzzyNow()),
+        (["today-0", "today+0"], _FuzzyNow(), _FuzzyNow()),
+        (
+            ["today-1d", "today+1d"],
+            _FuzzyNow() - dt.timedelta(days=1),
+            _FuzzyNow() + dt.timedelta(days=1),
+        ),
+        (
+            ["today-1d48h", "today+1d24h"],
+            _FuzzyNow() - dt.timedelta(days=3),
+            _FuzzyNow() + dt.timedelta(days=2),
+        ),
+        (
+            ["today-1d-2d", "today+1d+2d"],
+            _FuzzyNow() - dt.timedelta(days=3),
+            _FuzzyNow() + dt.timedelta(days=3),
+        ),
+        (
+            ["2022-01-01-1d", "2022-01-01+1d"],
+            dt.date(2021, 12, 31),
+            dt.date(2022, 1, 2),
+        ),
+        (
+            ["+1d"],
+            _FuzzyNow(),
+            _FuzzyNow() + dt.timedelta(days=1),
+        ),
+        (
+            ["--", "-2d"],
+            _FuzzyNow() - dt.timedelta(days=2),
+            _FuzzyNow(),
+        ),
+        (
+            ["2022-01-01", "+1d"],
+            dt.date(2022, 1, 1),
+            dt.date(2022, 1, 2),
+        ),
+        (
+            ["today-2d", "+1d"],
+            _FuzzyNow() - dt.timedelta(days=2),
+            _FuzzyNow() - dt.timedelta(days=2) + dt.timedelta(days=1),
+        ),
+        (
+            ["--", "-2d", "2022-01-01"],
+            dt.date(2021, 12, 30),
+            dt.date(2022, 1, 1),
+        ),
+        (
+            ["--", "-2d", "today+1d"],
+            _FuzzyNow() + dt.timedelta(days=1) - dt.timedelta(days=2),
+            _FuzzyNow() + dt.timedelta(days=1),
+        ),
+        (
+            ["--", "-2d", "+1d"],
+            _FuzzyNow() - dt.timedelta(days=2),
+            _FuzzyNow() + dt.timedelta(days=1),
+        ),
+    ],
+)
+@patch("randog.factory.randdate", side_effect=randog.factory.randdate)
+def test__main__datetime__suger(
+    mock_func: mock.MagicMock,
+    capfd,
+    params,
+    expected_start,
+    expected_end,
+):
+    args = ["randog", "date", *params]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        mock_func.assert_called_once_with(expected_start, expected_end)
+
+        out, err = capfd.readouterr()
+        assert re.match(r"^\d{4}-\d{2}-\d{2}\n$", out)
+        assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("params",),
+    [
+        (["2020-01-02", "2020-01-01"],),
+        (["--", "2020-01-02", "-1d"],),
+        (["+1d", "2020-01-02"],),
+        (["--", "+1d", "-1d"],),
+    ],
+)
+def test__main__date__suger__error_by_inverse_range(
+    capfd,
+    params,
+):
+    args = ["randog", "date", *params]
+
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "date: error: arguments must satisfy MINIMUM <= MAXIMUM" in err
 
 
 def test__main__date__help(capfd):

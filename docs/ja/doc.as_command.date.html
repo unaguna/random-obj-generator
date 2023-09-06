@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>date モード &mdash; random-obj-generator 0.11.0 ドキュメント</title>
+  <title>date モード &mdash; random-obj-generator 0.12.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.11.0
+                0.12.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -67,6 +67,7 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.datetime.html">datetime モード</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">date モード</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#arguments-and-options">引数とオプション</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expression-of-minimum-and-maximum">MINIMUM と MAXIMUM の表現方法</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#examples">実行例</a></li>
 </ul>
 </li>
@@ -126,14 +127,14 @@
 <ul class="simple">
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>最小値を <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
+<li><p>最小値。詳細は <a class="reference internal" href="#date-min-max-expression"><span class="std std-ref">こちら</span></a>。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>最大値を <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
+<li><p>最大値。詳細は <a class="reference internal" href="#date-min-max-expression"><span class="std std-ref">こちら</span></a>。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
 </ul>
 </dd>
 </dl>
@@ -161,6 +162,32 @@
 </li>
 </ul>
 </section>
+<section id="expression-of-minimum-and-maximum">
+<span id="date-min-max-expression"></span><h2>MINIMUM と MAXIMUM の表現方法<a class="headerlink" href="#expression-of-minimum-and-maximum" title="この見出しへのパーマリンク"></a></h2>
+<p>引数 <code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code>, <code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> はそれぞれ以下の記法で指定できます。</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">today</span></code>: 現在の日付を意味します。</p></li>
+<li><p><a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a>。例: <code class="code docutils literal notranslate"><span class="pre">2022-01-01</span></code></p></li>
+<li><p><a class="reference internal" href="doc.as_command.timedelta.html#timedelta-simple-format"><span class="std std-ref">timedelta の簡易書式</span></a> と日付の和。例: <code class="code docutils literal notranslate"><span class="pre">today+2d</span></code>, <code class="code docutils literal notranslate"><span class="pre">2022-01-01-1d</span></code></p></li>
+<li><p><a class="reference internal" href="doc.as_command.timedelta.html#timedelta-simple-format"><span class="std std-ref">timedelta の簡易書式</span></a> (日付の項を省略)。例: <code class="code docutils literal notranslate"><span class="pre">+2d</span></code>:, <code class="code docutils literal notranslate"><span class="pre">-7d</span></code></p>
+<ul>
+<li><p>MINIMUM と MAXIMUM のうちのもう一方が指定されていて日付の項が省略されていないなら、これはそのもう一方に timedelta を加算した日付を意味します。</p></li>
+<li><p>MINIMUM と MAXIMUM のうちのもう一方が指定されていないか、そちらも日付の項が省略されているなら、これは現在の日付に timedelta を加算した日付を意味します。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="code docutils literal notranslate"><span class="pre">-7d</span></code> のような簡易表現を使用できますが、<code class="code docutils literal notranslate"><span class="pre">-</span></code> で始まるため、オプション引数として解釈されエラーを引き起こしてしまいます。これを防ぐため、以下の例のように <code class="code docutils literal notranslate"><span class="pre">--</span></code> の後に指定する必要があります。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># valid (example for usage with --repeat)</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>--repeat<span class="w"> </span><span class="m">10</span><span class="w"> </span>--<span class="w"> </span>-7d<span class="w"> </span>+7d
+
+<span class="c1"># invalid (unknown option -30m)</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>--repeat<span class="w"> </span><span class="m">10</span><span class="w"> </span>-7d<span class="w"> </span>+7d
+</pre></div>
+</div>
+</div>
+</section>
 <section id="examples">
 <h2>実行例<a class="headerlink" href="#examples" title="この見出しへのパーマリンク"></a></h2>
 <p>最も簡素な例は次の通りです。日付を出力します。</p>
@@ -170,7 +197,20 @@
 <p>次の例のように、生成する値の範囲を指定することができます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value between 2021-01-01 and 2021-01-31</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span><span class="m">2021</span>-01-01<span class="w"> </span><span class="m">2021</span>-01-31
+
+<span class="c1"># generates a value between yesterday and tomorrow</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>--<span class="w"> </span>-1d<span class="w"> </span>+1d
+
+<span class="c1"># generates a value between 7 days ago and today</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>--<span class="w"> </span>-7d
+
+<span class="c1"># generates a value between today and 1 day later</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>+1d
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="code docutils literal notranslate"><span class="pre">+1d</span></code> 等の表現については <a class="reference internal" href="#date-min-max-expression"><span class="std std-ref">MINIMUM と MAXIMUM の表現方法</span></a> を参照してください。</p>
 </div>
 <p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference external" href="https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-format-codes">strftime や strptime と同じ形式</a> で指定したフォーマットや <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> に変更できます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>

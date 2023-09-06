@@ -145,7 +145,20 @@ class Args:
 
     @property
     def log_stderr(self) -> t.Optional[str]:
-        return self.get("log_stderr", None)
+        specified: t.Optional[str] = self.get("log_stderr", None)
+
+        if specified is None:
+            return None
+        elif "full" in specified:
+            return specified.replace("-full", "")
+        else:
+            return specified
+
+    @property
+    def log_stderr_is_full(self) -> bool:
+        specified: t.Optional[str] = self.get("log_stderr", None)
+
+        return specified is not None and "full" in specified
 
     @property
     def log_config_file(self) -> t.Optional[str]:

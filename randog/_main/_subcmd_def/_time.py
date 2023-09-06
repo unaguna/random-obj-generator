@@ -1,4 +1,5 @@
 import argparse
+import datetime as dt
 import typing as t
 
 import randog.factory
@@ -28,8 +29,18 @@ class SubcmdDefTime(SubcmdDef):
             nargs="?",
             metavar="MINIMUM",
             help=(
-                "the minimum value with the ISO-8601 format. "
-                "If not specified, the behavior is left to the specification of "
+                "the minimum value. "
+                "In addition to ISO-8601 format, 'now', which indicates the time "
+                "of execution, can also be used. "
+                "The time can also be expressed by adding the timedelta to the "
+                "time, for example, 'now+12h' or '12:00:00-42m'. "
+                "If the time term is omitted, e.g., '-12h', "
+                "then the MINIMUM is the MAXIMUM plus the specified timedelta. "
+                "However, if the time term is omitted in MAXIMUM or MAXIMUM itself "
+                "is omitted, then the MINIMUM is the current time plus the "
+                "specified timedelta. "
+                "If both MINIMUM and MAXIMUM are omitted completely, "
+                "the behavior is left to the specification of "
                 "randog.factory.randtime."
             ),
         )
@@ -39,8 +50,18 @@ class SubcmdDefTime(SubcmdDef):
             nargs="?",
             metavar="MAXIMUM",
             help=(
-                "the maximum value with the ISO-8601 format. "
-                "If not specified, the behavior is left to the specification of "
+                "the maximum value. "
+                "In addition to ISO-8601 format, 'now', which indicates the time "
+                "of execution, can also be used. "
+                "The time can also be expressed by adding the timedelta to the "
+                "time, for example, 'now+12h' or '12:00:00-42m'. "
+                "If the time term is omitted, e.g., '+12h', "
+                "then the MAXIMUM is the MINIMUM plus the specified timedelta. "
+                "However, if the time term is omitted in MINIMUM or MINIMUM itself "
+                "is omitted, then the MAXIMUM is the current time plus the "
+                "specified timedelta. "
+                "If both MINIMUM and MAXIMUM are omitted completely, "
+                "the behavior is left to the specification of "
                 "randog.factory.randtime."
             ),
         )
@@ -79,7 +100,50 @@ class SubcmdDefTime(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (args.get("minimum"), args.get("maximum")), {}
+        minimum, maximum = _normalize_min_max(args.get("minimum"), args.get("maximum"))
+
+        return (minimum, maximum), {}
 
     def get_factory_constructor(self) -> t.Callable:
         return randog.factory.randtime
+
+
+def _normalize_min_max(
+    arg0: t.Union[dt.time, dt.timedelta, None],
+    arg1: t.Union[dt.time, dt.timedelta, None],
+) -> t.Tuple[t.Optional[dt.time], t.Optional[dt.time]]:
+    minimum: t.Optional[dt.time]
+    maximum: t.Optional[dt.time]
+
+    now = dt.datetime.now()
+    if None not in (arg0, arg1):
+        if isinstance(arg0, dt.timedelta) and isinstance(arg1, dt.timedelta):
+            minimum = (now + arg0).time()
+            maximum = (now + arg1).time()
+        elif isinstance(arg0, dt.timedelta):
+            arg1_dt = dt.datetime.combine(dt.date.today(), arg1)
+            minimum = (arg1_dt + arg0).time()
+            maximum = arg1
+        elif isinstance(arg1, dt.timedelta):
+            arg0_dt = dt.datetime.combine(dt.date.today(), arg0)
+            minimum = arg0
+            maximum = (arg0_dt + arg1).time()
+        else:
+            minimum = arg0
+            maximum = arg1
+    elif arg0 is not None:
+        if isinstance(arg0, dt.timedelta):
+            if arg0 >= dt.timedelta(0):
+                minimum = now.time()
+                maximum = (now + arg0).time()
+            else:
+                minimum = (now + arg0).time()
+                maximum = now.time()
+        else:
+            minimum = arg0
+            maximum = None
+    else:
+        minimum = None
+        maximum = None
+
+    return minimum, maximum

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 13:32+0900\n"
+"POT-Creation-Date: 2023-09-02 16:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -48,19 +48,29 @@ msgstr "factory定義ファイルでは、:code:`import randog` を省略でき�
 
 #: ../../source/doc.external_def.rst:25
 msgid ""
+"As discussed below, :code:`import randog` cannot be omitted if the "
+"factory definition file is used as python code other than in from_pyfile "
+"or byfile mode."
+msgstr ""
+"後述するように、from_pyfile や byfile モード以外で "
+"factory 定義ファイルが python "
+"コードとして使用される場合、:code:`import randog` を省略できません。"
+
+#: ../../source/doc.external_def.rst:28
+msgid ""
 ":code:`CSV_COLUMNS` is used when executing randog as command in byfile "
 "mode. See also :doc:`doc.as_command.byfile`."
 msgstr ""
 ":code:`CSV_COLUMNS` は byfile "
 "モードでコマンド実行する際に使用されます。:doc:`doc.as_command.byfile` もご覧ください。"
 
-#: ../../source/doc.external_def.rst:27
+#: ../../source/doc.external_def.rst:30
 msgid ""
 "If you save this file under the name :code:`factory_def.py`, you can use "
 "it in your python code as follows:"
 msgstr "このファイルを :code:`factory_def.py` という名称で保存した場合、以下のような python プログラムから使用できます。"
 
-#: ../../source/doc.external_def.rst:40
+#: ../../source/doc.external_def.rst:43
 msgid ""
 "The definition file can also be used when executing randog as command in "
 "byfile mode such as :code:`python -m randog byfile ./factory_def.py`. See"
@@ -68,4 +78,53 @@ msgid ""
 msgstr ""
 "外部定義ファイルは :code:`python -m randog byfile ./factory_def.py` のように byfile "
 "モードでコマンド実行する際にも使用できます。:doc:`doc.as_command.byfile` もご覧ください。"
+
+#: ../../source/doc.external_def.rst:47
+msgid "Importable definition files"
+msgstr "インポート可能な定義ファイル"
+
+#: ../../source/doc.external_def.rst:49
+msgid ""
+"Since the definition file is written in python, it can be imported from "
+"other python files, but there are some points to note if it is intended "
+"to be imported."
+msgstr "定義ファイルはpythonで書かれるため他のpythonファイルからインポートすることができますが、インポートされることを想定する場合には注意すべき点があります。"
+
+#: ../../source/doc.external_def.rst:51
+msgid "For example, see the definition file below:"
+msgstr "例えば、以下の定義ファイルを見てください。"
+
+#: ../../source/doc.external_def.rst:71
+msgid ""
+"The following points are noted in this definition file to make it "
+"importable:"
+msgstr "この定義ファイルではインポート可能にするために以下の点に注意しています。"
+
+#: ../../source/doc.external_def.rst:73
+msgid ""
+"write :code:`import randog`; This can only be omitted when this file is "
+"executed directly in from_pyfile or byfile mode of command execution, not"
+" when it is imported."
+msgstr ""
+":code:`import randog` を記載する; これを省略できるのはこのファイルが from_pyfile やコマンド実行の "
+"byfile モードで直接実行されるときだけであり、インポートされる際には省略できません。"
+
+#: ../../source/doc.external_def.rst:75
+msgid ""
+"write the process that should not be executed at import in :code:`if "
+"__name__ == \"__randog__\"`; If this is not done, and the environment "
+"variable INITIAL_ID is not set or contains non-numbers when imported, an "
+"exception will be raised and the python code importing this file will not"
+" be executable."
+msgstr ""
+"インポート時に実行するべきでない処理は :code:`if __name__ == \"__randog__\"` に書く; "
+"もしこれをしなかった場合、インポートされた際に環境変数 INITIAL_ID "
+"が設定されていなかったり数字以外の文字が入っていたりすると、例外が発生してこのファイルをインポートしている python "
+"コードが実行不可になってしまいます。"
+
+#: ../../source/doc.external_def.rst:77
+msgid ""
+"You can avoid it by other means, such as proper handling of exceptions. "
+"Choose the method appropriate to your situation."
+msgstr "例外を適切にハンドリングするなど、他の手段でも回避できます。状況に適した方法を選びましょう。"
 

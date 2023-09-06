@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>byfile モード &mdash; random-obj-generator 0.11.0 ドキュメント</title>
+  <title>byfile モード &mdash; random-obj-generator 0.12.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.11.0
+                0.12.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -311,6 +311,10 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
 </pre></div>
 </div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>定義ファイルをインポート可能にしたい場合、環境変数の読み込みを <code class="code docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__randog__&quot;</span></code> で実施した方がよいかもしれません。詳細は <a class="reference internal" href="doc.external_def.html#importable-definition-files"><span class="std std-ref">インポート可能な定義ファイル</span></a> をご覧ください。</p>
 </div>
 </section>
 </section>

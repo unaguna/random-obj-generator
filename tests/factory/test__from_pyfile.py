@@ -1,13 +1,23 @@
+import pytest
+
 import randog.factory
 
 
-def test__from_pyfile(resources):
-    filepath = resources.joinpath("factory_def.py")
+@pytest.mark.parametrize(
+    ("filename", "expected"),
+    [
+        ("factory_def.py", "aaa"),
+        # assert __name__ == "__randog__"
+        ("factory_def_name.py", "__randog__"),
+    ],
+)
+def test__from_pyfile(resources, filename, expected):
+    filepath = resources.joinpath(filename)
     factory = randog.factory.from_pyfile(filepath)
 
     value = factory.next()
 
-    assert value == "aaa"
+    assert value == expected
 
 
 def test__from_pyfile__full_response__without_csv_col(resources):

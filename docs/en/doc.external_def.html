@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>External File Definition of Factory &mdash; random-obj-generator 0.11.0 documentation</title>
+  <title>External File Definition of Factory &mdash; random-obj-generator 0.12.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.11.0
+                0.12.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -53,7 +53,10 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Construct Factories (generator of random values)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">External File Definition of Factory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">External File Definition of Factory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#importable-definition-files">Importable definition files</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">Run as Command</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.logging.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (Usage)</a></li>
@@ -111,6 +114,10 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In factory definition file, <code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> can be omitted.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As discussed below, <code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> cannot be omitted if the factory definition file is used as python code other than in from_pyfile or byfile mode.</p>
+</div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -130,6 +137,39 @@
 <p class="admonition-title">See also</p>
 <p>The definition file can also be used when executing randog as command in byfile mode such as <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code>. See also <a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile Mode</span></a>.</p>
 </div>
+<section id="importable-definition-files">
+<span id="id1"></span><h2>Importable definition files<a class="headerlink" href="#importable-definition-files" title="Permalink to this heading"></a></h2>
+<p>Since the definition file is written in python, it can be imported from other python files, but there are some points to note if it is intended to be imported.</p>
+<p>For example, see the definition file below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">randog</span>
+
+<span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">]</span>
+
+<span class="c1"># other python file can import and reuse this</span>
+<span class="k">def</span> <span class="nf">create_factory</span><span class="p">(</span><span class="n">initial_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">initial_id</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__randog__&quot;</span><span class="p">:</span>
+    <span class="n">initial_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;INITIAL_ID&quot;</span><span class="p">])</span>
+    <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">create_factory</span><span class="p">(</span><span class="n">initial_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following points are noted in this definition file to make it importable:</p>
+<ul>
+<li><p>write <code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code>; This can only be omitted when this file is executed directly in from_pyfile or byfile mode of command execution, not when it is imported.</p></li>
+<li><p>write the process that should not be executed at import in <code class="code docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__randog__&quot;</span></code>; If this is not done, and the environment variable INITIAL_ID is not set or contains non-numbers when imported, an exception will be raised and the python code importing this file will not be executable.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>You can avoid it by other means, such as proper handling of exceptions. Choose the method appropriate to your situation.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
 </section>
 
 

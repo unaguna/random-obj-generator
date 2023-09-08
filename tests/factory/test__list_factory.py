@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -145,3 +147,22 @@ def test__random_list__error_when_no_factory_and_random_length(length):
         e.message
         == "the factory of element must be given to randlist() if length is at random"
     )
+
+
+@pytest.mark.parametrize(
+    "args",
+    [
+        [randog.factory.const(0), randog.factory.const("a")],
+    ],
+)
+def test__random_list__seed(args):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randlist(*args, rnd=rnd1)
+    factory2 = randog.factory.randlist(*args, rnd=rnd2)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

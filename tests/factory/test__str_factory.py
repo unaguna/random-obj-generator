@@ -1,3 +1,4 @@
+import random
 import re
 
 import pytest
@@ -147,3 +148,24 @@ def test__random_str_error_when_empty_charset_and_nonzero_length(length):
     assert (
         e.message == "the charset for randstr() must not be empty if length is positive"
     )
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"length": 10},
+        {"length": 5, "charset": "abcdef"},
+        {"regex": "[a-fA-F]{1,5}"},
+    ],
+)
+def test__random_str__seed(kwargs):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randstr(rnd=rnd1, **kwargs)
+    factory2 = randog.factory.randstr(rnd=rnd2, **kwargs)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

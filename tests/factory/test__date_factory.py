@@ -1,4 +1,5 @@
 import datetime as dt
+import random
 
 import pytest
 
@@ -74,3 +75,22 @@ def test__random_date__error_when_edges_inverse():
     e = e_ctx.value
 
     assert e.message == "empty range for randdate"
+
+
+@pytest.mark.parametrize(
+    "args",
+    [
+        [dt.date(2022, 4, 1), dt.date(2023, 4, 1)],
+    ],
+)
+def test__random_date__seed(args):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randdate(*args, rnd=rnd1)
+    factory2 = randog.factory.randdate(*args, rnd=rnd2)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

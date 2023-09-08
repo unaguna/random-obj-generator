@@ -1,4 +1,5 @@
 import datetime as dt
+import random
 
 import pytest
 
@@ -236,3 +237,27 @@ def test__random_time__error_when_naive_and_aware(minimum, maximum):
         e.message
         == "cannot define range for randtime with a naive time and an aware time"
     )
+
+
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([dt.time(12, 34, 56), dt.time(14, 34, 56)], {}),
+        ([dt.time(12, 34, 56), dt.time(14, 34, 56)], {"tzinfo": None}),
+        (
+            [dt.time(12, 34, 56), dt.time(14, 34, 56)],
+            {"tzinfo": dt.timezone.utc},
+        ),
+    ],
+)
+def test__random_time__seed(args, kwargs):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randtime(*args, rnd=rnd1, **kwargs)
+    factory2 = randog.factory.randtime(*args, rnd=rnd2, **kwargs)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

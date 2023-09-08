@@ -1,4 +1,5 @@
 import datetime as dt
+import random
 
 import pytest
 
@@ -198,3 +199,27 @@ def test__random_datetime__error_when_naive_and_aware(minimum, maximum):
         == "cannot define range for randdatetime with a naive datetime and an aware "
         "datetime"
     )
+
+
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([dt.datetime(2022, 4, 1), dt.datetime(2023, 4, 1)], {}),
+        ([dt.datetime(2022, 4, 1), dt.datetime(2023, 4, 1)], {"tzinfo": None}),
+        (
+            [dt.datetime(2022, 4, 1), dt.datetime(2023, 4, 1)],
+            {"tzinfo": dt.timezone.utc},
+        ),
+    ],
+)
+def test__random_datetime__seed(args, kwargs):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randdatetime(*args, rnd=rnd1, **kwargs)
+    factory2 = randog.factory.randdatetime(*args, rnd=rnd2, **kwargs)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -27,3 +29,24 @@ def test__random_int_error_when_illegal_probability(prop_true):
     e = e_ctx.value
 
     assert e.message == "the probability `prob_true` must range from 0 to 1"
+
+
+@pytest.mark.parametrize(
+    "args",
+    [
+        [0],
+        [0.5],
+        [1],
+    ],
+)
+def test__random_bool__seed(args):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randbool(*args, rnd=rnd1)
+    factory2 = randog.factory.randbool(*args, rnd=rnd2)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

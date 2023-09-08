@@ -1,4 +1,5 @@
 import datetime as dt
+import random
 
 import pytest
 
@@ -248,3 +249,26 @@ def test__random_timedelta__error_when_too_tight_edges_for_unit(minimum, maximum
     e = e_ctx.value
 
     assert e.message == "empty range for randtimedelta"
+
+
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([dt.timedelta(days=1, hours=1), dt.timedelta(days=1, hours=12)], {}),
+        (
+            [dt.timedelta(days=1, hours=1), dt.timedelta(days=1, hours=12)],
+            {"unit": dt.timedelta(minutes=1)},
+        ),
+    ],
+)
+def test__random_timedelta__seed(args, kwargs):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randtimedelta(*args, rnd=rnd1, **kwargs)
+    factory2 = randog.factory.randtimedelta(*args, rnd=rnd2, **kwargs)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

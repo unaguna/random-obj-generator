@@ -2,6 +2,7 @@ import datetime
 import datetime as dt
 import enum
 import math
+import random
 from decimal import Decimal
 
 import pytest
@@ -582,3 +583,28 @@ def test__from_example__custom_func__terminate_chain():
     assert isinstance(value.get("a"), int)
     assert value.get("b") is True
     assert isinstance(value.get("c"), int)
+
+
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([True], {}),
+        ([1], {}),
+        (["a"], {}),
+        ([Decimal("1.1")], {}),
+        ([[1, 2]], {}),
+        ([{"a": 1, "b": "B"}], {}),
+        ([{"a": 1, "z": {"a": 1, "b": "B"}}], {}),
+    ],
+)
+def test__from_example__seed(args, kwargs):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.from_example(*args, rnd=rnd1, **kwargs)
+    factory2 = randog.factory.from_example(*args, rnd=rnd2, **kwargs)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

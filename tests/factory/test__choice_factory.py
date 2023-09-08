@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -76,3 +78,25 @@ def test__random_choice__error_when_weights_does_not_match(weights_len):
     e = e_ctx.value
 
     assert e.message == "the number of weights must match the candidates"
+
+
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([0], {}),
+        ([0, 1, 2], {}),
+        ([0, 1, 2], {"weights": [0.6, 0.4, 0]}),
+        ([0, 1, 2], {"weights": [0.2, 0.3, 0.5]}),
+    ],
+)
+def test__random_choice__seed(args, kwargs):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randchoice(*args, rnd=rnd1, **kwargs)
+    factory2 = randog.factory.randchoice(*args, rnd=rnd2, **kwargs)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

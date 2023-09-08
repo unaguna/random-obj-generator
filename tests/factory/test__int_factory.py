@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -36,3 +38,22 @@ def test__random_int_error_when_edges_inverse():
     e = e_ctx.value
 
     assert e.message == "empty range for randint"
+
+
+@pytest.mark.parametrize(
+    "args",
+    [
+        [1, 200],
+    ],
+)
+def test__random_int__seed(args):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randint(*args, rnd=rnd1)
+    factory2 = randog.factory.randint(*args, rnd=rnd2)
+
+    generated1 = list(factory1.iter(20))
+    generated2 = list(factory2.iter(20))
+
+    assert generated1 == generated2

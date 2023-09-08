@@ -1,4 +1,5 @@
 import math
+import random
 from decimal import Decimal
 from fractions import Fraction
 
@@ -231,3 +232,29 @@ def test__random_decimal__error_when_negative_probability(p_inf, n_inf, nan):
         e.message
         == "the probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
     )
+
+
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([-1.25, 1.5], {}),
+        ([-1.25, 1.5], {"decimal_len": 5}),
+        ([-1.25, 1.5], {"p_inf": 0.5}),
+        ([-1.25, 1.5], {"n_inf": 0.5}),
+        ([-1.25, 1.5], {"nan": 0.5}),
+        ([-1.25, 1.5], {"p_inf": 0.3, "n_inf": 0.3}),
+        ([-1.25, 1.5], {"p_inf": 0.2, "n_inf": 0.2, "nan": 0.2}),
+    ],
+)
+def test__random_decimal__seed(args, kwargs):
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.randdecimal(*args, rnd=rnd1, **kwargs)
+    factory2 = randog.factory.randdecimal(*args, rnd=rnd2, **kwargs)
+
+    # NaN != NaN となってしまうため、repr 文字列で比較する
+    generated1 = [repr(v) for v in factory1.iter(20)]
+    generated2 = [repr(v) for v in factory2.iter(20)]
+
+    assert generated1 == generated2

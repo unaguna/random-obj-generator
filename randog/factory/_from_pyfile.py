@@ -73,14 +73,14 @@ def _from_pyfile(
     rnd: t.Optional[random.Random],
 ) -> FactoryDef:
     import randog
-    from .._main import main_config
+    from . import _from_pyfile_config
 
     d = types.ModuleType("__randog__")
     d.__file__ = str(filename)
     d.randog = randog
-    origin_main_config_rnd = main_config.rnd
+    origin_from_pyfile_config_rnd = _from_pyfile_config.rnd
     if rnd is not None:
-        main_config.rnd = rnd
+        _from_pyfile_config.rnd = rnd
 
     try:
         exec(compile(fp.read(), filename, "exec"), d.__dict__)
@@ -88,7 +88,7 @@ def _from_pyfile(
         e.strerror = f"Unable to load factory file ({e.strerror})"
         raise
     finally:
-        main_config.rnd = origin_main_config_rnd
+        _from_pyfile_config.rnd = origin_from_pyfile_config_rnd
 
     return _load_factory_module(d, filename=filename)
 

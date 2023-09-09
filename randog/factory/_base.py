@@ -355,15 +355,15 @@ def decide_rnd(
         logger.debug("use Random() object specified as argument 'rnd' of the factory")
         return explicit
 
-    from .._main import main_config
+    from . import _from_pyfile_config
 
-    global_rnd = main_config.rnd
-    if global_rnd is not None:
+    pyfile_rnd = _from_pyfile_config.rnd
+    if pyfile_rnd is not None:
         logger.debug(
             "use Random() object sent into __randog__ "
             "(a factory definition file executed in 'from_pyfile()')"
         )
-        return global_rnd
+        return pyfile_rnd
 
     if default:
         new_rnd = Random()

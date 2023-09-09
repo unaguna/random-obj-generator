@@ -3,8 +3,7 @@ from random import Random
 
 import rstr
 
-from .._base import Factory, _global_rnd
-from ..._utils.nullsafe import dfor
+from .._base import Factory, decide_rnd
 
 
 class StrRegexRandomFactory(Factory[str]):
@@ -41,7 +40,7 @@ class StrRegexRandomFactory(Factory[str]):
 
 
 def _get_xeger_args(rnd: t.Optional[Random]) -> t.Sequence[t.Any]:
-    rnd = dfor(rnd, _global_rnd())
+    rnd = decide_rnd(rnd, default=False)
 
     if rnd is not None:
         return [rnd]

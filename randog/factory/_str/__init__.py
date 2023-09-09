@@ -2,7 +2,7 @@ import string
 import typing as t
 from random import Random
 
-from .._base import Factory, _global_rnd
+from .._base import Factory, decide_rnd
 from ..._utils.nullsafe import dfor
 from ...exceptions import FactoryConstructionError
 
@@ -102,7 +102,7 @@ class StrRandomFactory(Factory[str]):
         FactoryConstructionError
             When the specified generating conditions are inconsistent.
         """
-        self._random = dfor(rnd, _global_rnd(), Random())
+        self._random = decide_rnd(rnd)
         self._length = dfor(length, 8)
         self._charset = dfor(charset, string.ascii_letters + string.digits)
 

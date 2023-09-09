@@ -2,10 +2,9 @@ import datetime as dt
 import typing as t
 from random import Random
 
-from ._base import Factory, _global_rnd
-from .._utils.nullsafe import dfor
-from ..exceptions import FactoryConstructionError
+from ._base import Factory, decide_rnd
 from ._datetime import DatetimeRandomFactory
+from ..exceptions import FactoryConstructionError
 
 
 def randtime(
@@ -77,7 +76,7 @@ class TimeRandomFactory(Factory[dt.time]):
         rnd : Random, optional
             random number generator to be used
         """
-        self._random = dfor(rnd, _global_rnd(), Random())
+        self._random = decide_rnd(rnd)
         self._min, self._max = self._normalize(minimum, maximum)
         self._fix_timezone = fix_timezone
         self._fixed_timezone = fixed_timezone

@@ -2,8 +2,7 @@ import datetime as dt
 import typing as t
 from random import Random
 
-from ._base import Factory, _global_rnd
-from .._utils.nullsafe import dfor
+from ._base import Factory, decide_rnd
 from ..exceptions import FactoryConstructionError
 
 
@@ -67,7 +66,7 @@ class DateRandomFactory(Factory[dt.date]):
         FactoryConstructionError
             When the specified generating conditions are inconsistent.
         """
-        self._random = dfor(rnd, _global_rnd(), Random())
+        self._random = decide_rnd(rnd)
         self._min, self._max = self._normalize(minimum, maximum)
 
         if self._min > self._max:

@@ -1,7 +1,7 @@
 from random import Random
 import typing as t
 
-from ._base import Factory
+from ._base import Factory, _global_rnd
 from .._utils.nullsafe import dfor
 from ..exceptions import FactoryConstructionError
 
@@ -54,7 +54,7 @@ class BoolRandomFactory(Factory[bool]):
         FactoryConstructionError
             When the specified generating conditions are inconsistent.
         """
-        self._random = dfor(rnd, Random())
+        self._random = dfor(rnd, _global_rnd(), Random())
         self._prop_true = prop_true
 
         if self._prop_true < 0.0 or 1.0 < self._prop_true:

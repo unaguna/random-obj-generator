@@ -316,3 +316,9 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
 class FactoryStopException(Exception):
     def __init__(self):
         super().__init__("the factory stopped generating")
+
+
+def _global_rnd() -> t.Optional[random.Random]:
+    from .._main import main_config
+
+    return main_config.rnd

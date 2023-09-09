@@ -3,7 +3,7 @@ import numbers
 from random import Random
 import typing as t
 
-from ._base import Factory
+from ._base import Factory, _global_rnd
 from .._utils.nullsafe import dfor
 from ..exceptions import FactoryConstructionError
 
@@ -98,7 +98,7 @@ class ChoiceRandomFactory(Factory[t.Any]):
         FactoryConstructionError
             No values are specified.
         """
-        self._random = dfor(rnd, Random())
+        self._random = dfor(rnd, _global_rnd(), Random())
         self._weights = weights
         self._values = values
 

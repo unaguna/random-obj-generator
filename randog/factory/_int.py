@@ -1,7 +1,7 @@
 from random import Random
 import typing as t
 
-from ._base import Factory
+from ._base import Factory, _global_rnd
 from .._utils.nullsafe import dfor
 from ..exceptions import FactoryConstructionError
 
@@ -61,7 +61,7 @@ class IntRandomFactory(Factory[int]):
         FactoryConstructionError
             When the specified generating conditions are inconsistent.
         """
-        self._random = dfor(rnd, Random())
+        self._random = dfor(rnd, _global_rnd(), Random())
         self._min = minimum
         self._max = maximum
 

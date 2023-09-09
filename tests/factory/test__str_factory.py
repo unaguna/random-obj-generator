@@ -159,6 +159,9 @@ def test__random_str_error_when_empty_charset_and_nonzero_length(length):
     ],
 )
 def test__random_str__seed(kwargs):
+    if "regex" in kwargs:
+        pytest.importorskip("rstr")
+
     seed = 12
     rnd1 = random.Random(seed)
     rnd2 = random.Random(seed)

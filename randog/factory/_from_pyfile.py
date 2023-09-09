@@ -1,8 +1,11 @@
 import dataclasses
+import random
 from os import PathLike
 import types
 import typing as t
 
+from .._utils.nullsafe import dfor
+from ._base import _global_rnd
 from randog.factory import Factory
 
 
@@ -14,14 +17,20 @@ class FactoryDef:
 
 @t.overload
 def from_pyfile(
-    file: t.Union[str, PathLike, t.IO], *, full_response: t.Literal[False] = False
+    file: t.Union[str, PathLike, t.IO],
+    *,
+    full_response: t.Literal[False] = False,
+    rnd: t.Optional[random.Random] = None,
 ) -> Factory:
     pass
 
 
 @t.overload
 def from_pyfile(
-    file: t.Union[str, PathLike, t.IO], *, full_response: t.Literal[True]
+    file: t.Union[str, PathLike, t.IO],
+    *,
+    full_response: t.Literal[True],
+    rnd: t.Optional[random.Random] = None,
 ) -> FactoryDef:
     pass
 
@@ -30,6 +39,7 @@ def from_pyfile(
     file: t.Union[str, PathLike, t.IO],
     *,
     full_response: bool = False,
+    rnd: t.Optional[random.Random] = None,
 ) -> t.Union[FactoryDef, Factory]:
     """Returns a factory defined in the specified file.
 
@@ -40,12 +50,14 @@ def from_pyfile(
     full_response : bool (default=False)
         If True is specified, the return value is the FactoryDef dataclass,
         and data other than the factory can be obtained.
+    rnd : Random, optional
+        random number generator to be used
     """
     if isinstance(file, (str, PathLike)):
         with open(file, mode="rb") as fp:
-            factory_def = _from_pyfile(fp, file)
+            factory_def = _from_pyfile(fp, file, rnd)
     else:
-        factory_def = _from_pyfile(file, "<io>")
+        factory_def = _from_pyfile(file, "<io>", rnd)
 
     if full_response:
         return factory_def
@@ -57,11 +69,17 @@ FACTORY_ATTR_NAME = "FACTORY"
 CSV_COL_ATTR_NAME = "CSV_COLUMNS"
 
 
-def _from_pyfile(fp: t.IO, filename: t.Union[str, PathLike]) -> FactoryDef:
+def _from_pyfile(
+    fp: t.IO,
+    filename: t.Union[str, PathLike],
+    rnd: t.Optional[random.Random],
+) -> FactoryDef:
     import randog
+    from .._main import main_config
 
     d = types.ModuleType("__randog__")
     d.randog = randog
+    main_config.rnd = dfor(rnd, _global_rnd())
     d.__file__ = str(filename)
     try:
         exec(compile(fp.read(), filename, "exec"), d.__dict__)

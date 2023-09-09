@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -49,3 +51,35 @@ def test__from_pyfile__full_response__with_csv_col(resources):
 
     assert isinstance(value, dict)
     assert value["id"] == 0
+
+
+@pytest.mark.parametrize(
+    ("filename",),
+    [
+        ("factory_def_rnd_bool.py",),
+        ("factory_def_rnd_int.py",),
+        ("factory_def_rnd_float.py",),
+        ("factory_def_rnd_str.py",),
+        ("factory_def_rnd_list.py",),
+        ("factory_def_rnd_dict.py",),
+        ("factory_def_rnd_decimal.py",),
+        ("factory_def_rnd_datetime.py",),
+        ("factory_def_rnd_date.py",),
+        ("factory_def_rnd_time.py",),
+        ("factory_def_rnd_timedelta.py",),
+        ("factory_def_rnd_enum.py",),
+    ],
+)
+def test__from_pyfile__seed(resources, filename):
+    filepath = resources.joinpath(filename)
+    seed = 12
+    rnd1 = random.Random(seed)
+    rnd2 = random.Random(seed)
+    factory1 = randog.factory.from_pyfile(filepath, rnd=rnd1)
+    factory2 = randog.factory.from_pyfile(filepath, rnd=rnd2)
+
+    # NaN != NaN となってしまうため、repr 文字列で比較する
+    generated1 = [repr(v) for v in factory1.iter(20)]
+    generated2 = [repr(v) for v in factory2.iter(20)]
+
+    assert generated1 == generated2

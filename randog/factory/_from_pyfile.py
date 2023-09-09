@@ -1,11 +1,9 @@
 import dataclasses
 import random
-from os import PathLike
 import types
 import typing as t
+from os import PathLike
 
-from .._utils.nullsafe import dfor
-from ._base import _global_rnd
 from randog.factory import Factory
 
 
@@ -78,14 +76,19 @@ def _from_pyfile(
     from .._main import main_config
 
     d = types.ModuleType("__randog__")
-    d.randog = randog
-    main_config.rnd = dfor(rnd, _global_rnd())
     d.__file__ = str(filename)
+    d.randog = randog
+    origin_main_config_rnd = main_config.rnd
+    if rnd is not None:
+        main_config.rnd = rnd
+
     try:
         exec(compile(fp.read(), filename, "exec"), d.__dict__)
     except OSError as e:
         e.strerror = f"Unable to load factory file ({e.strerror})"
         raise
+    finally:
+        main_config.rnd = origin_main_config_rnd
 
     return _load_factory_module(d, filename=filename)
 

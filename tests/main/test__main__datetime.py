@@ -612,7 +612,7 @@ def test__main__datetime__suger__error_by_inverse_range(
 def test__main__datetime__seed(capfd, tmp_path, seed0, seed1, expect_same_output):
     output_path0 = tmp_path.joinpath("out_0.txt")
     output_path1 = tmp_path.joinpath("out_1.txt")
-    args_base = ["randog", "datetime", "--repeat=50"]
+    args_base = ["randog", "datetime", "2022-01-01", "2022-12-31", "--repeat=50"]
     args0 = [*args_base, *seed0, "--output", str(output_path0)]
     args1 = [*args_base, *seed1, "--output", str(output_path1)]
 

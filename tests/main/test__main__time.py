@@ -563,7 +563,7 @@ def test__main__time__suger(
 def test__main__time__seed(capfd, tmp_path, seed0, seed1, expect_same_output):
     output_path0 = tmp_path.joinpath("out_0.txt")
     output_path1 = tmp_path.joinpath("out_1.txt")
-    args_base = ["randog", "time", "--repeat=50"]
+    args_base = ["randog", "time", "00:00:00", "12:00:00", "--repeat=50"]
     args0 = [*args_base, *seed0, "--output", str(output_path0)]
     args1 = [*args_base, *seed1, "--output", str(output_path1)]
 

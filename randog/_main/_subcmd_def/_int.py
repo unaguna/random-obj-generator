@@ -3,7 +3,7 @@ import typing as t
 
 import randog.factory
 from .. import Args, Subcmd
-from ._base import SubcmdDef, add_common_arguments
+from ._base import SubcmdDef, add_common_arguments, construct_random
 
 
 class SubcmdDefInt(SubcmdDef):
@@ -47,7 +47,8 @@ class SubcmdDefInt(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (args.get("minimum"), args.get("maximum")), {}
+        rnd = construct_random(args.seed)
+        return (args.get("minimum"), args.get("maximum")), {"rnd": rnd}
 
     def get_factory_constructor(self) -> t.Callable:
         return randog.factory.randint

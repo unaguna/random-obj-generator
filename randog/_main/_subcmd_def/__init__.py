@@ -1,7 +1,7 @@
 import typing as t
 
 from .. import Subcmd
-from ._base import SubcmdDef
+from ._base import SubcmdDef, construct_random
 from ._bool import SubcmdDefBool
 from ._byfile import SubcmdDefByfile
 from ._date import SubcmdDefDate

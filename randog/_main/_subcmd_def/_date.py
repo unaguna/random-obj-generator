@@ -5,7 +5,7 @@ import typing as t
 import randog.factory
 from ..._utils.type import date
 from .. import Args, Subcmd
-from ._base import SubcmdDef, add_common_arguments
+from ._base import SubcmdDef, add_common_arguments, construct_random
 
 
 class SubcmdDefDate(SubcmdDef):
@@ -106,9 +106,10 @@ class SubcmdDefDate(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        rnd = construct_random(args.seed)
         minimum, maximum = _normalize_min_max(args.get("minimum"), args.get("maximum"))
 
-        return (minimum, maximum), {}
+        return (minimum, maximum), {"rnd": rnd}
 
     def get_factory_constructor(self) -> t.Callable:
         return randog.factory.randdate

@@ -1,10 +1,12 @@
 import argparse
+import random
 from abc import ABC, abstractmethod
 import typing as t
 
 from .. import Linesep
 from ..._utils.type import positive_int, encoding
 from .._subcmd import Subcmd
+from .._logging import logger
 from .._main_args import Args
 
 
@@ -98,6 +100,12 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         "option.",
     )
     common_opt_group.add_argument(
+        "--seed",
+        default=None,
+        type=int,
+        help="random seed number",
+    )
+    common_opt_group.add_argument(
         "--quiet",
         "-q",
         action="store_true",
@@ -142,3 +150,9 @@ def add_common_arguments(parser: argparse.ArgumentParser):
     other_opt_group.add_argument(
         "-h", "--help", action="help", help="show this help message and exit"
     )
+
+
+def construct_random(seed: t.Any) -> random.Random:
+    rnd = random.Random(seed)
+    logger.debug(f"seed: {seed}")
+    return rnd

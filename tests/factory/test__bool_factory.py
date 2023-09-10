@@ -32,21 +32,31 @@ def test__random_int_error_when_illegal_probability(prop_true):
 
 
 @pytest.mark.parametrize(
-    "args",
+    ("rnd1", "rnd2", "expect_same_output"),
     [
-        [0],
-        [0.5],
-        [1],
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
     ],
 )
-def test__random_bool__seed(args):
-    seed = 12
-    rnd1 = random.Random(seed)
-    rnd2 = random.Random(seed)
-    factory1 = randog.factory.randbool(*args, rnd=rnd1)
-    factory2 = randog.factory.randbool(*args, rnd=rnd2)
+@pytest.mark.parametrize(
+    ("args", "substantial_constant"),
+    [
+        ([0], True),
+        ([0.5], False),
+        ([1], True),
+    ],
+)
+def test__random_bool__seed(rnd1, rnd2, expect_same_output, args, substantial_constant):
+    repeat = 200
+    factory1 = randog.factory.randbool(*args, **rnd1())
+    factory2 = randog.factory.randbool(*args, **rnd2())
 
-    generated1 = list(factory1.iter(20))
-    generated2 = list(factory2.iter(20))
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
 
-    assert generated1 == generated2
+    if substantial_constant or expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

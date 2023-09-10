@@ -240,6 +240,15 @@ def test__random_time__error_when_naive_and_aware(minimum, maximum):
 
 
 @pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
     ("args", "kwargs"),
     [
         ([dt.time(12, 34, 56), dt.time(14, 34, 56)], {}),
@@ -250,14 +259,15 @@ def test__random_time__error_when_naive_and_aware(minimum, maximum):
         ),
     ],
 )
-def test__random_time__seed(args, kwargs):
-    seed = 12
-    rnd1 = random.Random(seed)
-    rnd2 = random.Random(seed)
-    factory1 = randog.factory.randtime(*args, rnd=rnd1, **kwargs)
-    factory2 = randog.factory.randtime(*args, rnd=rnd2, **kwargs)
+def test__random_time__seed(rnd1, rnd2, expect_same_output, args, kwargs):
+    repeat = 20
+    factory1 = randog.factory.randtime(*args, **rnd1(), **kwargs)
+    factory2 = randog.factory.randtime(*args, **rnd2(), **kwargs)
 
-    generated1 = list(factory1.iter(20))
-    generated2 = list(factory2.iter(20))
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
 
-    assert generated1 == generated2
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

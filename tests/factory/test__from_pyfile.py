@@ -54,6 +54,15 @@ def test__from_pyfile__full_response__with_csv_col(resources):
 
 
 @pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
     ("filename",),
     [
         ("factory_def_rnd_bool.py",),
@@ -70,16 +79,17 @@ def test__from_pyfile__full_response__with_csv_col(resources):
         ("factory_def_rnd_enum.py",),
     ],
 )
-def test__from_pyfile__seed(resources, filename):
+def test__from_pyfile__seed(resources, rnd1, rnd2, expect_same_output, filename):
     filepath = resources.joinpath(filename)
-    seed = 12
-    rnd1 = random.Random(seed)
-    rnd2 = random.Random(seed)
-    factory1 = randog.factory.from_pyfile(filepath, rnd=rnd1)
-    factory2 = randog.factory.from_pyfile(filepath, rnd=rnd2)
+    repeat = 20
+    factory1 = randog.factory.from_pyfile(filepath, **rnd1())
+    factory2 = randog.factory.from_pyfile(filepath, **rnd2())
 
     # NaN != NaN となってしまうため、repr 文字列で比較する
-    generated1 = [repr(v) for v in factory1.iter(20)]
-    generated2 = [repr(v) for v in factory2.iter(20)]
+    generated1 = [repr(v) for v in factory1.iter(repeat)]
+    generated2 = [repr(v) for v in factory2.iter(repeat)]
 
-    assert generated1 == generated2
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

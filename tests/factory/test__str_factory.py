@@ -151,6 +151,15 @@ def test__random_str_error_when_empty_charset_and_nonzero_length(length):
 
 
 @pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
     "kwargs",
     [
         {"length": 10},
@@ -158,17 +167,18 @@ def test__random_str_error_when_empty_charset_and_nonzero_length(length):
         {"regex": "[a-fA-F]{1,5}"},
     ],
 )
-def test__random_str__seed(kwargs):
+def test__random_str__seed(rnd1, rnd2, expect_same_output, kwargs):
     if "regex" in kwargs:
         pytest.importorskip("rstr")
 
-    seed = 12
-    rnd1 = random.Random(seed)
-    rnd2 = random.Random(seed)
-    factory1 = randog.factory.randstr(rnd=rnd1, **kwargs)
-    factory2 = randog.factory.randstr(rnd=rnd2, **kwargs)
+    repeat = 20
+    factory1 = randog.factory.randstr(**rnd1(), **kwargs)
+    factory2 = randog.factory.randstr(**rnd2(), **kwargs)
 
-    generated1 = list(factory1.iter(20))
-    generated2 = list(factory2.iter(20))
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
 
-    assert generated1 == generated2
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

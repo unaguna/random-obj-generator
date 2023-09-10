@@ -177,6 +177,15 @@ def test__random_float__error_when_negative_probability(p_inf, n_inf, nan):
 
 
 @pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
     ("args", "kwargs"),
     [
         ([-1.25, 1.5], {}),
@@ -187,15 +196,16 @@ def test__random_float__error_when_negative_probability(p_inf, n_inf, nan):
         ([-1.25, 1.5], {"p_inf": 0.2, "n_inf": 0.2, "nan": 0.2}),
     ],
 )
-def test__random_float__seed(args, kwargs):
-    seed = 12
-    rnd1 = random.Random(seed)
-    rnd2 = random.Random(seed)
-    factory1 = randog.factory.randfloat(*args, rnd=rnd1, **kwargs)
-    factory2 = randog.factory.randfloat(*args, rnd=rnd2, **kwargs)
+def test__random_float__seed(rnd1, rnd2, expect_same_output, args, kwargs):
+    repeat = 20
+    factory1 = randog.factory.randfloat(*args, **rnd1(), **kwargs)
+    factory2 = randog.factory.randfloat(*args, **rnd2(), **kwargs)
 
     # NaN != NaN となってしまうため、repr 文字列で比較する
-    generated1 = [repr(v) for v in factory1.iter(20)]
-    generated2 = [repr(v) for v in factory2.iter(20)]
+    generated1 = [repr(v) for v in factory1.iter(repeat)]
+    generated2 = [repr(v) for v in factory2.iter(repeat)]
 
-    assert generated1 == generated2
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

@@ -586,6 +586,15 @@ def test__from_example__custom_func__terminate_chain():
 
 
 @pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
     ("args", "kwargs"),
     [
         ([True], {}),
@@ -597,14 +606,15 @@ def test__from_example__custom_func__terminate_chain():
         ([{"a": 1, "z": {"a": 1, "b": "B"}}], {}),
     ],
 )
-def test__from_example__seed(args, kwargs):
-    seed = 12
-    rnd1 = random.Random(seed)
-    rnd2 = random.Random(seed)
-    factory1 = randog.factory.from_example(*args, rnd=rnd1, **kwargs)
-    factory2 = randog.factory.from_example(*args, rnd=rnd2, **kwargs)
+def test__from_example__seed(rnd1, rnd2, expect_same_output, args, kwargs):
+    repeat = 20
+    factory1 = randog.factory.from_example(*args, **rnd1(), **kwargs)
+    factory2 = randog.factory.from_example(*args, **rnd2(), **kwargs)
 
-    generated1 = list(factory1.iter(20))
-    generated2 = list(factory2.iter(20))
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
 
-    assert generated1 == generated2
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

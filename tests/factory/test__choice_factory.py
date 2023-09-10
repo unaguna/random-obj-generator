@@ -81,22 +81,34 @@ def test__random_choice__error_when_weights_does_not_match(weights_len):
 
 
 @pytest.mark.parametrize(
-    ("args", "kwargs"),
+    ("rnd1", "rnd2", "expect_same_output"),
     [
-        ([0], {}),
-        ([0, 1, 2], {}),
-        ([0, 1, 2], {"weights": [0.6, 0.4, 0]}),
-        ([0, 1, 2], {"weights": [0.2, 0.3, 0.5]}),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
     ],
 )
-def test__random_choice__seed(args, kwargs):
-    seed = 12
-    rnd1 = random.Random(seed)
-    rnd2 = random.Random(seed)
-    factory1 = randog.factory.randchoice(*args, rnd=rnd1, **kwargs)
-    factory2 = randog.factory.randchoice(*args, rnd=rnd2, **kwargs)
+@pytest.mark.parametrize(
+    ("args", "kwargs", "substantial_constant"),
+    [
+        ([0], {}, True),
+        ([0, 1, 2], {}, False),
+        ([0, 1, 2], {"weights": [0.6, 0.4, 0]}, False),
+        ([0, 1, 2], {"weights": [0.2, 0.3, 0.5]}, False),
+    ],
+)
+def test__random_choice__seed(
+    rnd1, rnd2, expect_same_output, args, kwargs, substantial_constant
+):
+    repeat = 100
+    factory1 = randog.factory.randchoice(*args, **rnd1(), **kwargs)
+    factory2 = randog.factory.randchoice(*args, **rnd2(), **kwargs)
 
-    generated1 = list(factory1.iter(20))
-    generated2 = list(factory2.iter(20))
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
 
-    assert generated1 == generated2
+    if substantial_constant or expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

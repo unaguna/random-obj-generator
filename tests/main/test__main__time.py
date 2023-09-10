@@ -1,4 +1,5 @@
 import datetime as dt
+import filecmp
 import re
 import sys
 from unittest import mock
@@ -548,6 +549,37 @@ def test__main__time__suger(
         out, err = capfd.readouterr()
         assert re.match(r"^\d{2}:\d{2}:\d{2}(?:\.\d{6})?\n$", out)
         assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("seed0", "seed1", "expect_same_output"),
+    [
+        (["--seed=100"], ["--seed=100"], True),
+        (["--seed=100"], ["--seed=1000"], False),
+        ([], ["--seed=1000"], False),
+        ([], [], False),
+    ],
+)
+def test__main__time__seed(capfd, tmp_path, seed0, seed1, expect_same_output):
+    output_path0 = tmp_path.joinpath("out_0.txt")
+    output_path1 = tmp_path.joinpath("out_1.txt")
+    args_base = ["randog", "time", "--repeat=50"]
+    args0 = [*args_base, *seed0, "--output", str(output_path0)]
+    args1 = [*args_base, *seed1, "--output", str(output_path1)]
+
+    with patch.object(sys, "argv", args0):
+        randog.__main__.main()
+    with patch.object(sys, "argv", args1):
+        randog.__main__.main()
+
+    if expect_same_output:
+        assert filecmp.cmp(output_path0, output_path1, shallow=False)
+    else:
+        assert not filecmp.cmp(output_path0, output_path1, shallow=False)
+
+    out, err = capfd.readouterr()
+    assert out == ""
+    assert err == ""
 
 
 def test__main__time__help(capfd):

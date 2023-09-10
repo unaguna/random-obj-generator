@@ -1,4 +1,5 @@
 import decimal
+import filecmp
 import sys
 from unittest.mock import patch
 
@@ -528,6 +529,37 @@ def test__main__decimal__error_duplicate_format(capfd, resources, options):
         assert out == ""
         assert err.startswith("usage:")
         assert "not allowed with argument" in err
+
+
+@pytest.mark.parametrize(
+    ("seed0", "seed1", "expect_same_output"),
+    [
+        (["--seed=100"], ["--seed=100"], True),
+        (["--seed=100"], ["--seed=1000"], False),
+        ([], ["--seed=1000"], False),
+        ([], [], False),
+    ],
+)
+def test__main__decimal__seed(capfd, tmp_path, seed0, seed1, expect_same_output):
+    output_path0 = tmp_path.joinpath("out_0.txt")
+    output_path1 = tmp_path.joinpath("out_1.txt")
+    args_base = ["randog", "decimal", "0", "100", "--repeat=50"]
+    args0 = [*args_base, *seed0, "--output", str(output_path0)]
+    args1 = [*args_base, *seed1, "--output", str(output_path1)]
+
+    with patch.object(sys, "argv", args0):
+        randog.__main__.main()
+    with patch.object(sys, "argv", args1):
+        randog.__main__.main()
+
+    if expect_same_output:
+        assert filecmp.cmp(output_path0, output_path1, shallow=False)
+    else:
+        assert not filecmp.cmp(output_path0, output_path1, shallow=False)
+
+    out, err = capfd.readouterr()
+    assert out == ""
+    assert err == ""
 
 
 def test__main__decimal__help(capfd):

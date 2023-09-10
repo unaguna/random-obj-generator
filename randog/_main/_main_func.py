@@ -16,7 +16,7 @@ from ._logging import (
     apply_logging_config_file,
     apply_default_logging_config,
 )
-from ._subcmd_def import construct_random
+from ._rnd import construct_random
 from ._warning import RandogCmdWarning, apply_formatwarning
 from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryDef, FactoryStopException

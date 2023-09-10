@@ -1,13 +1,11 @@
 import argparse
-import random
-from abc import ABC, abstractmethod
 import typing as t
+from abc import ABC, abstractmethod
 
 from .. import Linesep
-from ..._utils.type import positive_int, encoding
-from .._subcmd import Subcmd
-from .._logging import logger
 from .._main_args import Args
+from .._subcmd import Subcmd
+from ..._utils.type import positive_int, encoding
 
 
 class SubcmdDef(ABC):
@@ -150,9 +148,3 @@ def add_common_arguments(parser: argparse.ArgumentParser):
     other_opt_group.add_argument(
         "-h", "--help", action="help", help="show this help message and exit"
     )
-
-
-def construct_random(seed: t.Any) -> random.Random:
-    rnd = random.Random(seed)
-    logger.debug(f"seed: {seed}")
-    return rnd

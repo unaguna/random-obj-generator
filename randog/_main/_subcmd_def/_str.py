@@ -4,7 +4,8 @@ import typing as t
 import randog.factory
 from ..._utils.type import non_negative_int
 from .. import Args, Subcmd
-from ._base import SubcmdDef, add_common_arguments, construct_random
+from ._base import SubcmdDef, add_common_arguments
+from .._rnd import construct_random
 
 
 class SubcmdDefString(SubcmdDef):

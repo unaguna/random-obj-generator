@@ -61,6 +61,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#output-format">Output format</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#output-to-file">Output to file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#iteration">Iteration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seed">Seed</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modify-environment-variable">Modify environment variable</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#logging">Logging</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#warning">Warning</a></li>
@@ -199,6 +200,30 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>See <a class="reference internal" href="#output-file"><span class="std std-ref">Output to file</span></a> for available placeholders.</p>
 </div>
 </section>
+<section id="seed">
+<h2>Seed<a class="headerlink" href="#seed" title="Permalink to this heading"></a></h2>
+<p>Normally, the values are generated randomly, but if you want to control the output results, use <code class="code docutils literal notranslate"><span class="pre">--seed</span></code> to specify a seed value.
+If the seed values are the same, as in the following example, the same result is returned.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># first</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
+
+<span class="c1"># second; the result is the same as the first</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Even though the seed value is the same, the generated value may change if the python version changes.
+See also <a class="reference external" href="https://docs.python.org/3/library/random.html#notes-on-reproducibility">the document of reproducibility</a>.</p>
+<p>Also, version upgrades of randog and dependent packages may change the generated values.</p>
+</div>
+<p>If no seed value is specified, a random seed value is used. The seed value used is <a class="reference internal" href="#cmd-logging"><span class="std std-ref">logged out</span></a> so that the seed value can be checked as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate str with log</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class="w"> </span>DEBUG
+</pre></div>
+</div>
+<p>If you note the observed seed value, you can reproduce the generation the next time by using that seed value.</p>
+</section>
 <section id="modify-environment-variable">
 <h2>Modify environment variable<a class="headerlink" href="#modify-environment-variable" title="Permalink to this heading"></a></h2>
 <p>In particular, in byfile mode, you may want to specify environment variables for the purpose of passing values to the definition file. In bash and other shells, you can specify environment variables on a single line, such as <code class="code docutils literal notranslate"><span class="pre">VAR=VAL</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">...</span></code>, but this is not possible in some shells, such as powershell.</p>
@@ -219,7 +244,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="logging">
-<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this heading"></a></h2>
+<span id="cmd-logging"></span><h2>Logging<a class="headerlink" href="#logging" title="Permalink to this heading"></a></h2>
 <p>By default, all logs are ignored, including those by randog (exceptions are noted below), but can be configured to output log.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>

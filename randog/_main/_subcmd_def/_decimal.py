@@ -5,6 +5,7 @@ import randog.factory
 from ..._utils.type import non_negative_int, probability
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
+from .._rnd import construct_random
 
 
 class SubcmdDefDecimal(SubcmdDef):
@@ -98,11 +99,13 @@ class SubcmdDefDecimal(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        rnd = construct_random(args.seed)
         return (args.get("minimum"), args.get("maximum")), {
             "decimal_len": args.get("decimal_len"),
             "p_inf": args.get("p_inf"),
             "n_inf": args.get("n_inf"),
             "nan": args.get("nan"),
+            "rnd": rnd,
         }
 
     def get_factory_constructor(self) -> t.Callable:

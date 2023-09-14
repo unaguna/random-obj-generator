@@ -5,6 +5,7 @@ from fractions import Fraction
 from random import Random
 
 from .._utils.nullsafe import dfor
+from ._logging import logger
 
 T = t.TypeVar("T")
 R = t.TypeVar("R")
@@ -316,3 +317,57 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
 class FactoryStopException(Exception):
     def __init__(self):
         super().__init__("the factory stopped generating")
+
+
+@t.overload
+def decide_rnd(
+    explicit: t.Optional[random.Random], default: t.Literal[True] = True
+) -> random.Random:
+    pass
+
+
+@t.overload
+def decide_rnd(
+    explicit: t.Optional[random.Random], default: t.Literal[False]
+) -> t.Optional[random.Random]:
+    pass
+
+
+def decide_rnd(
+    explicit: t.Optional[random.Random], default: bool = True
+) -> t.Optional[random.Random]:
+    """Decide random object used in the factory instance
+
+    Parameters
+    ----------
+    explicit : Random | None
+        Explicit designation
+    default : bool, default=True
+        The default behavior is to specify a new Random object if True,
+        or None if False.
+
+    Returns
+    -------
+    Random | None
+        decided random object
+    """
+    if explicit is not None:
+        logger.debug("use Random() object specified as argument 'rnd' of the factory")
+        return explicit
+
+    from . import _from_pyfile_config
+
+    pyfile_rnd = _from_pyfile_config.rnd
+    if pyfile_rnd is not None:
+        logger.debug(
+            "use Random() object sent into __randog__ "
+            "(a factory definition file executed in 'from_pyfile()')"
+        )
+        return pyfile_rnd
+
+    if default:
+        new_rnd = Random()
+        logger.debug("use a newly created Random() object since not specified")
+        return new_rnd
+    else:
+        return None

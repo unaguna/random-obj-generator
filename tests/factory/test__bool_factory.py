@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -27,3 +29,34 @@ def test__random_int_error_when_illegal_probability(prop_true):
     e = e_ctx.value
 
     assert e.message == "the probability `prob_true` must range from 0 to 1"
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    ("args", "substantial_constant"),
+    [
+        ([0], True),
+        ([0.5], False),
+        ([1], True),
+    ],
+)
+def test__random_bool__seed(rnd1, rnd2, expect_same_output, args, substantial_constant):
+    repeat = 200
+    factory1 = randog.factory.randbool(*args, **rnd1())
+    factory2 = randog.factory.randbool(*args, **rnd2())
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if substantial_constant or expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

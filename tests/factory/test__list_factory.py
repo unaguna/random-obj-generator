@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -145,3 +147,32 @@ def test__random_list__error_when_no_factory_and_random_length(length):
         e.message
         == "the factory of element must be given to randlist() if length is at random"
     )
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    ("args", "substantial_constant"),
+    [
+        ([randog.factory.const(0), randog.factory.const("a")], True),
+    ],
+)
+def test__random_list__seed(rnd1, rnd2, expect_same_output, args, substantial_constant):
+    repeat = 20
+    factory1 = randog.factory.randlist(*args, **rnd1())
+    factory2 = randog.factory.randlist(*args, **rnd2())
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if substantial_constant or expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

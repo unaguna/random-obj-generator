@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-03 21:35+0900\n"
+"POT-Creation-Date: 2023-09-11 20:48+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -198,10 +198,56 @@ msgid "See :ref:`output_file` for available placeholders."
 msgstr "使用できるプレースホルダーについては :ref:`output_file` を参照してください。"
 
 #: ../../source/doc.as_command.common_option.rst:102
+msgid "Seed"
+msgstr "シード値"
+
+#: ../../source/doc.as_command.common_option.rst:104
+msgid ""
+"Normally, the values are generated randomly, but if you want to control "
+"the output results, use :code:`--seed` to specify a seed value. If the "
+"seed values are the same, as in the following example, the same result is"
+" returned."
+msgstr ""
+"通常はランダムに値を生成しますが、出力結果をコントロールしたい場合、:code:`--seed` "
+"を使ってシード値を指定します。以下の例のようにシード値が同じであれば同じ結果を返します。"
+
+#: ../../source/doc.as_command.common_option.rst:116
+msgid ""
+"Even though the seed value is the same, the generated value may change if"
+" the python version changes. See also `the document of reproducibility "
+"<https://docs.python.org/3/library/random.html#notes-on-"
+"reproducibility>`_."
+msgstr ""
+"シード値が同一でも、python のバージョンが変わると生成される値が変わる場合があります。詳しくは `再現性についてのドキュメント "
+"<https://docs.python.org/ja/3/library/random.html#notes-on-"
+"reproducibility>`_ をご覧ください。"
+
+#: ../../source/doc.as_command.common_option.rst:119
+msgid ""
+"Also, version upgrades of randog and dependent packages may change the "
+"generated values."
+msgstr "また、randog や依存パッケージのバージョンアップによっても生成する値が変わる可能性があります。"
+
+#: ../../source/doc.as_command.common_option.rst:121
+msgid ""
+"If no seed value is specified, a random seed value is used. The seed "
+"value used is :ref:`logged out <cmd-logging>` so that the seed value can "
+"be checked as follows:"
+msgstr ""
+"シード値を指定しない場合はランダムなシード値が使用されます。使用されるシード値は :ref:`ログ出力される <cmd-logging>` "
+"ため、以下のようにしてシード値を確認することができます。"
+
+#: ../../source/doc.as_command.common_option.rst:128
+msgid ""
+"If you note the observed seed value, you can reproduce the generation the"
+" next time by using that seed value."
+msgstr "確認したシード値をメモしておけば、次回、そのシード値を使用することで生成を再現できます。"
+
+#: ../../source/doc.as_command.common_option.rst:132
 msgid "Modify environment variable"
 msgstr "環境変数を変更"
 
-#: ../../source/doc.as_command.common_option.rst:104
+#: ../../source/doc.as_command.common_option.rst:134
 msgid ""
 "In particular, in byfile mode, you may want to specify environment "
 "variables for the purpose of passing values to the definition file. In "
@@ -212,7 +258,7 @@ msgstr ""
 "とくに byfile モードで、定義ファイルに値を受け渡す目的で環境変数を指定したいかもしれません。bash 等では :code:`VAR=VAL"
 " python -m randog ...` のように1行で環境変数を指定できますが、powershellなど一部のシェルではそれができません。"
 
-#: ../../source/doc.as_command.common_option.rst:106
+#: ../../source/doc.as_command.common_option.rst:136
 msgid ""
 "Therefore, randog provides an option to specify environment variables. "
 "You can specify environment variables by using :code:`--env` as follows:"
@@ -220,38 +266,38 @@ msgstr ""
 "そこで、randog では環境変数を指定するオプションを用意しています。次のように :code:`--env` "
 "を使用することで環境変数を指定できます。"
 
-#: ../../source/doc.as_command.common_option.rst:112
+#: ../../source/doc.as_command.common_option.rst:142
 msgid ""
 "The above mentioned execution is useful, for example, when using a "
 "definition file such as the following:"
 msgstr "このような実行は、例えば以下のような定義ファイルを使用する際に有用です。"
 
-#: ../../source/doc.as_command.common_option.rst:127
+#: ../../source/doc.as_command.common_option.rst:159
 msgid "Logging"
 msgstr "ログ"
 
-#: ../../source/doc.as_command.common_option.rst:129
+#: ../../source/doc.as_command.common_option.rst:161
 msgid ""
 "By default, all logs are ignored, including those by randog (exceptions "
 "are noted below), but can be configured to output log."
 msgstr "デフォルトでは randog が出力するものも含めてすべてのログが無視されます (例外は後述) が、ログ出力するように設定することができます。"
 
-#: ../../source/doc.as_command.common_option.rst:132
-#: ../../source/doc.as_command.common_option.rst:163
+#: ../../source/doc.as_command.common_option.rst:164
+#: ../../source/doc.as_command.common_option.rst:195
 msgid ""
 "This is an experimental feature. It may be removed or significantly "
 "changed in the future."
 msgstr "これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。"
 
-#: ../../source/doc.as_command.common_option.rst:134
+#: ../../source/doc.as_command.common_option.rst:166
 msgid "For log output, you can use one of the following options:"
 msgstr "ログ出力について、以下のオプションのいずれか1つを使用できます。"
 
-#: ../../source/doc.as_command.common_option.rst:136
+#: ../../source/doc.as_command.common_option.rst:168
 msgid ":code:`--log-stderr <LEVEL>`:"
 msgstr ""
 
-#: ../../source/doc.as_command.common_option.rst:137
+#: ../../source/doc.as_command.common_option.rst:169
 msgid ""
 "Outputs logs of the specified level or higher to standard error output. "
 "The default setting is to omit traceback, but adding \"-full\" to end of "
@@ -262,11 +308,11 @@ msgstr ""
 "stderr ERROR-full` のようにレベルの後ろに \"-full\" "
 "をつけると、例外が発生した場合などのトレースバックも出力されます。"
 
-#: ../../source/doc.as_command.common_option.rst:139
+#: ../../source/doc.as_command.common_option.rst:171
 msgid ":code:`--log <LOGGING_CONFIG_PATH>`:"
 msgstr ""
 
-#: ../../source/doc.as_command.common_option.rst:139
+#: ../../source/doc.as_command.common_option.rst:171
 msgid ""
 "Uses the specified log configuration file. The file must be in JSON or "
 "YAML format and must adhere to `configuration dictionary schema "
@@ -279,7 +325,7 @@ msgstr ""
 "#configuration-dictionary-schema>`_ に従う必要があります。:code:`--log-stderr` "
 "とは異なり、トレースバックは省略されません。"
 
-#: ../../source/doc.as_command.common_option.rst:142
+#: ../../source/doc.as_command.common_option.rst:174
 msgid ""
 "To use YAML format configuration files, `PyYAML "
 "<https://pypi.org/project/PyYAML/>`_ must be installed."
@@ -287,7 +333,7 @@ msgstr ""
 "YAML 形式の設定ファイルを使用する場合、`PyYAML <https://pypi.org/project/PyYAML/>`_ "
 "をあらかじめインストールしておく必要があります。"
 
-#: ../../source/doc.as_command.common_option.rst:144
+#: ../../source/doc.as_command.common_option.rst:176
 msgid ""
 "In writing the configuration file, you may need information on the "
 "loggers used by randog. If so, please refer to :doc:`doc.logging`, which "
@@ -297,7 +343,7 @@ msgstr ""
 "が使用するロガーの情報が必要かもしれません。その場合は、ロギングについてコマンド実行に限定せず記載している :doc:`doc.logging` "
 "をご覧ください。"
 
-#: ../../source/doc.as_command.common_option.rst:147
+#: ../../source/doc.as_command.common_option.rst:179
 msgid ""
 "`Warnings <https://docs.python.org/3/library/warnings.html>`_ are set up "
 "through a different mechanism than logging. See also :ref:`warning`."
@@ -305,7 +351,7 @@ msgstr ""
 "`警告 <https://docs.python.org/ja/3/library/warnings.html>`_ "
 "はログとは別の仕組みで設定します。:ref:`warning` を参照してください。"
 
-#: ../../source/doc.as_command.common_option.rst:150
+#: ../../source/doc.as_command.common_option.rst:182
 msgid ""
 "In fact, error messages during command execution also use logging. You "
 "can override the error message output setting during command execution by"
@@ -321,7 +367,7 @@ msgstr ""
 "disable_existing_loggers のデフォルト値が true ですが、randog のコマンド実行時の標準エラー出力設定については"
 " :code:`disable_existing_loggers` を明示的に true にした場合にのみ上書きします。)"
 
-#: ../../source/doc.as_command.common_option.rst:153
+#: ../../source/doc.as_command.common_option.rst:185
 msgid ""
 "This means that if you specify :code:`disable_existing_loggers: true`, "
 "error messages may not be displayed on abnormal termination, depending on"
@@ -330,11 +376,11 @@ msgstr ""
 "つまり、:code:`disable_existing_loggers: true` "
 "を指定すると、設定次第では異常終了時のエラーメッセージが表示されなくなるということです。"
 
-#: ../../source/doc.as_command.common_option.rst:158
+#: ../../source/doc.as_command.common_option.rst:190
 msgid "Warning"
 msgstr "警告"
 
-#: ../../source/doc.as_command.common_option.rst:160
+#: ../../source/doc.as_command.common_option.rst:192
 msgid ""
 "By default, `warnings <https://docs.python.org/3/library/warnings.html>`_"
 " are output to standard error output, but it can be configured."
@@ -342,7 +388,7 @@ msgstr ""
 "デフォルトで、`警告 <https://docs.python.org/ja/3/library/warnings.html>`_ "
 "は標準エラー出力に出力されますが、設定を変えることができます。"
 
-#: ../../source/doc.as_command.common_option.rst:165
+#: ../../source/doc.as_command.common_option.rst:197
 msgid ""
 "You can hide warnings of randog by using the option "
 ":code:`--quiet`/:code:`-q`. If you wish to hide all warnings, use "
@@ -353,7 +399,7 @@ msgstr ""
 "python の :code:`-W` オプションを使用してください (`こちら "
 "<https://docs.python.org/ja/3/using/cmdline.html#cmdoption-W>`_ を参照)。"
 
-#: ../../source/doc.as_command.common_option.rst:168
+#: ../../source/doc.as_command.common_option.rst:200
 msgid ""
 "It should be possible to hide only randog warnings with :code:`-W` in the"
 " spec, but `there seems to be a problem "
@@ -364,7 +410,7 @@ msgstr ""
 "<https://github.com/python/cpython/issues/66733>`_。randog の "
 ":code:`--quiet`/:code:`-q` を使用してください。"
 
-#: ../../source/doc.as_command.common_option.rst:170
+#: ../../source/doc.as_command.common_option.rst:202
 msgid ""
 "Incidentally, the category of warnings that randog command execution "
 "produces is :code:`randog.RandogCmdWarning`."

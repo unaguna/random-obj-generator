@@ -5,6 +5,7 @@ import randog.factory
 from ..._utils.type import probability
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
+from .._rnd import construct_random
 
 
 class SubcmdDefBool(SubcmdDef):
@@ -37,7 +38,8 @@ class SubcmdDefBool(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (args.get("prop_true"),), {}
+        rnd = construct_random(args.seed)
+        return (args.get("prop_true"),), {"rnd": rnd}
 
     def get_factory_constructor(self) -> t.Callable:
         return randog.factory.randbool

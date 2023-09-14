@@ -1,11 +1,9 @@
+import typing as t
 from dataclasses import dataclass
 from random import Random
-import typing as t
 
-from ._base import Factory
-from .._utils.nullsafe import dfor
+from ._base import Factory, decide_rnd
 from ..exceptions import FactoryConstructionError
-
 
 _item_tuple = t.Tuple[Factory, float]
 
@@ -115,7 +113,7 @@ class DictRandomFactory(Factory[dict]):
         rnd : Random, optional
             random number generator to be used
         """
-        self._random = dfor(rnd, Random())
+        self._random = decide_rnd(rnd)
         self._items = items
 
     def _next(self) -> dict:

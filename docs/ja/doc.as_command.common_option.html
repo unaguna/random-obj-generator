@@ -62,6 +62,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#output-format">出力形式の変更</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#output-to-file">ファイル出力</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#iteration">繰り返し</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seed">シード値</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modify-environment-variable">環境変数を変更</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#logging">ログ</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#warning">警告</a></li>
@@ -200,6 +201,28 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>使用できるプレースホルダーについては <a class="reference internal" href="#output-file"><span class="std std-ref">ファイル出力</span></a> を参照してください。</p>
 </div>
 </section>
+<section id="seed">
+<h2>シード値<a class="headerlink" href="#seed" title="この見出しへのパーマリンク"></a></h2>
+<p>通常はランダムに値を生成しますが、出力結果をコントロールしたい場合、<code class="code docutils literal notranslate"><span class="pre">--seed</span></code> を使ってシード値を指定します。以下の例のようにシード値が同じであれば同じ結果を返します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># first</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
+
+<span class="c1"># second; the result is the same as the first</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>シード値が同一でも、python のバージョンが変わると生成される値が変わる場合があります。詳しくは <a class="reference external" href="https://docs.python.org/ja/3/library/random.html#notes-on-reproducibility">再現性についてのドキュメント</a> をご覧ください。</p>
+<p>また、randog や依存パッケージのバージョンアップによっても生成する値が変わる可能性があります。</p>
+</div>
+<p>シード値を指定しない場合はランダムなシード値が使用されます。使用されるシード値は <a class="reference internal" href="#cmd-logging"><span class="std std-ref">ログ出力される</span></a> ため、以下のようにしてシード値を確認することができます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate str with log</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class="w"> </span>DEBUG
+</pre></div>
+</div>
+<p>確認したシード値をメモしておけば、次回、そのシード値を使用することで生成を再現できます。</p>
+</section>
 <section id="modify-environment-variable">
 <h2>環境変数を変更<a class="headerlink" href="#modify-environment-variable" title="この見出しへのパーマリンク"></a></h2>
 <p>とくに byfile モードで、定義ファイルに値を受け渡す目的で環境変数を指定したいかもしれません。bash 等では <code class="code docutils literal notranslate"><span class="pre">VAR=VAL</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">...</span></code> のように1行で環境変数を指定できますが、powershellなど一部のシェルではそれができません。</p>
@@ -220,7 +243,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="logging">
-<h2>ログ<a class="headerlink" href="#logging" title="この見出しへのパーマリンク"></a></h2>
+<span id="cmd-logging"></span><h2>ログ<a class="headerlink" href="#logging" title="この見出しへのパーマリンク"></a></h2>
 <p>デフォルトでは randog が出力するものも含めてすべてのログが無視されます (例外は後述) が、ログ出力するように設定することができます。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>

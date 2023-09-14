@@ -2,6 +2,7 @@ import datetime
 import datetime as dt
 import enum
 import math
+import random
 from decimal import Decimal
 
 import pytest
@@ -582,3 +583,38 @@ def test__from_example__custom_func__terminate_chain():
     assert isinstance(value.get("a"), int)
     assert value.get("b") is True
     assert isinstance(value.get("c"), int)
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([True], {}),
+        ([1], {}),
+        (["a"], {}),
+        ([Decimal("1.1")], {}),
+        ([[1, 2]], {}),
+        ([{"a": 1, "b": "B"}], {}),
+        ([{"a": 1, "z": {"a": 1, "b": "B"}}], {}),
+    ],
+)
+def test__from_example__seed(rnd1, rnd2, expect_same_output, args, kwargs):
+    repeat = 20
+    factory1 = randog.factory.from_example(*args, **rnd1(), **kwargs)
+    factory2 = randog.factory.from_example(*args, **rnd2(), **kwargs)
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

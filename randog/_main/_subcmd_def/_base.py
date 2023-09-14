@@ -1,11 +1,11 @@
 import argparse
-from abc import ABC, abstractmethod
 import typing as t
+from abc import ABC, abstractmethod
 
 from .. import Linesep
-from ..._utils.type import positive_int, encoding
-from .._subcmd import Subcmd
 from .._main_args import Args
+from .._subcmd import Subcmd
+from ..._utils.type import positive_int, encoding
 
 
 class SubcmdDef(ABC):
@@ -96,6 +96,12 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         help="line separator for output. "
         "This is only effective when outputting to a file with the '--output'/'-O' "
         "option.",
+    )
+    common_opt_group.add_argument(
+        "--seed",
+        default=None,
+        type=int,
+        help="random seed number",
     )
     common_opt_group.add_argument(
         "--quiet",

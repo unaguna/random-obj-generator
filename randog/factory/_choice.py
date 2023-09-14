@@ -1,10 +1,9 @@
 import enum
 import numbers
-from random import Random
 import typing as t
+from random import Random
 
-from ._base import Factory
-from .._utils.nullsafe import dfor
+from ._base import Factory, decide_rnd
 from ..exceptions import FactoryConstructionError
 
 
@@ -98,7 +97,7 @@ class ChoiceRandomFactory(Factory[t.Any]):
         FactoryConstructionError
             No values are specified.
         """
-        self._random = dfor(rnd, Random())
+        self._random = decide_rnd(rnd)
         self._weights = weights
         self._values = values
 

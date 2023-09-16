@@ -246,7 +246,7 @@
 </div>
 </section>
 <section id="union-type">
-<h2>合成型 (Union type)<a class="headerlink" href="#union-type" title="この見出しへのパーマリンク"></a></h2>
+<span id="construct-union"></span><h2>合成型 (Union type)<a class="headerlink" href="#union-type" title="この見出しへのパーマリンク"></a></h2>
 <p>複数の型のうちのいずれかの値をランダムに生成する factory をいくつかの方法で作ることができます。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
@@ -329,6 +329,27 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;$&quot;</span>
 </pre></div>
+</div>
+<p>生成される値が dict であってその要素に処理をしたい場合、以下の例のように <code class="code docutils literal notranslate"><span class="pre">post_process</span></code> の代わりに <code class="code docutils literal notranslate"><span class="pre">post_process_items</span></code> を使うことで簡単に書けます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># use post_process_items to format the random decimal value &#39;[&quot;count&quot;]&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+<span class="gp">... </span>        <span class="n">count</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdecimal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="n">decimal_len</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">)</span><span class="o">.</span><span class="n">post_process_items</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># examples: {&#39;name&#39;: &#39;sir1w94s&#39;, &#39;count&#39;: &#39;$12,345.67&#39;}, etc.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;$&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>dict でない値が生成された場合は <code class="code docutils literal notranslate"><span class="pre">post_process_items</span></code> による変換がスキップされるため、<a class="reference internal" href="#nullable"><span class="std std-ref">or_none</span></a> や <a class="reference internal" href="#construct-union"><span class="std std-ref">union</span></a> と組み合わせて使うこともできます。</p>
 </div>
 </section>
 <section id="custom-factory">

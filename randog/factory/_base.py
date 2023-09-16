@@ -151,9 +151,9 @@ class Factory(ABC, t.Generic[T]):
         Parameters
         ----------
         default_process : Callable[[Any], Any] | None
-            the mapping to modify items which is not defined in `proccesses`
+            the mapping to modify items which is not defined in `processes`
         processes: Callable[[Any], Any]
-            the mappings to modify each item
+            functions to modify each item
 
         Returns
         -------

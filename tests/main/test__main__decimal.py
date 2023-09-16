@@ -318,6 +318,24 @@ def test__main__decimal__option_json(capfd, arg, expected):
 
 
 @pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        (["10000", "10000", "--fmt", ","], "10,000.0"),
+        (["10000", "10000", "--fmt", ".0f"], "10000"),
+        (["10000", "10000", "--fmt", ".2f"], "10000.00"),
+    ],
+)
+def test__main__decimal__fmt(capfd, options, expected):
+    args = ["randog", "decimal", *options]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == f"{expected}\n"
+        assert err == ""
+
+
+@pytest.mark.parametrize(
     "expected",
     [-1, 0, 1, 0.25],
 )

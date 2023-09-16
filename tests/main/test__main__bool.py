@@ -48,25 +48,18 @@ def test__main__bool__error_when_illegal_prop_true(capfd, prop_true):
 
 
 @pytest.mark.parametrize(
-    ("prop_true", "expected"),
-    [("0", False), ("0.0", False), ("1", True), ("1.0", True)],
+    ("options", "expected"),
+    [
+        (["0", "--repr"], "False"),
+        (["1", "--repr"], "True"),
+        (["0", "--json"], "false"),
+        (["1", "--json"], "true"),
+        (["0", "--fmt", "1"], "0"),
+        (["1", "--fmt", "1"], "1"),
+    ],
 )
-def test__main__bool__option_repr(capfd, prop_true, expected):
-    args = ["randog", "bool", prop_true, "--repr"]
-    with patch.object(sys, "argv", args):
-        randog.__main__.main()
-
-        out, err = capfd.readouterr()
-        assert out == f"{expected}\n"
-        assert err == ""
-
-
-@pytest.mark.parametrize(
-    ("prop_true", "expected"),
-    [("0", "false"), ("0.0", "false"), ("1", "true"), ("1.0", "true")],
-)
-def test__main__bool__option_json(capfd, prop_true, expected):
-    args = ["randog", "bool", prop_true, "--json"]
+def test__main__bool__fmt(capfd, options, expected):
+    args = ["randog", "bool", *options]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 

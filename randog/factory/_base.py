@@ -160,7 +160,7 @@ class Factory(ABC, t.Generic[T]):
         Factory[R]
             A factory whose result will be dict whose items is modified by `processes`
         """
-        raise Exception("Not implemented")
+        return PostDictFactory(self, processes, default_process)
 
     def iter(
         self,
@@ -286,6 +286,41 @@ class PostFactory(Factory[R], t.Generic[T, R]):
     def _next(self) -> R:
         pre_result = self._base_factory.next()
         return self._post_process(pre_result)
+
+
+class PostDictFactory(Factory[R], t.Generic[T, R]):
+    _base_factory: Factory[T]
+    _processes: t.Mapping[str, t.Callable[[t.Any], t.Any]]
+    _default_process: t.Callable[[t.Any], t.Any]
+
+    def __init__(
+        self,
+        base_factory: Factory[T],
+        processes: t.Mapping[str, t.Callable[[t.Any], t.Any]],
+        default_process: t.Callable[[t.Any], t.Any],
+    ):
+        self._base_factory = base_factory
+        self._processes = processes
+        self._default_process = (
+            default_process if default_process is not None else lambda x: x
+        )
+
+    def _next(self) -> R:
+        pre_result = self._base_factory.next()
+
+        if not isinstance(pre_result, t.Mapping):
+            return pre_result
+
+        return {
+            key: self._process_item(key, pre_value)
+            for key, pre_value in pre_result.items()
+        }
+
+    def _process_item(self, key, pre_value) -> t.Any:
+        if key in self._processes:
+            return self._processes[key](pre_value)
+        else:
+            return self._default_process(pre_value)
 
 
 class FactoryIter(t.Generic[T], t.Iterator[T]):

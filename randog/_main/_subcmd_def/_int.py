@@ -31,6 +31,13 @@ class SubcmdDefInt(SubcmdDef):
             metavar="MAXIMUM",
             help="the maximum value",
         )
+        int_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '011.2f'",
+        )
         add_common_arguments(int_parser)
 
         return int_parser

@@ -51,6 +51,13 @@ class SubcmdDefString(SubcmdDef):
                 "It cannot be used with `--length` or `--charset`."
             ),
         )
+        str_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '>10'",
+        )
         add_common_arguments(str_parser)
 
         return str_parser

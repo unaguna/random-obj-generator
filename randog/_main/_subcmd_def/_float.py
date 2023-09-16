@@ -66,6 +66,13 @@ class SubcmdDefFloat(SubcmdDef):
             metavar="PROB_NAN",
             help="the probability of NaN; default=0.0",
         )
+        float_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '.2f'",
+        )
         add_common_arguments(float_parser)
 
         return float_parser

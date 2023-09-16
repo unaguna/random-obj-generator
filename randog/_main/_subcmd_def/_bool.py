@@ -28,6 +28,13 @@ class SubcmdDefBool(SubcmdDef):
             metavar="PROP_TRUE",
             help="the probability of True",
         )
+        bool_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '1'",
+        )
         add_common_arguments(bool_parser)
 
         return bool_parser

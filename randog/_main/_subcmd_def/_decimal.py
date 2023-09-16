@@ -74,6 +74,13 @@ class SubcmdDefDecimal(SubcmdDef):
             metavar="PROB_NAN",
             help="the probability of NaN; default=0.0",
         )
+        decimal_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '011.2f'",
+        )
         add_common_arguments(decimal_parser)
 
         return decimal_parser

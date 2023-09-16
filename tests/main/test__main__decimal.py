@@ -320,7 +320,7 @@ def test__main__decimal__option_json(capfd, arg, expected):
 @pytest.mark.parametrize(
     ("options", "expected"),
     [
-        (["10000", "10000", "--fmt", ","], "10,000.0"),
+        (["10000", "10000", "--fmt", ","], "10,000"),
         (["10000", "10000", "--fmt", ".0f"], "10000"),
         (["10000", "10000", "--fmt", ".2f"], "10000.00"),
     ],

@@ -123,6 +123,45 @@ class Factory(ABC, t.Generic[T]):
         """
         return PostFactory(self, post_process)
 
+    def post_process_items(
+        self,
+        default_process: t.Optional[t.Callable[[t.Any], t.Any]] = None,
+        **processes: t.Callable[[t.Any], t.Any],
+    ) -> "Factory[R]":
+        """Returns a factory whose result will be dict
+        whose items is modified by `processes`
+
+        Examples
+        --------
+        >>> import randog
+        >>>
+        >>> # use post_process_items to format the random decimal value '["count"]'
+        >>> factory = (
+        ...     randog.factory.randdict(
+        ...         name=randog.factory.randstr(),
+        ...         count=randog.factory.randdecimal(0, 50000, decimal_len=2),
+        ...     ).post_process_items(count=lambda x: f"${x:,}")
+        ... )
+        >>>
+        >>> # examples: {'name': 'sir1w94s', 'count': '$12,345.67'}, etc.
+        >>> generated = factory.next()
+        >>> assert isinstance(generated["count"], str)
+        >>> assert generated["count"][0] == "$"
+
+        Parameters
+        ----------
+        default_process : Callable[[Any], Any] | None
+            the mapping to modify items which is not defined in `proccesses`
+        processes: Callable[[Any], Any]
+            the mappings to modify each item
+
+        Returns
+        -------
+        Factory[R]
+            A factory whose result will be dict whose items is modified by `processes`
+        """
+        raise Exception("Not implemented")
+
     def iter(
         self,
         size: int,

@@ -18,7 +18,7 @@ class SubcmdDefDecimal(SubcmdDef):
             usage=(
                 "python -m randog decimal [MINIMUM MAXIMUM] "
                 "[--decimal-len DECIMAL_LENGTH] [--p-inf PROB_P_INF] "
-                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]"
+                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [--fmt FORMAT] [common-options]"
             ),
             description="It generates values of type decimal.Decimal.",
             add_help=False,

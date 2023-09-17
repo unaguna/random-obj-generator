@@ -17,7 +17,7 @@ class SubcmdDefString(SubcmdDef):
             Subcmd.String.value,
             usage=(
                 "python -m randog str [--length LENGTH] [--charset CHARSET] "
-                "[--regex REGEX] [common-options]"
+                "[--regex REGEX] [--fmt FORMAT] [common-options]"
             ),
             description="It generates values of type str.",
             add_help=False,

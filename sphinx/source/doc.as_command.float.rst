@@ -5,28 +5,38 @@ In float mode, floating-point numeric values are generated. The format of the co
 
 .. code-block:: shell
 
-    python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]
+    python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [--fmt FORMAT] [common-options]
 
 
 Arguments and Options
 ---------------------
 
 - :code:`MINIMUM` (optional):
+
     - the minimum value. If not specified, the behavior is left to the specification of `randfloat <randog.factory.html#randog.factory.randfloat>`_.
 
 - :code:`MAXIMUM` (optional):
+
     - the maximum value. If not specified, the behavior is left to the specification of `randfloat <randog.factory.html#randog.factory.randfloat>`_.
 
 - :code:`--p-inf PROB_P_INF` (optional, default=0.0):
+
     - the probability of positive infinity.
 
 - :code:`--n-inf PROB_N_INF` (optional, default=0.0):
+
     - the probability of negative infinity.
 
 - :code:`--nan PROB_NAN` (optional, default=0.0):
+
     - the probability of NaN.
 
+- :code:`--fmt FORMAT` (optional):
+
+    - the output format written in `format specification mini-language <https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language>`_
+
 - :code:`common-options`
+
     - :doc:`common options <doc.as_command.common_option>`
 
 
@@ -46,6 +56,15 @@ You can specify a range of values to be generated, as in the following example:
     # generates a value between 0.01 and 10^100
     python -m randog float 0.01 1e+100
 
+.. note::
+
+    You can also use :doc:`decimal mode <doc.as_command.decimal>`.
+
+    If you want to generate an integer with no decimal part, use :doc:`int mode <doc.as_command.int>`.
+
+Infinity and NaN
+~~~~~~~~~~~~~~~~
+
 Infinity and NaN can be included as candidates for generation by specifying optional arguments.
 
 .. code-block:: shell
@@ -64,6 +83,19 @@ The output can also be in JSON format, such as :code:`Infinity`, :code:`-Infinit
     # Generates Infinity, -Infinity, or, NaN
     python -m randog float --p-inf 0.4 --n-inf 0.4 --nan 0.2 --json
 
+Format: Significant Digits, etc.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The output format can be specified in `format specification mini-language <https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language>`_ as follows:
+
+.. code-block:: shell
+
+    # output integer such as '4.20e+98', which has (2+1) significant digits
+    python -m randog float 0.01 1e+100 --fmt .2e
+
+Repeatedly Generate
+~~~~~~~~~~~~~~~~~~~
+
 Most likely, you will not be satisfied with just one generated, so you will probably want to output multiple times as follows:
 
 .. code-block:: shell
@@ -73,10 +105,3 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 
     # Generate list which contains 10 values
     python -m randog float -L 10
-
-.. note::
-
-    The float mode does not have the ability to specify the number of decimal places.
-    If you want to specify the digits after the decimal point, use :doc:`decimal mode <doc.as_command.decimal>`.
-
-    If you want to generate an integer with no decimal part, use :doc:`int mode <doc.as_command.int>`.

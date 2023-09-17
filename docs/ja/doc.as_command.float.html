@@ -118,53 +118,60 @@
   <section id="float-mode">
 <h1>float モード<a class="headerlink" href="#float-mode" title="この見出しへのパーマリンク"></a></h1>
 <p>float モードでは、浮動小数点数を生成します。コマンドの形式は次の通りです：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
 <h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>最小値。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randfloat">randfloat</a> の仕様に準ずる。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>最大値。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randfloat">randfloat</a> の仕様に準ずる。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--p-inf</span> <span class="pre">PROB_P_INF</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--p-inf</span> <span class="pre">PROB_P_INF</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>正の無限大を生成する確率。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--n-inf</span> <span class="pre">PROB_N_INF</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--n-inf</span> <span class="pre">PROB_N_INF</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>負の無限大を生成する確率。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--nan</span> <span class="pre">PROB_NAN</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--nan</span> <span class="pre">PROB_NAN</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>NaNを生成する確率。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/string.html?highlight=string#format-specification-mini-language">書式指定ミニ言語</a> で記載された出力フォーマット</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
 <li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">共通オプション</span></a></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </section>
@@ -179,6 +186,13 @@
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>1e+100
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">decimal モード</span></a> も使用できます。</p>
+<p>小数部がない整数を生成したい場合は <a class="reference internal" href="doc.as_command.int.html"><span class="doc">int モード</span></a> を使用してください。</p>
+</div>
+<section id="infinity-and-nan">
+<h3>Infinity and NaN<a class="headerlink" href="#infinity-and-nan" title="この見出しへのパーマリンク"></a></h3>
 <p>オプション引数を指定することで無限大やNaNを生成の候補に含めることができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generates positive infinity with 10% probability</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span><span class="w"> </span>1e+100<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.1
@@ -192,6 +206,17 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--n-inf<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--nan<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span>--json
 </pre></div>
 </div>
+</section>
+<section id="format-significant-digits-etc">
+<h3>出力フォーマット (有効桁数等)<a class="headerlink" href="#format-significant-digits-etc" title="この見出しへのパーマリンク"></a></h3>
+<p>以下のように出力フォーマットを <a class="reference external" href="https://docs.python.org/ja/3/library/string.html?highlight=string#format-specification-mini-language">書式指定ミニ言語</a> で指定することができます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output integer such as &#39;4.20e+98&#39;, which has (2+1) significant digits</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>1e+100<span class="w"> </span>--fmt<span class="w"> </span>.2e
+</pre></div>
+</div>
+</section>
+<section id="repeatedly-generate">
+<h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="この見出しへのパーマリンク"></a></h3>
 <p>たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
@@ -200,11 +225,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p>float モードには小数点以下の桁数を指定する機能がありません。小数点以下の桁数を指定したい場合は <a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">decimal モード</span></a> を使用してください。</p>
-<p>小数部がない整数を生成したい場合は <a class="reference internal" href="doc.as_command.int.html"><span class="doc">int モード</span></a> を使用してください。</p>
-</div>
+</section>
 </section>
 </section>
 

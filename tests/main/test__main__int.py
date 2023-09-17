@@ -78,15 +78,20 @@ def test__main__int__error_when_max_lt_min(capfd):
 
 
 @pytest.mark.parametrize(
-    "expected",
-    [-1, 0, 1],
+    ("options", "expected"),
+    [
+        (["1", "1", "--repr"], "1"),
+        (["0", "0", "--repr"], "0"),
+        (["-1", "-1", "--repr"], "-1"),
+        (["1", "1", "--json"], "1"),
+        (["0", "0", "--json"], "0"),
+        (["-1", "-1", "--json"], "-1"),
+        (["10000", "10000", "--fmt", ","], "10,000"),
+        (["10000", "10000", "--fmt", ".2f"], "10000.00"),
+    ],
 )
-@pytest.mark.parametrize(
-    "fmt",
-    ["--repr", "--json"],
-)
-def test__main__int__option_repr_json(capfd, expected, fmt):
-    args = ["randog", "int", str(expected), str(expected), fmt]
+def test__main__int__fmt(capfd, options, expected):
+    args = ["randog", "int", *options]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 

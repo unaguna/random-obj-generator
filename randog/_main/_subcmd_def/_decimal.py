@@ -18,7 +18,7 @@ class SubcmdDefDecimal(SubcmdDef):
             usage=(
                 "python -m randog decimal [MINIMUM MAXIMUM] "
                 "[--decimal-len DECIMAL_LENGTH] [--p-inf PROB_P_INF] "
-                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]"
+                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [--fmt FORMAT] [common-options]"
             ),
             description="It generates values of type decimal.Decimal.",
             add_help=False,
@@ -73,6 +73,13 @@ class SubcmdDefDecimal(SubcmdDef):
             default=0.0,
             metavar="PROB_NAN",
             help="the probability of NaN; default=0.0",
+        )
+        decimal_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '011.2f'",
         )
         add_common_arguments(decimal_parser)
 

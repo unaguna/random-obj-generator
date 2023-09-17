@@ -17,7 +17,7 @@ class SubcmdDefFloat(SubcmdDef):
             Subcmd.Float.value,
             usage=(
                 "python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] "
-                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]"
+                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [--fmt FORMAT] [common-options]"
             ),
             description="It generates values of type float.",
             add_help=False,
@@ -65,6 +65,13 @@ class SubcmdDefFloat(SubcmdDef):
             default=0.0,
             metavar="PROB_NAN",
             help="the probability of NaN; default=0.0",
+        )
+        float_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '.2f'",
         )
         add_common_arguments(float_parser)
 

@@ -17,7 +17,7 @@ class SubcmdDefString(SubcmdDef):
             Subcmd.String.value,
             usage=(
                 "python -m randog str [--length LENGTH] [--charset CHARSET] "
-                "[--regex REGEX] [common-options]"
+                "[--regex REGEX] [--fmt FORMAT] [common-options]"
             ),
             description="It generates values of type str.",
             add_help=False,
@@ -50,6 +50,13 @@ class SubcmdDefString(SubcmdDef):
                 "the regular expression for generated string. "
                 "It cannot be used with `--length` or `--charset`."
             ),
+        )
+        str_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '>10'",
         )
         add_common_arguments(str_parser)
 

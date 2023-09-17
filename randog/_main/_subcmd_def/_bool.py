@@ -15,7 +15,7 @@ class SubcmdDefBool(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         bool_parser = subparsers.add_parser(
             Subcmd.Bool.value,
-            usage="python -m randog bool [PROP_TRUE] [common-options]",
+            usage="python -m randog bool [PROP_TRUE] [--fmt FORMAT] [common-options]",
             description="It generates boolean values.",
             add_help=False,
         )
@@ -27,6 +27,13 @@ class SubcmdDefBool(SubcmdDef):
             nargs="?",
             metavar="PROP_TRUE",
             help="the probability of True",
+        )
+        bool_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '1'",
         )
         add_common_arguments(bool_parser)
 

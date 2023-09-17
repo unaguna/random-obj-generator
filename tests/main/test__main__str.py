@@ -192,6 +192,22 @@ def test__main__str__option_json(capfd, options, expected):
 
 
 @pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        (["--charset=a", "--length=3", "--fmt", ">5"], "  aaa"),
+    ],
+)
+def test__main__str__fmt(capfd, options, expected):
+    args = ["randog", "str", *options]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == f"{expected}\n"
+        assert err == ""
+
+
+@pytest.mark.parametrize(
     ("option", "count"),
     [
         ("--repeat", 3),

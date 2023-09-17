@@ -117,60 +117,67 @@
   <section id="decimal-mode">
 <h1>decimal Mode<a class="headerlink" href="#decimal-mode" title="Permalink to this heading"></a></h1>
 <p>In decimal mode, decimal values are generated. The format of the command is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--decimal-len<span class="w"> </span>DECIMAL_LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--decimal-len<span class="w"> </span>DECIMAL_LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
 <h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the minimum value. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randdecimal">randdecimal</a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the maximum value. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randdecimal">randdecimal</a>..</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--decimal-len</span> <span class="pre">DECIMAL_LENGTH</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--decimal-len</span> <span class="pre">DECIMAL_LENGTH</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the length of decimal part of generated values. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randdecimal">randdecimal</a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--p-inf</span> <span class="pre">PROB_P_INF</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--p-inf</span> <span class="pre">PROB_P_INF</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the probability of positive infinity.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--n-inf</span> <span class="pre">PROB_N_INF</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--n-inf</span> <span class="pre">PROB_N_INF</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the probability of negative infinity.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--nan</span> <span class="pre">PROB_NAN</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--nan</span> <span class="pre">PROB_NAN</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the probability of NaN.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the output format written in <a class="reference external" href="https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language">format specification mini-language</a></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
 <li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">common options</span></a></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </section>
@@ -190,6 +197,8 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span>--decimal-len<span class="w"> </span><span class="m">2</span>
 </pre></div>
 </div>
+<section id="infinity-and-nan">
+<h3>Infinity and NaN<a class="headerlink" href="#infinity-and-nan" title="Permalink to this heading"></a></h3>
 <p>Infinity and NaN can be included as candidates for generation by specifying optional arguments.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generates positive infinity with 10% probability</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span><span class="m">0</span><span class="w"> </span>1e+100<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.1
@@ -198,6 +207,17 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span>--nan<span class="w"> </span><span class="m">0</span>.15
 </pre></div>
 </div>
+</section>
+<section id="format-thousands-separator-etc">
+<h3>Format: Thousands Separator, etc.<a class="headerlink" href="#format-thousands-separator-etc" title="Permalink to this heading"></a></h3>
+<p>The output format can be specified in <a class="reference external" href="https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language">format specification mini-language</a> as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output separated numeric such as &#39;12,345.67&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span><span class="m">99999</span>.99<span class="w"> </span>--decimal-len<span class="w"> </span><span class="m">2</span><span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;,&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="repeatedly-generate">
+<h3>Repeatedly Generate<a class="headerlink" href="#repeatedly-generate" title="Permalink to this heading"></a></h3>
 <p>Most likely, you will not be satisfied with just one generated, so you will probably want to output multiple times as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span>--decimal-len<span class="w"> </span><span class="m">2</span><span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
@@ -206,6 +226,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span>--decimal-len<span class="w"> </span><span class="m">2</span><span class="w"> </span>-L<span class="w"> </span><span class="m">10</span><span class="w"> </span>--json
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 

@@ -90,7 +90,7 @@ The output format can be specified in `format specification mini-language <https
 
 .. code-block:: shell
 
-    # output integer such as '4.20e+98', which has (2+1) significant digits
+    # output numeric such as '4.20e+98', which has (2+1) significant digits
     python -m randog float 0.01 1e+100 --fmt .2e
 
 Repeatedly Generate

@@ -93,6 +93,10 @@ The output format can be specified in `format specification mini-language <https
     # output numeric such as '4.20e+98', which has (2+1) significant digits
     python -m randog float 0.01 1e+100 --fmt .2e
 
+.. note::
+
+    Although the length of the decimal part can be specified as in :code:`--fmt .2f`, :doc:`decimal mode <doc.as_command.decimal>` is suitable for generating numbers with a fixed length of decimal part.
+
 Repeatedly Generate
 ~~~~~~~~~~~~~~~~~~~
 

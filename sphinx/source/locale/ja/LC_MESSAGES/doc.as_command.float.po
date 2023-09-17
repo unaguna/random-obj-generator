@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-17 15:18+0900\n"
+"POT-Creation-Date: 2023-09-17 15:45+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -94,9 +94,9 @@ msgid ""
 "<https://docs.python.org/3/library/string.html?highlight=string#format-"
 "specification-mini-language>`_"
 msgstr ""
-"`書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
-"specification-mini-language>`_ "
-"で記載された出力フォーマット"
+"`書式指定ミニ言語 "
+"<https://docs.python.org/ja/3/library/string.html?highlight=string"
+"#format-specification-mini-language>`_ で記載された出力フォーマット"
 
 #: ../../source/doc.as_command.float.rst:38
 msgid ":code:`common-options`"
@@ -164,15 +164,26 @@ msgid ""
 " <https://docs.python.org/3/library/string.html?highlight=string#format-"
 "specification-mini-language>`_ as follows:"
 msgstr ""
-"以下のように出力フォーマットを `書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
-"specification-mini-language>`_ で指定することができます。"
+"以下のように出力フォーマットを `書式指定ミニ言語 "
+"<https://docs.python.org/ja/3/library/string.html?highlight=string"
+"#format-specification-mini-language>`_ で指定することができます。"
 
-#: ../../source/doc.as_command.float.rst:97
+#: ../../source/doc.as_command.float.rst:98
+msgid ""
+"Although the length of the decimal part can be specified as in "
+":code:`--fmt .2f`, :doc:`decimal mode <doc.as_command.decimal>` is "
+"suitable for generating numbers with a fixed length of decimal part."
+msgstr ""
+"小数部の長さは :code:`--fmt .2f` のように指定できますが、小数部の長さが決まった数値を生成する場合は "
+":doc:`decimal モード <doc.as_command.decimal>` が向いています。"
+
+#: ../../source/doc.as_command.float.rst:101
 msgid "Repeatedly Generate"
 msgstr "繰り返し生成"
 
-#: ../../source/doc.as_command.float.rst:99
+#: ../../source/doc.as_command.float.rst:103
 msgid ""
 "Most likely, you will not be satisfied with just one generated, so you "
 "will probably want to output multiple times as follows:"
 msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
+

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 15:04+0900\n"
+"POT-Creation-Date: 2023-09-17 13:13+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -61,10 +61,12 @@ msgid ""
 msgstr "最も簡素な例は次の通りです。True または False を 50% ずつの確率で出力します。"
 
 #: ../../source/doc.as_command.bool.rst:30
-msgid ""
-"Most likely, you will not be satisfied with just one generated, so you "
-"will probably want to output multiple times as follows:"
-msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
+msgid "You can specify the probability of True."
+msgstr "True を生成する確率を指定することができます。"
+
+#: ../../source/doc.as_command.bool.rst:38
+msgid "Lowercase"
+msgstr "小文字で出力"
 
 #: ../../source/doc.as_command.bool.rst:40
 msgid ""
@@ -74,3 +76,14 @@ msgid ""
 msgstr ""
 "出力を他の言語のプログラムで処理する場合などでは小文字で出力する必要があるかもしれません。その場合、次のように json "
 "形式で出力すると目的の形式で得られます。"
+
+#: ../../source/doc.as_command.bool.rst:51
+msgid "Repeatedly Generate"
+msgstr "繰り返し生成"
+
+#: ../../source/doc.as_command.bool.rst:53
+msgid ""
+"Most likely, you will not be satisfied with just one generated, so you "
+"will probably want to output multiple times as follows:"
+msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
+

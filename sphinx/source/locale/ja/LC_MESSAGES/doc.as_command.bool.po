@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-17 13:13+0900\n"
+"POT-Creation-Date: 2023-09-17 13:41+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -34,41 +34,55 @@ msgstr "bool モードでは、真偽値を生成します。コマンドの形�
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.bool.rst:15
+#: ../../source/doc.as_command.bool.rst:14
 msgid ":code:`PROP_TRUE` (optional, default=0.5):"
 msgstr ""
 
-#: ../../source/doc.as_command.bool.rst:15
+#: ../../source/doc.as_command.bool.rst:16
 msgid "the probability of True."
 msgstr "True を生成する確率。"
 
-#: ../../source/doc.as_command.bool.rst:19
+#: ../../source/doc.as_command.bool.rst:18
+msgid ":code:`--fmt FORMAT` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.bool.rst:20
+msgid ""
+"the output format written in `format specification mini-language "
+"<https://docs.python.org/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_"
+msgstr ""
+"`書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_ "
+"で記載された出力フォーマット"
+
+#: ../../source/doc.as_command.bool.rst:22
 msgid ":code:`common-options`"
 msgstr ""
 
-#: ../../source/doc.as_command.bool.rst:18
+#: ../../source/doc.as_command.bool.rst:24
 msgid ":doc:`common options <doc.as_command.common_option>`"
 msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
 
-#: ../../source/doc.as_command.bool.rst:22
+#: ../../source/doc.as_command.bool.rst:28
 msgid "Examples"
 msgstr "実行例"
 
-#: ../../source/doc.as_command.bool.rst:24
+#: ../../source/doc.as_command.bool.rst:30
 msgid ""
 "The simplest example is the following, which outputs True or False with a"
 " 50% probability of each."
 msgstr "最も簡素な例は次の通りです。True または False を 50% ずつの確率で出力します。"
 
-#: ../../source/doc.as_command.bool.rst:30
+#: ../../source/doc.as_command.bool.rst:36
 msgid "You can specify the probability of True."
 msgstr "True を生成する確率を指定することができます。"
 
-#: ../../source/doc.as_command.bool.rst:38
-msgid "Lowercase"
-msgstr "小文字で出力"
+#: ../../source/doc.as_command.bool.rst:44
+msgid "Format: Lowercase or Numeric"
+msgstr "出力フォーマット (小文字、数値)"
 
-#: ../../source/doc.as_command.bool.rst:40
+#: ../../source/doc.as_command.bool.rst:46
 msgid ""
 "It may be necessary to output in lower case, for example, if the output "
 "is to be processed by a program in another language. In that case, the "
@@ -77,11 +91,25 @@ msgstr ""
 "出力を他の言語のプログラムで処理する場合などでは小文字で出力する必要があるかもしれません。その場合、次のように json "
 "形式で出力すると目的の形式で得られます。"
 
-#: ../../source/doc.as_command.bool.rst:51
+#: ../../source/doc.as_command.bool.rst:56
+msgid "If you want to make it numeric, you can use :code:`--fmt`."
+msgstr "数値として出力したい場合、:code:`--fmt` を利用できます。"
+
+#: ../../source/doc.as_command.bool.rst:64
+msgid ""
+"This takes advantage of the property that `values of type bool are "
+"treated as integer values in some contexts "
+"<https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values>`_."
+msgstr ""
+"これは、`bool型の値が一部の文脈で整数値として扱われる性質 "
+"<https://docs.python.org/ja/3/library/stdtypes.html#bltin-boolean-"
+"values>`_ を利用しています。"
+
+#: ../../source/doc.as_command.bool.rst:67
 msgid "Repeatedly Generate"
 msgstr "繰り返し生成"
 
-#: ../../source/doc.as_command.bool.rst:53
+#: ../../source/doc.as_command.bool.rst:69
 msgid ""
 "Most likely, you will not be satisfied with just one generated, so you "
 "will probably want to output multiple times as follows:"

@@ -4,6 +4,7 @@ import typing as t
 import randog.factory
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
+from .._rnd import construct_random
 
 
 class SubcmdDefInt(SubcmdDef):
@@ -13,7 +14,10 @@ class SubcmdDefInt(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         int_parser = subparsers.add_parser(
             Subcmd.Int.value,
-            usage="python -m randog int MINIMUM MAXIMUM [common-options]",
+            usage=(
+                "python -m randog int MINIMUM MAXIMUM [--fmt FORMAT] "
+                "[common-options]"
+            ),
             description="It generates integer values.",
             add_help=False,
         )
@@ -29,6 +33,13 @@ class SubcmdDefInt(SubcmdDef):
             type=int,
             metavar="MAXIMUM",
             help="the maximum value",
+        )
+        int_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '011.2f'",
         )
         add_common_arguments(int_parser)
 
@@ -47,7 +58,8 @@ class SubcmdDefInt(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (args.get("minimum"), args.get("maximum")), {}
+        rnd = construct_random(args.seed)
+        return (args.get("minimum"), args.get("maximum")), {"rnd": rnd}
 
     def get_factory_constructor(self) -> t.Callable:
         return randog.factory.randint

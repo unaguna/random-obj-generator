@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>str Mode &mdash; random-obj-generator 0.12.0 documentation</title>
+  <title>str Mode &mdash; random-obj-generator 0.13.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -117,7 +117,9 @@
   <section id="str-mode">
 <h1>str Mode<a class="headerlink" href="#str-mode" title="Permalink to this heading"></a></h1>
 <p>In str mode, string values are generated. The format of the command is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span><span class="o">[</span>--length<span class="w"> </span>LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--charset<span class="w"> </span>CHARSET<span class="o">]</span><span class="w"> </span><span class="o">[</span>--regex<span class="w"> </span>REGEX<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span><span class="o">[</span>--length<span class="w"> </span>LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--charset<span class="w"> </span>CHARSET<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span><span class="o">[</span>--regex<span class="w"> </span>REGEX<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -127,34 +129,41 @@ In cases where there are security requirements, such as the generation of tokens
 </div>
 <section id="arguments-and-options">
 <h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">LENGTH</span></code>:</dt><dd><ul>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">LENGTH</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the length of generated strings. You can specify an integer such as <code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">5</span></code> or a range such as <code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">3:8</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--charset</span> <span class="pre">CHARSET</span></code>:</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--charset</span> <span class="pre">CHARSET</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the characters which contained by generated strings.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--regex</span> <span class="pre">REGEX</span></code>:</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--regex</span> <span class="pre">REGEX</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the regular expression for generated string. It cannot be used with <code class="code docutils literal notranslate"><span class="pre">--length</span></code> or <code class="code docutils literal notranslate"><span class="pre">--charset</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the output format written in <a class="reference external" href="https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language">format specification mini-language</a></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
 <li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">common options</span></a></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </section>
@@ -191,6 +200,14 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>To generate strings using regular expressions, use the <a class="reference external" href="https://pypi.org/project/rstr/">rstr</a> package.
 If you use it, please review and follow the license terms of rstr.</p>
 </div>
+<section id="format-align-etc">
+<h3>Format: align, etc.<a class="headerlink" href="#format-align-etc" title="Permalink to this heading"></a></h3>
+<p>The output format can be specified in <a class="reference external" href="https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language">format specification mini-language</a> as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output string such as &#39;      zy7q&#39;</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--length<span class="w"> </span><span class="m">4</span><span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;&gt;10&#39;</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 

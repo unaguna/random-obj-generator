@@ -1,3 +1,4 @@
+import random
 from unittest.mock import MagicMock
 
 import pytest
@@ -120,3 +121,32 @@ def test__random_union__error_when_weights_does_not_match(weights_len):
     e = e_ctx.value
 
     assert e.message == "the number of weights must match the factories"
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    "args",
+    [
+        [randog.factory.const(0), randog.factory.const("a")],
+    ],
+)
+def test__random_union__seed(rnd1, rnd2, expect_same_output, args):
+    repeat = 20
+    factory1 = randog.factory.union(*args, **rnd1())
+    factory2 = randog.factory.union(*args, **rnd2())
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

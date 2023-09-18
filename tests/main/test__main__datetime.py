@@ -1,3 +1,4 @@
+import filecmp
 from datetime import datetime, timedelta
 import re
 import sys
@@ -8,6 +9,7 @@ import pytest
 
 import randog.__main__
 from randog import timedelta_util
+from tests.testtools.trickobj import AnyObject
 
 
 def test__main__datetime__without_min_max(capfd):
@@ -567,7 +569,7 @@ def test__main__datetime__suger(
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
-        mock_func.assert_called_once_with(expected_start, expected_end)
+        mock_func.assert_called_once_with(expected_start, expected_end, rnd=AnyObject())
 
         out, err = capfd.readouterr()
         assert re.match(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{6})?\n$", out)
@@ -597,6 +599,37 @@ def test__main__datetime__suger__error_by_inverse_range(
         assert out == ""
         assert err.startswith("usage:")
         assert "datetime: error: arguments must satisfy MINIMUM <= MAXIMUM" in err
+
+
+@pytest.mark.parametrize(
+    ("seed0", "seed1", "expect_same_output"),
+    [
+        (["--seed=100"], ["--seed=100"], True),
+        (["--seed=100"], ["--seed=1000"], False),
+        ([], ["--seed=1000"], False),
+        ([], [], False),
+    ],
+)
+def test__main__datetime__seed(capfd, tmp_path, seed0, seed1, expect_same_output):
+    output_path0 = tmp_path.joinpath("out_0.txt")
+    output_path1 = tmp_path.joinpath("out_1.txt")
+    args_base = ["randog", "datetime", "2022-01-01", "2022-12-31", "--repeat=50"]
+    args0 = [*args_base, *seed0, "--output", str(output_path0)]
+    args1 = [*args_base, *seed1, "--output", str(output_path1)]
+
+    with patch.object(sys, "argv", args0):
+        randog.__main__.main()
+    with patch.object(sys, "argv", args1):
+        randog.__main__.main()
+
+    if expect_same_output:
+        assert filecmp.cmp(output_path0, output_path1, shallow=False)
+    else:
+        assert not filecmp.cmp(output_path0, output_path1, shallow=False)
+
+    out, err = capfd.readouterr()
+    assert out == ""
+    assert err == ""
 
 
 def test__main__datetime__help(capfd):

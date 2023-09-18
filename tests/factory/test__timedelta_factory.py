@@ -1,4 +1,5 @@
 import datetime as dt
+import random
 
 import pytest
 
@@ -248,3 +249,36 @@ def test__random_timedelta__error_when_too_tight_edges_for_unit(minimum, maximum
     e = e_ctx.value
 
     assert e.message == "empty range for randtimedelta"
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([dt.timedelta(days=1, hours=1), dt.timedelta(days=1, hours=12)], {}),
+        (
+            [dt.timedelta(days=1, hours=1), dt.timedelta(days=1, hours=12)],
+            {"unit": dt.timedelta(minutes=1)},
+        ),
+    ],
+)
+def test__random_timedelta__seed(rnd1, rnd2, expect_same_output, args, kwargs):
+    repeat = 20
+    factory1 = randog.factory.randtimedelta(*args, **rnd1(), **kwargs)
+    factory2 = randog.factory.randtimedelta(*args, **rnd2(), **kwargs)
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

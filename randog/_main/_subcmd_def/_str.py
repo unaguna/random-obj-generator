@@ -5,6 +5,7 @@ import randog.factory
 from ..._utils.type import non_negative_int
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
+from .._rnd import construct_random
 
 
 class SubcmdDefString(SubcmdDef):
@@ -16,7 +17,7 @@ class SubcmdDefString(SubcmdDef):
             Subcmd.String.value,
             usage=(
                 "python -m randog str [--length LENGTH] [--charset CHARSET] "
-                "[--regex REGEX] [common-options]"
+                "[--regex REGEX] [--fmt FORMAT] [common-options]"
             ),
             description="It generates values of type str.",
             add_help=False,
@@ -50,6 +51,13 @@ class SubcmdDefString(SubcmdDef):
                 "It cannot be used with `--length` or `--charset`."
             ),
         )
+        str_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '>10'",
+        )
         add_common_arguments(str_parser)
 
         return str_parser
@@ -76,7 +84,12 @@ class SubcmdDefString(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        kwargs = {"charset": args.get("charset"), "regex": args.get("regex")}
+        rnd = construct_random(args.seed)
+        kwargs = {
+            "charset": args.get("charset"),
+            "regex": args.get("regex"),
+            "rnd": rnd,
+        }
         length = args.get("length")
         if length is not None:
             if length[0] == length[1]:

@@ -5,6 +5,7 @@ from fractions import Fraction
 from random import Random
 
 from .._utils.nullsafe import dfor
+from ._logging import logger
 
 T = t.TypeVar("T")
 R = t.TypeVar("R")
@@ -121,6 +122,45 @@ class Factory(ABC, t.Generic[T]):
             A factory whose result will be modified by `post_process`.
         """
         return PostFactory(self, post_process)
+
+    def post_process_items(
+        self,
+        default_process: t.Optional[t.Callable[[t.Any], t.Any]] = None,
+        **processes: t.Callable[[t.Any], t.Any],
+    ) -> "Factory[R]":
+        """Returns a factory whose result will be dict
+        whose items is modified by `processes`
+
+        Examples
+        --------
+        >>> import randog
+        >>>
+        >>> # use post_process_items to format the random decimal value '["count"]'
+        >>> factory = (
+        ...     randog.factory.randdict(
+        ...         name=randog.factory.randstr(),
+        ...         count=randog.factory.randdecimal(0, 50000, decimal_len=2),
+        ...     ).post_process_items(count=lambda x: f"${x:,}")
+        ... )
+        >>>
+        >>> # examples: {'name': 'sir1w94s', 'count': '$12,345.67'}, etc.
+        >>> generated = factory.next()
+        >>> assert isinstance(generated["count"], str)
+        >>> assert generated["count"][0] == "$"
+
+        Parameters
+        ----------
+        default_process : Callable[[Any], Any] | None
+            the mapping to modify items which is not defined in `processes`
+        processes: Callable[[Any], Any]
+            functions to modify each item
+
+        Returns
+        -------
+        Factory[R]
+            A factory whose result will be dict whose items is modified by `processes`
+        """
+        return PostDictFactory(self, processes, default_process)
 
     def iter(
         self,
@@ -248,6 +288,41 @@ class PostFactory(Factory[R], t.Generic[T, R]):
         return self._post_process(pre_result)
 
 
+class PostDictFactory(Factory[R], t.Generic[T, R]):
+    _base_factory: Factory[T]
+    _processes: t.Mapping[str, t.Callable[[t.Any], t.Any]]
+    _default_process: t.Callable[[t.Any], t.Any]
+
+    def __init__(
+        self,
+        base_factory: Factory[T],
+        processes: t.Mapping[str, t.Callable[[t.Any], t.Any]],
+        default_process: t.Callable[[t.Any], t.Any],
+    ):
+        self._base_factory = base_factory
+        self._processes = processes
+        self._default_process = (
+            default_process if default_process is not None else lambda x: x
+        )
+
+    def _next(self) -> R:
+        pre_result = self._base_factory.next()
+
+        if not isinstance(pre_result, t.Mapping):
+            return pre_result
+
+        return {
+            key: self._process_item(key, pre_value)
+            for key, pre_value in pre_result.items()
+        }
+
+    def _process_item(self, key, pre_value) -> t.Any:
+        if key in self._processes:
+            return self._processes[key](pre_value)
+        else:
+            return self._default_process(pre_value)
+
+
 class FactoryIter(t.Generic[T], t.Iterator[T]):
     _rnd: random.Random
     _factory: Factory[T]
@@ -316,3 +391,57 @@ class FactoryIter(t.Generic[T], t.Iterator[T]):
 class FactoryStopException(Exception):
     def __init__(self):
         super().__init__("the factory stopped generating")
+
+
+@t.overload
+def decide_rnd(
+    explicit: t.Optional[random.Random], default: t.Literal[True] = True
+) -> random.Random:
+    pass
+
+
+@t.overload
+def decide_rnd(
+    explicit: t.Optional[random.Random], default: t.Literal[False]
+) -> t.Optional[random.Random]:
+    pass
+
+
+def decide_rnd(
+    explicit: t.Optional[random.Random], default: bool = True
+) -> t.Optional[random.Random]:
+    """Decide random object used in the factory instance
+
+    Parameters
+    ----------
+    explicit : Random | None
+        Explicit designation
+    default : bool, default=True
+        The default behavior is to specify a new Random object if True,
+        or None if False.
+
+    Returns
+    -------
+    Random | None
+        decided random object
+    """
+    if explicit is not None:
+        logger.debug("use Random() object specified as argument 'rnd' of the factory")
+        return explicit
+
+    from . import _from_pyfile_config
+
+    pyfile_rnd = _from_pyfile_config.rnd
+    if pyfile_rnd is not None:
+        logger.debug(
+            "use Random() object sent into __randog__ "
+            "(a factory definition file executed in 'from_pyfile()')"
+        )
+        return pyfile_rnd
+
+    if default:
+        new_rnd = Random()
+        logger.debug("use a newly created Random() object since not specified")
+        return new_rnd
+    else:
+        return None

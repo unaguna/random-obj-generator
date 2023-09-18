@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -76,3 +78,37 @@ def test__random_choice__error_when_weights_does_not_match(weights_len):
     e = e_ctx.value
 
     assert e.message == "the number of weights must match the candidates"
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    ("args", "kwargs", "substantial_constant"),
+    [
+        ([0], {}, True),
+        ([0, 1, 2], {}, False),
+        ([0, 1, 2], {"weights": [0.6, 0.4, 0]}, False),
+        ([0, 1, 2], {"weights": [0.2, 0.3, 0.5]}, False),
+    ],
+)
+def test__random_choice__seed(
+    rnd1, rnd2, expect_same_output, args, kwargs, substantial_constant
+):
+    repeat = 100
+    factory1 = randog.factory.randchoice(*args, **rnd1(), **kwargs)
+    factory2 = randog.factory.randchoice(*args, **rnd2(), **kwargs)
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if substantial_constant or expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

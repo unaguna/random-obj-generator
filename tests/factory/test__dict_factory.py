@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 import randog.factory
@@ -74,3 +76,37 @@ def test__random_dict__or_none_0():
     values = set(map(lambda x: type(factory.next()), range(200)))
 
     assert values == {dict}
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    "args",
+    [
+        [
+            {
+                "a": randog.factory.const(1),
+                "b": randog.factory.DictItem(randog.factory.const(2), 0.5),
+            }
+        ],
+    ],
+)
+def test__random_dict__seed(rnd1, rnd2, expect_same_output, args):
+    repeat = 20
+    factory1 = randog.factory.randdict(*args, **rnd1())
+    factory2 = randog.factory.randdict(*args, **rnd2())
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

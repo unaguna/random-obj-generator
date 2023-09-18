@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>date モード &mdash; random-obj-generator 0.12.0 ドキュメント</title>
+  <title>date モード &mdash; random-obj-generator 0.13.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -124,41 +124,41 @@
 </div>
 <section id="arguments-and-options">
 <h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>最小値。詳細は <a class="reference internal" href="#date-min-max-expression"><span class="std std-ref">こちら</span></a>。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>最大値。詳細は <a class="reference internal" href="#date-min-max-expression"><span class="std std-ref">こちら</span></a>。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randdate">randdate</a> の仕様に準ずる。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--iso</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--iso</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>指定した場合、<a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> で出力する。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>指定した場合、指定したフォーマットで出力する。フォーマットは <a class="reference external" href="https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-format-codes">strftime や strptime の形式</a> で指定する。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
 <li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">共通オプション</span></a></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </section>
@@ -212,6 +212,8 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p class="admonition-title">注釈</p>
 <p><code class="code docutils literal notranslate"><span class="pre">+1d</span></code> 等の表現については <a class="reference internal" href="#date-min-max-expression"><span class="std std-ref">MINIMUM と MAXIMUM の表現方法</span></a> を参照してください。</p>
 </div>
+<section id="format-iso-8601-etc">
+<h3>出力フォーマット (ISO-8601 等)<a class="headerlink" href="#format-iso-8601-etc" title="この見出しへのパーマリンク"></a></h3>
 <p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference external" href="https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-format-codes">strftime や strptime と同じ形式</a> で指定したフォーマットや <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> に変更できます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>--iso
@@ -220,6 +222,9 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;%Y/%m/%d&#39;</span>
 </pre></div>
 </div>
+</section>
+<section id="repeatedly-generate">
+<h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="この見出しへのパーマリンク"></a></h3>
 <p>たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>date<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
@@ -232,6 +237,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p class="admonition-title">注釈</p>
 <p>date モードでは時刻は生成されません。時刻も込みで生成したい場合、<a class="reference internal" href="doc.as_command.datetime.html"><span class="doc">datetime モード</span></a> を使用してください。</p>
 </div>
+</section>
 </section>
 </section>
 

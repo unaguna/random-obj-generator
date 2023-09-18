@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>timedelta Mode &mdash; random-obj-generator 0.12.0 documentation</title>
+  <title>timedelta Mode &mdash; random-obj-generator 0.13.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -124,48 +124,48 @@
 </div>
 <section id="arguments-and-options">
 <h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the minimum value with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the maximum value with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--unit</span> <span class="pre">UNIT</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--unit</span> <span class="pre">UNIT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the minimum unit of generated values with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--iso</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--iso</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>if specified, it outputs generated object with <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>if specified, it outputs generated object with the specified format; The format is specified in <a class="reference internal" href="#format-codes"><span class="std std-ref">the format codes</span></a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
 <li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">common options</span></a></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </section>
@@ -185,6 +185,8 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s
 </pre></div>
 </div>
+<section id="format-iso-8601-etc">
+<h3>Format: ISO-8601, etc.<a class="headerlink" href="#format-iso-8601-etc" title="Permalink to this heading"></a></h3>
 <p>By default, the output is in <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">the simple format</span></a>, but you can change the output format to the format specified in <a class="reference internal" href="#format-codes"><span class="std std-ref">the format codes</span></a> or <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a> by specifying options as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--iso
@@ -195,6 +197,9 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>7d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;%tH:%M:%S&#39;</span>
 </pre></div>
 </div>
+</section>
+<section id="repeatedly-generate">
+<h3>Repeatedly Generate<a class="headerlink" href="#repeatedly-generate" title="Permalink to this heading"></a></h3>
 <p>Most likely, you will not be satisfied with just one generated, so you will probably want to output multiple times as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
@@ -203,6 +208,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span><span class="w"> </span>--json<span class="w"> </span>--iso
 </pre></div>
 </div>
+</section>
 </section>
 <section id="simple-format">
 <span id="timedelta-simple-format"></span><h2>Simple Format<a class="headerlink" href="#simple-format" title="Permalink to this heading"></a></h2>

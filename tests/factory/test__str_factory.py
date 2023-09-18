@@ -1,3 +1,4 @@
+import random
 import re
 
 import pytest
@@ -147,3 +148,37 @@ def test__random_str_error_when_empty_charset_and_nonzero_length(length):
     assert (
         e.message == "the charset for randstr() must not be empty if length is positive"
     )
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"length": 10},
+        {"length": 5, "charset": "abcdef"},
+        {"regex": "[a-fA-F]{1,5}"},
+    ],
+)
+def test__random_str__seed(rnd1, rnd2, expect_same_output, kwargs):
+    if "regex" in kwargs:
+        pytest.importorskip("rstr")
+
+    repeat = 20
+    factory1 = randog.factory.randstr(**rnd1(), **kwargs)
+    factory2 = randog.factory.randstr(**rnd2(), **kwargs)
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

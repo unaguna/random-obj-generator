@@ -101,6 +101,10 @@ class Args:
             raise ValueError(f"illegal linesep: {specified}")
 
     @property
+    def seed(self) -> t.Optional[t.Any]:
+        return self._args.seed
+
+    @property
     def iso(self) -> bool:
         if hasattr(self._args, "iso"):
             return self._args.iso

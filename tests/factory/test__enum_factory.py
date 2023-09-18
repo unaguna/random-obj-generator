@@ -1,4 +1,5 @@
 import enum
+import random
 
 import pytest
 
@@ -83,3 +84,36 @@ def test__random_enum__error_when_weights_does_not_match(dummy_value):
     e = e_ctx.value
 
     assert e.message == "the weights must serve weight for each enum value"
+
+
+@pytest.mark.parametrize(
+    ("rnd1", "rnd2", "expect_same_output"),
+    [
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),
+        (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(13)}, False),
+        (lambda: {"rnd": random.Random(12)}, lambda: {}, False),
+        (lambda: {}, lambda: {}, False),
+    ],
+)
+@pytest.mark.parametrize(
+    ("args", "kwargs"),
+    [
+        ([MyEnum], {}),
+        (
+            [MyEnum],
+            {"weights": lambda x: x.value / sum(map(lambda y: y.value, MyEnum))},
+        ),
+    ],
+)
+def test__random_enum__seed(rnd1, rnd2, expect_same_output, args, kwargs):
+    repeat = 100
+    factory1 = randog.factory.randenum(*args, **rnd1(), **kwargs)
+    factory2 = randog.factory.randenum(*args, **rnd2(), **kwargs)
+
+    generated1 = list(factory1.iter(repeat))
+    generated2 = list(factory2.iter(repeat))
+
+    if expect_same_output:
+        assert generated1 == generated2
+    else:
+        assert generated1 != generated2

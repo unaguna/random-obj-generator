@@ -8,6 +8,7 @@ from ..._utils.type import timedelta, positive_timedelta
 from ... import timedelta_util
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
+from .._rnd import construct_random
 
 
 class SubcmdDefTimedelta(SubcmdDef):
@@ -106,7 +107,11 @@ class SubcmdDefTimedelta(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        return (args.get("minimum"), args.get("maximum")), {"unit": args.get("unit")}
+        rnd = construct_random(args.seed)
+        return (args.get("minimum"), args.get("maximum")), {
+            "unit": args.get("unit"),
+            "rnd": rnd,
+        }
 
     def get_factory_constructor(self) -> t.Callable:
         return lambda *a, **kw: randog.factory.randtimedelta(*a, **kw).post_process(

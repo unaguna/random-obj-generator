@@ -3,11 +3,9 @@ import math
 import typing as t
 from random import Random
 
-from ._base import Factory
+from ._base import Factory, decide_rnd
 from ._int import randint
-from .._utils.nullsafe import dfor
 from ..exceptions import FactoryConstructionError
-
 
 _ZERO = dt.timedelta(0)
 _DAY = dt.timedelta(days=1)
@@ -106,7 +104,7 @@ class TimedeltaRandomFactory(Factory[dt.timedelta]):
             if unit < dt.timedelta(0):
                 unit = -unit
 
-        self._random = dfor(rnd, Random())
+        self._random = decide_rnd(rnd)
         self._min, self._max, self._unit = self._normalize(minimum, maximum, unit)
 
         if self._min > self._max:

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-16 12:03+0900\n"
+"POT-Creation-Date: 2023-09-17 15:30+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -34,11 +34,11 @@ msgstr "decimal モードでは、10進小数値を生成します。コマン�
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.decimal.rst:15
+#: ../../source/doc.as_command.decimal.rst:14
 msgid ":code:`MINIMUM` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:15
+#: ../../source/doc.as_command.decimal.rst:16
 msgid ""
 "the minimum value. If not specified, the behavior is left to the "
 "specification of `randdecimal "
@@ -51,7 +51,7 @@ msgstr ""
 msgid ":code:`MAXIMUM` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:18
+#: ../../source/doc.as_command.decimal.rst:20
 msgid ""
 "the maximum value. If not specified, the behavior is left to the "
 "specification of `randdecimal "
@@ -60,11 +60,11 @@ msgstr ""
 "最大値。指定がない場合の動作は、`randdecimal "
 "<randog.factory.html#randog.factory.randdecimal>`_ の仕様に準ずる。"
 
-#: ../../source/doc.as_command.decimal.rst:21
+#: ../../source/doc.as_command.decimal.rst:22
 msgid ":code:`--decimal-len DECIMAL_LENGTH` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:21
+#: ../../source/doc.as_command.decimal.rst:24
 msgid ""
 "the length of decimal part of generated values. If not specified, the "
 "behavior is left to the specification of `randdecimal "
@@ -73,55 +73,69 @@ msgstr ""
 "生成される値の小数部分の桁数。指定がない場合の動作は、`randdecimal "
 "<randog.factory.html#randog.factory.randdecimal>`_ の仕様に準ずる。"
 
-#: ../../source/doc.as_command.decimal.rst:24
+#: ../../source/doc.as_command.decimal.rst:26
 msgid ":code:`--p-inf PROB_P_INF` (optional, default=0.0):"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:24
+#: ../../source/doc.as_command.decimal.rst:28
 msgid "the probability of positive infinity."
 msgstr "正の無限大を生成する確率。"
 
-#: ../../source/doc.as_command.decimal.rst:27
+#: ../../source/doc.as_command.decimal.rst:30
 msgid ":code:`--n-inf PROB_N_INF` (optional, default=0.0):"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:27
+#: ../../source/doc.as_command.decimal.rst:32
 msgid "the probability of negative infinity."
 msgstr "負の無限大を生成する確率。"
 
-#: ../../source/doc.as_command.decimal.rst:30
+#: ../../source/doc.as_command.decimal.rst:34
 msgid ":code:`--nan PROB_NAN` (optional, default=0.0):"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:30
+#: ../../source/doc.as_command.decimal.rst:36
 msgid "the probability of NaN."
 msgstr "NaNを生成する確率。"
 
-#: ../../source/doc.as_command.decimal.rst:34
+#: ../../source/doc.as_command.decimal.rst:38
+msgid ":code:`--fmt FORMAT` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:40
+msgid ""
+"the output format written in `format specification mini-language "
+"<https://docs.python.org/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_"
+msgstr ""
+"`書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_ "
+"で記載された出力フォーマット"
+
+#: ../../source/doc.as_command.decimal.rst:42
 msgid ":code:`common-options`"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:33
+#: ../../source/doc.as_command.decimal.rst:44
 msgid ":doc:`common options <doc.as_command.common_option>`"
 msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
 
-#: ../../source/doc.as_command.decimal.rst:37
+#: ../../source/doc.as_command.decimal.rst:48
 msgid "Examples"
 msgstr "実行例"
 
-#: ../../source/doc.as_command.decimal.rst:39
+#: ../../source/doc.as_command.decimal.rst:50
 msgid ""
 "The simplest example is the following, which outputs a value between 0 "
 "and 1."
 msgstr "最も簡素な例は次の通りです。0から1の間の数値を出力します。"
 
-#: ../../source/doc.as_command.decimal.rst:45
+#: ../../source/doc.as_command.decimal.rst:56
 msgid ""
 "You can specify a range of values to be generated, as in the following "
 "example:"
 msgstr "次の例のように、生成する値の範囲を指定することができます："
 
-#: ../../source/doc.as_command.decimal.rst:52
+#: ../../source/doc.as_command.decimal.rst:63
 msgid ""
 "When using decimal numbers, you will often want to limit the number of "
 "decimal places. In that case, use :code:`--decimal-len` as in the "
@@ -130,13 +144,34 @@ msgstr ""
 "10進数を使用する場合、小数点以下の桁数を制限したい場合が多いでしょう。その場合は次の例のように :code:`--decimal-len` "
 "を使用します。"
 
-#: ../../source/doc.as_command.decimal.rst:59
+#: ../../source/doc.as_command.decimal.rst:71
+msgid "Infinity and NaN"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:73
 msgid ""
 "Infinity and NaN can be included as candidates for generation by "
 "specifying optional arguments."
 msgstr "オプション引数を指定することで無限大やNaNを生成の候補に含めることができます。"
 
-#: ../../source/doc.as_command.decimal.rst:69
+#: ../../source/doc.as_command.decimal.rst:84
+msgid "Format: Thousands Separator, etc."
+msgstr "出力フォーマット (桁区切り等)"
+
+#: ../../source/doc.as_command.decimal.rst:86
+msgid ""
+"The output format can be specified in `format specification mini-language"
+" <https://docs.python.org/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_ as follows:"
+msgstr ""
+"以下のように出力フォーマットを `書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_ で指定することができます。"
+
+#: ../../source/doc.as_command.decimal.rst:95
+msgid "Repeatedly Generate"
+msgstr "繰り返し生成"
+
+#: ../../source/doc.as_command.decimal.rst:97
 msgid ""
 "Most likely, you will not be satisfied with just one generated, so you "
 "will probably want to output multiple times as follows:"

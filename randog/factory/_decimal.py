@@ -2,9 +2,9 @@ import typing as t
 from decimal import Decimal
 from random import Random
 
-from ._base import Factory
+from ._base import Factory, decide_rnd
 from ._float import randfloat
-from .._utils.nullsafe import dfor, dforc
+from .._utils.nullsafe import dforc
 
 
 def randdecimal(
@@ -94,7 +94,7 @@ class DecimalRandomFactory(Factory[Decimal]):
         FactoryConstructionError
             When the specified generating conditions are inconsistent.
         """
-        self._random = dfor(rnd, Random())
+        self._random = decide_rnd(rnd)
         self._factory = randfloat(
             minimum, maximum, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=self._random
         )

@@ -16,6 +16,7 @@ from ._logging import (
     apply_logging_config_file,
     apply_default_logging_config,
 )
+from ._rnd import construct_random
 from ._warning import RandogCmdWarning, apply_formatwarning
 from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryDef, FactoryStopException
@@ -28,14 +29,19 @@ def _build_factories(
 
     if args.sub_cmd == Subcmd.Byfile:
         for factory_count, filepath in enumerate(args.factories):
+            rnd = construct_random(args.seed)
             if filepath == "-":
                 def_file_name = ""
-                factory_def = randog.factory.from_pyfile(sys.stdin, full_response=True)
+                factory_def = randog.factory.from_pyfile(
+                    sys.stdin, full_response=True, rnd=rnd
+                )
             else:
                 def_file_name = os.path.basename(filepath)
                 if def_file_name.endswith(".py"):
                     def_file_name = def_file_name[:-3]
-                factory_def = randog.factory.from_pyfile(filepath, full_response=True)
+                factory_def = randog.factory.from_pyfile(
+                    filepath, full_response=True, rnd=rnd
+                )
             factory = factory_def.factory
 
             post_process = _gen_post_function_for_byfile_mode(args, factory_def)

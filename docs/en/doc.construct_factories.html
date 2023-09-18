@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Construct Factories (generator of random values) &mdash; random-obj-generator 0.12.0 documentation</title>
+  <title>Construct Factories (generator of random values) &mdash; random-obj-generator 0.13.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.12.0
+                0.13.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -246,7 +246,7 @@ However, if the argument is specified as in <code class="code docutils literal n
 </div>
 </section>
 <section id="union-type">
-<h2>Union type<a class="headerlink" href="#union-type" title="Permalink to this heading"></a></h2>
+<span id="construct-union"></span><h2>Union type<a class="headerlink" href="#union-type" title="Permalink to this heading"></a></h2>
 <p>Several methods can be used to determine randomly generated values from multiple types.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -330,6 +330,27 @@ However, if the argument is specified as in <code class="code docutils literal n
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;$&quot;</span>
 </pre></div>
+</div>
+<p>If the value to be generated is a dict and you want to process the items, you can easily code it by using <code class="code docutils literal notranslate"><span class="pre">post_process_items</span></code> instead of <code class="code docutils literal notranslate"><span class="pre">post_process</span></code>, as in the following example.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># use post_process_items to format the random decimal value &#39;[&quot;count&quot;]&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>
+<span class="gp">... </span>        <span class="n">count</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdecimal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="n">decimal_len</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">)</span><span class="o">.</span><span class="n">post_process_items</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># examples: {&#39;name&#39;: &#39;sir1w94s&#39;, &#39;count&#39;: &#39;$12,345.67&#39;}, etc.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;$&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a non-dict value is generated, conversion by <code class="code docutils literal notranslate"><span class="pre">post_process_items</span></code> is skipped, so it can be used in combination with <a class="reference internal" href="#nullable"><span class="std std-ref">or_none</span></a> and <a class="reference internal" href="#construct-union"><span class="std std-ref">union</span></a>.</p>
 </div>
 </section>
 <section id="custom-factory">

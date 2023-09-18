@@ -137,6 +137,7 @@ If you want None to be a candidate for generation, use `or_none <randog.factory.
     This difference affects, for example, the use of non-random factories.
 
 
+.. _construct_union:
 
 Union type
 ----------
@@ -243,6 +244,29 @@ The processing of factory output can be predefined. This can be used to change t
    >>> generated = factory.next()
    >>> assert isinstance(generated, str)
    >>> assert generated[0] == "$"
+
+
+If the value to be generated is a dict and you want to process the items, you can easily code it by using :code:`post_process_items` instead of :code:`post_process`, as in the following example.
+
+.. doctest::
+
+    >>> import randog
+
+    >>> # use post_process_items to format the random decimal value '["count"]'
+    >>> factory = (
+    ...     randog.factory.randdict(
+    ...         name=randog.factory.randstr(),
+    ...         count=randog.factory.randdecimal(0, 50000, decimal_len=2),
+    ...     ).post_process_items(count=lambda x: f"${x:,}")
+    ... )
+
+    >>> # examples: {'name': 'sir1w94s', 'count': '$12,345.67'}, etc.
+    >>> generated = factory.next()
+    >>> assert isinstance(generated["count"], str)
+    >>> assert generated["count"][0] == "$"
+
+.. note::
+    If a non-dict value is generated, conversion by :code:`post_process_items` is skipped, so it can be used in combination with :ref:`or_none <nullable>` and :ref:`union <construct_union>`.
 
 
 .. _custom_factory:

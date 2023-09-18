@@ -98,6 +98,36 @@ On the other hand, if you want to output each repeatedly generated object separa
     See :ref:`output_file` for available placeholders.
 
 
+Seed
+----
+
+Normally, the values are generated randomly, but if you want to control the output results, use :code:`--seed` to specify a seed value.
+If the seed values are the same, as in the following example, the same result is returned.
+
+.. code-block:: shell
+
+    # first
+    python -m randog str --seed 42
+
+    # second; the result is the same as the first
+    python -m randog str --seed 42
+
+.. warning::
+    Even though the seed value is the same, the generated value may change if the python version changes.
+    See also `the document of reproducibility <https://docs.python.org/3/library/random.html#notes-on-reproducibility>`_.
+
+    Also, version upgrades of randog and dependent packages may change the generated values.
+
+If no seed value is specified, a random seed value is used. The seed value used is :ref:`logged out <cmd-logging>` so that the seed value can be checked as follows:
+
+.. code-block:: shell
+
+    # generate str with log
+    python -m randog str --log-stderr DEBUG
+
+If you note the observed seed value, you can reproduce the generation the next time by using that seed value.
+
+
 Modify environment variable
 ---------------------------
 
@@ -122,6 +152,8 @@ The above mentioned execution is useful, for example, when using a definition fi
         charset=os.environ["CHARSET"],
     )
 
+
+.. _cmd-logging:
 
 Logging
 -------

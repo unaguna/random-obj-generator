@@ -5,6 +5,7 @@ import randog.factory
 from ..._utils.type import probability
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
+from .._rnd import construct_random
 
 
 class SubcmdDefFloat(SubcmdDef):
@@ -16,7 +17,7 @@ class SubcmdDefFloat(SubcmdDef):
             Subcmd.Float.value,
             usage=(
                 "python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] "
-                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [common-options]"
+                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [--fmt FORMAT] [common-options]"
             ),
             description="It generates values of type float.",
             add_help=False,
@@ -65,6 +66,13 @@ class SubcmdDefFloat(SubcmdDef):
             metavar="PROB_NAN",
             help="the probability of NaN; default=0.0",
         )
+        float_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '.2f'",
+        )
         add_common_arguments(float_parser)
 
         return float_parser
@@ -90,10 +98,12 @@ class SubcmdDefFloat(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        rnd = construct_random(args.seed)
         return (args.get("minimum"), args.get("maximum")), {
             "p_inf": args.get("p_inf"),
             "n_inf": args.get("n_inf"),
             "nan": args.get("nan"),
+            "rnd": rnd,
         }
 
     def get_factory_constructor(self) -> t.Callable:

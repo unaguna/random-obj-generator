@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-03 16:39+0900\n"
+"POT-Creation-Date: 2023-09-18 11:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -34,12 +34,11 @@ msgstr "timedelta モードでは、経過時間を生成します。コマン�
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.timedelta.rst:15
+#: ../../source/doc.as_command.timedelta.rst:14
 msgid ":code:`MINIMUM` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:15
-#, fuzzy
+#: ../../source/doc.as_command.timedelta.rst:16
 msgid ""
 "the minimum value with the simple format; see also :ref:`here <timedelta-"
 "simple-format>`. If not specified, the behavior is left to the "
@@ -53,8 +52,7 @@ msgstr ""
 msgid ":code:`MAXIMUM` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:18
-#, fuzzy
+#: ../../source/doc.as_command.timedelta.rst:20
 msgid ""
 "the maximum value with the simple format; see also :ref:`here <timedelta-"
 "simple-format>`. If not specified, the behavior is left to the "
@@ -64,12 +62,11 @@ msgstr ""
 "最大値を :ref:`簡易書式 <simple-format>` で指定する。指定がない場合の動作は、`randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_ の仕様に準ずる。"
 
-#: ../../source/doc.as_command.timedelta.rst:21
+#: ../../source/doc.as_command.timedelta.rst:22
 msgid ":code:`--unit UNIT` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:21
-#, fuzzy
+#: ../../source/doc.as_command.timedelta.rst:24
 msgid ""
 "the minimum unit of generated values with the simple format; see also "
 ":ref:`here <timedelta-simple-format>`. If not specified, the behavior is "
@@ -79,57 +76,60 @@ msgstr ""
 "生成される値の最小単位を :ref:`簡易書式 <simple-format>` で指定する。指定がない場合の動作は、`randtimedelta"
 " <randog.factory.html#randog.factory.randtimedelta>`_ の仕様に準ずる。"
 
-#: ../../source/doc.as_command.timedelta.rst:24
+#: ../../source/doc.as_command.timedelta.rst:26
 msgid ":code:`--iso` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:24
+#: ../../source/doc.as_command.timedelta.rst:28
 msgid ""
 "if specified, it outputs generated object with `ISO-8601 format "
 "<https://en.wikipedia.org/wiki/ISO_8601>`_."
 msgstr "指定した場合、`ISO-8601 形式 <https://ja.wikipedia.org/wiki/ISO_8601>`_ で出力する。"
 
-#: ../../source/doc.as_command.timedelta.rst:27
+#: ../../source/doc.as_command.timedelta.rst:30
 msgid ":code:`--fmt FORMAT` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:27
+#: ../../source/doc.as_command.timedelta.rst:32
 msgid ""
 "if specified, it outputs generated object with the specified format; The "
 "format is specified in :ref:`the format codes <format-codes>`."
 msgstr "指定した場合、指定したフォーマットで出力する。フォーマットは :ref:`独自の書式コード <format-codes>` で指定する。"
 
-#: ../../source/doc.as_command.timedelta.rst:31
+#: ../../source/doc.as_command.timedelta.rst:34
 msgid ":code:`common-options`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:30
+#: ../../source/doc.as_command.timedelta.rst:36
 msgid ":doc:`common options <doc.as_command.common_option>`"
 msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
 
-#: ../../source/doc.as_command.timedelta.rst:34
+#: ../../source/doc.as_command.timedelta.rst:40
 msgid "Examples"
 msgstr "実行例"
 
-#: ../../source/doc.as_command.timedelta.rst:36
+#: ../../source/doc.as_command.timedelta.rst:42
 msgid "The simplest example is the following, which outputs a timedelta value."
 msgstr "最も簡素な例は次の通りです。timedelta の値を出力します。"
 
-#: ../../source/doc.as_command.timedelta.rst:42
+#: ../../source/doc.as_command.timedelta.rst:48
 msgid ""
 "You can specify a range of values to be generated, as in the following "
 "example:"
 msgstr "次の例のように、生成する値の範囲を指定することができます："
 
-#: ../../source/doc.as_command.timedelta.rst:49
+#: ../../source/doc.as_command.timedelta.rst:55
 msgid ""
 "If the minimum unit is not specified, it will be adjusted to the "
 "appropriate length. In many cases, it may be necessary to specify this "
 "manually as follows"
 msgstr "生成される値の最小単位を指定しない場合、適当な長さに調整されます。多くの場合は次のように手動で指定する必要でしょう。"
 
-#: ../../source/doc.as_command.timedelta.rst:56
-#, fuzzy
+#: ../../source/doc.as_command.timedelta.rst:63
+msgid "Format: ISO-8601, etc."
+msgstr "出力フォーマット (ISO-8601 等)"
+
+#: ../../source/doc.as_command.timedelta.rst:65
 msgid ""
 "By default, the output is in :ref:`the simple format <timedelta-simple-"
 "format>`, but you can change the output format to the format specified in"
@@ -141,91 +141,95 @@ msgstr ""
 ":ref:`独自の書式コード <format-codes>` で指定したフォーマットや `ISO-8601 形式 "
 "<https://ja.wikipedia.org/wiki/ISO_8601>`_ に変更できます："
 
-#: ../../source/doc.as_command.timedelta.rst:68
+#: ../../source/doc.as_command.timedelta.rst:78
+msgid "Repeatedly Generate"
+msgstr "繰り返し生成"
+
+#: ../../source/doc.as_command.timedelta.rst:80
 msgid ""
 "Most likely, you will not be satisfied with just one generated, so you "
 "will probably want to output multiple times as follows:"
 msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
 
-#: ../../source/doc.as_command.timedelta.rst:82
+#: ../../source/doc.as_command.timedelta.rst:94
 msgid "Simple Format"
 msgstr "簡易書式"
 
-#: ../../source/doc.as_command.timedelta.rst:84
+#: ../../source/doc.as_command.timedelta.rst:96
 msgid ""
 "In this mode, duration is represented in a proprietary format, such as "
 ":code:`1h30m` or :code:`1d2h3m4s5ms6us`."
 msgstr "このモードでは、経過時間を :code:`1h30m` や :code:`1d2h3m4s5ms6us` のような独自のフォーマットで表現します。"
 
-#: ../../source/doc.as_command.timedelta.rst:86
+#: ../../source/doc.as_command.timedelta.rst:98
 msgid ""
 "This format expresses duration by concatenating one or more of the "
 "following elements:"
 msgstr "このフォーマットは、以下の要素を1つ以上連結することで経過時間を表現します。"
 
-#: ../../source/doc.as_command.timedelta.rst:91
-#: ../../source/doc.as_command.timedelta.rst:133
+#: ../../source/doc.as_command.timedelta.rst:103
+#: ../../source/doc.as_command.timedelta.rst:145
 msgid "Directive"
 msgstr "ディレクティブ"
 
-#: ../../source/doc.as_command.timedelta.rst:92
-#: ../../source/doc.as_command.timedelta.rst:134
+#: ../../source/doc.as_command.timedelta.rst:104
+#: ../../source/doc.as_command.timedelta.rst:146
 msgid "Meaning"
 msgstr "意味"
 
-#: ../../source/doc.as_command.timedelta.rst:94
+#: ../../source/doc.as_command.timedelta.rst:106
 msgid ":code:`Xd`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:95
+#: ../../source/doc.as_command.timedelta.rst:107
 msgid "X is number of days. For example, :code:`2d` means \"2 days\""
 msgstr "X は日数です。例えば、:code:`2d` は \"2日間\" を意味します。"
 
-#: ../../source/doc.as_command.timedelta.rst:97
+#: ../../source/doc.as_command.timedelta.rst:109
 msgid ":code:`Xh`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:98
+#: ../../source/doc.as_command.timedelta.rst:110
 msgid "X is number of hours. For example, :code:`2h` means \"2 hours\""
 msgstr "X は時間 (hour) です。例えば、:code:`2h` は \"2時間\" を意味します。"
 
-#: ../../source/doc.as_command.timedelta.rst:100
+#: ../../source/doc.as_command.timedelta.rst:112
 msgid ":code:`Xm`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:101
+#: ../../source/doc.as_command.timedelta.rst:113
 msgid "X is number of minutes. For example, :code:`2m` means \"2 minutes\""
 msgstr "X は分 (minute) です。例えば、:code:`2m` は \"2分間\" を意味します。"
 
-#: ../../source/doc.as_command.timedelta.rst:103
+#: ../../source/doc.as_command.timedelta.rst:115
 msgid ":code:`Xs`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:104
+#: ../../source/doc.as_command.timedelta.rst:116
 msgid "X is number of seconds. For example, :code:`2s` means \"2 seconds\""
 msgstr "X は秒数です。例えば、:code:`2s` は \"2秒間\" を意味します。"
 
-#: ../../source/doc.as_command.timedelta.rst:106
+#: ../../source/doc.as_command.timedelta.rst:118
 msgid ":code:`Xms`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:107
+#: ../../source/doc.as_command.timedelta.rst:119
 msgid ""
 "X is number of milliseconds. For example, :code:`2ms` means \"2 "
 "milliseconds\""
 msgstr "X はミリ秒数です。例えば、:code:`2ms` は \"2ミリ秒間\" を意味します。"
 
-#: ../../source/doc.as_command.timedelta.rst:109
+#: ../../source/doc.as_command.timedelta.rst:121
 msgid ":code:`Xus`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:110
+#: ../../source/doc.as_command.timedelta.rst:122
 msgid ""
 "X is number of microseconds. For example, :code:`2us` means \"2 "
 "microseconds\""
 msgstr "X はマイクロ秒数です。例えば、:code:`2us` は \"2マイクロ秒間\" を意味します。"
 
-#: ../../source/doc.as_command.timedelta.rst:112
+#: ../../source/doc.as_command.timedelta.rst:124
 msgid ":code:`0`"
 msgstr ""
 
@@ -239,8 +243,8 @@ msgid ""
 "unit is also allowed."
 msgstr "ゼロの場合は単位が意味を成さないため、単位なしの表記も認められています。"
 
-#: ../../source/doc.as_command.timedelta.rst:119
-#: ../../source/doc.as_command.timedelta.rst:179
+#: ../../source/doc.as_command.timedelta.rst:131
+#: ../../source/doc.as_command.timedelta.rst:191
 msgid ""
 "It is not possible to specify by months or years. This is because "
 "python's timedelta does not manage units larger than days and cannot "
@@ -249,122 +253,122 @@ msgstr ""
 "月単位や年単位で区間を指定することはできません。python の timedelta "
 "では日より大きい単位は管理しておらず、たとえば1か月間と30日間を区別できないためです。"
 
-#: ../../source/doc.as_command.timedelta.rst:126
+#: ../../source/doc.as_command.timedelta.rst:138
 msgid "Format codes"
 msgstr "書式コード"
 
-#: ../../source/doc.as_command.timedelta.rst:128
+#: ../../source/doc.as_command.timedelta.rst:140
 msgid ""
 "Python timedelta has no format codes defined, but in this mode, you can "
 "use proprietary format codes:"
 msgstr "pythonのtimedeltaには書式コードが定義されていませんが、このモードでは独自の書式コードを使用することができます。"
 
-#: ../../source/doc.as_command.timedelta.rst:135
+#: ../../source/doc.as_command.timedelta.rst:147
 msgid "Example"
 msgstr "例"
 
-#: ../../source/doc.as_command.timedelta.rst:137
+#: ../../source/doc.as_command.timedelta.rst:149
 msgid ":code:`%D`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:138
+#: ../../source/doc.as_command.timedelta.rst:150
 msgid "equals to :code:`timedelta.days`"
 msgstr ":code:`timedelta.days` に等しい"
 
-#: ../../source/doc.as_command.timedelta.rst:139
-#: ../../source/doc.as_command.timedelta.rst:147
-#: ../../source/doc.as_command.timedelta.rst:155
-#: ../../source/doc.as_command.timedelta.rst:163
+#: ../../source/doc.as_command.timedelta.rst:151
+#: ../../source/doc.as_command.timedelta.rst:159
+#: ../../source/doc.as_command.timedelta.rst:167
+#: ../../source/doc.as_command.timedelta.rst:175
 msgid "0, 1, 2, ..."
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:141
+#: ../../source/doc.as_command.timedelta.rst:153
 msgid ":code:`%H`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:142
+#: ../../source/doc.as_command.timedelta.rst:154
 msgid "hours part (zero-padded to 2 digits)"
 msgstr "時間 (hour) 部分 (0埋めして2桁表記)"
 
-#: ../../source/doc.as_command.timedelta.rst:143
+#: ../../source/doc.as_command.timedelta.rst:155
 msgid "00, 01, ..., 23"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:145
+#: ../../source/doc.as_command.timedelta.rst:157
 msgid ":code:`%tH`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:146
+#: ../../source/doc.as_command.timedelta.rst:158
 msgid "total duration in hours (rounded down)"
 msgstr "時間 (hour) 単位の総時間 (小数点以下切り捨て)"
 
-#: ../../source/doc.as_command.timedelta.rst:149
+#: ../../source/doc.as_command.timedelta.rst:161
 msgid ":code:`%M`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:150
+#: ../../source/doc.as_command.timedelta.rst:162
 msgid "minutes part (zero-padded to 2 digits)"
 msgstr "分 (minute) 部分 (0埋めして2桁表記)"
 
-#: ../../source/doc.as_command.timedelta.rst:151
-#: ../../source/doc.as_command.timedelta.rst:159
+#: ../../source/doc.as_command.timedelta.rst:163
+#: ../../source/doc.as_command.timedelta.rst:171
 msgid "00, 01, ..., 59"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:153
+#: ../../source/doc.as_command.timedelta.rst:165
 msgid ":code:`%tM`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:154
+#: ../../source/doc.as_command.timedelta.rst:166
 msgid "total duration in minutes (rounded down)"
 msgstr "分単位の総時間 (小数点以下切り捨て)"
 
-#: ../../source/doc.as_command.timedelta.rst:157
+#: ../../source/doc.as_command.timedelta.rst:169
 msgid ":code:`%S`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:158
+#: ../../source/doc.as_command.timedelta.rst:170
 msgid "seconds part (zero-padded to 2 digits)"
 msgstr "秒部分 (0埋めして2桁表記)"
 
-#: ../../source/doc.as_command.timedelta.rst:161
+#: ../../source/doc.as_command.timedelta.rst:173
 msgid ":code:`%tS`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:162
+#: ../../source/doc.as_command.timedelta.rst:174
 msgid "total duration in seconds (rounded down)"
 msgstr "秒単位の総時間 (小数点以下切り捨て)"
 
-#: ../../source/doc.as_command.timedelta.rst:165
+#: ../../source/doc.as_command.timedelta.rst:177
 #, python-format
 msgid ":code:`%f`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:166
+#: ../../source/doc.as_command.timedelta.rst:178
 msgid "decimal part in seconds (zero-padded to 6 digits)"
 msgstr "秒数の小数部分 (0埋めして6桁表記)"
 
-#: ../../source/doc.as_command.timedelta.rst:167
+#: ../../source/doc.as_command.timedelta.rst:179
 msgid "000000, 000001, ..., 999999"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:169
+#: ../../source/doc.as_command.timedelta.rst:181
 msgid "Typically, the following formats are used:"
 msgstr "典型的には、以下のようなフォーマットが使用されます："
 
-#: ../../source/doc.as_command.timedelta.rst:171
+#: ../../source/doc.as_command.timedelta.rst:183
 msgid ":code:`%D %H:%M:%S`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:172
+#: ../../source/doc.as_command.timedelta.rst:184
 msgid "\"140 hours\" is represented as \"5 20:00:00\""
 msgstr "\"140時間\" は \"5 20:00:00\" と表現されます"
 
-#: ../../source/doc.as_command.timedelta.rst:175
+#: ../../source/doc.as_command.timedelta.rst:187
 msgid ":code:`%tH:%M:%S`"
 msgstr ""
 
-#: ../../source/doc.as_command.timedelta.rst:174
+#: ../../source/doc.as_command.timedelta.rst:186
 msgid "\"140 hours\" is represented as \"140:00:00\""
 msgstr "\"140時間\" は \"140:00:00\" と表現されます"
 

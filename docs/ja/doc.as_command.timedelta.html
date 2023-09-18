@@ -125,48 +125,48 @@
 </div>
 <section id="arguments-and-options">
 <h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>the minimum value with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>最小値を <span class="xref std std-ref">簡易書式</span> で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a> の仕様に準ずる。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
-<li><p>the maximum value with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>最大値を <span class="xref std std-ref">簡易書式</span> で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a> の仕様に準ずる。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--unit</span> <span class="pre">UNIT</span></code> (optional):</dt><dd><ul>
-<li><p>the minimum unit of generated values with the simple format; see also <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">here</span></a>. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a>.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--unit</span> <span class="pre">UNIT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>生成される値の最小単位を <span class="xref std std-ref">簡易書式</span> で指定する。指定がない場合の動作は、<a class="reference external" href="randog.factory.html#randog.factory.randtimedelta">randtimedelta</a> の仕様に準ずる。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--iso</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--iso</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>指定した場合、<a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> で出力する。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>指定した場合、指定したフォーマットで出力する。フォーマットは <a class="reference internal" href="#format-codes"><span class="std std-ref">独自の書式コード</span></a> で指定する。</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
 <li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">共通オプション</span></a></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </section>
@@ -186,7 +186,9 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s
 </pre></div>
 </div>
-<p>By default, the output is in <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">the simple format</span></a>, but you can change the output format to the format specified in <a class="reference internal" href="#format-codes"><span class="std std-ref">the format codes</span></a> or <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a> by specifying options as follows:</p>
+<section id="format-iso-8601-etc">
+<h3>出力フォーマット (ISO-8601 等)<a class="headerlink" href="#format-iso-8601-etc" title="この見出しへのパーマリンク"></a></h3>
+<p>デフォルトでは <span class="xref std std-ref">簡易書式</span> で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference internal" href="#format-codes"><span class="std std-ref">独自の書式コード</span></a> で指定したフォーマットや <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> に変更できます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--iso
 
@@ -196,6 +198,9 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>7d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;%tH:%M:%S&#39;</span>
 </pre></div>
 </div>
+</section>
+<section id="repeatedly-generate">
+<h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="この見出しへのパーマリンク"></a></h3>
 <p>たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
@@ -204,6 +209,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span><span class="w"> </span>--json<span class="w"> </span>--iso
 </pre></div>
 </div>
+</section>
 </section>
 <section id="simple-format">
 <span id="timedelta-simple-format"></span><h2>簡易書式<a class="headerlink" href="#simple-format" title="この見出しへのパーマリンク"></a></h2>

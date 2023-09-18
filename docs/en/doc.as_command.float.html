@@ -117,53 +117,60 @@
   <section id="float-mode">
 <h1>float Mode<a class="headerlink" href="#float-mode" title="Permalink to this heading"></a></h1>
 <p>In float mode, floating-point numeric values are generated. The format of the command is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
 <h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</dt><dd><ul>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the minimum value. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randfloat">randfloat</a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the maximum value. If not specified, the behavior is left to the specification of <a class="reference external" href="randog.factory.html#randog.factory.randfloat">randfloat</a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--p-inf</span> <span class="pre">PROB_P_INF</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--p-inf</span> <span class="pre">PROB_P_INF</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the probability of positive infinity.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--n-inf</span> <span class="pre">PROB_N_INF</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--n-inf</span> <span class="pre">PROB_N_INF</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the probability of negative infinity.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--nan</span> <span class="pre">PROB_NAN</span></code> (optional, default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--nan</span> <span class="pre">PROB_NAN</span></code> (optional, default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the probability of NaN.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the output format written in <a class="reference external" href="https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language">format specification mini-language</a></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
 <li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">common options</span></a></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </section>
@@ -178,6 +185,13 @@
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>1e+100
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also use <a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">decimal mode</span></a>.</p>
+<p>If you want to generate an integer with no decimal part, use <a class="reference internal" href="doc.as_command.int.html"><span class="doc">int mode</span></a>.</p>
+</div>
+<section id="infinity-and-nan">
+<h3>Infinity and NaN<a class="headerlink" href="#infinity-and-nan" title="Permalink to this heading"></a></h3>
 <p>Infinity and NaN can be included as candidates for generation by specifying optional arguments.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generates positive infinity with 10% probability</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span><span class="w"> </span>1e+100<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.1
@@ -192,6 +206,21 @@ The output can also be in JSON format, such as <code class="code docutils litera
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--n-inf<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--nan<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span>--json
 </pre></div>
 </div>
+</section>
+<section id="format-significant-digits-etc">
+<h3>Format: Significant Digits, etc.<a class="headerlink" href="#format-significant-digits-etc" title="Permalink to this heading"></a></h3>
+<p>The output format can be specified in <a class="reference external" href="https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language">format specification mini-language</a> as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output numeric such as &#39;4.20e+98&#39;, which has (2+1) significant digits</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>1e+100<span class="w"> </span>--fmt<span class="w"> </span>.2e
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the length of the decimal part can be specified as in <code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">.2f</span></code>, <a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">decimal mode</span></a> is suitable for generating numbers with a fixed length of decimal part.</p>
+</div>
+</section>
+<section id="repeatedly-generate">
+<h3>Repeatedly Generate<a class="headerlink" href="#repeatedly-generate" title="Permalink to this heading"></a></h3>
 <p>Most likely, you will not be satisfied with just one generated, so you will probably want to output multiple times as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
@@ -200,12 +229,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The float mode does not have the ability to specify the number of decimal places.
-If you want to specify the digits after the decimal point, use <a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">decimal mode</span></a>.</p>
-<p>If you want to generate an integer with no decimal part, use <a class="reference internal" href="doc.as_command.int.html"><span class="doc">int mode</span></a>.</p>
-</div>
+</section>
 </section>
 </section>
 

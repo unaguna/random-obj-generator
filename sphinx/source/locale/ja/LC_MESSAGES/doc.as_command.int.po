@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 15:22+0900\n"
+"POT-Creation-Date: 2023-09-17 13:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -34,11 +34,11 @@ msgstr "int モードでは、整数値を生成します。コマンドの形�
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.int.rst:15
+#: ../../source/doc.as_command.int.rst:14
 msgid ":code:`MINIMUM`:"
 msgstr ""
 
-#: ../../source/doc.as_command.int.rst:15
+#: ../../source/doc.as_command.int.rst:16
 msgid "the minimum value."
 msgstr "最小値"
 
@@ -46,39 +46,70 @@ msgstr "最小値"
 msgid ":code:`MAXIMUM`:"
 msgstr ""
 
-#: ../../source/doc.as_command.int.rst:18
+#: ../../source/doc.as_command.int.rst:20
 msgid "the maximum value."
 msgstr "最大値"
 
 #: ../../source/doc.as_command.int.rst:22
+msgid ":code:`--fmt FORMAT` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.int.rst:24
+msgid ""
+"the output format written in `format specification mini-language "
+"<https://docs.python.org/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_"
+msgstr ""
+"`書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_ "
+"で記載された出力フォーマット"
+
+#: ../../source/doc.as_command.int.rst:26
 msgid ":code:`common-options`"
 msgstr ""
 
-#: ../../source/doc.as_command.int.rst:21
+#: ../../source/doc.as_command.int.rst:28
 msgid ":doc:`common options <doc.as_command.common_option>`"
 msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
 
-#: ../../source/doc.as_command.int.rst:25
+#: ../../source/doc.as_command.int.rst:32
 msgid "Examples"
 msgstr "実行例"
 
-#: ../../source/doc.as_command.int.rst:27
+#: ../../source/doc.as_command.int.rst:34
 msgid ""
 "The simplest example is the following, which outputs a value in the "
 "specified range."
 msgstr "最も簡素な例は次の通りです。指定した区間の値をランダムに1つ出力します。"
 
-#: ../../source/doc.as_command.int.rst:33
+#: ../../source/doc.as_command.int.rst:41
+msgid "Format: 0-padding, etc."
+msgstr "出力フォーマット (0-パッディング等)"
+
+#: ../../source/doc.as_command.int.rst:43
+msgid ""
+"The output format can be specified in `format specification mini-language"
+" <https://docs.python.org/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_ as follows:"
+msgstr ""
+"以下のように出力フォーマットを `書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
+"specification-mini-language>`_ で指定することができます。"
+
+#: ../../source/doc.as_command.int.rst:54
+msgid "Repeatedly Generate"
+msgstr "繰り返し生成"
+
+#: ../../source/doc.as_command.int.rst:56
 msgid ""
 "Most likely, you will not be satisfied with just one generated, so you "
 "will probably want to output multiple times as follows:"
 msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
 
-#: ../../source/doc.as_command.int.rst:45
+#: ../../source/doc.as_command.int.rst:68
 msgid ""
 "If you want to generate decimal values, use :doc:`decimal mode "
 "<doc.as_command.decimal>` or :doc:`float mode <doc.as_command.float>`."
 msgstr ""
-"小数値を生成したい場合は、:doc:`decimal モード "
-"<doc.as_command.decimal>` や :doc:`float モード <doc.as_command.float>` を使用してください。"
+"小数値を生成したい場合は、:doc:`decimal モード <doc.as_command.decimal>` や :doc:`float "
+"モード <doc.as_command.float>` を使用してください。"
 

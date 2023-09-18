@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-03 16:53+0900\n"
+"POT-Creation-Date: 2023-09-18 11:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -34,47 +34,49 @@ msgstr "datetime モードでは、日時を生成します。コマンドの形
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.datetime.rst:15
+#: ../../source/doc.as_command.datetime.rst:14
 msgid ":code:`MINIMUM` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.datetime.rst:15
+#: ../../source/doc.as_command.datetime.rst:16
 msgid ""
 "the minimum value; see also :ref:`here <datetime-min-max-expression>`. If"
 " not specified, the behavior is left to the specification of "
 "`randdatetime <randog.factory.html#randog.factory.randdatetime>`_."
 msgstr ""
-"最小値。詳細は :ref:`こちら <datetime-min-max-expression>`。指定がない場合の動作は、`randdatetime "
+"最小値。詳細は :ref:`こちら <datetime-min-max-"
+"expression>`。指定がない場合の動作は、`randdatetime "
 "<randog.factory.html#randog.factory.randdatetime>`_ の仕様に準ずる。"
 
 #: ../../source/doc.as_command.datetime.rst:18
 msgid ":code:`MAXIMUM` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.datetime.rst:18
+#: ../../source/doc.as_command.datetime.rst:20
 msgid ""
 "the maximum value; see also :ref:`here <datetime-min-max-expression>`. If"
 " not specified, the behavior is left to the specification of "
 "`randdatetime <randog.factory.html#randog.factory.randdatetime>`_."
 msgstr ""
-"最大値。詳細は :ref:`こちら <datetime-min-max-expression>`。指定がない場合の動作は、`randdatetime "
+"最大値。詳細は :ref:`こちら <datetime-min-max-"
+"expression>`。指定がない場合の動作は、`randdatetime "
 "<randog.factory.html#randog.factory.randdatetime>`_ の仕様に準ずる。"
 
-#: ../../source/doc.as_command.datetime.rst:21
+#: ../../source/doc.as_command.datetime.rst:22
 msgid ":code:`--iso` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.datetime.rst:21
+#: ../../source/doc.as_command.datetime.rst:24
 msgid ""
 "if specified, it outputs generated object with `ISO-8601 format "
 "<https://en.wikipedia.org/wiki/ISO_8601>`_."
 msgstr "指定した場合、`ISO-8601 形式 <https://ja.wikipedia.org/wiki/ISO_8601>`_ で出力する。"
 
-#: ../../source/doc.as_command.datetime.rst:24
+#: ../../source/doc.as_command.datetime.rst:26
 msgid ":code:`--fmt FORMAT` (optional):"
 msgstr ""
 
-#: ../../source/doc.as_command.datetime.rst:24
+#: ../../source/doc.as_command.datetime.rst:28
 msgid ""
 "if specified, it outputs generated object with the specified format; The "
 "format is specified in `the form of strftime or strptime "
@@ -85,29 +87,29 @@ msgstr ""
 "<https://docs.python.org/ja/3/library/datetime.html#strftime-and-"
 "strptime-format-codes>`_ で指定する。"
 
-#: ../../source/doc.as_command.datetime.rst:28
+#: ../../source/doc.as_command.datetime.rst:30
 msgid ":code:`common-options`"
 msgstr ""
 
-#: ../../source/doc.as_command.datetime.rst:27
+#: ../../source/doc.as_command.datetime.rst:32
 msgid ":doc:`common options <doc.as_command.common_option>`"
 msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
 
-#: ../../source/doc.as_command.datetime.rst:33
+#: ../../source/doc.as_command.datetime.rst:38
 msgid "Expression of MINIMUM and MAXIMUM"
 msgstr "MINIMUM と MAXIMUM の表現方法"
 
-#: ../../source/doc.as_command.datetime.rst:35
+#: ../../source/doc.as_command.datetime.rst:40
 msgid ""
 "You can specify the arguments :code:`MINIMUM` and :code:`MAXIMUM` with "
 "following expressions:"
 msgstr "引数 :code:`MINIMUM`, :code:`MAXIMUM` はそれぞれ以下の記法で指定できます。"
 
-#: ../../source/doc.as_command.datetime.rst:37
+#: ../../source/doc.as_command.datetime.rst:42
 msgid ":code:`now`: it means current datetime"
 msgstr ":code:`now`: 現在日時を意味します。"
 
-#: ../../source/doc.as_command.datetime.rst:39
+#: ../../source/doc.as_command.datetime.rst:44
 msgid ""
 "`ISO-8601 format <https://en.wikipedia.org/wiki/ISO_8601>`_, such as "
 ":code:`2022-01-01T00:00:00.000000`, :code:`2022-01-01T00:00:00`, or, "
@@ -117,15 +119,15 @@ msgstr ""
 ":code:`2022-01-01T00:00:00.000000`, :code:`2022-01-01T00:00:00`, "
 ":code:`2022-01-01`"
 
-#: ../../source/doc.as_command.datetime.rst:41
+#: ../../source/doc.as_command.datetime.rst:46
 msgid ""
 "datetime combined with :ref:`simple format of timedelta <timedelta-"
 "simple-format>`, such as :code:`now+2h`, or, :code:`2022-01-01-1h30m`."
 msgstr ""
-":ref:`timedelta の簡易書式 <timedelta-simple-format>` と日時の和。例: "
-":code:`now+2h`, :code:`2022-01-01-1h30m`"
+":ref:`timedelta の簡易書式 <timedelta-simple-format>` と日時の和。例: :code:`now+2h`,"
+" :code:`2022-01-01-1h30m`"
 
-#: ../../source/doc.as_command.datetime.rst:43
+#: ../../source/doc.as_command.datetime.rst:48
 msgid ""
 ":ref:`simple format of timedelta <timedelta-simple-format>` (datetime "
 "term is omitted), such as :code:`+2h`:, or, :code:`-30m`"
@@ -133,7 +135,7 @@ msgstr ""
 ":ref:`timedelta の簡易書式 <timedelta-simple-format>` (日時の項を省略)。例: "
 ":code:`+2h`:, :code:`-30m`"
 
-#: ../../source/doc.as_command.datetime.rst:45
+#: ../../source/doc.as_command.datetime.rst:50
 msgid ""
 "If the other (MAXIMUM or MINIMUM) is specified with datetime term, it "
 "means the other plus the timedelta."
@@ -141,7 +143,7 @@ msgstr ""
 "MINIMUM と MAXIMUM のうちのもう一方が指定されていて日時の項が省略されていないなら、これはそのもう一方に timedelta "
 "を加算した日時を意味します。"
 
-#: ../../source/doc.as_command.datetime.rst:46
+#: ../../source/doc.as_command.datetime.rst:51
 msgid ""
 "If the other (MAXIMUM or MINIMUM) is fully omitted or datetime term of "
 "the other is omitted, it means :code:`now` plus the timedelta."
@@ -149,7 +151,7 @@ msgstr ""
 "MINIMUM と MAXIMUM のうちのもう一方が指定されていないか、そちらも日時の項が省略されているなら、これは現在日時に "
 "timedelta を加算した日付を意味します。"
 
-#: ../../source/doc.as_command.datetime.rst:49
+#: ../../source/doc.as_command.datetime.rst:54
 msgid ""
 "A simple expression such as :code:`-30m` can be used, but since it begins"
 " with :code:`-`, it is interpreted as an optional argument and will cause"
@@ -160,27 +162,31 @@ msgstr ""
 "で始まるため、オプション引数として解釈されエラーを引き起こしてしまいます。これを防ぐため、以下の例のように :code:`--` "
 "の後に指定する必要があります。"
 
-#: ../../source/doc.as_command.datetime.rst:61
+#: ../../source/doc.as_command.datetime.rst:66
 msgid "Examples"
 msgstr "実行例"
 
-#: ../../source/doc.as_command.datetime.rst:63
+#: ../../source/doc.as_command.datetime.rst:68
 msgid "The simplest example is the following, which outputs a datetime value."
 msgstr "最も簡素な例は次の通りです。日時を出力します。"
 
-#: ../../source/doc.as_command.datetime.rst:69
+#: ../../source/doc.as_command.datetime.rst:74
 msgid ""
 "You can specify a range of values to be generated, as in the following "
 "example:"
 msgstr "次の例のように、生成する値の範囲を指定することができます："
 
-#: ../../source/doc.as_command.datetime.rst:87
+#: ../../source/doc.as_command.datetime.rst:92
 msgid ""
 "See :ref:`datetime-min-max-expression` for expressions such as "
 ":code:`+1d`."
 msgstr ":code:`+1d` 等の表現については :ref:`datetime-min-max-expression` を参照してください。"
 
-#: ../../source/doc.as_command.datetime.rst:89
+#: ../../source/doc.as_command.datetime.rst:95
+msgid "Format: ISO-8601, etc."
+msgstr "出力フォーマット (ISO-8601 等)"
+
+#: ../../source/doc.as_command.datetime.rst:97
 msgid ""
 "By default, the output is in the standard python format, but you can "
 "change the output format to the format specified in `the form of strftime"
@@ -194,13 +200,17 @@ msgstr ""
 "strptime-format-codes>`_ で指定したフォーマットや `ISO-8601 形式 "
 "<https://ja.wikipedia.org/wiki/ISO_8601>`_ に変更できます："
 
-#: ../../source/doc.as_command.datetime.rst:99
+#: ../../source/doc.as_command.datetime.rst:108
+msgid "Repeatedly Generate"
+msgstr "繰り返し生成"
+
+#: ../../source/doc.as_command.datetime.rst:110
 msgid ""
 "Most likely, you will not be satisfied with just one generated, so you "
 "will probably want to output multiple times as follows:"
 msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
 
-#: ../../source/doc.as_command.datetime.rst:110
+#: ../../source/doc.as_command.datetime.rst:121
 msgid ""
 "In datetime mode, date and time are generated simultaneously. If only one"
 " is wanted, use :doc:`date mode <doc.as_command.date>` or :doc:`time mode"
@@ -209,7 +219,7 @@ msgstr ""
 "datetime モードでは日付と時刻を同時に生成します。一方のみを望む場合、:doc:`date モード "
 "<doc.as_command.date>` や :doc:`time モード <doc.as_command.time>` を利用してください。"
 
-#: ../../source/doc.as_command.datetime.rst:112
+#: ../../source/doc.as_command.datetime.rst:123
 msgid ""
 "Also, if you want to generate an elapsed time rather than a time that "
 "points to a certain point in time, use :doc:`timedelta mode "

@@ -139,48 +139,48 @@
 </div>
 <section id="arguments-and-options">
 <h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">FACTORY_PATH</span> <span class="pre">[...]</span></code>:</dt><dd><ul>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">FACTORY_PATH</span> <span class="pre">[...]</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>paths of one or more <a class="reference internal" href="doc.external_def.html"><span class="doc">factory definition files</span></a>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--regenerate</span> <span class="pre">PROB_REGEN</span></code> (default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--regenerate</span> <span class="pre">PROB_REGEN</span></code> (default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the probability that the factory generation value is not returned as is, but is regenerated. It affects cases where the original factory returns a value that is not completely random.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--discard</span> <span class="pre">PROB_DISCARD</span></code> (default=0.0):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--discard</span> <span class="pre">PROB_DISCARD</span></code> (default=0.0):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>the probability that the factory generation value is not returned as is, but is discarded. If discarded, the number of times the value is generated is less than <code class="code docutils literal notranslate"><span class="pre">--repeat/-r</span></code> or <code class="code docutils literal notranslate"><span class="pre">--list/-L</span></code> or <code class="code docutils literal notranslate"><span class="pre">--csv</span></code>.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--csv</span> <span class="pre">ROW_NUM</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--csv</span> <span class="pre">ROW_NUM</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>if specified, it outputs generated ROW_NUM objects as CSV. When using this option, it is recommended to use a factory that generates dictionaries and to define <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> in the definition file to specify the fields of the CSV.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">--error-on-factory-stopped</span></code> (optional):</dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--error-on-factory-stopped</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>If specified, error is occurred in case the factory cannot generate value due to <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#StopIteration">StopIteration</a>. If not specified, the generation simply stops in the case.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></dt><dd><ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
 <li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">common options</span></a></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </section>

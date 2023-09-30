@@ -1,9 +1,9 @@
-import struct
 import typing as t
 from random import Random
 
 from ._base import Factory, decide_rnd
 from ._int import randint
+from .._utils import floatutils
 from ..exceptions import FactoryConstructionError
 
 
@@ -281,25 +281,15 @@ class FloatExpRandomFactory(Factory[float]):
 
     @classmethod
     def _calc_exp_and_fraction(cls, edge: float) -> t.Tuple[int, int]:
-        as_bytes = struct.pack(">d", edge)
-
-        if edge > 0:
-            exp = int.from_bytes(as_bytes[:2], "big") >> 4
-        elif edge < 0:
-            exp = -(int.from_bytes(as_bytes[:2], "big") & 0x7FF0) >> 4
-        else:
-            exp = 0
-
-        fraction = int.from_bytes(as_bytes, "big") & 0x000FFFFFFFFFFFFF
+        sign, exp, fraction = floatutils.to_tuple(edge)
+        if sign == 1:
+            exp *= -1
 
         return exp, fraction
 
     @classmethod
     def _calc_float_from_exp_and_fraction(cls, exp: int, fraction: int) -> float:
-        sign = 1 if exp < 0 else 0
+        sign = t.cast(t.Literal[0, 1], 1 if exp < 0 else 0)
         unsigned_exp = abs(exp)
 
-        as_bytes_as_int = sign << 63 | unsigned_exp << 52 | fraction
-        as_bytes = as_bytes_as_int.to_bytes(8, "big", signed=False)
-
-        return struct.unpack(">d", as_bytes)[0]
+        return floatutils.parse(sign, unsigned_exp, fraction)

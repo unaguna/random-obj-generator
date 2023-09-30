@@ -1,3 +1,5 @@
+import math
+import sys
 import typing as t
 from random import Random
 
@@ -112,8 +114,14 @@ class FloatRandomFactory(Factory[float]):
         self._n_inf = float(n_inf)
         self._nan = float(nan)
 
-        if self._min > self._max:
+        if (
+            self._min > self._max
+            or self._min == float("inf")
+            or self._max == float("-inf")
+        ):
             raise FactoryConstructionError("empty range for randfloat")
+        if math.isnan(self._min) or math.isnan(self._max):
+            raise FactoryConstructionError("minimum and maximum are must not be nan")
         if self._p_inf < 0.0 or self._n_inf < 0.0 or self._nan < 0.0:
             raise FactoryConstructionError(
                 "the probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
@@ -146,6 +154,11 @@ class FloatRandomFactory(Factory[float]):
         maximum: t.Optional[t.SupportsFloat],
     ) -> t.Tuple[float, float]:
         default_range = 1.0
+
+        if minimum == float("-inf"):
+            minimum = -sys.float_info.max
+        if maximum == float("inf"):
+            maximum = sys.float_info.max
 
         if minimum is None and maximum is None:
             return 0.0, 1.0
@@ -188,8 +201,14 @@ class FloatExpRandomFactory(Factory[float]):
         self._n_inf = float(n_inf)
         self._nan = float(nan)
 
-        if self._min > self._max:
+        if (
+            self._min > self._max
+            or self._min == float("inf")
+            or self._max == float("-inf")
+        ):
             raise FactoryConstructionError("empty range for randfloat")
+        if math.isnan(self._min) or math.isnan(self._max):
+            raise FactoryConstructionError("minimum and maximum are must not be nan")
         if self._p_inf < 0.0 or self._n_inf < 0.0 or self._nan < 0.0:
             raise FactoryConstructionError(
                 "the probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"

@@ -1,5 +1,6 @@
 import math
 import random
+import typing as t
 from collections import Counter
 from decimal import Decimal
 from fractions import Fraction
@@ -17,6 +18,31 @@ def test__random_float(weight):
     value = factory.next()
 
     assert isinstance(value, float)
+
+
+@pytest.mark.parametrize(
+    ("minimum", "maximum", "weight", "assertion"),
+    [
+        # negative zero
+        (-0.0, -0.0, "flat", lambda x: x == 0),
+        (-0.0, 0.0, "flat", lambda x: x == 0),
+        (0.0, 0.0, "flat", lambda x: x == 0),
+        (-0.0, -0.0, "log_flat", lambda x: x == 0),
+        (-0.0, 0.0, "log_flat", lambda x: x == 0),
+        (0.0, 0.0, "log_flat", lambda x: x == 0),
+        # infinity
+        (1.0, float("inf"), "flat", lambda x: x > 0 and math.isfinite(x)),
+        (float("-inf"), -1.0, "flat", lambda x: x < 0 and math.isfinite(x)),
+        (float("-inf"), float("inf"), "flat", lambda x: math.isfinite(x)),
+        (1.0, float("inf"), "log_flat", lambda x: x > 0 and math.isfinite(x)),
+        (float("-inf"), -1.0, "log_flat", lambda x: x < 0 and math.isfinite(x)),
+        (float("-inf"), float("inf"), "log_flat", lambda x: math.isfinite(x)),
+    ],
+)
+def test__random_float__range(minimum, maximum, weight: t.Any, assertion):
+    factory = randog.factory.randfloat(minimum, maximum, weight=weight)
+
+    assert {str(v) for v in factory.iter(100) if not assertion(v)} == set()
 
 
 @pytest.mark.parametrize("expected_value", (-1.0, 0.0, 1.0))
@@ -145,13 +171,40 @@ def test__random_float__or_none_0(weight):
     assert values == {1.0}
 
 
+@pytest.mark.parametrize(
+    ("minimum", "maximum"),
+    [
+        (2, 1),
+        (float("inf"), 0),
+        (float("inf"), float("inf")),
+        (0, float("-inf")),
+        (float("-inf"), float("-inf")),
+    ],
+)
 @pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
-def test__random_float_error_when_edges_inverse(weight):
+def test__random_float_error_when_edges_inverse(minimum, maximum, weight):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.randfloat(2, 1, **weight)
+        randog.factory.randfloat(minimum, maximum, **weight)
     e = e_ctx.value
 
     assert e.message == "empty range for randfloat"
+
+
+@pytest.mark.parametrize(
+    ("minimum", "maximum"),
+    [
+        (float("nan"), 0),
+        (0, float("nan")),
+        (float("nan"), float("nan")),
+    ],
+)
+@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+def test__random_float_error_when_edges_nan(minimum, maximum, weight):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.randfloat(minimum, maximum, **weight)
+    e = e_ctx.value
+
+    assert e.message == "minimum and maximum are must not be nan"
 
 
 @pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])

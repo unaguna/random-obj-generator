@@ -1,13 +1,14 @@
 import math
 import random
 import typing as t
-from collections import Counter
+from collections import Counter, defaultdict
 from decimal import Decimal
 from fractions import Fraction
 
 import pytest
 
 import randog.factory
+from randog.rangeutils import frange
 from randog.exceptions import FactoryConstructionError
 
 
@@ -266,43 +267,88 @@ def _log2_int(x):
         "expect0",
         "expected_log_range_pos",
         "expected_log_range_neg",
-        "deviation",
+        "distribution",
     ),
     [
-        (1.0, 8.0, False, {0, 1, 2}, set(), 0.01),
-        (0.25, 8.0, False, {-2, -1, 0, 1, 2}, set(), 0.01),
-        (-8.0, -1.0, False, set(), {0, 1, 2}, 0.01),
-        (-4.0, 8.0, True, set(range(-1022, 3)), set(range(-1022, 2)), 0.4),
+        (
+            1.0,
+            8.0,
+            False,
+            {0, 1, 2},
+            set(),
+            defaultdict(lambda: frange(1 / 3).radius(0.02)),
+        ),
+        (
+            0.25,
+            8.0,
+            False,
+            {-2, -1, 0, 1, 2},
+            set(),
+            defaultdict(lambda: frange(1 / 5).radius(0.02)),
+        ),
+        (
+            -8.0,
+            -1.0,
+            False,
+            set(),
+            {0, 1, 2},
+            defaultdict(lambda: frange(1 / 3).radius(0.02)),
+        ),
+        (
+            -4.0,
+            8.0,
+            True,
+            set(range(-1022, 3)),
+            set(range(-1022, 2)),
+            defaultdict(lambda: frange(1 / 2049).radius(0.1)),
+        ),
+        (
+            1,
+            3,  # ; it is not 2^x
+            False,
+            {0, 1},
+            set(),
+            {
+                (1, 0): frange(2 / 3).radius(0.02),
+                (1, 1): frange(1 / 3).radius(0.02),
+            },
+        ),
+        (
+            -5,  # ; it is not 2^x
+            -1,
+            False,
+            set(),
+            {0, 1, 2},
+            defaultdict(
+                lambda: frange(4 / 9).radius(0.01),
+                {
+                    (-1, 2): frange(1 / 9).radius(0.01),
+                },
+            ),
+        ),
     ],
 )
 def test__random_float__log_flat__distribution(
-    minimum, maximum, expect0, expected_log_range_pos, expected_log_range_neg, deviation
+    minimum,
+    maximum,
+    expect0,
+    expected_log_range_pos,
+    expected_log_range_neg,
+    distribution,
 ):
+    iter_count = 200000
     factory = randog.factory.randfloat(minimum, maximum, weight="log_flat")
 
-    log_count = Counter((_sign(x), _log2_int(x)) for x in factory.iter(200000))
+    log_count = Counter((_sign(x), _log2_int(x)) for x in factory.iter(iter_count))
 
-    count_min = min(log_count.values())
-    count_max = max(log_count.values())
-
-    assert (count_max - count_min) / (count_max + count_min) < deviation
+    for key, count in log_count.items():
+        assert count / iter_count in distribution[key]
     assert {k for sign, k in log_count.keys() if sign > 0} == expected_log_range_pos
     assert {k for sign, k in log_count.keys() if sign < 0} == expected_log_range_neg
     if expect0:
         assert 0 in {sign for sign, k in log_count.keys()}
     else:
         assert 0 not in {sign for sign, k in log_count.keys()}
-
-
-def test__random_float__log_flat__balance():
-    factory = randog.factory.randfloat(1, 3, weight="log_flat")
-
-    log_count = Counter((_sign(x), _log2_int(x)) for x in factory.iter(200000))
-
-    count_max = max(log_count.values())
-
-    assert log_count[(1, 0)] / count_max > 0.9
-    assert 0.4 < log_count[(1, 1)] / count_max < 0.6
 
 
 @pytest.mark.parametrize(

@@ -199,31 +199,46 @@ def _sign(x):
         return 0
 
 
-def _log2(x):
+def _log2_int(x):
     if x != 0:
-        return math.log2(abs(x))
+        return math.floor(math.log2(abs(x)))
     else:
         return None
 
 
 @pytest.mark.parametrize(
-    ("minimum", "maximum"),
+    (
+        "minimum",
+        "maximum",
+        "expect0",
+        "expected_log_range_pos",
+        "expected_log_range_neg",
+        "deviation",
+    ),
     [
-        (1.0, 8.0),
-        (-8.0, -1.0),
+        (1.0, 8.0, False, {0, 1, 2}, set(), 0.01),
+        (0.25, 8.0, False, {-2, -1, 0, 1, 2}, set(), 0.01),
+        (-8.0, -1.0, False, set(), {0, 1, 2}, 0.01),
+        (-4.0, 8.0, True, set(range(-1022, 3)), set(range(-1022, 2)), 0.4),
     ],
 )
-def test__random_float__log_flat__distribution(minimum, maximum):
-    # TODO: log_count.keys() の値域のアサーション
-    # TODO: 端点の取り扱い（負の min や正の max を値域に含むかどうか）
+def test__random_float__log_flat__distribution(
+    minimum, maximum, expect0, expected_log_range_pos, expected_log_range_neg, deviation
+):
     factory = randog.factory.randfloat(minimum, maximum, weight="log_flat")
 
-    log_count = Counter((_sign(x), math.floor(_log2(x))) for x in factory.iter(200000))
+    log_count = Counter((_sign(x), _log2_int(x)) for x in factory.iter(200000))
 
     count_min = min(log_count.values())
     count_max = max(log_count.values())
 
-    assert (count_max - count_min) / (count_max + count_min) < 0.01
+    assert (count_max - count_min) / (count_max + count_min) < deviation
+    assert {k for sign, k in log_count.keys() if sign > 0} == expected_log_range_pos
+    assert {k for sign, k in log_count.keys() if sign < 0} == expected_log_range_neg
+    if expect0:
+        assert 0 in {sign for sign, k in log_count.keys()}
+    else:
+        assert 0 not in {sign for sign, k in log_count.keys()}
 
 
 @pytest.mark.parametrize(

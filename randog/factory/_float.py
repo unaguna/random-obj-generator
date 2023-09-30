@@ -201,10 +201,18 @@ class FloatExpRandomFactory(Factory[float]):
             )
 
         self._min_exp, self._min_fraction = self._calc_exp_and_fraction(
-            self._min, for_min=True
+            self._min,
+            # Don't include negative min in the generation range.
+            # However, if min == max,
+            # it is included so that the generation range is not empty.
+            to0_if_neg=self._min != self._max,
         )
         self._max_exp, self._max_fraction = self._calc_exp_and_fraction(
-            self._max, for_max=True
+            self._max,
+            # Don't include positive max in the generation range.
+            # However, if min == max,
+            # it is included so that the generation range is not empty.
+            to0_if_pos=self._min != self._max,
         )
         self._exp_factory = randint(self._min_exp, self._max_exp, rnd=self._random)
 
@@ -285,12 +293,12 @@ class FloatExpRandomFactory(Factory[float]):
 
     @classmethod
     def _calc_exp_and_fraction(
-        cls, edge: float, for_min: bool = False, for_max: bool = False
+        cls, edge: float, to0_if_neg: bool = False, to0_if_pos: bool = False
     ) -> t.Tuple[int, int]:
         sign, exp, fraction = floatutils.to_tuple(edge)
 
         # don't contain negative min and positive max into random value range
-        if for_min and sign == 1 or for_max and sign == 0:
+        if to0_if_neg and sign == 1 or to0_if_pos and sign == 0:
             sign, exp, fraction = floatutils.next_to_0(sign, exp, fraction)
 
         if sign == 1:

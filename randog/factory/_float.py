@@ -4,7 +4,6 @@ import typing as t
 from random import Random
 
 from ._base import Factory, decide_rnd
-from ._int import randint
 from .._utils import floatutils
 from ..exceptions import FactoryConstructionError
 
@@ -174,11 +173,12 @@ class FloatRandomFactory(Factory[float]):
 
 class FloatExpRandomFactory(Factory[float]):
     _random: Random
-    _exp_factory: Factory[int]
     _min: float
     _max: float
     _min_exp: int
     _max_exp: int
+    _min_exp_prob: float
+    _max_exp_prob: float
     _fraction_minmax_of_min_exp: t.Tuple[int, int]
     _fraction_minmax_of_max_exp: t.Tuple[int, int]
     _p_inf: float
@@ -233,9 +233,10 @@ class FloatExpRandomFactory(Factory[float]):
             # it is included so that the generation range is not empty.
             to0_if_pos=self._min != self._max,
         )
-        self._exp_factory = randint(self._min_exp, self._max_exp, rnd=self._random)
 
         if self._min_exp == self._max_exp:
+            self._min_exp_prob = 1.0
+            self._max_exp_prob = 1.0
             if self._min_exp < 0:
                 self._fraction_minmax_of_min_exp = (
                     self._max_fraction,
@@ -263,6 +264,15 @@ class FloatExpRandomFactory(Factory[float]):
                 self._fraction_minmax_of_max_exp = self._max_fraction, 2**52 - 1
             else:
                 self._fraction_minmax_of_max_exp = 0, self._max_fraction
+            pattern_num_of_min_exp = _int_num(*self._fraction_minmax_of_min_exp)
+            pattern_num_of_max_exp = _int_num(*self._fraction_minmax_of_max_exp)
+            pattern_num = (
+                (self._max_exp - self._min_exp - 1) * 2**52
+                + pattern_num_of_min_exp
+                + pattern_num_of_max_exp
+            )
+            self._min_exp_prob = pattern_num_of_min_exp / pattern_num
+            self._max_exp_prob = pattern_num_of_max_exp / pattern_num
 
     def _next(self) -> float:
         pre_weight = self._random.random()
@@ -276,10 +286,21 @@ class FloatExpRandomFactory(Factory[float]):
         if pre_weight < 0:
             return float("NaN")
 
-        exp = self._exp_factory.next()
+        exp = self._next_exp()
         fraction = self._next_fraction(exp)
 
         return self._calc_float_from_exp_and_fraction(exp, fraction)
+
+    def _next_exp(self) -> int:
+        pre_weight = self._random.random()
+        pre_weight -= self._min_exp_prob
+        if pre_weight < 0:
+            return self._min_exp
+        pre_weight -= self._max_exp_prob
+        if pre_weight < 0:
+            return self._max_exp
+
+        return self._random.randint(self._min_exp + 1, self._max_exp - 1)
 
     def _next_fraction(self, next_exp: int) -> int:
         if next_exp == 0:
@@ -330,3 +351,7 @@ class FloatExpRandomFactory(Factory[float]):
         unsigned_exp = abs(exp)
 
         return floatutils.parse(sign, unsigned_exp, fraction)
+
+
+def _int_num(minimum: int, maximum: int) -> int:
+    return maximum - minimum + 1

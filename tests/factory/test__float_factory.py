@@ -294,6 +294,17 @@ def test__random_float__log_flat__distribution(
         assert 0 not in {sign for sign, k in log_count.keys()}
 
 
+def test__random_float__log_flat__balance():
+    factory = randog.factory.randfloat(1, 3, weight="log_flat")
+
+    log_count = Counter((_sign(x), _log2_int(x)) for x in factory.iter(200000))
+
+    count_max = max(log_count.values())
+
+    assert log_count[(1, 0)] / count_max > 0.9
+    assert 0.4 < log_count[(1, 1)] / count_max < 0.6
+
+
 @pytest.mark.parametrize(
     ("rnd1", "rnd2", "expect_same_output"),
     [

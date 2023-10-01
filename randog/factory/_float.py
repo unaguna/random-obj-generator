@@ -1,3 +1,4 @@
+import abc
 import math
 import sys
 import typing as t
@@ -67,9 +68,7 @@ def randfloat(
         raise ValueError(f"illegal weight: {weight}")
 
 
-class FloatRandomFactory(Factory[float]):
-    """factory generating random float values"""
-
+class _BaseFloatRandomFactory(Factory[float], abc.ABC):
     _random: Random
     _min: float
     _max: float
@@ -147,6 +146,40 @@ class FloatRandomFactory(Factory[float]):
 
         return self._next_finite()
 
+    @abc.abstractmethod
+    def _next_finite(self) -> float:
+        pass
+
+    @classmethod
+    def _normalize(
+        cls,
+        minimum: t.Optional[t.SupportsFloat],
+        maximum: t.Optional[t.SupportsFloat],
+    ) -> t.Tuple[float, float]:
+        default_range = 1.0
+
+        if minimum is None and maximum is None:
+            return 0.0, 1.0
+        elif minimum is None:
+            maximum = float(maximum)
+            return maximum - default_range, maximum
+        elif maximum is None:
+            minimum = float(minimum)
+            return minimum, minimum + default_range
+        else:
+            return float(minimum), float(maximum)
+
+
+class FloatRandomFactory(_BaseFloatRandomFactory):
+    """factory generating random float values"""
+
+    _random: Random
+    _min: float
+    _max: float
+    _p_inf: float
+    _n_inf: float
+    _nan: float
+
     def _next_finite(self) -> float:
         weight = self._random.random()
         return self._max * weight + self._min * (1 - weight)
@@ -176,7 +209,7 @@ class FloatRandomFactory(Factory[float]):
             return float(minimum), float(maximum)
 
 
-class FloatExpRandomFactory(FloatRandomFactory):
+class FloatExpRandomFactory(_BaseFloatRandomFactory):
     _random: Random
     _min: float
     _max: float
@@ -283,25 +316,6 @@ class FloatExpRandomFactory(FloatRandomFactory):
             return self._random.randint(*self._fraction_range_of_max_exp.minmax())
         else:
             return self._random.randrange(0, 2**52)
-
-    @classmethod
-    def _normalize(
-        cls,
-        minimum: t.Optional[t.SupportsFloat],
-        maximum: t.Optional[t.SupportsFloat],
-    ) -> t.Tuple[float, float]:
-        default_range = 1.0
-
-        if minimum is None and maximum is None:
-            return 0.0, 1.0
-        elif minimum is None:
-            maximum = float(maximum)
-            return maximum - default_range, maximum
-        elif maximum is None:
-            minimum = float(minimum)
-            return minimum, minimum + default_range
-        else:
-            return float(minimum), float(maximum)
 
     @classmethod
     def _calc_exp_and_fraction(

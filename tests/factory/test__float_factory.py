@@ -272,6 +272,7 @@ def _sign_and_log2(x):
         "expected_log_range_pos",
         "expected_log_range_neg",
         "distribution",
+        "value_is_valid",
     ),
     [
         (
@@ -281,6 +282,7 @@ def _sign_and_log2(x):
             {0, 1, 2},
             set(),
             defaultdict(lambda: interval(1 / 3).radius(0.02)),
+            lambda x: 1.0 <= x < 8.0,
         ),
         (
             0.25,
@@ -289,6 +291,7 @@ def _sign_and_log2(x):
             {-2, -1, 0, 1, 2},
             set(),
             defaultdict(lambda: interval(1 / 5).radius(0.02)),
+            lambda x: 0.25 <= x < 8.0,
         ),
         (
             -8.0,
@@ -297,6 +300,7 @@ def _sign_and_log2(x):
             set(),
             {0, 1, 2},
             defaultdict(lambda: interval(1 / 3).radius(0.02)),
+            lambda x: -8.0 < x <= -1.0,
         ),
         (
             -4.0,
@@ -305,6 +309,7 @@ def _sign_and_log2(x):
             set(range(-1022, 3)),
             set(range(-1022, 2)),
             defaultdict(lambda: interval(1 / 2049).radius(0.1)),
+            lambda x: -4.0 < x < 8.0,
         ),
         (
             1,
@@ -316,6 +321,7 @@ def _sign_and_log2(x):
                 (1, 0): interval(2 / 3).radius(0.02),
                 (1, 1): interval(1 / 3).radius(0.02),
             },
+            lambda x: 1.0 <= x < 3.0,
         ),
         (
             -5,  # ; it is not 2^x
@@ -329,6 +335,7 @@ def _sign_and_log2(x):
                     (-1, 2): interval(1 / 9).radius(0.01),
                 },
             ),
+            lambda x: -5.0 < x <= -1.0,
         ),
     ],
 )
@@ -339,12 +346,13 @@ def test__random_float__log_flat__distribution(
     expected_log_range_pos,
     expected_log_range_neg,
     distribution,
+    value_is_valid,
 ):
     iter_count = 200000
     factory = randog.factory.randfloat(minimum, maximum, weight="log_flat")
 
     def assert_value(value: float) -> float:
-        assert minimum <= value <= maximum
+        assert value_is_valid(value)
         return value
 
     log_count = Counter(

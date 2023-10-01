@@ -12,7 +12,9 @@ from randog.rangeutils import interval
 from randog.exceptions import FactoryConstructionError
 
 
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float(weight):
     factory = randog.factory.randfloat(**weight)
 
@@ -25,19 +27,19 @@ def test__random_float(weight):
     ("minimum", "maximum", "weight", "assertion"),
     [
         # negative zero
-        (-0.0, -0.0, "flat", lambda x: x == 0),
-        (-0.0, 0.0, "flat", lambda x: x == 0),
-        (0.0, 0.0, "flat", lambda x: x == 0),
-        (-0.0, -0.0, "log_flat", lambda x: x == 0),
-        (-0.0, 0.0, "log_flat", lambda x: x == 0),
-        (0.0, 0.0, "log_flat", lambda x: x == 0),
+        (-0.0, -0.0, "uniform", lambda x: x == 0),
+        (-0.0, 0.0, "uniform", lambda x: x == 0),
+        (0.0, 0.0, "uniform", lambda x: x == 0),
+        (-0.0, -0.0, "exp_uniform", lambda x: x == 0),
+        (-0.0, 0.0, "exp_uniform", lambda x: x == 0),
+        (0.0, 0.0, "exp_uniform", lambda x: x == 0),
         # infinity
-        (1.0, float("inf"), "flat", lambda x: x > 0 and math.isfinite(x)),
-        (float("-inf"), -1.0, "flat", lambda x: x < 0 and math.isfinite(x)),
-        (float("-inf"), float("inf"), "flat", lambda x: math.isfinite(x)),
-        (1.0, float("inf"), "log_flat", lambda x: x > 0 and math.isfinite(x)),
-        (float("-inf"), -1.0, "log_flat", lambda x: x < 0 and math.isfinite(x)),
-        (float("-inf"), float("inf"), "log_flat", lambda x: math.isfinite(x)),
+        (1.0, float("inf"), "uniform", lambda x: x > 0 and math.isfinite(x)),
+        (float("-inf"), -1.0, "uniform", lambda x: x < 0 and math.isfinite(x)),
+        (float("-inf"), float("inf"), "uniform", lambda x: math.isfinite(x)),
+        (1.0, float("inf"), "exp_uniform", lambda x: x > 0 and math.isfinite(x)),
+        (float("-inf"), -1.0, "exp_uniform", lambda x: x < 0 and math.isfinite(x)),
+        (float("-inf"), float("inf"), "exp_uniform", lambda x: math.isfinite(x)),
     ],
 )
 def test__random_float__range(minimum, maximum, weight: t.Any, assertion):
@@ -47,7 +49,9 @@ def test__random_float__range(minimum, maximum, weight: t.Any, assertion):
 
 
 @pytest.mark.parametrize("expected_value", (-1.0, 0.0, 1.0))
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__by_float(expected_value, weight):
     factory = randog.factory.randfloat(expected_value, expected_value, **weight)
 
@@ -64,7 +68,9 @@ def test__random_float__by_float(expected_value, weight):
         (2, 2.0),
     ),
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__by_int(condition, expected_value, weight):
     factory = randog.factory.randfloat(condition, condition, **weight)
 
@@ -81,7 +87,9 @@ def test__random_float__by_int(condition, expected_value, weight):
         (Decimal("0.125"), 0.125),
     ),
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__by_decimal(condition, expected_value, weight):
     factory = randog.factory.randfloat(condition, condition, **weight)
 
@@ -98,7 +106,9 @@ def test__random_float__by_decimal(condition, expected_value, weight):
         (Fraction("1/8"), 0.125),
     ),
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__by_fraction(condition, expected_value, weight):
     factory = randog.factory.randfloat(condition, condition, **weight)
 
@@ -115,7 +125,9 @@ def test__random_float__by_fraction(condition, expected_value, weight):
         (0.0, 1.0, float("-inf")),
     ),
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__inf(p_inf, n_inf, expected_value, weight):
     factory = randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, **weight)
 
@@ -125,7 +137,9 @@ def test__random_float__inf(p_inf, n_inf, expected_value, weight):
     assert value == expected_value
 
 
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__nan(weight):
     factory = randog.factory.randfloat(nan=1.0, **weight)
 
@@ -144,7 +158,9 @@ def test__random_float__nan(weight):
         (-0.0, -0.0),
     ),
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__inf_zero(p_inf, n_inf, weight):
     factory = randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, **weight)
 
@@ -154,7 +170,9 @@ def test__random_float__inf_zero(p_inf, n_inf, weight):
     assert math.isfinite(value)
 
 
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__or_none(weight):
     factory = randog.factory.randfloat(1, 1, **weight).or_none(0.5)
 
@@ -163,7 +181,9 @@ def test__random_float__or_none(weight):
     assert values == {1.0, None}
 
 
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__or_none_0(weight):
     factory = randog.factory.randfloat(1, 1, **weight).or_none(0)
 
@@ -182,7 +202,9 @@ def test__random_float__or_none_0(weight):
         (float("-inf"), float("-inf")),
     ],
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float_error_when_edges_inverse(minimum, maximum, weight):
     with pytest.raises(FactoryConstructionError) as e_ctx:
         randog.factory.randfloat(minimum, maximum, **weight)
@@ -199,7 +221,9 @@ def test__random_float_error_when_edges_inverse(minimum, maximum, weight):
         (float("nan"), float("nan")),
     ],
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float_error_when_edges_nan(minimum, maximum, weight):
     with pytest.raises(FactoryConstructionError) as e_ctx:
         randog.factory.randfloat(minimum, maximum, **weight)
@@ -208,7 +232,9 @@ def test__random_float_error_when_edges_nan(minimum, maximum, weight):
     assert e.message == "minimum and maximum are must not be nan"
 
 
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float_error_when_probability_gt_1(weight):
     with pytest.raises(FactoryConstructionError) as e_ctx:
         randog.factory.randfloat(p_inf=0.625, n_inf=0.5, **weight)
@@ -232,7 +258,9 @@ def test__random_float_error_when_probability_gt_1(weight):
         (-0.1, -0.1, -0.1),
     ),
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 def test__random_float__error_when_negative_probability(p_inf, n_inf, nan, weight):
     with pytest.raises(FactoryConstructionError) as e_ctx:
         randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, nan=nan, **weight)
@@ -339,7 +367,7 @@ def _sign_and_log2(x):
         ),
     ],
 )
-def test__random_float__log_flat__distribution(
+def test__random_float__exp_uniform__distribution(
     minimum,
     maximum,
     expect0,
@@ -349,7 +377,7 @@ def test__random_float__log_flat__distribution(
     value_is_valid,
 ):
     iter_count = 200000
-    factory = randog.factory.randfloat(minimum, maximum, weight="log_flat")
+    factory = randog.factory.randfloat(minimum, maximum, weight="exp_uniform")
 
     def assert_value(value: float) -> float:
         assert value_is_valid(value)
@@ -378,7 +406,9 @@ def test__random_float__log_flat__distribution(
         (lambda: {}, lambda: {}, False),
     ],
 )
-@pytest.mark.parametrize("weight", [{}, {"weight": "flat"}, {"weight": "log_flat"}])
+@pytest.mark.parametrize(
+    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+)
 @pytest.mark.parametrize(
     ("args", "kwargs"),
     [

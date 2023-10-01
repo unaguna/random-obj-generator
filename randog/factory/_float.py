@@ -145,6 +145,9 @@ class FloatRandomFactory(Factory[float]):
         if pre_weight < 0:
             return float("NaN")
 
+        return self._next_finite()
+
+    def _next_finite(self) -> float:
         weight = self._random.random()
         return self._max * weight + self._min * (1 - weight)
 
@@ -173,7 +176,7 @@ class FloatRandomFactory(Factory[float]):
             return float(minimum), float(maximum)
 
 
-class FloatExpRandomFactory(Factory[float]):
+class FloatExpRandomFactory(FloatRandomFactory):
     _random: Random
     _min: float
     _max: float
@@ -198,29 +201,7 @@ class FloatExpRandomFactory(Factory[float]):
         nan: t.SupportsFloat = 0.0,
         rnd: t.Optional[Random] = None,
     ):
-        self._random = decide_rnd(rnd)
-        self._min, self._max = self._normalize(minimum, maximum)
-        self._p_inf = float(p_inf)
-        self._n_inf = float(n_inf)
-        self._nan = float(nan)
-
-        if (
-            self._min > self._max
-            or self._min == float("inf")
-            or self._max == float("-inf")
-        ):
-            raise FactoryConstructionError("empty range for randfloat")
-        if math.isnan(self._min) or math.isnan(self._max):
-            raise FactoryConstructionError("minimum and maximum are must not be nan")
-        if self._p_inf < 0.0 or self._n_inf < 0.0 or self._nan < 0.0:
-            raise FactoryConstructionError(
-                "the probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
-            )
-        if self._p_inf + self._n_inf + self._nan > 1.0:
-            raise FactoryConstructionError(
-                "the sum of probabilities `p_inf`, `n_inf`, and `nan` "
-                "must range from 0 to 1"
-            )
+        super().__init__(minimum, maximum, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=rnd)
 
         self._min_exp, self._min_fraction = self._calc_exp_and_fraction(
             self._min,
@@ -276,18 +257,7 @@ class FloatExpRandomFactory(Factory[float]):
                 + self._pattern_num_of_max_exp
             )
 
-    def _next(self) -> float:
-        pre_weight = self._random.random()
-        pre_weight -= self._p_inf
-        if pre_weight < 0:
-            return float("inf")
-        pre_weight -= self._n_inf
-        if pre_weight < 0:
-            return float("-inf")
-        pre_weight -= self._nan
-        if pre_weight < 0:
-            return float("NaN")
-
+    def _next_finite(self) -> float:
         exp = self._next_exp()
         fraction = self._next_fraction(exp)
 

@@ -260,6 +260,10 @@ def _log2_int(x):
         return None
 
 
+def _sign_and_log2(x):
+    return _sign(x), _log2_int(x)
+
+
 @pytest.mark.parametrize(
     (
         "minimum",
@@ -339,7 +343,13 @@ def test__random_float__log_flat__distribution(
     iter_count = 200000
     factory = randog.factory.randfloat(minimum, maximum, weight="log_flat")
 
-    log_count = Counter((_sign(x), _log2_int(x)) for x in factory.iter(iter_count))
+    def assert_value(value: float) -> float:
+        assert minimum <= value <= maximum
+        return value
+
+    log_count = Counter(
+        _sign_and_log2(assert_value(x)) for x in factory.iter(iter_count)
+    )
 
     for key, count in log_count.items():
         assert count / iter_count in distribution[key]

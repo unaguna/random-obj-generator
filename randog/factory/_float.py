@@ -6,6 +6,7 @@ from random import Random
 from ._base import Factory, decide_rnd
 from .._utils import floatutils
 from ..exceptions import FactoryConstructionError
+from ..rangeutils import interval, IntInterval
 
 
 def randfloat(
@@ -180,8 +181,8 @@ class FloatExpRandomFactory(Factory[float]):
     _pattern_num_of_min_exp: int
     _pattern_num_of_max_exp: int
     _pattern_num: int
-    _fraction_minmax_of_min_exp: t.Tuple[int, int]
-    _fraction_minmax_of_max_exp: t.Tuple[int, int]
+    _fraction_range_of_min_exp: IntInterval
+    _fraction_range_of_max_exp: IntInterval
     _p_inf: float
     _n_inf: float
     _nan: float
@@ -237,37 +238,37 @@ class FloatExpRandomFactory(Factory[float]):
 
         if self._min_exp == self._max_exp:
             if self._min_exp < 0:
-                self._fraction_minmax_of_min_exp = (
-                    self._max_fraction,
-                    self._min_fraction,
+                self._fraction_range_of_min_exp = interval(
+                    self._max_fraction, self._min_fraction
                 )
-                self._fraction_minmax_of_max_exp = (
-                    self._max_fraction,
-                    self._min_fraction,
+                self._fraction_range_of_max_exp = interval(
+                    self._max_fraction, self._min_fraction
                 )
             else:
-                self._fraction_minmax_of_min_exp = (
-                    self._min_fraction,
-                    self._max_fraction,
+                self._fraction_range_of_min_exp = interval(
+                    self._min_fraction, self._max_fraction
                 )
-                self._fraction_minmax_of_max_exp = (
-                    self._min_fraction,
-                    self._max_fraction,
+                self._fraction_range_of_max_exp = interval(
+                    self._min_fraction, self._max_fraction
                 )
-            self._pattern_num_of_min_exp = _int_num(*self._fraction_minmax_of_min_exp)
-            self._pattern_num_of_max_exp = _int_num(*self._fraction_minmax_of_max_exp)
+            self._pattern_num_of_min_exp = self._fraction_range_of_min_exp.count_int()
+            self._pattern_num_of_max_exp = self._fraction_range_of_max_exp.count_int()
             self._pattern_num = self._pattern_num_of_min_exp
         else:
             if self._min_exp < 0:
-                self._fraction_minmax_of_min_exp = 0, self._min_fraction
+                self._fraction_range_of_min_exp = interval(0, self._min_fraction)
             else:
-                self._fraction_minmax_of_min_exp = self._min_fraction, 2**52 - 1
+                self._fraction_range_of_min_exp = interval(
+                    self._min_fraction, 2**52 - 1
+                )
             if self._max_exp < 0:
-                self._fraction_minmax_of_max_exp = self._max_fraction, 2**52 - 1
+                self._fraction_range_of_max_exp = interval(
+                    self._max_fraction, 2**52 - 1
+                )
             else:
-                self._fraction_minmax_of_max_exp = 0, self._max_fraction
-            self._pattern_num_of_min_exp = _int_num(*self._fraction_minmax_of_min_exp)
-            self._pattern_num_of_max_exp = _int_num(*self._fraction_minmax_of_max_exp)
+                self._fraction_range_of_max_exp = interval(0, self._max_fraction)
+            self._pattern_num_of_min_exp = self._fraction_range_of_min_exp.count_int()
+            self._pattern_num_of_max_exp = self._fraction_range_of_max_exp.count_int()
             self._pattern_num = (
                 (self._max_exp - self._min_exp - 1) * 2**52
                 + self._pattern_num_of_min_exp
@@ -306,9 +307,9 @@ class FloatExpRandomFactory(Factory[float]):
         if next_exp == 0:
             return 0
         elif next_exp == self._min_exp:
-            return self._random.randint(*self._fraction_minmax_of_min_exp)
+            return self._random.randint(*self._fraction_range_of_min_exp.minmax())
         elif next_exp == self._max_exp:
-            return self._random.randint(*self._fraction_minmax_of_max_exp)
+            return self._random.randint(*self._fraction_range_of_max_exp.minmax())
         else:
             return self._random.randrange(0, 2**52)
 
@@ -351,7 +352,3 @@ class FloatExpRandomFactory(Factory[float]):
         unsigned_exp = abs(exp)
 
         return floatutils.parse(sign, unsigned_exp, fraction)
-
-
-def _int_num(minimum: int, maximum: int) -> int:
-    return maximum - minimum + 1

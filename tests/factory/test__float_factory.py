@@ -8,7 +8,7 @@ from fractions import Fraction
 import pytest
 
 import randog.factory
-from randog.rangeutils import frange
+from randog.rangeutils import interval
 from randog.exceptions import FactoryConstructionError
 
 
@@ -276,7 +276,7 @@ def _log2_int(x):
             False,
             {0, 1, 2},
             set(),
-            defaultdict(lambda: frange(1 / 3).radius(0.02)),
+            defaultdict(lambda: interval(1 / 3).radius(0.02)),
         ),
         (
             0.25,
@@ -284,7 +284,7 @@ def _log2_int(x):
             False,
             {-2, -1, 0, 1, 2},
             set(),
-            defaultdict(lambda: frange(1 / 5).radius(0.02)),
+            defaultdict(lambda: interval(1 / 5).radius(0.02)),
         ),
         (
             -8.0,
@@ -292,7 +292,7 @@ def _log2_int(x):
             False,
             set(),
             {0, 1, 2},
-            defaultdict(lambda: frange(1 / 3).radius(0.02)),
+            defaultdict(lambda: interval(1 / 3).radius(0.02)),
         ),
         (
             -4.0,
@@ -300,7 +300,7 @@ def _log2_int(x):
             True,
             set(range(-1022, 3)),
             set(range(-1022, 2)),
-            defaultdict(lambda: frange(1 / 2049).radius(0.1)),
+            defaultdict(lambda: interval(1 / 2049).radius(0.1)),
         ),
         (
             1,
@@ -309,8 +309,8 @@ def _log2_int(x):
             {0, 1},
             set(),
             {
-                (1, 0): frange(2 / 3).radius(0.02),
-                (1, 1): frange(1 / 3).radius(0.02),
+                (1, 0): interval(2 / 3).radius(0.02),
+                (1, 1): interval(1 / 3).radius(0.02),
             },
         ),
         (
@@ -320,9 +320,9 @@ def _log2_int(x):
             set(),
             {0, 1, 2},
             defaultdict(
-                lambda: frange(4 / 9).radius(0.01),
+                lambda: interval(4 / 9).radius(0.01),
                 {
-                    (-1, 2): frange(1 / 9).radius(0.01),
+                    (-1, 2): interval(1 / 9).radius(0.01),
                 },
             ),
         ),

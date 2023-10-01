@@ -46,7 +46,7 @@ def randfloat(
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    if distribution == "uniform":
+    if distribution is None or distribution == "uniform":
         return FloatRandomFactory(
             minimum,
             maximum,

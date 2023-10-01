@@ -13,10 +13,10 @@ from randog.exceptions import FactoryConstructionError
 
 
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float(weight):
-    factory = randog.factory.randfloat(**weight)
+def test__random_float(distribution):
+    factory = randog.factory.randfloat(**distribution)
 
     value = factory.next()
 
@@ -24,7 +24,7 @@ def test__random_float(weight):
 
 
 @pytest.mark.parametrize(
-    ("minimum", "maximum", "weight", "assertion"),
+    ("minimum", "maximum", "distribution", "assertion"),
     [
         # negative zero
         (-0.0, -0.0, "uniform", lambda x: x == 0),
@@ -42,18 +42,18 @@ def test__random_float(weight):
         (float("-inf"), float("inf"), "exp_uniform", lambda x: math.isfinite(x)),
     ],
 )
-def test__random_float__range(minimum, maximum, weight: t.Any, assertion):
-    factory = randog.factory.randfloat(minimum, maximum, weight=weight)
+def test__random_float__range(minimum, maximum, distribution: t.Any, assertion):
+    factory = randog.factory.randfloat(minimum, maximum, distribution=distribution)
 
     assert {str(v) for v in factory.iter(100) if not assertion(v)} == set()
 
 
 @pytest.mark.parametrize("expected_value", (-1.0, 0.0, 1.0))
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__by_float(expected_value, weight):
-    factory = randog.factory.randfloat(expected_value, expected_value, **weight)
+def test__random_float__by_float(expected_value, distribution):
+    factory = randog.factory.randfloat(expected_value, expected_value, **distribution)
 
     value = factory.next()
 
@@ -69,10 +69,10 @@ def test__random_float__by_float(expected_value, weight):
     ),
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__by_int(condition, expected_value, weight):
-    factory = randog.factory.randfloat(condition, condition, **weight)
+def test__random_float__by_int(condition, expected_value, distribution):
+    factory = randog.factory.randfloat(condition, condition, **distribution)
 
     value = factory.next()
 
@@ -88,10 +88,10 @@ def test__random_float__by_int(condition, expected_value, weight):
     ),
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__by_decimal(condition, expected_value, weight):
-    factory = randog.factory.randfloat(condition, condition, **weight)
+def test__random_float__by_decimal(condition, expected_value, distribution):
+    factory = randog.factory.randfloat(condition, condition, **distribution)
 
     value = factory.next()
 
@@ -107,10 +107,10 @@ def test__random_float__by_decimal(condition, expected_value, weight):
     ),
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__by_fraction(condition, expected_value, weight):
-    factory = randog.factory.randfloat(condition, condition, **weight)
+def test__random_float__by_fraction(condition, expected_value, distribution):
+    factory = randog.factory.randfloat(condition, condition, **distribution)
 
     value = factory.next()
 
@@ -126,10 +126,10 @@ def test__random_float__by_fraction(condition, expected_value, weight):
     ),
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__inf(p_inf, n_inf, expected_value, weight):
-    factory = randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, **weight)
+def test__random_float__inf(p_inf, n_inf, expected_value, distribution):
+    factory = randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, **distribution)
 
     value = factory.next()
 
@@ -138,10 +138,10 @@ def test__random_float__inf(p_inf, n_inf, expected_value, weight):
 
 
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__nan(weight):
-    factory = randog.factory.randfloat(nan=1.0, **weight)
+def test__random_float__nan(distribution):
+    factory = randog.factory.randfloat(nan=1.0, **distribution)
 
     value = factory.next()
 
@@ -159,10 +159,10 @@ def test__random_float__nan(weight):
     ),
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__inf_zero(p_inf, n_inf, weight):
-    factory = randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, **weight)
+def test__random_float__inf_zero(p_inf, n_inf, distribution):
+    factory = randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, **distribution)
 
     value = factory.next()
 
@@ -171,10 +171,10 @@ def test__random_float__inf_zero(p_inf, n_inf, weight):
 
 
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__or_none(weight):
-    factory = randog.factory.randfloat(1, 1, **weight).or_none(0.5)
+def test__random_float__or_none(distribution):
+    factory = randog.factory.randfloat(1, 1, **distribution).or_none(0.5)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -182,10 +182,10 @@ def test__random_float__or_none(weight):
 
 
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__or_none_0(weight):
-    factory = randog.factory.randfloat(1, 1, **weight).or_none(0)
+def test__random_float__or_none_0(distribution):
+    factory = randog.factory.randfloat(1, 1, **distribution).or_none(0)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -203,11 +203,11 @@ def test__random_float__or_none_0(weight):
     ],
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float_error_when_edges_inverse(minimum, maximum, weight):
+def test__random_float_error_when_edges_inverse(minimum, maximum, distribution):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.randfloat(minimum, maximum, **weight)
+        randog.factory.randfloat(minimum, maximum, **distribution)
     e = e_ctx.value
 
     assert e.message == "empty range for randfloat"
@@ -222,22 +222,22 @@ def test__random_float_error_when_edges_inverse(minimum, maximum, weight):
     ],
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float_error_when_edges_nan(minimum, maximum, weight):
+def test__random_float_error_when_edges_nan(minimum, maximum, distribution):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.randfloat(minimum, maximum, **weight)
+        randog.factory.randfloat(minimum, maximum, **distribution)
     e = e_ctx.value
 
     assert e.message == "minimum and maximum are must not be nan"
 
 
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float_error_when_probability_gt_1(weight):
+def test__random_float_error_when_probability_gt_1(distribution):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.randfloat(p_inf=0.625, n_inf=0.5, **weight)
+        randog.factory.randfloat(p_inf=0.625, n_inf=0.5, **distribution)
     e = e_ctx.value
 
     assert (
@@ -259,11 +259,13 @@ def test__random_float_error_when_probability_gt_1(weight):
     ),
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
-def test__random_float__error_when_negative_probability(p_inf, n_inf, nan, weight):
+def test__random_float__error_when_negative_probability(
+    p_inf, n_inf, nan, distribution
+):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, nan=nan, **weight)
+        randog.factory.randfloat(p_inf=p_inf, n_inf=n_inf, nan=nan, **distribution)
     e = e_ctx.value
 
     assert (
@@ -377,7 +379,7 @@ def test__random_float__exp_uniform__distribution(
     value_is_valid,
 ):
     iter_count = 200000
-    factory = randog.factory.randfloat(minimum, maximum, weight="exp_uniform")
+    factory = randog.factory.randfloat(minimum, maximum, distribution="exp_uniform")
 
     def assert_value(value: float) -> float:
         assert value_is_valid(value)
@@ -407,7 +409,7 @@ def test__random_float__exp_uniform__distribution(
     ],
 )
 @pytest.mark.parametrize(
-    "weight", [{}, {"weight": "uniform"}, {"weight": "exp_uniform"}]
+    "distribution", [{}, {"distribution": "uniform"}, {"distribution": "exp_uniform"}]
 )
 @pytest.mark.parametrize(
     ("args", "kwargs"),
@@ -420,10 +422,12 @@ def test__random_float__exp_uniform__distribution(
         ([-1.25, 1.5], {"p_inf": 0.2, "n_inf": 0.2, "nan": 0.2}),
     ],
 )
-def test__random_float__seed(rnd1, rnd2, expect_same_output, weight, args, kwargs):
+def test__random_float__seed(
+    rnd1, rnd2, expect_same_output, distribution, args, kwargs
+):
     repeat = 20
-    factory1 = randog.factory.randfloat(*args, **weight, **rnd1(), **kwargs)
-    factory2 = randog.factory.randfloat(*args, **weight, **rnd2(), **kwargs)
+    factory1 = randog.factory.randfloat(*args, **distribution, **rnd1(), **kwargs)
+    factory2 = randog.factory.randfloat(*args, **distribution, **rnd2(), **kwargs)
 
     # NaN != NaN となってしまうため、repr 文字列で比較する
     generated1 = [repr(v) for v in factory1.iter(repeat)]

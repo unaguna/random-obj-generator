@@ -18,7 +18,7 @@ def randfloat(
     p_inf: t.SupportsFloat = 0.0,
     n_inf: t.SupportsFloat = 0.0,
     nan: t.SupportsFloat = 0.0,
-    weight: t.Literal["uniform", "exp_uniform"] = "uniform",
+    distribution: t.Literal["uniform", "exp_uniform"] = "uniform",
     rnd: t.Optional[Random] = None,
 ) -> Factory[float]:
     """Return a factory generating random float values.
@@ -35,7 +35,7 @@ def randfloat(
         the probability of negative infinity
     nan : float, default=0
         the probability of NaN
-    weight : "uniform"|"exp_uniform", default="flat"
+    distribution : "uniform"|"exp_uniform", default="flat"
         probability distribution. If 'flat', the distribution is uniform.
         If 'exp_uniform', the distribution of digits (log with a base of 2) is uniform.
     rnd : Random, optional
@@ -46,7 +46,7 @@ def randfloat(
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    if weight == "uniform":
+    if distribution == "uniform":
         return FloatRandomFactory(
             minimum,
             maximum,
@@ -55,7 +55,7 @@ def randfloat(
             nan=nan,
             rnd=rnd,
         )
-    elif weight == "exp_uniform":
+    elif distribution == "exp_uniform":
         return FloatExpRandomFactory(
             minimum,
             maximum,
@@ -65,7 +65,7 @@ def randfloat(
             rnd=rnd,
         )
     else:
-        raise ValueError(f"illegal weight: {weight}")
+        raise ValueError(f"illegal distribution: {distribution}")
 
 
 class _BaseFloatRandomFactory(Factory[float], abc.ABC):

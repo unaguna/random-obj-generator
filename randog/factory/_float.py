@@ -5,6 +5,7 @@ from random import Random
 
 from ._base import Factory, decide_rnd
 from .._utils import floatutils
+from .._utils.floatutils import FRACTION_MAX
 from ..exceptions import FactoryConstructionError
 from ..rangeutils import interval, IntInterval
 
@@ -259,11 +260,11 @@ class FloatExpRandomFactory(Factory[float]):
                 self._fraction_range_of_min_exp = interval(0, self._min_fraction)
             else:
                 self._fraction_range_of_min_exp = interval(
-                    self._min_fraction, 2**52 - 1
+                    self._min_fraction, FRACTION_MAX
                 )
             if self._max_exp < 0:
                 self._fraction_range_of_max_exp = interval(
-                    self._max_fraction, 2**52 - 1
+                    self._max_fraction, FRACTION_MAX
                 )
             else:
                 self._fraction_range_of_max_exp = interval(0, self._max_fraction)

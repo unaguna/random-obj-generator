@@ -150,18 +150,18 @@ class IntExpRandomFactory(Factory[int]):
             self._range_of_max_exp = interval(_min_of_max_exp, self._max)
 
             prop_base = (
-                self._range_of_min_exp.count_int() / (1 << (min_bit_len - 1))
-                + self._range_of_max_exp.count_int() / (1 << (max_bit_len - 1))
+                self._range_of_min_exp.count_int() / _count_by_bit_len(min_bit_len)
+                + self._range_of_max_exp.count_int() / _count_by_bit_len(max_bit_len)
                 + non_edge_exp_num
             )
             self._prop_min_exp = (
                 self._range_of_min_exp.count_int()
-                / (1 << (min_bit_len - 1))
+                / _count_by_bit_len(min_bit_len)
                 / prop_base
             )
             self._prop_max_exp = (
                 self._range_of_max_exp.count_int()
-                / (1 << (max_bit_len - 1))
+                / _count_by_bit_len(max_bit_len)
                 / prop_base
             )
 
@@ -184,6 +184,17 @@ class IntExpRandomFactory(Factory[int]):
             return sign * self._random.randint(1 << (bit_len - 1), (1 << bit_len) - 1)
         else:
             return 0
+
+
+def _count_by_bit_len(bit_len: int) -> int:
+    """count the number of non-negative integer n such as n.bit_len = bit_len"""
+
+    if bit_len > 0:
+        return 1 << (bit_len - 1)
+    elif bit_len == 0:
+        return 1
+    else:
+        raise ValueError(bit_len)
 
 
 def _sign(x):

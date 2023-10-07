@@ -361,9 +361,9 @@ def test__main__int__seed(
 ):
     output_path0 = tmp_path.joinpath("out_0.txt")
     output_path1 = tmp_path.joinpath("out_1.txt")
-    args_base = ["randog", "int", "0", "100", "--repeat=50"]
-    args0 = [*args_base, *seed0, "--output", str(output_path0), *distribution]
-    args1 = [*args_base, *seed1, "--output", str(output_path1), *distribution]
+    args_base = ["randog", "int", "0", "100", "--repeat=50", *distribution]
+    args0 = [*args_base, *seed0, "--output", str(output_path0)]
+    args1 = [*args_base, *seed1, "--output", str(output_path1)]
 
     with patch.object(sys, "argv", args0):
         randog.__main__.main()

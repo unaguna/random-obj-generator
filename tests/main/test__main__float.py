@@ -521,10 +521,19 @@ def test__main__float__error_duplicate_format(capfd, resources, options):
         ([], [], False),
     ],
 )
-def test__main__float__seed(capfd, tmp_path, seed0, seed1, expect_same_output):
+@pytest.mark.parametrize(
+    ("distribution",),
+    [
+        ([],),
+        (["--exp-uniform"],),
+    ],
+)
+def test__main__float__seed(
+    capfd, tmp_path, seed0, seed1, expect_same_output, distribution
+):
     output_path0 = tmp_path.joinpath("out_0.txt")
     output_path1 = tmp_path.joinpath("out_1.txt")
-    args_base = ["randog", "float", "0", "100", "--repeat=50"]
+    args_base = ["randog", "float", "0", "100", "--repeat=50", *distribution]
     args0 = [*args_base, *seed0, "--output", str(output_path0)]
     args1 = [*args_base, *seed1, "--output", str(output_path1)]
 

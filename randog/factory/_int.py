@@ -3,6 +3,7 @@ from random import Random
 
 from ._base import Factory, decide_rnd
 from ..exceptions import FactoryConstructionError
+from ..rangeutils import interval, IntInterval
 
 
 def randint(
@@ -31,7 +32,12 @@ def randint(
     FactoryConstructionError
         When the specified generating conditions are inconsistent.
     """
-    return IntRandomFactory(minimum, maximum, rnd=rnd)
+    if distribution is None or distribution == "uniform":
+        return IntRandomFactory(minimum, maximum, rnd=rnd)
+    elif distribution == "exp_uniform":
+        return IntExpRandomFactory(minimum, maximum, rnd=rnd)
+    else:
+        raise ValueError(f"illegal distribution: {distribution}")
 
 
 class IntRandomFactory(Factory[int]):
@@ -73,3 +79,117 @@ class IntRandomFactory(Factory[int]):
 
     def _next(self) -> int:
         return self._random.randint(self._min, self._max)
+
+
+class IntExpRandomFactory(Factory[int]):
+    """factory generating random int values"""
+
+    _random: Random
+    _min: int
+    _max: int
+    _range_of_min_exp: IntInterval
+    _range_of_max_exp: IntInterval
+    # _pattern_num_of_min_exp: int
+    # _pattern_num_of_max_exp: int
+    # _pattern_num: int
+    _prop_min_exp: float
+    _prop_max_exp: float
+
+    _range_of_non_edge_signed_bit_len: IntInterval
+    """positive a means 2^(a-1), negative -a means -2^(a-1), 0 means 0"""
+
+    def __init__(
+        self,
+        minimum: int,
+        maximum: int,
+        *,
+        rnd: t.Optional[Random] = None,
+    ):
+        self._random = decide_rnd(rnd)
+        self._min = minimum
+        self._max = maximum
+
+        if minimum > maximum:
+            raise FactoryConstructionError("empty range for randint")
+
+        min_bit_len = self._min.bit_length()
+        signed_min_bit_len = min_bit_len * _sign(self._min)
+        max_bit_len = self._max.bit_length()
+        signed_max_bit_len = max_bit_len * _sign(self._max)
+
+        if min_bit_len == max_bit_len:
+            self._range_of_min_exp = interval(self._min, self._max)
+            self._range_of_max_exp = interval(self._min, self._max)
+            self._range_of_non_edge_signed_bit_len = interval(empty=True)
+
+            self._prop_min_exp = 1.0
+            self._prop_max_exp = 1.0
+        else:
+            if self._min > 0:
+                _max_of_min_exp = (1 << min_bit_len) - 1
+            elif self._min < 0:
+                _max_of_min_exp = -(1 << (min_bit_len - 1))
+            else:
+                _max_of_min_exp = 0
+            if self._max > 0:
+                _min_of_max_exp = 1 << (max_bit_len - 1)
+            elif self._max < 0:
+                _min_of_max_exp = -((1 << max_bit_len) - 1)
+            else:
+                _min_of_max_exp = 0
+
+            if self._min * self._max >= 0:
+                non_edge_exp_num = abs(max_bit_len - min_bit_len) - 1
+            else:
+                non_edge_exp_num = max_bit_len + min_bit_len - 1
+
+            self._range_of_non_edge_signed_bit_len = interval(
+                signed_min_bit_len + 1, signed_max_bit_len - 1
+            )
+            self._range_of_min_exp = interval(self._min, _max_of_min_exp)
+            self._range_of_max_exp = interval(_min_of_max_exp, self._max)
+
+            prop_base = (
+                self._range_of_min_exp.count_int() / (1 << (min_bit_len - 1))
+                + self._range_of_max_exp.count_int() / (1 << (max_bit_len - 1))
+                + non_edge_exp_num
+            )
+            self._prop_min_exp = (
+                self._range_of_min_exp.count_int()
+                / (1 << (min_bit_len - 1))
+                / prop_base
+            )
+            self._prop_max_exp = (
+                self._range_of_max_exp.count_int()
+                / (1 << (max_bit_len - 1))
+                / prop_base
+            )
+
+    def _next(self) -> int:
+        pre_weight = self._random.random()
+        pre_weight -= self._prop_min_exp
+        if pre_weight < 0:
+            return self._random.randint(*self._range_of_min_exp.minmax())
+        pre_weight -= self._prop_max_exp
+        if pre_weight < 0:
+            return self._random.randint(*self._range_of_max_exp.minmax())
+
+        signed_bit_len = self._random.randint(
+            *self._range_of_non_edge_signed_bit_len.minmax()
+        )
+        bit_len = abs(signed_bit_len)
+        sign = _sign(signed_bit_len)
+
+        if bit_len != 0:
+            return sign * self._random.randint(1 << (bit_len - 1), (1 << bit_len) - 1)
+        else:
+            return 0
+
+
+def _sign(x):
+    if x > 0:
+        return 1
+    elif x < 0:
+        return -1
+    else:
+        return 0

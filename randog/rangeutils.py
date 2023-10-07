@@ -42,17 +42,59 @@ class IntInterval(FloatInterval):
         return self._max - self._min + 1
 
 
+class EmptyInterval(IntInterval):
+    def __init__(self):
+        super().__init__(float("nan"), float("nan"))
+
+    def __contains__(self, item):
+        return False
+
+    def __repr__(self):
+        return "interval.empty()"
+
+    def count_int(self) -> int:
+        return 0
+
+    def radius(self, radius: float) -> "FloatInterval":
+        raise Exception("cannot calc a radius interval whose center is empty interval")
+
+    def minmax(self) -> t.Iterable[float]:
+        raise Exception("the empty interval have neither minimum nor maximum")
+
+
 @t.overload
-def interval(minimum: int, maximum: t.Optional[int] = None) -> IntInterval:
+def interval(
+    minimum: int, maximum: t.Optional[int] = None, *, empty: t.Literal[False] = False
+) -> IntInterval:
     pass
 
 
 @t.overload
-def interval(minimum: float, maximum: t.Optional[float] = None) -> FloatInterval:
+def interval(
+    minimum: float,
+    maximum: t.Optional[float] = None,
+    *,
+    empty: t.Literal[False] = False,
+) -> FloatInterval:
     pass
 
 
-def interval(minimum: float, maximum: t.Optional[float] = None) -> FloatInterval:
+@t.overload
+def interval(
+    minimum: None = None, maximum: None = None, *, empty: t.Literal[True]
+) -> EmptyInterval:
+    pass
+
+
+def interval(
+    minimum: t.Optional[float] = None,
+    maximum: t.Optional[float] = None,
+    *,
+    empty: bool = False,
+) -> FloatInterval:
+    if empty:
+        return EmptyInterval()
+
     if maximum is None:
         maximum = minimum
 

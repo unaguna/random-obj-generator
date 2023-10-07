@@ -84,24 +84,21 @@ def _sign_and_log2(x):
         "distribution",
     ),
     [
-        (
-            1,
-            7,
-            set(range(1, 8)),
-            defaultdict(lambda: interval(1 / 3).radius(0.02)),
-        ),
-        (
-            -7,
-            -1,
-            set(range(-7, 0)),
-            defaultdict(lambda: interval(1 / 3).radius(0.02)),
-        ),
-        (
-            -3,
-            7,
-            set(range(-3, 8)),
-            defaultdict(lambda: interval(1 / 6).radius(0.02)),
-        ),
+        (1, 7, set(range(1, 8)), defaultdict(lambda: interval(1 / 3).radius(0.02))),
+        (1, 31, set(range(1, 32)), defaultdict(lambda: interval(1 / 5).radius(0.02))),
+        (0, 7, set(range(0, 8)), defaultdict(lambda: interval(1 / 4).radius(0.02))),
+        (18, 31, set(range(18, 32)), defaultdict(lambda: interval(1))),
+        (18, 18, {18}, defaultdict(lambda: interval(1))),
+        (-7, -1, set(range(-7, 0)), defaultdict(lambda: interval(1 / 3).radius(0.02))),
+        (-7, 0, set(range(-7, 1)), defaultdict(lambda: interval(1 / 4).radius(0.02))),
+        (-31, -18, set(range(-31, -17)), defaultdict(lambda: interval(1))),
+        (-18, -18, {-18}, defaultdict(lambda: interval(1))),
+        (0, 0, {0}, defaultdict(lambda: interval(1))),
+        (1, 1, {1}, defaultdict(lambda: interval(1))),
+        (2, 2, {2}, defaultdict(lambda: interval(1))),
+        (-1, -1, {-1}, defaultdict(lambda: interval(1))),
+        (-2, -2, {-2}, defaultdict(lambda: interval(1))),
+        (-3, 7, set(range(-3, 8)), defaultdict(lambda: interval(1 / 6).radius(0.02))),
         (
             1,
             5,  # ; it is not 2^x
@@ -132,7 +129,7 @@ def test__random_int__exp_uniform__distribution(
     expected_values,
     distribution,
 ):
-    iter_count = 5000
+    iter_count = 20000
     factory = randog.factory.randint(minimum, maximum, distribution="exp_uniform")
 
     value_count = {
@@ -147,6 +144,8 @@ def test__random_int__exp_uniform__distribution(
         k: sum((v for _, v in v_c))
         for k, v_c in groupby(value_count.items(), lambda v_c: _sign_and_log2(v_c[0]))
     }
+    print(value_count)
+    print(log_count)
 
     assert value_count.keys() == expected_values
     for key, count in log_count.items():

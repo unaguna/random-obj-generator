@@ -93,7 +93,7 @@ class IntExpRandomFactory(Factory[int]):
     _prop_min_bit_len: float
     _prop_max_bit_len: float
 
-    _range_of_non_edge_signed_bit_len: IntInterval
+    _range_of_non_edge_bit_len: IntInterval
     """positive a means 2^(a-1), negative -a means -2^(a-1), 0 means 0"""
 
     def __init__(
@@ -111,30 +111,22 @@ class IntExpRandomFactory(Factory[int]):
         if minimum > maximum:
             raise FactoryConstructionError("empty range for randint")
 
-        min_bit_len = self._min.bit_length()
-        signed_min_bit_len = min_bit_len * _sign(self._min)
-        max_bit_len = self._max.bit_length()
-        signed_max_bit_len = max_bit_len * _sign(self._max)
+        min_bit_len = self._min.bit_length() * _sign(self._min)
+        max_bit_len = self._max.bit_length() * _sign(self._max)
 
-        if signed_min_bit_len == signed_max_bit_len:
+        if min_bit_len == max_bit_len:
             self._range_of_min_bit_len = self._range
             self._range_of_max_bit_len = self._range
-            self._range_of_non_edge_signed_bit_len = interval(empty=True)
+            self._range_of_non_edge_bit_len = interval(empty=True)
 
             self._prop_min_bit_len = 1.0
             self._prop_max_bit_len = 1.0
         else:
-            self._range_of_non_edge_signed_bit_len = interval(
-                signed_min_bit_len + 1, signed_max_bit_len - 1
-            )
-            self._range_of_min_bit_len = self._range & interval(
-                bit_len=signed_min_bit_len
-            )
-            self._range_of_max_bit_len = self._range & interval(
-                bit_len=signed_max_bit_len
-            )
+            self._range_of_non_edge_bit_len = interval(min_bit_len + 1, max_bit_len - 1)
+            self._range_of_min_bit_len = self._range & interval(bit_len=min_bit_len)
+            self._range_of_max_bit_len = self._range & interval(bit_len=max_bit_len)
 
-            non_edge_bit_len_count = signed_max_bit_len - signed_min_bit_len - 1
+            non_edge_bit_len_count = max_bit_len - min_bit_len - 1
             prop_base = (
                 self._range_of_min_bit_len.count_int() / _count_by_bit_len(min_bit_len)
                 + self._range_of_max_bit_len.count_int()
@@ -161,23 +153,23 @@ class IntExpRandomFactory(Factory[int]):
         if pre_weight < 0:
             return self._random.randint(*self._range_of_max_bit_len.minmax())
 
-        signed_bit_len = self._random.randint(
-            *self._range_of_non_edge_signed_bit_len.minmax()
-        )
-        bit_len = abs(signed_bit_len)
-        sign = _sign(signed_bit_len)
+        bit_len = self._random.randint(*self._range_of_non_edge_bit_len.minmax())
+        unsigned_bit_len = abs(bit_len)
+        sign = _sign(bit_len)
 
-        if bit_len != 0:
-            return sign * self._random.randint(1 << (bit_len - 1), (1 << bit_len) - 1)
+        if unsigned_bit_len != 0:
+            return sign * self._random.randint(
+                1 << (unsigned_bit_len - 1), (1 << unsigned_bit_len) - 1
+            )
         else:
             return 0
 
 
 def _count_by_bit_len(bit_len: int) -> int:
-    """count the number of non-negative integer n such as n.bit_len = bit_len"""
+    """count the number of non-negative integer n such as n.bit_len = abs(bit_len)"""
 
-    if bit_len > 0:
-        return 1 << (bit_len - 1)
+    if bit_len != 0:
+        return 1 << (abs(bit_len) - 1)
     elif bit_len == 0:
         return 1
     else:

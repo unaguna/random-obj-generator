@@ -1,5 +1,6 @@
 import filecmp
 import sys
+from unittest import mock
 from unittest.mock import patch
 
 import pytest
@@ -75,6 +76,33 @@ def test__main__int__error_when_max_lt_min(capfd):
         assert out == ""
         assert err.startswith("usage:")
         assert "int: error: arguments must satisfy MINIMUM <= MAXIMUM" in err
+
+
+@pytest.mark.parametrize(
+    ("minimum", "maximum", "options", "expected_kwargs"),
+    [
+        (1, 8, [], {}),
+        (-8, -1, [], {}),
+    ],
+)
+@patch("randog.factory.randint", side_effect=randog.factory.randint)
+def test__main__int__weight__exp_uniform(
+    mock_func: mock.MagicMock, capfd, minimum, maximum, options, expected_kwargs
+):
+    args = ["randog", "int", *options, "--exp-uniform", str(minimum), str(maximum)]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        mock_func.assert_called_once()
+        assert mock_func.mock_calls[0].args == (minimum, maximum)
+        assert mock_func.mock_calls[0].kwargs.get("distribution") == "exp_uniform"
+        assert {
+            k: mock_func.mock_calls[0].kwargs.get(k) for k in expected_kwargs.keys()
+        } == expected_kwargs
+
+        out, err = capfd.readouterr()
+        assert out != ""
+        assert err == ""
 
 
 @pytest.mark.parametrize(
@@ -321,12 +349,21 @@ def test__main__int__error_duplicate_format(capfd, resources, options):
         ([], [], False),
     ],
 )
-def test__main__int__seed(capfd, tmp_path, seed0, seed1, expect_same_output):
+@pytest.mark.parametrize(
+    ("distribution",),
+    [
+        ([],),
+        (["--exp-uniform"],),
+    ],
+)
+def test__main__int__seed(
+    capfd, tmp_path, seed0, seed1, expect_same_output, distribution
+):
     output_path0 = tmp_path.joinpath("out_0.txt")
     output_path1 = tmp_path.joinpath("out_1.txt")
     args_base = ["randog", "int", "0", "100", "--repeat=50"]
-    args0 = [*args_base, *seed0, "--output", str(output_path0)]
-    args1 = [*args_base, *seed1, "--output", str(output_path1)]
+    args0 = [*args_base, *seed0, "--output", str(output_path0), *distribution]
+    args1 = [*args_base, *seed1, "--output", str(output_path1), *distribution]
 
     with patch.object(sys, "argv", args0):
         randog.__main__.main()

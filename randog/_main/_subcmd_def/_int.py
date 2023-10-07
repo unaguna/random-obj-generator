@@ -35,6 +35,16 @@ class SubcmdDefInt(SubcmdDef):
             help="the maximum value",
         )
         int_args_group.add_argument(
+            "--exp-uniform",
+            dest="distribution",
+            action="store_const",
+            const="exp_uniform",
+            help=(
+                "if specified, the distribution of digits (log with a base of 2) is "
+                "uniform."
+            ),
+        )
+        int_args_group.add_argument(
             "--fmt",
             dest="format",
             metavar="FORMAT",
@@ -59,7 +69,10 @@ class SubcmdDefInt(SubcmdDef):
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
         rnd = construct_random(args.seed)
-        return (args.get("minimum"), args.get("maximum")), {"rnd": rnd}
+        return (args.get("minimum"), args.get("maximum")), {
+            "distribution": args.get("distribution"),
+            "rnd": rnd,
+        }
 
     def get_factory_constructor(self) -> t.Callable:
         return randog.factory.randint

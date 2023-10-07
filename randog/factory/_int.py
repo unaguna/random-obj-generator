@@ -159,10 +159,8 @@ def _count_by_bit_len(bit_len: int) -> int:
 
     if bit_len != 0:
         return 1 << (abs(bit_len) - 1)
-    elif bit_len == 0:
-        return 1
     else:
-        raise ValueError(bit_len)
+        return 1
 
 
 def _sign(x):

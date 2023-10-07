@@ -116,7 +116,7 @@ class IntExpRandomFactory(Factory[int]):
         max_bit_len = self._max.bit_length()
         signed_max_bit_len = max_bit_len * _sign(self._max)
 
-        if min_bit_len == max_bit_len:
+        if signed_min_bit_len == signed_max_bit_len:
             self._range_of_min_bit_len = self._range
             self._range_of_max_bit_len = self._range
             self._range_of_non_edge_signed_bit_len = interval(empty=True)

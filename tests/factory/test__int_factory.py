@@ -100,6 +100,12 @@ def _sign_and_log2(x):
         (-2, -2, {-2}, defaultdict(lambda: interval(1))),
         (-3, 7, set(range(-3, 8)), defaultdict(lambda: interval(1 / 6).radius(0.02))),
         (
+            -15,
+            15,
+            set(range(-15, 16)),
+            defaultdict(lambda: interval(1 / 9).radius(0.02)),
+        ),
+        (
             1,
             5,  # ; it is not 2^x
             {1, 2, 3, 4, 5},
@@ -118,6 +124,18 @@ def _sign_and_log2(x):
                 lambda: interval(2 / 5).radius(0.01),
                 {
                     (-1, 2): interval(1 / 5).radius(0.02),
+                },
+            ),
+        ),
+        (
+            -5,  # ; it is not 2^x
+            5,
+            set(range(-5, 6)),
+            defaultdict(
+                lambda: interval(1 / 6).radius(0.01),
+                {
+                    (-1, 2): interval(1 / 12).radius(0.02),
+                    (1, 2): interval(1 / 12).radius(0.02),
                 },
             ),
         ),

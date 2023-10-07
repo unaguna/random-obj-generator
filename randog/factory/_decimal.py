@@ -1,3 +1,4 @@
+import math
 import typing as t
 from decimal import Decimal
 from random import Random
@@ -98,7 +99,8 @@ class DecimalRandomFactory(Factory[Decimal]):
         self._factory = randfloat(
             minimum, maximum, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=self._random
         )
-        self._decimal_len = dforc(lambda x: Decimal(1).scaleb(-x), decimal_len)
+        d = _calc_decimal_len(minimum, maximum, decimal_len)
+        self._decimal_len = dforc(lambda x: Decimal(1).scaleb(-x), d)
 
     def _next(self) -> Decimal:
         pre_value = self._factory.next()
@@ -108,3 +110,27 @@ class DecimalRandomFactory(Factory[Decimal]):
             value = value.quantize(self._decimal_len)
 
         return value
+
+
+def _calc_decimal_len(
+    minimum: t.Optional[t.SupportsFloat],
+    maximum: t.Optional[t.SupportsFloat],
+    decimal_len: t.Optional[int],
+) -> t.Optional[int]:
+    if decimal_len is not None:
+        return decimal_len
+
+    edge_exponents = []
+    if isinstance(minimum, Decimal):
+        edge_exponents.append(minimum.as_tuple().exponent)
+    if isinstance(maximum, Decimal):
+        edge_exponents.append(maximum.as_tuple().exponent)
+
+    if len(edge_exponents) > 0:
+        return -min(edge_exponents)
+
+    if minimum is not None and maximum is not None and maximum > minimum:
+        return -math.floor(math.log10(maximum - minimum))
+    else:
+        # TODO: 仕様を検討
+        return None

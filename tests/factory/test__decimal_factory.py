@@ -83,21 +83,29 @@ def test__random_decimal__by_fraction(condition, expected_value):
 
 
 @pytest.mark.parametrize(
-    ("condition", "decimal_len", "expected_value"),
+    ("minimum", "maximum", "decimal_len", "expected_value"),
     (
-        (1.0, 0, Decimal("1")),
-        (1.0, 1, Decimal("1.0")),
-        (1.0, 2, Decimal("1.00")),
-        (0.2, 0, Decimal("0")),
-        (0.2, 1, Decimal("0.2")),
-        (0.2, 2, Decimal("0.20")),
-        (15.0, 0, Decimal("15")),
-        (15.0, 1, Decimal("15.0")),
-        (15.0, 2, Decimal("15.00")),
+        (1.0, 1.0, 0, Decimal("1")),
+        (1.0, 1.0, 1, Decimal("1.0")),
+        (1.0, 1.0, 2, Decimal("1.00")),
+        (0.2, 0.2, 0, Decimal("0")),
+        (0.2, 0.2, 1, Decimal("0.2")),
+        (0.2, 0.2, 2, Decimal("0.20")),
+        (15.0, 15.0, 0, Decimal("15")),
+        (15.0, 15.0, 1, Decimal("15.0")),
+        (15.0, 15.0, 2, Decimal("15.00")),
+        (Decimal("1"), Decimal("1"), None, Decimal("1")),
+        (Decimal("1.0"), Decimal("1.0"), None, Decimal("1.0")),
+        (Decimal("1.0"), Decimal("1.00"), None, Decimal("1.00")),
+        (Decimal("1.00"), Decimal("1.0"), None, Decimal("1.00")),
+        (Decimal("1.00"), 1.0, None, Decimal("1.00")),
+        (1.0, Decimal("1.00"), None, Decimal("1.00")),
+        (Decimal("1E+2"), Decimal("1E+2"), None, Decimal("1E+2")),
+        # TODO: min も max も non-Decimal で decimal_len の指定がない場合の仕様を検討
     ),
 )
-def test__random_decimal__decimal_len(condition, decimal_len, expected_value):
-    factory = randog.factory.randdecimal(condition, condition, decimal_len=decimal_len)
+def test__random_decimal__decimal_len(minimum, maximum, decimal_len, expected_value):
+    factory = randog.factory.randdecimal(minimum, maximum, decimal_len=decimal_len)
 
     value = factory.next()
 

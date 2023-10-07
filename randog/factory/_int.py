@@ -126,23 +126,20 @@ class IntExpRandomFactory(Factory[int]):
             self._range_of_min_bit_len = self._range & interval(bit_len=min_bit_len)
             self._range_of_max_bit_len = self._range & interval(bit_len=max_bit_len)
 
-            non_edge_bit_len_count = max_bit_len - min_bit_len - 1
-            prop_base = (
+            # the prob weight of edge bit_len; the weight non-edge bit_len is 1.0
+            weight_of_min_bit_len = (
                 self._range_of_min_bit_len.count_int() / _count_by_bit_len(min_bit_len)
-                + self._range_of_max_bit_len.count_int()
-                / _count_by_bit_len(max_bit_len)
-                + non_edge_bit_len_count
             )
-            self._prop_min_bit_len = (
-                self._range_of_min_bit_len.count_int()
-                / _count_by_bit_len(min_bit_len)
-                / prop_base
+            weight_of_max_bit_len = (
+                self._range_of_max_bit_len.count_int() / _count_by_bit_len(max_bit_len)
             )
-            self._prop_max_bit_len = (
-                self._range_of_max_bit_len.count_int()
-                / _count_by_bit_len(max_bit_len)
-                / prop_base
+            weight_sum = (
+                weight_of_min_bit_len
+                + weight_of_max_bit_len
+                + (max_bit_len - min_bit_len - 1)
             )
+            self._prop_min_bit_len = weight_of_min_bit_len / weight_sum
+            self._prop_max_bit_len = weight_of_max_bit_len / weight_sum
 
     def _next(self) -> int:
         pre_weight = self._random.random()

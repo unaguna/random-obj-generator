@@ -87,6 +87,7 @@ class IntExpRandomFactory(Factory[int]):
     _random: Random
     _min: int
     _max: int
+    _range: IntInterval
     _range_of_min_bit_len: IntInterval
     _range_of_max_bit_len: IntInterval
     _prop_min_bit_len: float
@@ -105,6 +106,7 @@ class IntExpRandomFactory(Factory[int]):
         self._random = decide_rnd(rnd)
         self._min = minimum
         self._max = maximum
+        self._range = interval(minimum, maximum)
 
         if minimum > maximum:
             raise FactoryConstructionError("empty range for randint")
@@ -115,31 +117,22 @@ class IntExpRandomFactory(Factory[int]):
         signed_max_bit_len = max_bit_len * _sign(self._max)
 
         if min_bit_len == max_bit_len:
-            self._range_of_min_bit_len = interval(self._min, self._max)
-            self._range_of_max_bit_len = interval(self._min, self._max)
+            self._range_of_min_bit_len = self._range
+            self._range_of_max_bit_len = self._range
             self._range_of_non_edge_signed_bit_len = interval(empty=True)
 
             self._prop_min_bit_len = 1.0
             self._prop_max_bit_len = 1.0
         else:
-            if self._min > 0:
-                _max_of_min_bit_len = (1 << min_bit_len) - 1
-            elif self._min < 0:
-                _max_of_min_bit_len = -(1 << (min_bit_len - 1))
-            else:
-                _max_of_min_bit_len = 0
-            if self._max > 0:
-                _min_of_max_bit_len = 1 << (max_bit_len - 1)
-            elif self._max < 0:
-                _min_of_max_bit_len = -((1 << max_bit_len) - 1)
-            else:
-                _min_of_max_bit_len = 0
-
             self._range_of_non_edge_signed_bit_len = interval(
                 signed_min_bit_len + 1, signed_max_bit_len - 1
             )
-            self._range_of_min_bit_len = interval(self._min, _max_of_min_bit_len)
-            self._range_of_max_bit_len = interval(_min_of_max_bit_len, self._max)
+            self._range_of_min_bit_len = self._range & interval(
+                bit_len=signed_min_bit_len
+            )
+            self._range_of_max_bit_len = self._range & interval(
+                bit_len=signed_max_bit_len
+            )
 
             non_edge_bit_len_count = signed_max_bit_len - signed_min_bit_len - 1
             prop_base = (

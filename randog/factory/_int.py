@@ -154,15 +154,7 @@ class IntExpRandomFactory(Factory[int]):
             return self._random.randint(*self._range_of_max_bit_len.minmax())
 
         bit_len = self._random.randint(*self._range_of_non_edge_bit_len.minmax())
-        unsigned_bit_len = abs(bit_len)
-        sign = _sign(bit_len)
-
-        if unsigned_bit_len != 0:
-            return sign * self._random.randint(
-                1 << (unsigned_bit_len - 1), (1 << unsigned_bit_len) - 1
-            )
-        else:
-            return 0
+        return self._random.randint(*interval(bit_len=bit_len).minmax())
 
 
 def _count_by_bit_len(bit_len: int) -> int:

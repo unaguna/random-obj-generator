@@ -160,18 +160,30 @@ class DecimalRandomFactory(Factory[Decimal]):
         if maximum == float("inf"):
             maximum = sys.float_info.max
 
+        minimum = _cast_to_decimal(minimum)
+        maximum = _cast_to_decimal(maximum)
+
         if minimum is None and maximum is None:
             return 0, 10 ** max(0, decimal_len)
         elif minimum is None:
-            max_int = math.floor(Decimal(maximum).scaleb(decimal_len))
+            max_int = math.floor(maximum.scaleb(decimal_len))
             return max_int - default_range, max_int
         elif maximum is None:
-            min_int = math.ceil(Decimal(minimum).scaleb(decimal_len))
+            min_int = math.ceil(minimum.scaleb(decimal_len))
             return min_int, min_int + default_range
         else:
-            min_int = math.ceil(Decimal(minimum).scaleb(decimal_len))
-            max_int = math.floor(Decimal(maximum).scaleb(decimal_len))
+            min_int = math.ceil(minimum.scaleb(decimal_len))
+            max_int = math.floor(maximum.scaleb(decimal_len))
             return min_int, max_int
+
+
+def _cast_to_decimal(value: t.Optional[t.SupportsFloat]) -> t.Optional[Decimal]:
+    if value is None:
+        return None
+    elif isinstance(value, Decimal):
+        return value
+    else:
+        return Decimal(value)
 
 
 def _calc_decimal_len(

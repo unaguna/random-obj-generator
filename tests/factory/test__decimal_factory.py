@@ -88,9 +88,7 @@ def test__random_decimal__by_fraction(condition, expected_value):
         (1.0, 1.0, 0, Decimal("1")),
         (1.0, 1.0, 1, Decimal("1.0")),
         (1.0, 1.0, 2, Decimal("1.00")),
-        (0.2, 0.2, 0, Decimal("0")),
-        (0.2, 0.2, 1, Decimal("0.2")),
-        (0.2, 0.2, 2, Decimal("0.20")),
+        (0.25, 0.25, 2, Decimal("0.25")),
         (15.0, 15.0, 0, Decimal("15")),
         (15.0, 15.0, 1, Decimal("15.0")),
         (15.0, 15.0, 2, Decimal("15.00")),
@@ -200,12 +198,19 @@ def test__random_decimal__or_none_0():
     assert isinstance(value, Decimal)
 
 
-def test__random_decimal__error_when_edges_inverse():
+@pytest.mark.parametrize(
+    ("minimum", "maximum", "kwargs"),
+    [
+        (2, 1, {}),
+        (Decimal("0.01"), Decimal("0.02"), {"decimal_len": 1}),
+    ],
+)
+def test__random_decimal__error_when_edges_inverse(minimum, maximum, kwargs):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.randdecimal(2, 1)
+        randog.factory.randdecimal(minimum, maximum, **kwargs)
     e = e_ctx.value
 
-    assert e.message == "empty range for randfloat"
+    assert e.message == "empty range for randdecimal"
 
 
 def test__random_decimal__error_when_probability_gt_1():

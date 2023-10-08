@@ -184,7 +184,7 @@ def _cast_to_decimal(value: t.Optional[t.SupportsFloat]) -> t.Optional[Decimal]:
         return value
     else:
         try:
-            return Decimal(value)
+            return Decimal(t.cast(t.Any, value))
         except TypeError:
             return Decimal(float(value))
 

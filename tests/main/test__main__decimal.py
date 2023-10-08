@@ -26,8 +26,10 @@ def test__main__decimal__without_min_max(capfd):
         ("0", "0", "0"),
         ("-1", "-1", "-1"),
         ("1.25", "1.25", "1.25"),
+        # can use inf; assert only numeric grammatical format but numeric validity
         ("0.0", "inf", re.compile(r"\d+(\.\d+)?(E[+-]\d+)?\n")),
         ("-inf", "0.0", re.compile(r"-\d+(\.\d+)?(E[+-]\d+)?\n")),
+        ("-inf", "inf", re.compile(r"-?\d+(\.\d+)?(E[+-]\d+)?\n")),
     ],
 )
 def test__main__decimal__min_max(capfd, minimum, maximum, expected):

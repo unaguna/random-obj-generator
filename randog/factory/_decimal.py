@@ -1,4 +1,3 @@
-import decimal
 import math
 import sys
 import typing as t
@@ -207,7 +206,11 @@ def _calc_decimal_len(
     if len(edge_exponents) > 0:
         return -min(edge_exponents)
 
-    if minimum is not None and maximum is not None and maximum > minimum:
+    if (
+        minimum is not None
+        and maximum is not None
+        and 0 < maximum - minimum < float("inf")
+    ):
         return -math.floor(math.log10(maximum - minimum))
     else:
         # TODO: 仕様を検討

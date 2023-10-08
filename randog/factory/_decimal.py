@@ -1,11 +1,12 @@
 import math
+import sys
 import typing as t
 from decimal import Decimal
 from random import Random
 
 from ._base import Factory, decide_rnd
-from ._float import randfloat
-from .._utils.nullsafe import dforc
+from ._int import randint
+from ..exceptions import FactoryConstructionError
 
 
 def randdecimal(
@@ -57,9 +58,11 @@ class DecimalRandomFactory(Factory[Decimal]):
     """factory generating random Decimal values"""
 
     _random: Random
-    _factory: Factory[float]
+    _p_inf: float
+    _n_inf: float
+    _nan: float
+    _factory: Factory[int]
     _decimal_len: t.Optional[int]
-    _decimal_len_p: t.Optional[Decimal]
 
     def __init__(
         self,
@@ -97,20 +100,78 @@ class DecimalRandomFactory(Factory[Decimal]):
             When the specified generating conditions are inconsistent.
         """
         self._random = decide_rnd(rnd)
-        self._factory = randfloat(
-            minimum, maximum, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=self._random
-        )
+        self._p_inf = float(p_inf)
+        self._n_inf = float(n_inf)
+        self._nan = float(nan)
         self._decimal_len = _calc_decimal_len(minimum, maximum, decimal_len)
-        self._decimal_len_p = dforc(lambda x: Decimal(1).scaleb(-x), self._decimal_len)
+
+        if (minimum is not None and math.isnan(minimum)) or (
+            maximum is not None and math.isnan(maximum)
+        ):
+            raise FactoryConstructionError("minimum and maximum are must not be nan")
+        if minimum == float("inf") or maximum == float("-inf"):
+            raise FactoryConstructionError("empty range for randdecimal")
+        if self._p_inf < 0.0 or self._n_inf < 0.0 or self._nan < 0.0:
+            raise FactoryConstructionError(
+                "the probabilities `p_inf`, `n_inf`, and `nan` must range from 0 to 1"
+            )
+        if self._p_inf + self._n_inf + self._nan > 1.0:
+            raise FactoryConstructionError(
+                "the sum of probabilities `p_inf`, `n_inf`, and `nan` "
+                "must range from 0 to 1"
+            )
+
+        min_int, max_int = self._normalize_as_int(minimum, maximum, self._decimal_len)
+
+        if min_int > max_int:
+            raise FactoryConstructionError("empty range for randdecimal")
+
+        self._factory = randint(min_int, max_int, rnd=self._random)
 
     def _next(self) -> Decimal:
-        pre_value = self._factory.next()
-        value = Decimal(pre_value)
+        pre_weight = self._random.random()
+        pre_weight -= self._p_inf
+        if pre_weight < 0:
+            return Decimal("inf")
+        pre_weight -= self._n_inf
+        if pre_weight < 0:
+            return Decimal("-inf")
+        pre_weight -= self._nan
+        if pre_weight < 0:
+            return Decimal("NaN")
 
-        if self._decimal_len_p is not None and value.is_finite():
-            value = value.quantize(self._decimal_len_p)
+        return self._next_finite()
 
-        return value
+    def _next_finite(self) -> Decimal:
+        int_value = self._factory.next()
+        return Decimal(int_value).scaleb(-self._decimal_len)
+
+    @classmethod
+    def _normalize_as_int(
+        cls,
+        minimum: t.Optional[t.SupportsFloat],
+        maximum: t.Optional[t.SupportsFloat],
+        decimal_len: int,
+    ) -> t.Tuple[int, int]:
+        default_range = 100
+
+        if minimum == float("-inf"):
+            minimum = -sys.float_info.max
+        if maximum == float("inf"):
+            maximum = sys.float_info.max
+
+        if minimum is None and maximum is None:
+            return 0, 10 ** max(0, decimal_len)
+        elif minimum is None:
+            max_int = math.floor(Decimal(maximum).scaleb(decimal_len))
+            return max_int - default_range, max_int
+        elif maximum is None:
+            min_int = math.ceil(Decimal(minimum).scaleb(decimal_len))
+            return min_int, min_int + default_range
+        else:
+            min_int = math.ceil(Decimal(minimum).scaleb(decimal_len))
+            max_int = math.floor(Decimal(maximum).scaleb(decimal_len))
+            return min_int, max_int
 
 
 def _calc_decimal_len(
@@ -134,4 +195,4 @@ def _calc_decimal_len(
         return -math.floor(math.log10(maximum - minimum))
     else:
         # TODO: 仕様を検討
-        return None
+        return 5

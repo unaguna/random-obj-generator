@@ -58,7 +58,8 @@ class DecimalRandomFactory(Factory[Decimal]):
 
     _random: Random
     _factory: Factory[float]
-    _decimal_len: t.Optional[Decimal]
+    _decimal_len: t.Optional[int]
+    _decimal_len_p: t.Optional[Decimal]
 
     def __init__(
         self,
@@ -99,15 +100,15 @@ class DecimalRandomFactory(Factory[Decimal]):
         self._factory = randfloat(
             minimum, maximum, p_inf=p_inf, n_inf=n_inf, nan=nan, rnd=self._random
         )
-        d = _calc_decimal_len(minimum, maximum, decimal_len)
-        self._decimal_len = dforc(lambda x: Decimal(1).scaleb(-x), d)
+        self._decimal_len = _calc_decimal_len(minimum, maximum, decimal_len)
+        self._decimal_len_p = dforc(lambda x: Decimal(1).scaleb(-x), self._decimal_len)
 
     def _next(self) -> Decimal:
         pre_value = self._factory.next()
         value = Decimal(pre_value)
 
-        if self._decimal_len is not None and value.is_finite():
-            value = value.quantize(self._decimal_len)
+        if self._decimal_len_p is not None and value.is_finite():
+            value = value.quantize(self._decimal_len_p)
 
         return value
 

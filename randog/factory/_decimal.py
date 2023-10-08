@@ -243,8 +243,12 @@ def _calc_decimal_len(
     edge_exponents = []
     if isinstance(minimum, Decimal) and minimum.is_finite():
         edge_exponents.append(minimum.as_tuple().exponent)
+    elif isinstance(minimum, int):
+        edge_exponents.append(0)
     if isinstance(maximum, Decimal) and maximum.is_finite():
         edge_exponents.append(maximum.as_tuple().exponent)
+    elif isinstance(maximum, int):
+        edge_exponents.append(0)
 
     if len(edge_exponents) > 0:
         return -min(edge_exponents)

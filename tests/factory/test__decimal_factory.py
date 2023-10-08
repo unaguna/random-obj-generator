@@ -386,8 +386,8 @@ def _sign_and_log10(x):
             lambda x: 1.0 <= x < 55.0,
         ),
         (
-            Decimal(-324),  # ; it is not 10^x
-            Decimal(-1),
+            -324,  # ; it is not 10^x
+            -1,
             False,
             set(),
             {0, 1, 2},

@@ -183,7 +183,10 @@ def _cast_to_decimal(value: t.Optional[t.SupportsFloat]) -> t.Optional[Decimal]:
     elif isinstance(value, Decimal):
         return value
     else:
-        return Decimal(value)
+        try:
+            return Decimal(value)
+        except TypeError:
+            return Decimal(float(value))
 
 
 def _calc_decimal_len(

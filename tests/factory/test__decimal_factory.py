@@ -368,14 +368,14 @@ def _sign_and_log10(x):
             Decimal("-99.9"),
             Decimal("999.9"),
             True,
-            {-1, 0, 1},
             {-1, 0, 1, 2},
+            {-1, 0, 1},
             defaultdict(lambda: interval(1 / 8).radius(0.02)),
             lambda x: -100.0 < x < 1000.0,
         ),
         (
             1,
-            50,  # ; it is not 10^x
+            54,  # ; it is not 10^x
             False,
             {0, 1},
             set(),
@@ -383,11 +383,11 @@ def _sign_and_log10(x):
                 (1, 0): interval(2 / 3).radius(0.02),
                 (1, 1): interval(1 / 3).radius(0.02),
             },
-            lambda x: 1.0 <= x < 50.0,
+            lambda x: 1.0 <= x < 55.0,
         ),
         (
-            -250,  # ; it is not 10^x
-            -1,
+            Decimal(-324),  # ; it is not 10^x
+            Decimal(-1),
             False,
             set(),
             {0, 1, 2},
@@ -397,7 +397,7 @@ def _sign_and_log10(x):
                     (-1, 2): interval(1 / 9).radius(0.01),
                 },
             ),
-            lambda x: -5.0 < x <= -1.0,
+            lambda x: -325.0 < x <= -1.0,
         ),
     ],
 )
@@ -417,10 +417,11 @@ def test__random_float__exp_uniform__distribution(
         assert value_is_valid(value)
         return value
 
+    print([(x, _sign_and_log10(x)) for x in factory.iter(20)])
     log_count = Counter(
         _sign_and_log10(assert_value(x)) for x in factory.iter(iter_count)
     )
-
+    print(log_count)
     for key, count in log_count.items():
         assert count / iter_count in distribution[key]
     assert {k for sign, k in log_count.keys() if sign > 0} == expected_log_range_pos

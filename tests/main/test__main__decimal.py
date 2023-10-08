@@ -1,5 +1,6 @@
 import decimal
 import filecmp
+import re
 import sys
 from unittest.mock import patch
 
@@ -19,21 +20,26 @@ def test__main__decimal__without_min_max(capfd):
 
 
 @pytest.mark.parametrize(
-    ("arg", "expected"),
+    ("minimum", "maximum", "expected"),
     [
-        ("1", "1"),
-        ("0", "0"),
-        ("-1", "-1"),
-        ("1.25", "1.25"),
+        ("1", "1", "1"),
+        ("0", "0", "0"),
+        ("-1", "-1", "-1"),
+        ("1.25", "1.25", "1.25"),
+        ("0.0", "inf", re.compile(r"\d+(\.\d+)?(E[+-]\d+)?\n")),
+        ("-inf", "0.0", re.compile(r"-\d+(\.\d+)?(E[+-]\d+)?\n")),
     ],
 )
-def test__main__decimal__min_max(capfd, arg, expected):
-    args = ["randog", "decimal", arg, arg]
+def test__main__decimal__min_max(capfd, minimum, maximum, expected):
+    args = ["randog", "decimal", "--", minimum, maximum]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == f"{expected}\n"
+        if isinstance(expected, re.Pattern):
+            assert expected.fullmatch(out)
+        else:
+            assert out == f"{expected}\n"
         assert err == ""
 
 

@@ -50,7 +50,7 @@ def test__main__decimal__error_when_illegal_min(capfd, minimum):
         out, err = capfd.readouterr()
         assert out == ""
         assert err.startswith("usage:")
-        assert "decimal: error: argument MINIMUM: invalid float value: " in err
+        assert "decimal: error: argument MINIMUM: invalid decimal value: " in err
 
 
 @pytest.mark.parametrize(
@@ -66,7 +66,7 @@ def test__main__decimal__error_when_illegal_max(capfd, maximum):
         out, err = capfd.readouterr()
         assert out == ""
         assert err.startswith("usage:")
-        assert "decimal: error: argument MAXIMUM: invalid float value: " in err
+        assert "decimal: error: argument MAXIMUM: invalid decimal value: " in err
 
 
 def test__main__decimal__error_when_max_lt_min(capfd):
@@ -395,7 +395,7 @@ def test__main__decimal__error_with_negative_repeat(capfd, resources, option, le
 
 @pytest.mark.parametrize(
     "expected",
-    [-1, 0, 1, 0.1],
+    [-1, 0, 1, 0.25],
 )
 @pytest.mark.parametrize(
     ("option", "length"),

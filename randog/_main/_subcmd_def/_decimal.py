@@ -2,7 +2,7 @@ import argparse
 import typing as t
 
 import randog.factory
-from ..._utils.type import non_negative_int, probability
+from ..._utils.type import decimal, non_negative_int, probability
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
@@ -26,7 +26,7 @@ class SubcmdDefDecimal(SubcmdDef):
         decimal_args_group = decimal_parser.add_argument_group("arguments")
         decimal_args_group.add_argument(
             "minimum",
-            type=float,
+            type=decimal,
             nargs="?",
             metavar="MINIMUM",
             help=(
@@ -37,7 +37,7 @@ class SubcmdDefDecimal(SubcmdDef):
         )
         decimal_args_group.add_argument(
             "maximum",
-            type=float,
+            type=decimal,
             nargs="?",
             metavar="MAXIMUM",
             help=(

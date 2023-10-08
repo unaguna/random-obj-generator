@@ -1,6 +1,9 @@
 import decimal
 import filecmp
+import re
 import sys
+from decimal import Decimal
+from unittest import mock
 from unittest.mock import patch
 
 import pytest
@@ -19,21 +22,28 @@ def test__main__decimal__without_min_max(capfd):
 
 
 @pytest.mark.parametrize(
-    ("arg", "expected"),
+    ("minimum", "maximum", "expected"),
     [
-        ("1", "1"),
-        ("0", "0"),
-        ("-1", "-1"),
-        ("1.25", "1.25"),
+        ("1", "1", "1"),
+        ("0", "0", "0"),
+        ("-1", "-1", "-1"),
+        ("1.25", "1.25", "1.25"),
+        # can use inf; assert only numeric grammatical format but numeric validity
+        ("0.0", "inf", re.compile(r"\d+(\.\d+)?(E[+-]\d+)?\n")),
+        ("-inf", "0.0", re.compile(r"-\d+(\.\d+)?(E[+-]\d+)?\n")),
+        ("-inf", "inf", re.compile(r"-?\d+(\.\d+)?(E[+-]\d+)?\n")),
     ],
 )
-def test__main__decimal__min_max(capfd, arg, expected):
-    args = ["randog", "decimal", arg, arg]
+def test__main__decimal__min_max(capfd, minimum, maximum, expected):
+    args = ["randog", "decimal", "--", minimum, maximum]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == f"{expected}\n"
+        if isinstance(expected, re.Pattern):
+            assert expected.fullmatch(out)
+        else:
+            assert out == f"{expected}\n"
         assert err == ""
 
 
@@ -50,7 +60,7 @@ def test__main__decimal__error_when_illegal_min(capfd, minimum):
         out, err = capfd.readouterr()
         assert out == ""
         assert err.startswith("usage:")
-        assert "decimal: error: argument MINIMUM: invalid float value: " in err
+        assert "decimal: error: argument MINIMUM: invalid decimal value: " in err
 
 
 @pytest.mark.parametrize(
@@ -66,7 +76,7 @@ def test__main__decimal__error_when_illegal_max(capfd, maximum):
         out, err = capfd.readouterr()
         assert out == ""
         assert err.startswith("usage:")
-        assert "decimal: error: argument MAXIMUM: invalid float value: " in err
+        assert "decimal: error: argument MAXIMUM: invalid decimal value: " in err
 
 
 def test__main__decimal__error_when_max_lt_min(capfd):
@@ -285,6 +295,40 @@ def test__main__decimal__error_when_too_large_inf_nan(
 
 
 @pytest.mark.parametrize(
+    ("minimum", "maximum", "options", "expected_kwargs"),
+    [
+        (Decimal(1.0), Decimal(8.0), [], {}),
+        (Decimal(-8.0), Decimal(-1.0), [], {}),
+        (Decimal(1.0), Decimal(8.0), ["--p-inf=0.4"], {"p_inf": 0.4}),
+        (
+            Decimal(1.0),
+            Decimal(8.0),
+            ["--p-inf=0.4", "--n-inf=0.1", "--nan=0.2"],
+            {"p_inf": 0.4, "n_inf": 0.1, "nan": 0.2},
+        ),
+    ],
+)
+@patch("randog.factory.randdecimal", side_effect=randog.factory.randdecimal)
+def test__main__float__weight__exp_uniform(
+    mock_func: mock.MagicMock, capfd, minimum, maximum, options, expected_kwargs
+):
+    args = ["randog", "decimal", *options, "--exp-uniform", str(minimum), str(maximum)]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        mock_func.assert_called_once()
+        assert mock_func.mock_calls[0].args == (minimum, maximum)
+        assert mock_func.mock_calls[0].kwargs.get("distribution") == "exp_uniform"
+        assert {
+            k: mock_func.mock_calls[0].kwargs.get(k) for k in expected_kwargs.keys()
+        } == expected_kwargs
+
+        out, err = capfd.readouterr()
+        assert out != ""
+        assert err == ""
+
+
+@pytest.mark.parametrize(
     ("arg", "expected"),
     [
         ("0", "Decimal('0')"),
@@ -395,7 +439,7 @@ def test__main__decimal__error_with_negative_repeat(capfd, resources, option, le
 
 @pytest.mark.parametrize(
     "expected",
-    [-1, 0, 1, 0.1],
+    [-1, 0, 1, 0.25],
 )
 @pytest.mark.parametrize(
     ("option", "length"),

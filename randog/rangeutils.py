@@ -91,6 +91,7 @@ def interval(
     *,
     empty: t.Literal[False] = False,
     bit_len: None = None,
+    dec_len: None = None,
 ) -> IntInterval:
     pass
 
@@ -102,6 +103,7 @@ def interval(
     *,
     empty: t.Literal[False] = False,
     bit_len: None = None,
+    dec_len: None = None,
 ) -> FloatInterval:
     pass
 
@@ -113,6 +115,7 @@ def interval(
     *,
     empty: t.Literal[True],
     bit_len: None = None,
+    dec_len: None = None,
 ) -> EmptyInterval:
     pass
 
@@ -124,6 +127,19 @@ def interval(
     *,
     empty: t.Literal[False] = False,
     bit_len: int,
+    dec_len: None = None,
+) -> IntInterval:
+    pass
+
+
+@t.overload
+def interval(
+    minimum: None = None,
+    maximum: None = None,
+    *,
+    empty: t.Literal[False] = False,
+    bit_len: None = None,
+    dec_len: int,
 ) -> IntInterval:
     pass
 
@@ -134,6 +150,7 @@ def interval(
     *,
     empty: bool = False,
     bit_len: int = None,
+    dec_len: int = None,
 ) -> FloatInterval:
     if empty:
         return EmptyInterval()
@@ -145,6 +162,17 @@ def interval(
         elif bit_len < 0:
             return interval(
                 -(1 << unsigned_bit_len) + 1, -(1 << (unsigned_bit_len - 1))
+            )
+        else:
+            return interval(0, 0)
+    if dec_len is not None:
+        unsigned_dec_len = abs(dec_len)
+
+        if dec_len > 0:
+            return interval(10 ** (unsigned_dec_len - 1), 10**unsigned_dec_len - 1)
+        elif dec_len < 0:
+            return interval(
+                -(10**unsigned_dec_len) + 1, -(10 ** (unsigned_dec_len - 1))
             )
         else:
             return interval(0, 0)

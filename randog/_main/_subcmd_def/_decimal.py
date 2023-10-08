@@ -2,7 +2,7 @@ import argparse
 import typing as t
 
 import randog.factory
-from ..._utils.type import non_negative_int, probability
+from ..._utils.type import decimal, non_negative_int, probability
 from .. import Args, Subcmd
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
@@ -26,7 +26,7 @@ class SubcmdDefDecimal(SubcmdDef):
         decimal_args_group = decimal_parser.add_argument_group("arguments")
         decimal_args_group.add_argument(
             "minimum",
-            type=float,
+            type=decimal,
             nargs="?",
             metavar="MINIMUM",
             help=(
@@ -37,7 +37,7 @@ class SubcmdDefDecimal(SubcmdDef):
         )
         decimal_args_group.add_argument(
             "maximum",
-            type=float,
+            type=decimal,
             nargs="?",
             metavar="MAXIMUM",
             help=(
@@ -73,6 +73,16 @@ class SubcmdDefDecimal(SubcmdDef):
             default=0.0,
             metavar="PROB_NAN",
             help="the probability of NaN; default=0.0",
+        )
+        decimal_args_group.add_argument(
+            "--exp-uniform",
+            dest="distribution",
+            action="store_const",
+            const="exp_uniform",
+            help=(
+                "if specified, the distribution of digits (log with a base of 2) is "
+                "uniform."
+            ),
         )
         decimal_args_group.add_argument(
             "--fmt",
@@ -112,6 +122,7 @@ class SubcmdDefDecimal(SubcmdDef):
             "p_inf": args.get("p_inf"),
             "n_inf": args.get("n_inf"),
             "nan": args.get("nan"),
+            "distribution": args.get("distribution"),
             "rnd": rnd,
         }
 

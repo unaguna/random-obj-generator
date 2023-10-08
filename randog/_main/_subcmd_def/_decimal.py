@@ -75,6 +75,16 @@ class SubcmdDefDecimal(SubcmdDef):
             help="the probability of NaN; default=0.0",
         )
         decimal_args_group.add_argument(
+            "--exp-uniform",
+            dest="distribution",
+            action="store_const",
+            const="exp_uniform",
+            help=(
+                "if specified, the distribution of digits (log with a base of 2) is "
+                "uniform."
+            ),
+        )
+        decimal_args_group.add_argument(
             "--fmt",
             dest="format",
             metavar="FORMAT",
@@ -112,6 +122,7 @@ class SubcmdDefDecimal(SubcmdDef):
             "p_inf": args.get("p_inf"),
             "n_inf": args.get("n_inf"),
             "nan": args.get("nan"),
+            "distribution": args.get("distribution"),
             "rnd": rnd,
         }
 

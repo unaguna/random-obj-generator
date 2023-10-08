@@ -2,6 +2,8 @@ import decimal
 import filecmp
 import re
 import sys
+from decimal import Decimal
+from unittest import mock
 from unittest.mock import patch
 
 import pytest
@@ -290,6 +292,40 @@ def test__main__decimal__error_when_too_large_inf_nan(
             "arguments must satisfy that PROB_P_INF + PROB_N_INF + PROB_NAN <= 1.0"
             in err
         )
+
+
+@pytest.mark.parametrize(
+    ("minimum", "maximum", "options", "expected_kwargs"),
+    [
+        (Decimal(1.0), Decimal(8.0), [], {}),
+        (Decimal(-8.0), Decimal(-1.0), [], {}),
+        (Decimal(1.0), Decimal(8.0), ["--p-inf=0.4"], {"p_inf": 0.4}),
+        (
+            Decimal(1.0),
+            Decimal(8.0),
+            ["--p-inf=0.4", "--n-inf=0.1", "--nan=0.2"],
+            {"p_inf": 0.4, "n_inf": 0.1, "nan": 0.2},
+        ),
+    ],
+)
+@patch("randog.factory.randdecimal", side_effect=randog.factory.randdecimal)
+def test__main__float__weight__exp_uniform(
+    mock_func: mock.MagicMock, capfd, minimum, maximum, options, expected_kwargs
+):
+    args = ["randog", "decimal", *options, "--exp-uniform", str(minimum), str(maximum)]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        mock_func.assert_called_once()
+        assert mock_func.mock_calls[0].args == (minimum, maximum)
+        assert mock_func.mock_calls[0].kwargs.get("distribution") == "exp_uniform"
+        assert {
+            k: mock_func.mock_calls[0].kwargs.get(k) for k in expected_kwargs.keys()
+        } == expected_kwargs
+
+        out, err = capfd.readouterr()
+        assert out != ""
+        assert err == ""
 
 
 @pytest.mark.parametrize(

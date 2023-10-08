@@ -17,6 +17,7 @@ def randdecimal(
     p_inf: t.SupportsFloat = 0.0,
     n_inf: t.SupportsFloat = 0.0,
     nan: t.SupportsFloat = 0.0,
+    distribution: t.Literal["uniform", "exp_uniform"] = "uniform",
     rnd: t.Optional[Random] = None,
 ) -> Factory[Decimal]:
     """Return a factory generating random Decimal values.
@@ -35,6 +36,9 @@ def randdecimal(
         the probability of negative infinity
     nan : float, default=0
         the probability of NaN
+    distribution : "uniform"|"exp_uniform", default="uniform"
+        probability distribution. If 'uniform', the distribution is uniform.
+        If 'exp_uniform', the distribution of digits (log with a base of 2) is uniform.
     rnd : Random, optional
         random number generator to be used
 
@@ -50,6 +54,7 @@ def randdecimal(
         p_inf=p_inf,
         n_inf=n_inf,
         nan=nan,
+        distribution=distribution,
         rnd=rnd,
     )
 
@@ -73,6 +78,7 @@ class DecimalRandomFactory(Factory[Decimal]):
         p_inf: t.SupportsFloat = 0.0,
         n_inf: t.SupportsFloat = 0.0,
         nan: t.SupportsFloat = 0.0,
+        distribution: t.Literal["uniform", "exp_uniform"] = "uniform",
         rnd: t.Optional[Random] = None,
     ):
         """Return a factory generating random Decimal values.
@@ -91,6 +97,10 @@ class DecimalRandomFactory(Factory[Decimal]):
             the probability of negative infinity
         nan : float, default=0
             the probability of NaN
+        distribution : "uniform"|"exp_uniform", default="uniform"
+            probability distribution. If 'uniform', the distribution is uniform.
+            If 'exp_uniform', the distribution of digits (log with a base of 2) is
+            uniform.
         rnd : Random, optional
             random number generator to be used
 
@@ -126,7 +136,9 @@ class DecimalRandomFactory(Factory[Decimal]):
         if min_int > max_int:
             raise FactoryConstructionError("empty range for randdecimal")
 
-        self._factory = randint(min_int, max_int, rnd=self._random)
+        self._factory = randint(
+            min_int, max_int, distribution=distribution, rnd=self._random
+        )
 
     def _next(self) -> Decimal:
         pre_weight = self._random.random()

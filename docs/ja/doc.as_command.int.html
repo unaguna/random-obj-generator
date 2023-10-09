@@ -118,7 +118,7 @@
   <section id="int-mode">
 <h1>int モード<a class="headerlink" href="#int-mode" title="この見出しへのパーマリンク"></a></h1>
 <p>int モードでは、整数値を生成します。コマンドの形式は次の通りです：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>int<span class="w"> </span>MINIMUM<span class="w"> </span>MAXIMUM<span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>int<span class="w"> </span>MINIMUM<span class="w"> </span>MAXIMUM<span class="w"> </span><span class="o">[</span>--exp-uniform<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
@@ -135,6 +135,13 @@
 <blockquote>
 <div><ul class="simple">
 <li><p>最大値</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--exp-uniform</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>指定した場合、桁数 (2を底とする対数) が一様になる。</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -184,6 +191,24 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <span class="c1"># Generate list which contains 10 values</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>int<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
 </pre></div>
+</div>
+</section>
+<section id="probability-distribution-uniform-distribution-of-digits">
+<h3>確率分布 (桁数の分布を一様に)<a class="headerlink" href="#probability-distribution-uniform-distribution-of-digits" title="この見出しへのパーマリンク"></a></h3>
+<p>デフォルトでは生成の確率分布は一様分布です。たとえば、1 から 10000 の値を生成する場合、1 が生成される確率、50 が生成される確率、10000 が生成される確率はすべて同一です。</p>
+<p>特にこだわらない場合は一様分布でも問題ありませんが、様々な桁数の値が生成されてほしい場合はこれでは問題があります。上述の例だと4桁の数値 (1000 - 9999) が生成される確率は 90% であり、1桁の数が生成される確率はわずか 0.1% しかありません。つまり、生成される値の大半が4桁なのです。</p>
+<p>桁数の分布を均一にするためには <code class="code docutils literal notranslate"><span class="pre">--exp-uniform</span></code> を使用します。このオプションを使用することで桁数が小さい数に大きい比重がかけられ、桁数はおおむね均一になります。より正確には、2進数表記した際の桁数 <code class="code docutils literal notranslate"><span class="pre">floor(log2(x))</span></code> の分布が一様になります。ただし、0の桁数は0とし、正の数と負の数は別々に確率を持ちます。たとえば、-15 から 47 までの整数を生成する場合、以下の事象はすべて同じ確率です。</p>
+<ul class="simple">
+<li><p>-15 以上 -8 以下</p></li>
+<li><p>0</p></li>
+<li><p>1</p></li>
+<li><p>8 以上 15 以下</p></li>
+<li><p>16 以上 31 以下</p></li>
+</ul>
+<p>なお、当該桁数の数の一部しか生成範囲に入っていない場合、その桁数になる確率は減少します。上述の例では、32-63 のうち半分しか生成範囲に含まれないため、他の桁数に比べて確率は半分になります。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>あまり大きな違いは生じませんが、10進表記の桁数に基づいて確率を決定したい場合、<a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">decimal モード</span></a> を使用できます。その際、 <code class="code docutils literal notranslate"><span class="pre">--decimal-len=0</span></code> を使用することで生成値を整数に限定できます。</p>
 </div>
 </section>
 </section>

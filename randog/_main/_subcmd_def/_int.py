@@ -40,8 +40,7 @@ class SubcmdDefInt(SubcmdDef):
             action="store_const",
             const="exp_uniform",
             help=(
-                "if specified, the distribution of digits (log with a base of 2) is "
-                "uniform."
+                "if specified, the distribution of digits (log with base 2) is uniform."
             ),
         )
         int_args_group.add_argument(

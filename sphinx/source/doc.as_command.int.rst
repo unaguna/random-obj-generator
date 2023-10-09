@@ -5,7 +5,7 @@ In int mode, integer values are generated. The format of the command is as follo
 
 .. code-block:: shell
 
-    python -m randog int MINIMUM MAXIMUM [--fmt FORMAT] [common-options]
+    python -m randog int MINIMUM MAXIMUM [--exp-uniform] [--fmt FORMAT] [common-options]
 
 
 Arguments and Options
@@ -18,6 +18,10 @@ Arguments and Options
 - :code:`MAXIMUM`:
 
     - the maximum value.
+
+- :code:`--exp-uniform` (optional):
+
+    - if specified, the distribution of digits (log with base 2) is uniform.
 
 - :code:`--fmt FORMAT` (optional):
 
@@ -66,3 +70,24 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 
     # Generate list which contains 10 values
     python -m randog int -L 10
+
+Probability Distribution; uniform distribution of digits
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the probability distribution of generation is uniform. For example, when generating values from 1 to 10000, the probabilities of generating 1, 50, and 10000 are all identical.
+
+If you are not particular, a uniform distribution is fine, but if you want values to be generated with a variety of digits, this can be problematic. In the above example, there is a 90% probability that a 4-digit number (1000 - 9999) will be generated, and only a 0.1% probability that a 1-digit number will be generated. In other words, the majority of the values generated are 4-digit.
+
+To make the distribution of digits uniform, use :code:`--exp-uniform`. This option gives greater weight to numbers with smaller digits, so that the number of digits is generally uniform. More precisely, the distribution of :code:`floor(log2(x))`, digits in binary notation, is uniform; However, the number of digits of 0 is assumed to be 0, and positive and negative numbers have separate probabilities. For example, when generating integers from -15 to 47, the following events all have the same probability:
+
+- from -15 to -8
+- 0
+- 1
+- from 8 to 15
+- from 16 to 31
+
+Note that if only a portion of the number of the digit is in the generation range, the probability of numbers of the digit is reduced; In the example above, only half of 32-63 are included in the range, so the probability is half that of the other digits.
+
+.. note::
+
+    Although it will not make much difference, if you want to determine the probability distribution based on the number of digits in decimal notation, use :doc:`decimal mode <doc.as_command.decimal>`. You can limit the generation to integers by specifying option :code:`--decimal-len=0`.

@@ -18,7 +18,8 @@ class SubcmdDefDecimal(SubcmdDef):
             usage=(
                 "python -m randog decimal [MINIMUM MAXIMUM] "
                 "[--decimal-len DECIMAL_LENGTH] [--p-inf PROB_P_INF] "
-                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [--fmt FORMAT] [common-options]"
+                "[--n-inf PROB_N_INF] [--nan PROB_NAN] [--exp-uniform] [--fmt FORMAT] "
+                "[common-options]"
             ),
             description="It generates values of type decimal.Decimal.",
             add_help=False,
@@ -80,7 +81,7 @@ class SubcmdDefDecimal(SubcmdDef):
             action="store_const",
             const="exp_uniform",
             help=(
-                "if specified, the distribution of digits (log with a base of 2) is "
+                "if specified, the distribution of digits (log with a base of 10) is "
                 "uniform."
             ),
         )

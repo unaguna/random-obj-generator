@@ -16,7 +16,7 @@ class SubcmdDefInt(SubcmdDef):
             Subcmd.Int.value,
             usage=(
                 "python -m randog int MINIMUM MAXIMUM [--fmt FORMAT] "
-                "[common-options]"
+                "[--exp-uniform] [common-options]"
             ),
             description="It generates integer values.",
             add_help=False,

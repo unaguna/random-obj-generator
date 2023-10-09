@@ -15,7 +15,7 @@ class SubcmdDefInt(SubcmdDef):
         int_parser = subparsers.add_parser(
             Subcmd.Int.value,
             usage=(
-                "python -m randog int MINIMUM MAXIMUM [--fmt FORMAT] "
+                "python -m randog int MINIMUM MAXIMUM [--exp-uniform] [--fmt FORMAT] "
                 "[common-options]"
             ),
             description="It generates integer values.",
@@ -40,8 +40,7 @@ class SubcmdDefInt(SubcmdDef):
             action="store_const",
             const="exp_uniform",
             help=(
-                "if specified, the distribution of digits (log with a base of 2) is "
-                "uniform."
+                "if specified, the distribution of digits (log with base 2) is uniform."
             ),
         )
         int_args_group.add_argument(

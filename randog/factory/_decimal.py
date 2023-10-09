@@ -39,7 +39,7 @@ def randdecimal(
         the probability of NaN
     distribution : "uniform"|"exp_uniform", default="uniform"
         probability distribution. If 'uniform', the distribution is uniform.
-        If 'exp_uniform', the distribution of digits (log with a base of 2) is uniform.
+        If 'exp_uniform', the distribution of digits (log with a base of 10) is uniform.
     rnd : Random, optional
         random number generator to be used
 

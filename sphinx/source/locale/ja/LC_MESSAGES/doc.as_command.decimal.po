@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-17 15:30+0900\n"
+"POT-Creation-Date: 2023-10-09 21:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -98,44 +98,52 @@ msgid "the probability of NaN."
 msgstr "NaNを生成する確率。"
 
 #: ../../source/doc.as_command.decimal.rst:38
-msgid ":code:`--fmt FORMAT` (optional):"
+msgid ":code:`--exp-uniform` (optional):"
 msgstr ""
 
 #: ../../source/doc.as_command.decimal.rst:40
+msgid "if specified, the distribution of digits (log with base 10) is uniform."
+msgstr "指定した場合、桁数 (10を底とする対数) が一様になる。"
+
+#: ../../source/doc.as_command.decimal.rst:42
+msgid ":code:`--fmt FORMAT` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:44
 msgid ""
 "the output format written in `format specification mini-language "
 "<https://docs.python.org/3/library/string.html?highlight=string#format-"
 "specification-mini-language>`_"
 msgstr ""
-"`書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
-"specification-mini-language>`_ "
-"で記載された出力フォーマット"
+"`書式指定ミニ言語 "
+"<https://docs.python.org/ja/3/library/string.html?highlight=string"
+"#format-specification-mini-language>`_ で記載された出力フォーマット"
 
-#: ../../source/doc.as_command.decimal.rst:42
+#: ../../source/doc.as_command.decimal.rst:46
 msgid ":code:`common-options`"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:44
+#: ../../source/doc.as_command.decimal.rst:48
 msgid ":doc:`common options <doc.as_command.common_option>`"
 msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
 
-#: ../../source/doc.as_command.decimal.rst:48
+#: ../../source/doc.as_command.decimal.rst:52
 msgid "Examples"
 msgstr "実行例"
 
-#: ../../source/doc.as_command.decimal.rst:50
+#: ../../source/doc.as_command.decimal.rst:54
 msgid ""
 "The simplest example is the following, which outputs a value between 0 "
 "and 1."
 msgstr "最も簡素な例は次の通りです。0から1の間の数値を出力します。"
 
-#: ../../source/doc.as_command.decimal.rst:56
+#: ../../source/doc.as_command.decimal.rst:60
 msgid ""
 "You can specify a range of values to be generated, as in the following "
 "example:"
 msgstr "次の例のように、生成する値の範囲を指定することができます："
 
-#: ../../source/doc.as_command.decimal.rst:63
+#: ../../source/doc.as_command.decimal.rst:67
 msgid ""
 "When using decimal numbers, you will often want to limit the number of "
 "decimal places. In that case, use :code:`--decimal-len` as in the "
@@ -144,36 +152,115 @@ msgstr ""
 "10進数を使用する場合、小数点以下の桁数を制限したい場合が多いでしょう。その場合は次の例のように :code:`--decimal-len` "
 "を使用します。"
 
-#: ../../source/doc.as_command.decimal.rst:71
+#: ../../source/doc.as_command.decimal.rst:75
 msgid "Infinity and NaN"
 msgstr ""
 
-#: ../../source/doc.as_command.decimal.rst:73
+#: ../../source/doc.as_command.decimal.rst:77
 msgid ""
 "Infinity and NaN can be included as candidates for generation by "
 "specifying optional arguments."
 msgstr "オプション引数を指定することで無限大やNaNを生成の候補に含めることができます。"
 
-#: ../../source/doc.as_command.decimal.rst:84
+#: ../../source/doc.as_command.decimal.rst:88
 msgid "Format: Thousands Separator, etc."
 msgstr "出力フォーマット (桁区切り等)"
 
-#: ../../source/doc.as_command.decimal.rst:86
+#: ../../source/doc.as_command.decimal.rst:90
 msgid ""
 "The output format can be specified in `format specification mini-language"
 " <https://docs.python.org/3/library/string.html?highlight=string#format-"
 "specification-mini-language>`_ as follows:"
 msgstr ""
-"以下のように出力フォーマットを `書式指定ミニ言語 <https://docs.python.org/ja/3/library/string.html?highlight=string#format-"
-"specification-mini-language>`_ で指定することができます。"
+"以下のように出力フォーマットを `書式指定ミニ言語 "
+"<https://docs.python.org/ja/3/library/string.html?highlight=string"
+"#format-specification-mini-language>`_ で指定することができます。"
 
-#: ../../source/doc.as_command.decimal.rst:95
+#: ../../source/doc.as_command.decimal.rst:99
 msgid "Repeatedly Generate"
 msgstr "繰り返し生成"
 
-#: ../../source/doc.as_command.decimal.rst:97
+#: ../../source/doc.as_command.decimal.rst:101
 msgid ""
 "Most likely, you will not be satisfied with just one generated, so you "
 "will probably want to output multiple times as follows:"
 msgstr "たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。"
+
+#: ../../source/doc.as_command.decimal.rst:112
+msgid "Probability Distribution; uniform distribution of digits"
+msgstr "確率分布 (桁数の分布を一様に)"
+
+#: ../../source/doc.as_command.decimal.rst:114
+msgid ""
+"By default, the probability distribution of generation is uniform. For "
+"example, when generating values from 0.1 to 1000.0, the probabilities of "
+"generating 0.1, 5.0, and 500.0 are all identical."
+msgstr ""
+"デフォルトでは生成の確率分布は一様分布です。たとえば、0.1 から 1000.0 "
+"の値を生成する場合、0.1 が生成される確率、5.0 が生成される確率、500.0 "
+"が生成される確率はすべて同一です。"
+
+#: ../../source/doc.as_command.decimal.rst:116
+msgid ""
+"If you are not particular, a uniform distribution is fine, but if you "
+"want values to be generated with a variety of digits, this can be "
+"problematic. In the above example, there is a 90% probability that a "
+"3-digit number (100.0 - 1000.0) will be generated, and only a 0.1% "
+"probability that a number less than 1 will be generated. In other words, "
+"the majority of the values generated are 3-digit."
+msgstr ""
+"特にこだわらない場合は一様分布でも問題ありませんが、様々な桁数の値が生成されてほしい場合はこれでは問題があります。上述の例だと3桁の数値 "
+"(100.0 - 1000.0) が生成される確率は 90% であり、1未満の数が生成される確率はわずか "
+"0.1% しかありません。つまり、生成される値の大半が3桁なのです。"
+
+#: ../../source/doc.as_command.decimal.rst:118
+msgid ""
+"To make the distribution of digits uniform, use :code:`--exp-uniform`. "
+"This option gives greater weight to numbers with smaller digits, so that "
+"the number of digits is generally uniform. More precisely, the "
+"distribution of :code:`floor(log10(x))`, digits in binary notation, is "
+"uniform; However, the number of digits of 0 is assumed to be 0, and "
+"positive and negative numbers have separate probabilities. For example, "
+"when generating numbers from -1000.00 to 55000.00, the following events "
+"all have the same probability:"
+msgstr ""
+"桁数の分布を均一にするためには :code:`--exp-uniform` "
+"を使用します。このオプションを使用することで桁数が小さい数に大きい比重がかけられ、桁数はおおむね均一になります。"
+"より正確には、10進数表記した際の桁数 :code:`floor(log10(x))` の分布が一様になります。ただし、"
+"0の桁数は0とし、正の数と負の数は別々に確率を持ちます。たとえば、"
+"-1000.00 から 55000.00 までの整数を生成する場合、以下の事象はすべて同じ確率です。"
+
+#: ../../source/doc.as_command.decimal.rst:120
+msgid "from -1000.00 to -100.00"
+msgstr "-1000.00 超 -100.00 以下"
+
+#: ../../source/doc.as_command.decimal.rst:121
+msgid "from -0.10 to -0.01"
+msgstr "-0.10 超 -0.01 以下"
+
+#: ../../source/doc.as_command.decimal.rst:122
+msgid "0.00"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:123
+msgid "1.00"
+msgstr ""
+
+#: ../../source/doc.as_command.decimal.rst:124
+msgid "from 0.01 to 0.10"
+msgstr "0.01 以上 0.10 未満"
+
+#: ../../source/doc.as_command.decimal.rst:125
+msgid "from 1000.00 to 10000.00"
+msgstr "1000.00 以上 10000.00 未満"
+
+#: ../../source/doc.as_command.decimal.rst:127
+msgid ""
+"Note that if only a portion of the number of the digit is in the "
+"generation range, the probability of numbers of the digit is reduced; In "
+"the example above, only half of 10000.00-100000.00 are included in the "
+"range, so the probability is half that of the other digits."
+msgstr ""
+"なお、当該桁数の数の一部しか生成範囲に入っていない場合、その桁数になる確率は減少します。"
+"上述の例では、10000.00-100000.00 のうち半分しか生成範囲に含まれないため、他の桁数に比べて確率は半分になります。"
 

@@ -45,7 +45,7 @@ msgid ""
 "specification of `randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_."
 msgstr ""
-"最小値を :ref:`簡易書式 <simple-format>` で指定する。指定がない場合の動作は、`randtimedelta "
+"最小値を :ref:`簡易書式 <timedelta-simple-format>` で指定する。指定がない場合の動作は、`randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_ の仕様に準ずる。"
 
 #: ../../source/doc.as_command.timedelta.rst:18
@@ -59,7 +59,7 @@ msgid ""
 "specification of `randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_."
 msgstr ""
-"最大値を :ref:`簡易書式 <simple-format>` で指定する。指定がない場合の動作は、`randtimedelta "
+"最大値を :ref:`簡易書式 <timedelta-simple-format>` で指定する。指定がない場合の動作は、`randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_ の仕様に準ずる。"
 
 #: ../../source/doc.as_command.timedelta.rst:22
@@ -73,7 +73,7 @@ msgid ""
 "left to the specification of `randtimedelta "
 "<randog.factory.html#randog.factory.randtimedelta>`_."
 msgstr ""
-"生成される値の最小単位を :ref:`簡易書式 <simple-format>` で指定する。指定がない場合の動作は、`randtimedelta"
+"生成される値の最小単位を :ref:`簡易書式 <timedelta-simple-format>` で指定する。指定がない場合の動作は、`randtimedelta"
 " <randog.factory.html#randog.factory.randtimedelta>`_ の仕様に準ずる。"
 
 #: ../../source/doc.as_command.timedelta.rst:26
@@ -137,7 +137,7 @@ msgid ""
 "<https://en.wikipedia.org/wiki/ISO_8601>`_ by specifying options as "
 "follows:"
 msgstr ""
-"デフォルトでは :ref:`簡易書式 <simple-format>` で出力されますが、次のようにオプションを指定することで出力形式を "
+"デフォルトでは :ref:`簡易書式 <timedelta-simple-format>` で出力されますが、次のようにオプションを指定することで出力形式を "
 ":ref:`独自の書式コード <format-codes>` で指定したフォーマットや `ISO-8601 形式 "
 "<https://ja.wikipedia.org/wiki/ISO_8601>`_ に変更できます："
 

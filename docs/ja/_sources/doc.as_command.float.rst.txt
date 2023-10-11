@@ -5,7 +5,7 @@ In float mode, floating-point numeric values are generated. The format of the co
 
 .. code-block:: shell
 
-    python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [--fmt FORMAT] [common-options]
+    python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [--exp-uniform] [--fmt FORMAT] [common-options]
 
 
 Arguments and Options
@@ -30,6 +30,10 @@ Arguments and Options
 - :code:`--nan PROB_NAN` (optional, default=0.0):
 
     - the probability of NaN.
+
+- :code:`--exp-uniform` (optional):
+
+    - if specified, the distribution of digits (log with base 2) is uniform.
 
 - :code:`--fmt FORMAT` (optional):
 
@@ -109,3 +113,27 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 
     # Generate list which contains 10 values
     python -m randog float -L 10
+
+Probability Distribution; uniform distribution of digits
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the probability distribution of generation is uniform. For example, when generating values from 0.1 to 1000.0, the probabilities of generating 0.1, 5.0, and 500.0 are all identical.
+
+If you are not particular, a uniform distribution is fine, but if you want values to be generated with a variety of digits, this can be problematic. In the above example, there is a 90% probability that a 3-digit number (100.0 - 1000.0) will be generated, and only a 0.1% probability that a number less than 1 will be generated. In other words, the majority of the values generated are 3-digit.
+
+To make the distribution of digits uniform, use :code:`--exp-uniform`. This option gives greater weight to numbers with smaller digits, so that the number of digits is generally uniform. More precisely, the distribution of :code:`floor(log2(x))`, digits in binary notation, is uniform; However, the number of digits of 0 is assumed to be 0, and positive and negative numbers have separate probabilities. For example, when generating numbers from -8 to 24, the following events all have the same probability:
+
+- from -8.0 to -4.0
+- from -0.25 to -0.125
+- 0.0
+- 1.0
+- from 0.125 to 0.25
+- from 8.0 to 16.0
+
+Note that if only a portion of the number of the digit is in the generation range, the probability of numbers of the digit is reduced; In the example above, only half of 16-32 are included in the range, so the probability is half that of the other digits.
+
+.. note::
+
+    Since floating-point numbers can be represented to the smallest power of -1022 of 2, including 0 in the generation range tends to result in only small absolute values. For example, if the range is 0 to 100, the number of digits ranges from -1022 to 7, so 90% of the generated values will be smaller than 2 to the power of -100.
+
+    If this is not desired, use :doc:`decimal mode <doc.as_command.decimal>`. The probability distribution will be based on decimal notation, but you can limit the smallest unit with option :code:`--decimal-len`.

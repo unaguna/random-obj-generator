@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>decimal モード &mdash; random-obj-generator 0.13.0 ドキュメント</title>
+  <title>decimal モード &mdash; random-obj-generator 0.14.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.13.0
+                0.14.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -118,7 +118,7 @@
   <section id="decimal-mode">
 <h1>decimal モード<a class="headerlink" href="#decimal-mode" title="この見出しへのパーマリンク"></a></h1>
 <p>decimal モードでは、10進小数値を生成します。コマンドの形式は次の通りです：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--decimal-len<span class="w"> </span>DECIMAL_LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--decimal-len<span class="w"> </span>DECIMAL_LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--exp-uniform<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
@@ -163,6 +163,13 @@
 <blockquote>
 <div><ul class="simple">
 <li><p>NaNを生成する確率。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--exp-uniform</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>指定した場合、桁数 (10を底とする対数) が一様になる。</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -227,6 +234,21 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>decimal<span class="w"> </span>--decimal-len<span class="w"> </span><span class="m">2</span><span class="w"> </span>-L<span class="w"> </span><span class="m">10</span><span class="w"> </span>--json
 </pre></div>
 </div>
+</section>
+<section id="probability-distribution-uniform-distribution-of-digits">
+<h3>確率分布 (桁数の分布を一様に)<a class="headerlink" href="#probability-distribution-uniform-distribution-of-digits" title="この見出しへのパーマリンク"></a></h3>
+<p>デフォルトでは生成の確率分布は一様分布です。たとえば、0.1 から 1000.0 の値を生成する場合、0.1 が生成される確率、5.0 が生成される確率、500.0 が生成される確率はすべて同一です。</p>
+<p>特にこだわらない場合は一様分布でも問題ありませんが、様々な桁数の値が生成されてほしい場合はこれでは問題があります。上述の例だと3桁の数値 (100.0 - 1000.0) が生成される確率は 90% であり、1未満の数が生成される確率はわずか 0.1% しかありません。つまり、生成される値の大半が3桁なのです。</p>
+<p>桁数の分布を均一にするためには <code class="code docutils literal notranslate"><span class="pre">--exp-uniform</span></code> を使用します。このオプションを使用することで桁数が小さい数に大きい比重がかけられ、桁数はおおむね均一になります。より正確には、10進数表記した際の桁数 <code class="code docutils literal notranslate"><span class="pre">floor(log10(x))</span></code> の分布が一様になります。ただし、0の桁数は0とし、正の数と負の数は別々に確率を持ちます。たとえば、-1000.00 から 55000.00 までの整数を生成する場合、以下の事象はすべて同じ確率です。</p>
+<ul class="simple">
+<li><p>-1000.00 超 -100.00 以下</p></li>
+<li><p>-0.10 超 -0.01 以下</p></li>
+<li><p>0.00</p></li>
+<li><p>1.00</p></li>
+<li><p>0.01 以上 0.10 未満</p></li>
+<li><p>1000.00 以上 10000.00 未満</p></li>
+</ul>
+<p>なお、当該桁数の数の一部しか生成範囲に入っていない場合、その桁数になる確率は減少します。上述の例では、10000.00-100000.00 のうち半分しか生成範囲に含まれないため、他の桁数に比べて確率は半分になります。</p>
 </section>
 </section>
 </section>

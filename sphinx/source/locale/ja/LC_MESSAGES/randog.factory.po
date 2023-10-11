@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-16 17:34+0900\n"
+"POT-Creation-Date: 2023-10-09 21:25+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -116,10 +116,10 @@ msgstr ""
 #: randog.factory._bool.randbool:5 randog.factory._choice.randchoice:8
 #: randog.factory._choice.randenum:7 randog.factory._date.randdate:7
 #: randog.factory._datetime.randdatetime:12
-#: randog.factory._decimal.randdecimal:15 randog.factory._dict.randdict:8
-#: randog.factory._float.randfloat:13
+#: randog.factory._decimal.randdecimal:18 randog.factory._dict.randdict:8
+#: randog.factory._float.randfloat:16
 #: randog.factory._from_example.from_example:20
-#: randog.factory._from_pyfile.from_pyfile:8 randog.factory._int.randint:7
+#: randog.factory._from_pyfile.from_pyfile:8 randog.factory._int.randint:10
 #: randog.factory._list.randlist:12 randog.factory._str.randstr:10
 #: randog.factory._time.randtime:12 randog.factory._timedelta.randtimedelta:9
 #: randog.factory._union.union:13
@@ -371,8 +371,8 @@ msgstr "True を生成する確率"
 
 #: of randog.factory._bool.randbool:8 randog.factory._date.randdate:10
 #: randog.factory._datetime.randdatetime:15
-#: randog.factory._decimal.randdecimal:18 randog.factory._float.randfloat:16
-#: randog.factory._int.randint:10 randog.factory._list.randlist:17
+#: randog.factory._decimal.randdecimal:21 randog.factory._float.randfloat:19
+#: randog.factory._int.randint:13 randog.factory._list.randlist:17
 #: randog.factory._str.randstr:13 randog.factory._time.randtime:15
 #: randog.factory._timedelta.randtimedelta:12
 msgid "When the specified generating conditions are inconsistent."
@@ -447,6 +447,13 @@ msgstr "負の無限を生成する確率"
 msgid "the probability of NaN"
 msgstr "NaN を生成する確率"
 
+#: of randog.factory._decimal.randdecimal:15
+msgid ""
+"probability distribution. If 'uniform', the distribution is uniform. If "
+"'exp_uniform', the distribution of digits (log with a base of 10) is "
+"uniform."
+msgstr "確率分布。'uniform' の場合は一様分布になる。'exp_uniform' を指定すると桁数 (10を底とする対数) が一様分布になる。"
+
 #: of randog.factory._dict.randdict:1
 msgid "Return a factory generating random dict."
 msgstr "ランダムに dict 型の値を生成する factory を返す。"
@@ -476,6 +483,13 @@ msgstr "それぞれの値が選ばれる確率。"
 #: of randog.factory._float.randfloat:1
 msgid "Return a factory generating random float values."
 msgstr "ランダムに float 型の値を生成する factory を返す。"
+
+#: of randog.factory._float.randfloat:13 randog.factory._int.randint:7
+msgid ""
+"probability distribution. If 'uniform', the distribution is uniform. If "
+"'exp_uniform', the distribution of digits (log with a base of 2) is "
+"uniform."
+msgstr "確率分布。'uniform' の場合は一様分布になる。'exp_uniform' を指定すると桁数 (2を底とする対数) が一様分布になる。"
 
 #: of randog.factory._int.randint:1
 msgid "Return a factory generating random int values."

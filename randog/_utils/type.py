@@ -2,8 +2,16 @@ import codecs
 import datetime as dt
 import re
 import typing as t
+from decimal import Decimal, InvalidOperation
 
 from .. import timedelta_util
+
+
+def decimal(value):
+    try:
+        return Decimal(value)
+    except InvalidOperation:
+        raise ValueError("invalid Decimal string")
 
 
 def positive_int(value):

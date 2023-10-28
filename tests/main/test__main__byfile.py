@@ -85,6 +85,29 @@ def test__main__option_json_indent(capfd, resources, json_indent, expected_inden
         assert err == ""
 
 
+@pytest.mark.parametrize("json_indent", ["-1"])
+def test__main__error_with_illegal_json_indent(capfd, resources, json_indent):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--json",
+        f"--json-indent={json_indent}",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            "byfile: error: argument --json-indent: invalid indent value: "
+            + repr(json_indent)
+            in err
+        )
+
+
 @pytest.mark.parametrize(
     ("option", "count"),
     [

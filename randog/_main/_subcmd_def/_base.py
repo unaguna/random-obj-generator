@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from .. import Linesep
 from .._main_args import Args
 from .._subcmd import Subcmd
-from ..._utils.type import positive_int, encoding
+from ..._utils.type import positive_int, encoding, indent
 
 
 class SubcmdDef(ABC):
@@ -74,11 +74,12 @@ def add_common_arguments(parser: argparse.ArgumentParser):
     )
     common_opt_group.add_argument(
         "--json-indent",
-        metavar="INDENT_SIZE",
-        type=positive_int,
+        metavar="INDENT",
+        type=indent,
         help=(
             "if specified with '--json', "
-            "it outputs JSON formatted with the specified indent size."
+            "it outputs JSON formatted with the specified indent. "
+            "Examples of INDENT: 2 (two spaces), \\t (a tab character), etc."
         ),
     )
     common_opt_group.add_argument(

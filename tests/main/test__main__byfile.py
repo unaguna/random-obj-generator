@@ -53,6 +53,30 @@ def test__main__option_json(capfd, resources):
         assert err == ""
 
 
+@pytest.mark.parametrize("json_indent", [1, 2, 3])
+def test__main__option_json_indent(capfd, resources, json_indent):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--json",
+        "--json-indent",
+        str(json_indent),
+    ]
+    indent_str = " " * json_indent
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == (
+            f'{{\n{indent_str}"id": 0,'
+            f'\n{indent_str}"name": "aaa",'
+            f'\n{indent_str}"join_date": "2019-10-14"\n}}\n'
+        )
+        assert err == ""
+
+
 @pytest.mark.parametrize(
     ("option", "count"),
     [

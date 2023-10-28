@@ -73,6 +73,15 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         help="if specified, it outputs generated object by json format",
     )
     common_opt_group.add_argument(
+        "--json-indent",
+        metavar="INDENT_SIZE",
+        type=positive_int,
+        help=(
+            "if specified with '--json', "
+            "it outputs JSON formatted with the specified indent size."
+        ),
+    )
+    common_opt_group.add_argument(
         "--output",
         "-O",
         metavar="DESC_PATH",

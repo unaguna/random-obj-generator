@@ -119,6 +119,13 @@ class Args:
             return None
 
     @property
+    def json_indent(self) -> t.Optional[int]:
+        if hasattr(self._args, "json_indent"):
+            return self._args.json_indent
+        else:
+            return None
+
+    @property
     def regenerate(self) -> float:
         if hasattr(self._args, "regenerate"):
             return self._args.regenerate

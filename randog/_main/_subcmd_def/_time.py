@@ -89,10 +89,7 @@ class SubcmdDefTime(SubcmdDef):
 
         return time_parser
 
-    def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
-        if args.sub_cmd != Subcmd.Time:
-            return
-
+    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         if args.output_fmt == "repr" and args.iso:
             subparser.error("argument --iso: not allowed with argument --repr")
         elif args.output_fmt == "repr" and args.format:

@@ -17,9 +17,26 @@ class SubcmdDef(ABC):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         ...
 
-    @abstractmethod
     def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
+        if args.sub_cmd != self.cmd():
+            return
+
+        # validate for common arguments
+        self._validate_common_parser(args, subparser)
+
+        # validate for special arguments
+        self._validate_parser(args, subparser)
+
+    @abstractmethod
+    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         ...
+
+    @classmethod
+    def _validate_common_parser(cls, args: Args, subparser: argparse.ArgumentParser):
+        if args.json_indent is not None and args.output_fmt != "json":
+            subparser.error(
+                "argument --json-indent: not allowed without argument --json"
+            )
 
     @abstractmethod
     def build_args(

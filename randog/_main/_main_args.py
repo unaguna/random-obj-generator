@@ -76,6 +76,13 @@ class Args:
         return self._args.output_fmt
 
     @property
+    def json_indent(self) -> t.Optional[int]:
+        if hasattr(self._args, "json_indent"):
+            return self._args.json_indent
+        else:
+            return None
+
+    @property
     def output_path(self) -> t.Optional[str]:
         return self._args.output
 
@@ -115,13 +122,6 @@ class Args:
     def format(self) -> t.Optional[str]:
         if hasattr(self._args, "format"):
             return self._args.format
-        else:
-            return None
-
-    @property
-    def json_indent(self) -> t.Optional[int]:
-        if hasattr(self._args, "json_indent"):
-            return self._args.json_indent
         else:
             return None
 

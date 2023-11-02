@@ -208,3 +208,14 @@ def encoding(value):
     except LookupError as e:
         raise ValueError(*e.args)
     return value
+
+
+def indent(value):
+    """argument of json.dump()"""
+    try:
+        value_int = int(value)
+    except ValueError:
+        # In order to decode r"\t" into "\t"
+        return codecs.decode(value, "unicode-escape")
+
+    return non_negative_int(value_int)

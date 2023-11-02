@@ -62,7 +62,7 @@ class SubcmdDefString(SubcmdDef):
 
         return str_parser
 
-    def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
+    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         iargs, kwargs = self.build_args(args)
         regex = kwargs["regex"]
         length = kwargs.get("length")

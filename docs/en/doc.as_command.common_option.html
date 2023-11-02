@@ -119,9 +119,12 @@
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: The generated object is converted by using <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> before output.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">--json</span></code>: Outputs the generated object in JSON format. Objects for which no standard JSON format is defined are converted to JSON after being converted to strings with <code class="code docutils literal notranslate"><span class="pre">str()</span></code>.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--json-indent</span> <span class="pre">&lt;INDENT&gt;</span></code>: If specified with <code class="code docutils literal notranslate"><span class="pre">--json</span></code>, the output JSON will be formatted with the specified indent. Examples of INDENT: <code class="code docutils literal notranslate"><span class="pre">2</span></code> (two spaces), <code class="code docutils literal notranslate"><span class="pre">\t</span></code> (a tab character), etc.</p></li>
 </ul>
 <p>For example:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
 </pre></div>
 </div>

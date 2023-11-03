@@ -96,5 +96,5 @@ class DateRandomFactory(Factory[dt.date]):
         elif maximum is not None:
             return maximum - dt.timedelta(days=364), maximum
         else:
-            now = dt.datetime.utcnow().date()
+            now = dt.datetime.now(dt.timezone.utc).date()
             return now - dt.timedelta(days=182), now + dt.timedelta(hours=182)

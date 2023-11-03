@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from .. import Linesep
 from .._main_args import Args
 from .._subcmd import Subcmd
-from ..._utils.type import positive_int, encoding
+from ..._utils.type import positive_int, encoding, indent
 
 
 class SubcmdDef(ABC):
@@ -17,9 +17,26 @@ class SubcmdDef(ABC):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         ...
 
-    @abstractmethod
     def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
+        if args.sub_cmd != self.cmd():
+            return
+
+        # validate for common arguments
+        self._validate_common_parser(args, subparser)
+
+        # validate for special arguments
+        self._validate_parser(args, subparser)
+
+    @abstractmethod
+    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         ...
+
+    @classmethod
+    def _validate_common_parser(cls, args: Args, subparser: argparse.ArgumentParser):
+        if args.json_indent is not None and args.output_fmt != "json":
+            subparser.error(
+                "argument --json-indent: not allowed without argument --json"
+            )
 
     @abstractmethod
     def build_args(
@@ -71,6 +88,16 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         action="store_const",
         const="json",
         help="if specified, it outputs generated object by json format",
+    )
+    common_opt_group.add_argument(
+        "--json-indent",
+        metavar="INDENT",
+        type=indent,
+        help=(
+            "if specified with '--json', "
+            "it outputs JSON formatted with the specified indent. "
+            "Examples of INDENT: 2 (two spaces), \\t (a tab character), etc."
+        ),
     )
     common_opt_group.add_argument(
         "--output",

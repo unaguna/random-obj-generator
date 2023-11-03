@@ -54,6 +54,89 @@ def test__main__option_json(capfd, resources):
 
 
 @pytest.mark.parametrize(
+    ("json_indent", "expected_indent"),
+    [
+        ("0", ""),
+        ("1", " "),
+        ("2", "  "),
+        ("3", "   "),
+        ("", ""),
+        (r"\t", "\t"),
+    ],
+)
+def test__main__option_json_indent(capfd, resources, json_indent, expected_indent):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--json",
+        f"--json-indent={json_indent}",
+    ]
+
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == (
+            f'{{\n{expected_indent}"id": 0,'
+            f'\n{expected_indent}"name": "aaa",'
+            f'\n{expected_indent}"join_date": "2019-10-14"\n}}\n'
+        )
+        assert err == ""
+
+
+@pytest.mark.parametrize("json_indent", ["-1"])
+def test__main__error_with_illegal_json_indent(capfd, resources, json_indent):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--json",
+        f"--json-indent={json_indent}",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            "byfile: error: argument --json-indent: invalid indent value: "
+            + repr(json_indent)
+            in err
+        )
+
+
+@pytest.mark.parametrize(
+    "options",
+    [
+        [],
+        ["--repr"],
+    ],
+)
+def test__main__error_with_json_indent_without_json(capfd, resources, options):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--json-indent=2",
+        *options,
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert (
+            "byfile: error: argument --json-indent: not allowed without argument --json"
+            in err
+        )
+
+
+@pytest.mark.parametrize(
     ("option", "count"),
     [
         ("--repeat", 3),

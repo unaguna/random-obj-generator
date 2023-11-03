@@ -39,7 +39,7 @@ class SubcmdDefBool(SubcmdDef):
 
         return bool_parser
 
-    def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
+    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         pass
 
     def build_args(

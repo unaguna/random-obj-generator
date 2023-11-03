@@ -120,9 +120,12 @@
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: 生成されたオブジェクトを <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> 関数で変換して出力します。</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">--json</span></code>: 生成されたオブジェクトをJSON形式で出力します。標準的なJSON形式が定められていないオブジェクトは <code class="code docutils literal notranslate"><span class="pre">str()</span></code> 関数で文字列に変換してからJSON化されます。</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--json-indent</span> <span class="pre">&lt;INDENT&gt;</span></code>: <code class="code docutils literal notranslate"><span class="pre">--json</span></code> とともに指定することで、出力のJSONが指定したインデントでフォーマットされます。INDENT の例： <code class="code docutils literal notranslate"><span class="pre">2</span></code> (スペース2つ)、<code class="code docutils literal notranslate"><span class="pre">\t</span></code> (タブ文字1つ) 等</p></li>
 </ul>
 <p>例:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
 </pre></div>
 </div>

@@ -88,10 +88,7 @@ class SubcmdDefFloat(SubcmdDef):
 
         return float_parser
 
-    def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
-        if args.sub_cmd != Subcmd.Float:
-            return
-
+    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         iargs, kwargs = self.build_args(args)
         minimum, maximum = iargs
         nan = kwargs["nan"]

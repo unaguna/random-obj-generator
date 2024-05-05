@@ -22,16 +22,13 @@ class DictItem:
     """probability of key generation"""
 
     @t.overload
-    def __init__(self, factory: Factory):
-        ...
+    def __init__(self, factory: Factory): ...
 
     @t.overload
-    def __init__(self, factory: Factory, prop_exists: float):
-        ...
+    def __init__(self, factory: Factory, prop_exists: float): ...
 
     @t.overload
-    def __init__(self, item: _item_tuple):
-        ...
+    def __init__(self, item: _item_tuple): ...
 
     def __init__(self, *args):
         if len(args) == 1 and isinstance(args[0], Factory):

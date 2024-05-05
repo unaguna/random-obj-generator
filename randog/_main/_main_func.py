@@ -187,7 +187,7 @@ def _open_output_fp(
     else:
         options = {}
 
-        if output_path in already_written_files:
+        if output_path in already_written_files or args.output_appending_mode:
             options["mode"] = "at"
         else:
             options["mode"] = "wt"
@@ -210,7 +210,7 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
     if args.output_fmt == "repr":
         print(repr(generated), file=fp)
     elif args.output_fmt == "json":
-        json.dump(generated, fp, default=str)
+        json.dump(generated, fp, default=str, indent=args.json_indent)
         fp.write("\n")
     else:
         print(generated, file=fp)

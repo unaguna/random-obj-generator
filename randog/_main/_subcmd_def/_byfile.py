@@ -78,7 +78,7 @@ class SubcmdDefByfile(SubcmdDef):
 
         return byfile_parser
 
-    def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
+    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         if args.output_fmt == "repr" and args.csv is not None:
             subparser.error("argument --csv: not allowed with argument --repr")
         elif args.output_fmt == "json" and args.csv is not None:

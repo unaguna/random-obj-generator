@@ -173,7 +173,7 @@ def test__from_example__datetime_type():
     "obj",
     (
         dt.datetime.now(),
-        dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc),
+        dt.datetime.now(dt.timezone.utc),
     ),
 )
 def test__from_example__datetime_value(obj):

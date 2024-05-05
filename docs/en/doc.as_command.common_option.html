@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Common Options &mdash; random-obj-generator 0.14.0 documentation</title>
+  <title>Common Options &mdash; random-obj-generator 0.15.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.14.0
+                0.15.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -119,9 +119,12 @@
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: The generated object is converted by using <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> before output.</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">--json</span></code>: Outputs the generated object in JSON format. Objects for which no standard JSON format is defined are converted to JSON after being converted to strings with <code class="code docutils literal notranslate"><span class="pre">str()</span></code>.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--json-indent</span> <span class="pre">&lt;INDENT&gt;</span></code>: If specified with <code class="code docutils literal notranslate"><span class="pre">--json</span></code>, the output JSON will be formatted with the specified indent. Examples of INDENT: <code class="code docutils literal notranslate"><span class="pre">2</span></code> (two spaces), <code class="code docutils literal notranslate"><span class="pre">\t</span></code> (a tab character), etc.</p></li>
 </ul>
 <p>For example:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
 </pre></div>
 </div>
@@ -129,7 +132,12 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <section id="output-to-file">
 <span id="output-file"></span><h2>Output to file<a class="headerlink" href="#output-to-file" title="Permalink to this heading"></a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">--output</span></code> option can be used to output to a file, as in the following example.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to ./out.txt; if already exists, it will be truncated</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+
+<span class="c1"># output to ./out.txt;</span>
+<span class="c1"># if already exists, it will be kept and generated values will be appended at the end of the file</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt<span class="w"> </span>--output-appending
 
 <span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
@@ -138,8 +146,9 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
 </pre></div>
 </div>
-<p>As above example, You can specify the <a class="reference external" href="https://docs.python.org/3/library/codecs.html#standard-encodings">encoding</a> and newline character for output with options <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>).</p>
-<p>As the example above also uses {now}, the following placeholders can be used with <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">format specification</a>.</p>
+<p>As above examples, by default, the file specified as the output destination is truncated if it already exists, but you can append it to the end of an existing file by using the option <code class="code docutils literal notranslate"><span class="pre">--output-appending</span></code> (<code class="code docutils literal notranslate"><span class="pre">--Oa</span></code>).</p>
+<p>As above examples, You can specify the <a class="reference external" href="https://docs.python.org/3/library/codecs.html#standard-encodings">encoding</a> and newline character for output with options <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>).</p>
+<p>As the examples above also uses {now}, the following placeholders can be used with <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">format specification</a>.</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">{0}</span></code> (int):</dt><dd><p>Serial number, which is a sequential number when the <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> option is used or when multiple definition files are used in order in byfile mode. If used only once, <code class="code docutils literal notranslate"><span class="pre">{}</span></code> is also acceptable.</p>

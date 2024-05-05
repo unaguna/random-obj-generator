@@ -10,12 +10,15 @@ Normally, the generated objects are output as is with :code:`print()`, but the o
 
 - :code:`--repr`: The generated object is converted by using :code:`repr()` before output.
 - :code:`--json`: Outputs the generated object in JSON format. Objects for which no standard JSON format is defined are converted to JSON after being converted to strings with :code:`str()`.
+- :code:`--json-indent <INDENT>`: If specified with :code:`--json`, the output JSON will be formatted with the specified indent. Examples of INDENT: :code:`2` (two spaces), :code:`\\t` (a tab character), etc.
 
 For example:
 
 .. code-block:: shell
 
     python -m randog time --json
+    python -m randog time --json --json-indent 2
+    python -m randog time --json --json-indent \t
     python -m randog time --repr
 
 
@@ -28,7 +31,12 @@ Output to file
 
 .. code-block:: shell
 
+    # output to ./out.txt; if already exists, it will be truncated
     python -m randog time --output ./out.txt
+
+    # output to ./out.txt;
+    # if already exists, it will be kept and generated values will be appended at the end of the file
+    python -m randog time --output ./out.txt --output-appending
 
     # output to out.txt in UTF-16 LE with line-separator '\r\n'
     python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
@@ -37,10 +45,11 @@ Output to file
     python -m randog time --output './out_{now:%Y%m%d%H%M%S}.txt'
 
 
-As above example, You can specify the `encoding <https://docs.python.org/3/library/codecs.html#standard-encodings>`_ and newline character for output with options :code:`--output-encoding` (:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`).
+As above examples, by default, the file specified as the output destination is truncated if it already exists, but you can append it to the end of an existing file by using the option :code:`--output-appending` (:code:`--Oa`).
 
+As above examples, You can specify the `encoding <https://docs.python.org/3/library/codecs.html#standard-encodings>`_ and newline character for output with options :code:`--output-encoding` (:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`).
 
-As the example above also uses {now}, the following placeholders can be used with `format specification <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
+As the examples above also uses {now}, the following placeholders can be used with `format specification <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
 
 - :code:`{0}` (int):
     Serial number, which is a sequential number when the :code:`--repeat` option is used or when multiple definition files are used in order in byfile mode. If used only once, :code:`{}` is also acceptable.

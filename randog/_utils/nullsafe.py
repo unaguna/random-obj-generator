@@ -5,13 +5,11 @@ R = t.TypeVar("R")
 
 
 @t.overload
-def dfor(value: t.Optional[T], default: T) -> T:
-    ...
+def dfor(value: t.Optional[T], default: T) -> T: ...
 
 
 @t.overload
-def dfor(value0: t.Optional[T], value1: t.Optional[T], default: T) -> T:
-    ...
+def dfor(value0: t.Optional[T], value1: t.Optional[T], default: T) -> T: ...
 
 
 def dfor(*values: t.Optional[T]) -> T:

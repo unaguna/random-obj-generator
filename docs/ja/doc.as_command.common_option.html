@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>共通オプション &mdash; random-obj-generator 0.14.0 ドキュメント</title>
+  <title>共通オプション &mdash; random-obj-generator 0.15.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.14.0
+                0.15.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -120,9 +120,12 @@
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: 生成されたオブジェクトを <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> 関数で変換して出力します。</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">--json</span></code>: 生成されたオブジェクトをJSON形式で出力します。標準的なJSON形式が定められていないオブジェクトは <code class="code docutils literal notranslate"><span class="pre">str()</span></code> 関数で文字列に変換してからJSON化されます。</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--json-indent</span> <span class="pre">&lt;INDENT&gt;</span></code>: <code class="code docutils literal notranslate"><span class="pre">--json</span></code> とともに指定することで、出力のJSONが指定したインデントでフォーマットされます。INDENT の例： <code class="code docutils literal notranslate"><span class="pre">2</span></code> (スペース2つ)、<code class="code docutils literal notranslate"><span class="pre">\t</span></code> (タブ文字1つ) 等</p></li>
 </ul>
 <p>例:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
 </pre></div>
 </div>
@@ -130,7 +133,12 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <section id="output-to-file">
 <span id="output-file"></span><h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
 <p>以下の例のように <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用することで、結果をファイル出力することができます。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to ./out.txt; if already exists, it will be truncated</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+
+<span class="c1"># output to ./out.txt;</span>
+<span class="c1"># if already exists, it will be kept and generated values will be appended at the end of the file</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt<span class="w"> </span>--output-appending
 
 <span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
@@ -139,6 +147,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
 </pre></div>
 </div>
+<p>上の例のように、デフォルトでは指定の出力先ファイルが既に存在する場合はその内容が削除されてから生成した内容が出力されますが、 <code class="code docutils literal notranslate"><span class="pre">--output-appending</span></code> (<code class="code docutils literal notranslate"><span class="pre">--Oa</span></code>) オプションを使用することで、既存のファイルの末尾に追記させることもできます。</p>
 <p>上の例のように、オプション <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) や <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>) を使用することで、出力時の <a class="reference external" href="https://docs.python.org/ja/3/library/codecs.html#standard-encodings">エンコード</a> と改行文字を指定できます。</p>
 <p>上の例で {now} を使用しているように、下記のプレースホルダーを使用できます (<a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-string-syntax">書式指定子</a> も使用できます)。</p>
 <ul class="simple">

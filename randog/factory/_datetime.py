@@ -131,5 +131,5 @@ class DatetimeRandomFactory(Factory[dt.datetime]):
         elif maximum is not None:
             return maximum - dt.timedelta(days=1), maximum
         else:
-            now = dt.datetime.utcnow()
+            now = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
             return now - dt.timedelta(hours=12), now + dt.timedelta(hours=12)

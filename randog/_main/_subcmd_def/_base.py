@@ -10,12 +10,10 @@ from ..._utils.type import positive_int, encoding, indent
 
 class SubcmdDef(ABC):
     @abstractmethod
-    def cmd(self) -> Subcmd:
-        ...
+    def cmd(self) -> Subcmd: ...
 
     @abstractmethod
-    def add_parser(self, subparsers) -> argparse.ArgumentParser:
-        ...
+    def add_parser(self, subparsers) -> argparse.ArgumentParser: ...
 
     def validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         if args.sub_cmd != self.cmd():
@@ -28,8 +26,7 @@ class SubcmdDef(ABC):
         self._validate_parser(args, subparser)
 
     @abstractmethod
-    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
-        ...
+    def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser): ...
 
     @classmethod
     def _validate_common_parser(cls, args: Args, subparser: argparse.ArgumentParser):
@@ -41,12 +38,10 @@ class SubcmdDef(ABC):
     @abstractmethod
     def build_args(
         self, args: Args
-    ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
-        ...
+    ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]: ...
 
     @abstractmethod
-    def get_factory_constructor(self) -> t.Callable:
-        ...
+    def get_factory_constructor(self) -> t.Callable: ...
 
 
 def add_common_arguments(parser: argparse.ArgumentParser):

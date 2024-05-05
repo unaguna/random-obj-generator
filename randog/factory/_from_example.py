@@ -204,8 +204,7 @@ class _CustomFunc(t.Protocol):
         example: t.Any,
         *,
         context: FromExampleContext,
-    ) -> t.Any:
-        ...
+    ) -> t.Any: ...
 
 
 class ContextFactory:

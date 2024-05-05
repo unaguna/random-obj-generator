@@ -87,6 +87,10 @@ class Args:
         return self._args.output
 
     @property
+    def output_appending_mode(self) -> bool:
+        return self._args.output_appending
+
+    @property
     def output_encoding(self) -> t.Optional[str]:
         specified = self._args.output_encoding
         if specified is None or self.output_path is None:

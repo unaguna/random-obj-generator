@@ -106,6 +106,16 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         help="destination file path",
     )
     common_opt_group.add_argument(
+        "--output-appending",
+        "--Oa",
+        action="store_true",
+        default=False,
+        help=(
+            "if specified with '--output', "
+            "it outputs at the end of destination file without deleting the file."
+        ),
+    )
+    common_opt_group.add_argument(
         "--output-encoding",
         "-X",
         metavar="ENCODING",

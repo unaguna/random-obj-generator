@@ -133,7 +133,12 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <section id="output-to-file">
 <span id="output-file"></span><h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
 <p>以下の例のように <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用することで、結果をファイル出力することができます。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to ./out.txt; if already exists, it will be truncated</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+
+<span class="c1"># output to ./out.txt;</span>
+<span class="c1"># if already exists, it will be kept and generated values will be appended at the end of the file</span>
+python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt<span class="w"> </span>--output-appending
 
 <span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
@@ -142,6 +147,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
 </pre></div>
 </div>
+<p>上の例のように、デフォルトでは指定の出力先ファイルが既に存在する場合はその内容が削除されてから生成した内容が出力されますが、 <code class="code docutils literal notranslate"><span class="pre">--output-appending</span></code> (<code class="code docutils literal notranslate"><span class="pre">--Oa</span></code>) オプションを使用することで、既存のファイルの末尾に追記させることもできます。</p>
 <p>上の例のように、オプション <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code> (<code class="code docutils literal notranslate"><span class="pre">-X</span></code>) や <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code> (<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code>) を使用することで、出力時の <a class="reference external" href="https://docs.python.org/ja/3/library/codecs.html#standard-encodings">エンコード</a> と改行文字を指定できます。</p>
 <p>上の例で {now} を使用しているように、下記のプレースホルダーを使用できます (<a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-string-syntax">書式指定子</a> も使用できます)。</p>
 <ul class="simple">

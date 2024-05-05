@@ -187,7 +187,7 @@ def _open_output_fp(
     else:
         options = {}
 
-        if output_path in already_written_files:
+        if output_path in already_written_files or args.output_appending_mode:
             options["mode"] = "at"
         else:
             options["mode"] = "wt"

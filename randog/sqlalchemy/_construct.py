@@ -22,8 +22,7 @@ def factory(
     *,
     as_dict: t.Literal[False] = False,
     rnd: t.Optional[Random] = None,
-) -> Factory[M]:
-    ...
+) -> Factory[M]: ...
 
 
 @t.overload
@@ -33,8 +32,7 @@ def factory(
     *,
     as_dict: t.Literal[True],
     rnd: t.Optional[Random] = None,
-) -> Factory[dict]:
-    ...
+) -> Factory[dict]: ...
 
 
 def factory(

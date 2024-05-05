@@ -34,7 +34,7 @@ class Args:
             metavar="MODE",
             help=(
                 "mode of value generation; candidates: "
-                f"{', '.join(map(lambda c: c.value, Subcmd))}. "
+                f"{', '.join(c.value for c in Subcmd)}. "
                 "For more information, see the command 'randog MODE --help'."
             ),
         )
@@ -85,6 +85,10 @@ class Args:
     @property
     def output_path(self) -> t.Optional[str]:
         return self._args.output
+
+    @property
+    def output_appending_mode(self) -> bool:
+        return self._args.output_appending
 
     @property
     def output_encoding(self) -> t.Optional[str]:

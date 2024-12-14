@@ -4,6 +4,7 @@ import sys
 import typing as t
 import warnings
 
+from .._processmode import get_process_mode, Subcmd
 from ..exceptions import RandogWarning
 from ..factory import Factory
 
@@ -106,14 +107,26 @@ def _create_csv_row_post_function(
             elif isinstance(pre_value, t.Sequence) and not isinstance(pre_value, str):
                 return pre_value
             else:
-                warnings.warn(
-                    "--csv is recommended for only collections (such as "
-                    "dict, list, tuple, etc.); "
-                    "In CSV output, one generated value is treated as one row, "
-                    "so the result is the same as --repeat except for collections; "
-                    "CSV_COLUMNS in the definition file is ignored.",
-                    RandogWarning,
-                )
+                # different warnings depending on the mode of the process
+                if get_process_mode() is not None:
+                    warnings.warn(
+                        "--csv is recommended for only collections (such as "
+                        "dict, list, tuple, etc.); "
+                        "In CSV output, one generated value is treated as one row, "
+                        "so the result is the same as --repeat except for collections; "
+                        "CSV_COLUMNS in the definition file is ignored.",
+                        RandogWarning,
+                    )
+                else:
+                    warnings.warn(
+                        "CSV output is recommended for only collections "
+                        "(such as dict, list, tuple, etc.); "
+                        "In CSV output, one generated value is treated as one row, "
+                        "so the result is the same as iteration of "
+                        "'print(factory.next())'; "
+                        "csv_columns specified as argument is ignored.",
+                        RandogWarning,
+                    )
                 return [pre_value]
 
     else:
@@ -122,33 +135,55 @@ def _create_csv_row_post_function(
             if pre_value is None:
                 return None
             elif isinstance(pre_value, t.Mapping):
-                # Why msg_part is defined:
-                #   Consider the possibility that future modifications will allow
-                #   users to reach here in other than byfile mode,
-                #   and branch the error message.
-                # TODO: msg_part = (
-                #     " in the definition file" if args.sub_cmd is Subcmd.Byfile else ""
-                # )
-                msg_part = ""
-                warnings.warn(
-                    f"Since CSV_COLUMNS is not defined{msg_part}, "
-                    "the fields are inserted in the order returned by the "
-                    "dictionary; In this case, fields may not be aligned "
-                    "depending on the FACTORY definition, "
-                    "so it is recommended to define CSV_COLUMNS.",
-                    RandogWarning,
-                )
+                # different warnings depending on the mode of the process
+                p_mode = get_process_mode()
+                if p_mode is not None:
+                    # Why msg_part is defined:
+                    #   Consider the possibility that future modifications will allow
+                    #   users to reach here in other than byfile mode,
+                    #   and branch the error message.
+                    msg_part = (
+                        " in the definition file" if p_mode is Subcmd.Byfile else ""
+                    )
+                    warnings.warn(
+                        f"Since CSV_COLUMNS is not defined{msg_part}, "
+                        "the fields are inserted in the order returned by the "
+                        "dictionary; In this case, fields may not be aligned "
+                        "depending on the FACTORY definition, "
+                        "so it is recommended to define CSV_COLUMNS.",
+                        RandogWarning,
+                    )
+                else:
+                    warnings.warn(
+                        "Since csv_columns is None, "
+                        "the fields are inserted in the order returned by the "
+                        "dictionary; In this case, fields may not be aligned "
+                        "depending on the factory definition, "
+                        "so it is recommended to specify non-none csv_columns.",
+                        RandogWarning,
+                    )
                 return list(pre_value.values())
             elif isinstance(pre_value, t.Sequence) and not isinstance(pre_value, str):
                 return pre_value
             else:
-                warnings.warn(
-                    "--csv is recommended for only collections (such as "
-                    "dict, list, tuple, etc.); "
-                    "In CSV output, one generated value is treated as one row, "
-                    "so the result is the same as --repeat except for collections.",
-                    RandogWarning,
-                )
+                # different warnings depending on the mode of the process
+                if get_process_mode() is not None:
+                    warnings.warn(
+                        "--csv is recommended for only collections (such as "
+                        "dict, list, tuple, etc.); "
+                        "In CSV output, one generated value is treated as one row, "
+                        "so the result is the same as --repeat except for collections.",
+                        RandogWarning,
+                    )
+                else:
+                    warnings.warn(
+                        "CSV output is recommended for only collections "
+                        "(such as dict, list, tuple, etc.); "
+                        "In CSV output, one generated value is treated as one row, "
+                        "so the result is the same as iteration of "
+                        "'print(factory.next())'.",
+                        RandogWarning,
+                    )
                 return [pre_value]
 
     return _post_function

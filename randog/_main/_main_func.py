@@ -9,7 +9,7 @@ import warnings
 
 import randog.factory
 from ..exceptions import RandogWarning
-from .._processmode import Subcmd
+from .._processmode import Subcmd, set_process_mode
 from . import Args, get_subcmd_def
 from ._logging import (
     logger,
@@ -242,6 +242,7 @@ def main():
 
     args = Args(sys.argv)
     now = datetime.datetime.now()
+    set_process_mode(args.sub_cmd)
     already_written_files = set()
 
     _setup_primary_configuration(args)

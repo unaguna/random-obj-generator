@@ -1078,6 +1078,56 @@ def test__main__option_output__error_with_illegal_encoding(
         ("out_{}.txt", "out_0.txt"),
     ],
 )
+@pytest.mark.parametrize("encoding", ["utf8", "shift_jis"])
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], "テスト\n"),
+        (["--csv=1", "--quiet"], "テスト\n"),
+        (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
+        (["--list=1"], "['テスト']\n"),
+        (["--repeat=1"], "テスト\n"),
+    ],
+)
+def test__main__option_output__default_encoding(
+    capfd,
+    tmp_path,
+    resources,
+    output_fmt,
+    output,
+    encoding,
+    options,
+    expected,
+):
+    output_path_fmt = tmp_path.joinpath(output_fmt)
+    output_path = tmp_path.joinpath(output)
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath(f"factory_def_ja_{encoding}.py")),
+        "--output",
+        str(output_path_fmt),
+        *options,
+        "--output-linesep=LF",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_path, mode="rb") as out_fp:
+            assert out_fp.read(50) == expected.encode(encoding=encoding)
+
+
+@pytest.mark.parametrize(
+    ("output_fmt", "output"),
+    [
+        ("out.txt", "out.txt"),
+        ("out_{}.txt", "out_0.txt"),
+    ],
+)
 @pytest.mark.parametrize(
     ("ls_options", "ls_expected"),
     [

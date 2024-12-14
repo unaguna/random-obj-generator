@@ -24,7 +24,14 @@ from .._output import generate_to_csv
 
 def _build_factories(
     args: Args,
-) -> t.Iterator[t.Tuple[int, str, randog.factory.Factory]]:
+) -> t.Iterator[
+    t.Tuple[
+        int,
+        str,
+        randog.factory.Factory,
+        t.Optional[t.Sequence[t.Union[str, t.Callable[[t.Mapping], t.Any]]]],
+    ]
+]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
 
     if args.sub_cmd == Subcmd.Byfile:
@@ -44,11 +51,7 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
-            post_process = _gen_post_function_for_byfile_mode(args, factory_def)
-            if post_process is not None:
-                factory = factory.post_process(post_process)
-
-            yield factory_count, def_file_name, factory
+            yield factory_count, def_file_name, factory, factory_def.csv_columns
     else:
         iargs, kwargs = subcmd_def.build_args(args)
         construct_factory = subcmd_def.get_factory_constructor()
@@ -65,94 +68,7 @@ def _build_factories(
             factory = factory.post_process(
                 lambda x: format(x, args.format) if x is not None else None
             )
-        yield 0, "", factory
-
-
-def _get_csv_field(pre_value: t.Mapping, col) -> t.Any:
-    if isinstance(col, t.Callable):
-        return col(pre_value)
-    else:
-        return pre_value.get(col)
-
-
-def _gen_post_function_for_byfile_mode(
-    args: Args, factory_def: FactoryDef
-) -> t.Optional[t.Callable[[t.Any], t.Any]]:
-    """args に応じて、factory_def.factory に適用する post_process 関数を作成する。
-
-    この関数は、byfile モードでのみ使用する。
-    """
-    if args.sub_cmd is not Subcmd.Byfile:
-        raise RuntimeError("internal error; Unexpected function call")
-
-    # CSV 出力の場合、CSVの行 (Sequence[Any]) を生成するような post_process を作成する。
-    if args.get("csv", False):
-        if factory_def.csv_columns is not None:
-
-            def _post_function(pre_value) -> t.Optional[t.Sequence[t.Any]]:
-                if pre_value is None:
-                    return None
-                elif isinstance(pre_value, t.Mapping):
-                    return [
-                        _get_csv_field(pre_value, col)
-                        for col in factory_def.csv_columns
-                    ]
-                elif isinstance(pre_value, t.Sequence) and not isinstance(
-                    pre_value, str
-                ):
-                    return pre_value
-                else:
-                    warnings.warn(
-                        "--csv is recommended for only collections (such as "
-                        "dict, list, tuple, etc.); "
-                        "In CSV output, one generated value is treated as one row, "
-                        "so the result is the same as --repeat except for collections; "
-                        "CSV_COLUMNS in the definition file is ignored.",
-                        RandogCmdWarning,
-                    )
-                    return [pre_value]
-
-        else:
-
-            def _post_function(pre_value) -> t.Optional[t.Sequence[t.Any]]:
-                if pre_value is None:
-                    return None
-                elif isinstance(pre_value, t.Mapping):
-                    # Why msg_part is defined:
-                    #   Consider the possibility that future modifications will allow
-                    #   users to reach here in other than byfile mode,
-                    #   and branch the error message.
-                    msg_part = (
-                        " in the definition file"
-                        if args.sub_cmd is Subcmd.Byfile
-                        else ""
-                    )
-                    warnings.warn(
-                        f"Since CSV_COLUMNS is not defined{msg_part}, "
-                        "the fields are inserted in the order returned by the "
-                        "dictionary; In this case, fields may not be aligned "
-                        "depending on the FACTORY definition, "
-                        "so it is recommended to define CSV_COLUMNS.",
-                        RandogCmdWarning,
-                    )
-                    return list(pre_value.values())
-                elif isinstance(pre_value, t.Sequence) and not isinstance(
-                    pre_value, str
-                ):
-                    return pre_value
-                else:
-                    warnings.warn(
-                        "--csv is recommended for only collections (such as "
-                        "dict, list, tuple, etc.); "
-                        "In CSV output, one generated value is treated as one row, "
-                        "so the result is the same as --repeat except for collections.",
-                        RandogCmdWarning,
-                    )
-                    return [pre_value]
-
-        return _post_function
-    else:
-        return None
+        yield 0, "", factory, None
 
 
 class _DummyIO:
@@ -335,7 +251,7 @@ def main():
 
     try:
         index = 0
-        for factory_count, def_file, factory in _build_factories(args):
+        for factory_count, def_file, factory, csv_columns in _build_factories(args):
             for r_index in range(args.repeat):
                 with _open_output_fp(
                     args,
@@ -360,6 +276,7 @@ def main():
                             factory,
                             args.csv,
                             fp,
+                            csv_columns=csv_columns,
                             regenerate=args.regenerate,
                             discard=args.discard,
                             raise_on_factory_stopped=args.error_on_factory_stopped,

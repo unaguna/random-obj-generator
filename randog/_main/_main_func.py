@@ -19,6 +19,7 @@ from ._rnd import construct_random
 from ._warning import RandogCmdWarning, apply_formatwarning
 from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryDef, FactoryStopException
+from .._output import generate_to_csv
 
 
 def _build_factories(
@@ -355,7 +356,8 @@ def main():
                     # 生成処理と出力処理
                     # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
                     if args.csv is not None:
-                        factory.generate_to_csv(
+                        generate_to_csv(
+                            factory,
                             args.csv,
                             fp,
                             regenerate=args.regenerate,

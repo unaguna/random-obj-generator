@@ -2,7 +2,8 @@ import argparse
 import typing as t
 
 import randog.factory
-from .. import Args, Subcmd
+from ..._processmode import Subcmd
+from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
 

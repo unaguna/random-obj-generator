@@ -13,6 +13,7 @@ def generate_to_csv(
     line_num: int,
     fp: t.TextIO,
     csv_columns: t.Optional[t.Sequence[t.Union[str, t.Callable[[t.Mapping], t.Any]]]],
+    *,
     regenerate: float = 0.0,
     discard: float = 0.0,
     raise_on_factory_stopped: bool = False,

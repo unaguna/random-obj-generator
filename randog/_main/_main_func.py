@@ -9,7 +9,8 @@ import warnings
 
 import randog.factory
 from ..exceptions import RandogWarning
-from . import Args, Subcmd, get_subcmd_def
+from .._processmode import Subcmd
+from . import Args, get_subcmd_def
 from ._logging import (
     logger,
     apply_stderr_logging_config,

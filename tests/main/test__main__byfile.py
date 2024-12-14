@@ -1206,9 +1206,12 @@ def test__main__option_output__error_with_illegal_linesep(
         out, err = capfd.readouterr()
         assert out == ""
         assert err.startswith("usage:")
+        # Since different versions of python no longer enclose choices in single quotes,
+        # remove the single quotes before comparison to ensure
+        # that the assertion will succeed whether single quotes are attached.
         assert (
             f"byfile: error: argument --output-linesep/--O-ls: invalid choice: "
-            f"'{ls_options[1]}' (choose from 'LF', 'CRLF', 'CR')" in err
+            f"{ls_options[1]} (choose from LF, CRLF, CR)" in err.replace("'", "")
         )
 
 

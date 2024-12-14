@@ -19,9 +19,12 @@ class Subcmd(Enum):
 
 
 def set_process_mode(mode: t.Optional[Subcmd]):
-    os.environ[ENV_PROCESS_MODE] = str(mode.value)
+    if mode is not None:
+        os.environ[ENV_PROCESS_MODE] = str(mode.value)
+    else:
+        del os.environ[ENV_PROCESS_MODE]
 
 
-def get_process_mode() -> Subcmd:
-    mode_str = os.environ[ENV_PROCESS_MODE]
-    return Subcmd(mode_str)
+def get_process_mode() -> t.Optional[Subcmd]:
+    mode_str = os.environ.get(ENV_PROCESS_MODE)
+    return Subcmd(mode_str) if mode_str is not None else None

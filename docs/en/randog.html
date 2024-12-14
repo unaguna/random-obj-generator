@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Construct Factories (generator of random values)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.write_generated.html">Output Generated Values</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">External File Definition of Factory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">Run as Command</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.logging.html">Logging</a></li>
@@ -71,7 +72,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#randog.Example"><code class="docutils literal notranslate"><span class="pre">Example</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#randog.RandogCmdWarning"><code class="docutils literal notranslate"><span class="pre">RandogCmdWarning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#randog.generate_to_csv"><code class="docutils literal notranslate"><span class="pre">generate_to_csv()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -146,11 +147,41 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></p>
 </dd></dl>
 
-<dl class="py exception">
-<dt class="sig sig-object py" id="randog.RandogCmdWarning">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">randog.</span></span><span class="sig-name descname"><span class="pre">RandogCmdWarning</span></span><a class="headerlink" href="#randog.RandogCmdWarning" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">FutureWarning</span></code></p>
-<p>warning raised during command execution</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="randog.generate_to_csv">
+<span class="sig-prename descclassname"><span class="pre">randog.</span></span><span class="sig-name descname"><span class="pre">generate_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TextIO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Mapping</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regenerate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_on_factory_stopped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#randog.generate_to_csv" title="Permalink to this definition"></a></dt>
+<dd><p>Generate values randomly and output as CSV</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>factory</strong> (<a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a>) – the factory to generate values</p></li>
+<li><p><strong>line_num</strong> (<em>int</em>) – the number of the iterator.
+However, if the argument <cite>raise_on_factory_stopped</cite> is not True,
+fewer iterations than the specified <cite>size</cite> will be executed
+if the factory is stopped.
+Also, if the argument <cite>discard</cite> is specified, the size may be less.</p></li>
+<li><p><strong>fp</strong> (<em>TextIO</em>) – CSV output destination</p></li>
+<li><p><strong>csv_columns</strong> (<em>list</em><em>[</em><em>str</em><em>, </em><em>Callable</em><em>[</em><em>[</em><em>Mapping</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>] </em><em>| </em><em>None</em>) – the definitions of each column value.
+If it is defined with str,
+the value is taken from the generated object using that as the key.
+If it is defined with a function,
+the function is used with the generated object as an argument,
+and the return value is used.</p></li>
+<li><p><strong>regenerate</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – the probability that the original factory generation value is not returned
+as is, but is regenerated.
+It affects cases where the original factory returns a value
+that is not completely random.</p></li>
+<li><p><strong>discard</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – the probability that the original factory generation value is not returned
+as is, but is discarded.
+If discarded, the number of times the value is generated is less than
+<cite>size</cite>.</p></li>
+<li><p><strong>raise_on_factory_stopped</strong> (<em>bool</em><em>, </em><em>default=False</em>) – If True, raises <cite>FactoryStopException</cite>
+in case the factory cannot generate value due to <cite>StopIteration</cite>.
+If False, simply raises <cite>StopIteration</cite>.</p></li>
+<li><p><strong>linesep</strong> (<em>str</em><em>, </em><em>optional</em>) – If specified, CSV rows are separated by this string.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

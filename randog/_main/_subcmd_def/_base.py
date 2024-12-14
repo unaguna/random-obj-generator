@@ -2,9 +2,9 @@ import argparse
 import typing as t
 from abc import ABC, abstractmethod
 
+from ..._processmode import Subcmd
 from .. import Linesep
 from .._main_args import Args
-from .._subcmd import Subcmd
 from ..._utils.type import positive_int, encoding, indent
 
 

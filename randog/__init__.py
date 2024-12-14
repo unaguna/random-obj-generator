@@ -1,12 +1,12 @@
 from ._examples import DictItemExample, Example
 from . import factory
-from ._main import RandogCmdWarning
+from ._output import generate_to_csv
 
 __all__ = [
     "factory",
     "DictItemExample",
     "Example",
-    "RandogCmdWarning",
+    "generate_to_csv",
 ]
 
 __version__ = "0.15.0"

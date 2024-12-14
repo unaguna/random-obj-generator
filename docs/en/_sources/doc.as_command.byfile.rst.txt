@@ -88,6 +88,9 @@ In the case, the output can be made missing by :code:`--discard` or :code:`--reg
     # output exactly 20 values (each value will be regenerated at 10% probability)
     python -m randog byfile factory_def.py --repeat 20 --regenerate 0.1
 
+
+.. _output_as_csv:
+
 output as CSV
 ~~~~~~~~~~~~~
 

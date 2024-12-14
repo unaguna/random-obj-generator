@@ -1,11 +1,11 @@
 import random
-from abc import ABC, abstractmethod
 import typing as t
+from abc import ABC, abstractmethod
 from fractions import Fraction
 from random import Random
 
-from .._utils.nullsafe import dfor
 from ._logging import logger
+from .._utils.nullsafe import dfor
 
 T = t.TypeVar("T")
 R = t.TypeVar("R")

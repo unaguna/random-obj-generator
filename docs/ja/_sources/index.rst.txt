@@ -10,6 +10,7 @@ random-obj-generator
    doc.quickstart
    doc.construct_factories
    doc.use_factories
+   doc.write_generated
    doc.external_def
    doc.as_command
    doc.logging

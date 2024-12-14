@@ -8,7 +8,7 @@ from unittest.mock import patch
 import pytest
 
 import randog.__main__
-from randog import RandogCmdWarning
+from randog.exceptions import RandogWarning
 from tests.testtools.envvar import EnvVarSnapshot
 
 
@@ -851,7 +851,7 @@ def test__main__csv__with_warning(
     ]
 
     with patch.object(sys, "argv", args):
-        with pytest.warns((RandogCmdWarning, _DummyWarning)) as w_ctx:
+        with pytest.warns((RandogWarning, _DummyWarning)) as w_ctx:
             warnings.warn("dummy for test", _DummyWarning)
             randog.__main__.main()
 
@@ -861,7 +861,7 @@ def test__main__csv__with_warning(
         else:
             assert len(w_ctx.list) == 2
             assert isinstance(w_ctx.list[0].message, _DummyWarning)
-            assert isinstance(w_ctx.list[1].message, RandogCmdWarning)
+            assert isinstance(w_ctx.list[1].message, RandogWarning)
             assert len(w_ctx.list[1].message.args) == 1
             assert w_ctx.list[1].message.args[0] == warning_msg
 
@@ -1232,7 +1232,7 @@ def test__main__csv__with_regenerate_repeat(capfd, tmp_path, resources):
     ]
 
     with patch.object(sys, "argv", args):
-        with pytest.warns(RandogCmdWarning, match="--csv *"):
+        with pytest.warns(RandogWarning, match="--csv *"):
             randog.__main__.main()
 
         out, err = capfd.readouterr()
@@ -1274,7 +1274,7 @@ def test__main__csv__with_discard_repeat(capfd, tmp_path, resources):
     ]
 
     with patch.object(sys, "argv", args):
-        with pytest.warns(RandogCmdWarning, match="--csv *"):
+        with pytest.warns(RandogWarning, match="--csv *"):
             randog.__main__.main()
 
         out, err = capfd.readouterr()

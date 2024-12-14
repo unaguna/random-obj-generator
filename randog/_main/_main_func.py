@@ -8,6 +8,7 @@ import typing as t
 import warnings
 
 import randog.factory
+from ..exceptions import RandogWarning
 from . import Args, Subcmd, get_subcmd_def
 from ._logging import (
     logger,
@@ -16,9 +17,9 @@ from ._logging import (
     apply_default_logging_config,
 )
 from ._rnd import construct_random
-from ._warning import RandogCmdWarning, apply_formatwarning
+from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
-from ..factory import FactoryDef, FactoryStopException
+from ..factory import FactoryStopException
 from .._output import generate_to_csv
 
 
@@ -232,7 +233,7 @@ def _setup_primary_configuration(args: Args):
 
     # setup warning
     if args.hide_randog_warnings:
-        warnings.simplefilter("ignore", RandogCmdWarning)
+        warnings.simplefilter("ignore", RandogWarning)
 
 
 def main():

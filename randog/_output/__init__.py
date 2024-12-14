@@ -4,6 +4,7 @@ import sys
 import typing as t
 import warnings
 
+from ..exceptions import RandogWarning
 from ..factory import Factory
 
 
@@ -93,7 +94,6 @@ def _create_csv_row_post_function(
     csv_columns: t.Optional[t.Sequence[t.Union[str, t.Callable[[t.Mapping], t.Any]]]],
 ):
     # TODO: 警告メッセージをコマンド実行専用から汎用に修正する
-    from .. import RandogCmdWarning
 
     if csv_columns is not None:
 
@@ -111,7 +111,7 @@ def _create_csv_row_post_function(
                     "In CSV output, one generated value is treated as one row, "
                     "so the result is the same as --repeat except for collections; "
                     "CSV_COLUMNS in the definition file is ignored.",
-                    RandogCmdWarning,
+                    RandogWarning,
                 )
                 return [pre_value]
 
@@ -135,7 +135,7 @@ def _create_csv_row_post_function(
                     "dictionary; In this case, fields may not be aligned "
                     "depending on the FACTORY definition, "
                     "so it is recommended to define CSV_COLUMNS.",
-                    RandogCmdWarning,
+                    RandogWarning,
                 )
                 return list(pre_value.values())
             elif isinstance(pre_value, t.Sequence) and not isinstance(pre_value, str):
@@ -146,7 +146,7 @@ def _create_csv_row_post_function(
                     "dict, list, tuple, etc.); "
                     "In CSV output, one generated value is treated as one row, "
                     "so the result is the same as --repeat except for collections.",
-                    RandogCmdWarning,
+                    RandogWarning,
                 )
                 return [pre_value]
 

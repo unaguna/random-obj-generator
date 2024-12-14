@@ -1,4 +1,3 @@
-from ._warning import RandogCmdWarning
 from ._linesep import Linesep
 from ._subcmd import Subcmd
 from ._main_args import Args

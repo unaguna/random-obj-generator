@@ -1,4 +1,3 @@
-import csv
 import datetime
 import itertools
 import json
@@ -216,39 +215,6 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
         print(generated, file=fp)
 
 
-def _output_to_csv(
-    factory: randog.factory.Factory[t.Optional[t.Sequence[t.Sequence[t.Any]]]],
-    line_num: int,
-    fp: t.TextIO,
-    regenerate: float,
-    discard: float,
-    raise_on_factory_stopped: bool,
-    linesep: t.Optional[str],
-):
-    writer_options = {}
-    if fp in (sys.stdout, sys.stderr):
-        # windows で "\r\n" にすると、標準出力時に改行が "\r\r\n" に変換されてしまう。
-        # よって、windows で改行を "\r\n" にしたい場合も、標準出力時はここには　"\n" を指定する。
-        writer_options["lineterminator"] = "\n"
-    elif linesep is None:
-        writer_options["lineterminator"] = os.linesep
-    else:
-        writer_options["lineterminator"] = linesep
-
-    csv_writer = csv.writer(fp, **writer_options)
-    csv_writer.writerows(
-        filter(
-            lambda x: x is not None,
-            factory.iter(
-                line_num,
-                regenerate=regenerate,
-                discard=discard,
-                raise_on_factory_stopped=raise_on_factory_stopped,
-            ),
-        )
-    )
-
-
 class _Discarded(Exception):
     pass
 
@@ -389,8 +355,7 @@ def main():
                     # 生成処理と出力処理
                     # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
                     if args.csv is not None:
-                        _output_to_csv(
-                            factory,
+                        factory.generate_to_csv(
                             args.csv,
                             fp,
                             regenerate=args.regenerate,

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Factory で生成した値の出力 &mdash; random-obj-generator 0.15.0 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Factory の外部定義ファイル" href="doc.external_def.html" />
+    <link rel="prev" title="Factory を使用する" href="doc.use_factories.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+              <div class="version">
+                0.15.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Factory で生成した値の出力</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#as-json">JSONとして出力</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#as-csv">CSVとして出力</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.logging.html">ログ出力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Factory で生成した値の出力</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.write_generated.html"
+            >English</option>
+            <option value="../ja/doc.write_generated.html"
+                selected
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="output-generated-values">
+<h1>Factory で生成した値の出力<a class="headerlink" href="#output-generated-values" title="この見出しへのパーマリンク"></a></h1>
+<p>Factory で生成した値をプログラムの外部で使用したい場合、何らかの方法で出力しましょう。</p>
+<p>もっとも単純な方法は、次の例のように print 関数を使用することです。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># factory which generates &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot; in order non-randomly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="s2">&quot;abcde&quot;</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">factory</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="go">a</span>
+<span class="go">b</span>
+<span class="go">c</span>
+<span class="go">d</span>
+<span class="go">e</span>
+</pre></div>
+</div>
+<p>場合によっては、次に示す方法が役に立ちます</p>
+<section id="as-json">
+<h2>JSONとして出力<a class="headerlink" href="#as-json" title="この見出しへのパーマリンク"></a></h2>
+<p><a class="reference internal" href="doc.tips_json.html"><span class="doc">JSON をランダムに生成する</span></a> を参照してください。</p>
+</section>
+<section id="as-csv">
+<h2>CSVとして出力<a class="headerlink" href="#as-csv" title="この見出しへのパーマリンク"></a></h2>
+<p><a class="reference external" href="randog.factory.html#randog.generate_to_csv">generate_to_csv</a> 関数を使用することで、生成された辞書を簡単にCSV出力できます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>コマンド実行の際には <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> オプションを使用することで同様の出力が可能です。<a class="reference internal" href="doc.as_command.byfile.html#output-as-csv"><span class="std std-ref">CSV として出力</span></a> も参照してください。</p>
+</div>
+<p>generate_to_csv を使用する際は次の例のように、引数に辞書の factory、行数、出力先、各列のキーを指定します。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">f1</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">f2</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="s2">&quot;abcde&quot;</span><span class="p">)),</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">randog</span><span class="o">.</span><span class="n">generate_to_csv</span><span class="p">(</span><span class="n">factory</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">csv_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;f1&quot;</span><span class="p">,</span> <span class="s2">&quot;f2&quot;</span><span class="p">])</span>
+<span class="go">1,a</span>
+<span class="go">2,b</span>
+<span class="go">3,c</span>
+<span class="go">4,d</span>
+<span class="go">5,e</span>
+</pre></div>
+</div>
+<p>csv_columnsには列のキーだけでなく次に示す例のように、列の値を生成するラムダ式を指定することもできます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">randog</span>
+<span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span>
+    <span class="n">created_by</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdate</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">csv_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="c1"># output with format &#39;YYYYMMDD&#39;</span>
+    <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;created_by&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># Example:</span>
+<span class="c1">#   sniIz6EK,20240817</span>
+<span class="c1">#   QE37X0KD,20241202</span>
+<span class="c1">#   smWGOrjO,20241025</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output.csv&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">randog</span><span class="o">.</span><span class="n">generate_to_csv</span><span class="p">(</span><span class="n">factory</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">csv_columns</span><span class="o">=</span><span class="n">csv_columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.use_factories.html" class="btn btn-neutral float-left" title="Factory を使用する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.external_def.html" class="btn btn-neutral float-right" title="Factory の外部定義ファイル" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

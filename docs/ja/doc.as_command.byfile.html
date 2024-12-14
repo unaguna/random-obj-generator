@@ -54,6 +54,7 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.write_generated.html">Factory で生成した値の出力</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#modes">モード</a></li>
@@ -210,7 +211,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </pre></div>
 </div>
 <section id="output-as-csv">
-<h3>CSV として出力<a class="headerlink" href="#output-as-csv" title="この見出しへのパーマリンク"></a></h3>
+<span id="id1"></span><h3>CSV として出力<a class="headerlink" href="#output-as-csv" title="この見出しへのパーマリンク"></a></h3>
 <p>CSV形式で出力したい場合は、<code class="code docutils literal notranslate"><span class="pre">--csv</span></code> オプションを使用します。各フィールドの値は、定義ファイル内で定義された <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> によって決定されます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output CSV which contains 20 rows</span>
 python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>

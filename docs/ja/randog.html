@@ -72,7 +72,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#randog.Example"><code class="docutils literal notranslate"><span class="pre">Example</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#randog.RandogCmdWarning"><code class="docutils literal notranslate"><span class="pre">RandogCmdWarning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#randog.generate_to_csv"><code class="docutils literal notranslate"><span class="pre">generate_to_csv()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -147,11 +147,24 @@
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></p>
 </dd></dl>
 
-<dl class="py exception">
-<dt class="sig sig-object py" id="randog.RandogCmdWarning">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">randog.</span></span><span class="sig-name descname"><span class="pre">RandogCmdWarning</span></span><a class="headerlink" href="#randog.RandogCmdWarning" title="この定義へのパーマリンク"></a></dt>
-<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">FutureWarning</span></code></p>
-<p>コマンド実行中に出される警告</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="randog.generate_to_csv">
+<span class="sig-prename descclassname"><span class="pre">randog.</span></span><span class="sig-name descname"><span class="pre">generate_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TextIO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Mapping</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regenerate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_on_factory_stopped</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#randog.generate_to_csv" title="この定義へのパーマリンク"></a></dt>
+<dd><p>値をランダムに生成し、CSVとして出力する。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>factory</strong> (<a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a>) -- 値を生成する factory</p></li>
+<li><p><strong>line_num</strong> (<em>int</em>) -- 繰り返しの回数。ただし、引数 raise_on_factory_stopped が True でない場合、factory が停止すると size より少ないイテレーションで停止する。また、引数 discard が指定されている場合、イテレーションの回数が少なくなる場合がある。</p></li>
+<li><p><strong>fp</strong> (<em>TextIO</em>) -- CSVの出力先</p></li>
+<li><p><strong>csv_columns</strong> (<em>list</em><em>[</em><em>str</em><em>, </em><em>Callable</em><em>[</em><em>[</em><em>Mapping</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>] </em><em>| </em><em>None</em>) -- 各列の定義。文字列で定義した場合、生成されたオブジェクトからその文字列をキーとして値を取り出す。関数で定義した場合、生成されたオブジェクトを引数としてその関数を実行し、戻り値を使用する。</p></li>
+<li><p><strong>regenerate</strong> (<em>float</em><em>, </em><em>default=0.0</em>) -- factory が生成した値をそのまま使用せずに再生成する確率。このオプションは factory が完全にランダムでない値を生成する場合に効果がある。</p></li>
+<li><p><strong>discard</strong> (<em>float</em><em>, </em><em>default=0.0</em>) -- factory が生成した値をそのまま使用せずに廃棄する確率。廃棄が生じた場合、生成される数は size で指定した数より少なくなる</p></li>
+<li><p><strong>raise_on_factory_stopped</strong> (<em>bool</em><em>, </em><em>default=False</em>) -- True を指定すると、factory が StopIteration によって生成を停止した場合に例外 FactoryStopException を発する。False を指定するか何も指定しない場合、先述のケースで単にイテレーションを停止する。</p></li>
+<li><p><strong>linesep</strong> (<em>str</em><em>, </em><em>optional</em>) -- 指定した場合、CSVの行は指定した文字列で区切られる。</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

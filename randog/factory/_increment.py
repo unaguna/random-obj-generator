@@ -29,6 +29,16 @@ def increment(
 ) -> Factory[dt.datetime]: ...
 
 
+@t.overload
+def increment(
+    initial_value: dt.date,
+    maximum: t.Optional[dt.date] = None,
+    step: t.Optional[dt.timedelta] = None,
+    *,
+    rnd: t.Optional[Random] = None,
+) -> Factory[dt.date]: ...
+
+
 def increment(
     initial_value: t.Optional[t.Any] = None,
     maximum: t.Optional[t.Any] = None,
@@ -64,9 +74,11 @@ def increment(
     if step is None:
         if isinstance(initial_value, dt.datetime):
             step = dt.timedelta(seconds=1)
+        elif isinstance(initial_value, dt.date):
+            step = dt.timedelta(days=1)
         else:
             step = 1
-    if isinstance(initial_value, dt.datetime):
+    if isinstance(initial_value, (dt.datetime, dt.date)):
         resume_value = initial_value
     else:
         resume_value = 1

@@ -259,14 +259,14 @@ def main():
 
     try:
         index = 0
-        for factory_count, def_file, factory, factoryDef in _build_factories(args):
-            csv_columns = factoryDef.csv_columns if factoryDef is not None else None
+        for factory_count, def_file, factory, factory_def in _build_factories(args):
+            csv_columns = factory_def.csv_columns if factory_def is not None else None
 
             for r_index in range(args.repeat):
                 with _open_output_fp(
                     args,
                     index,
-                    factoryDef,
+                    factory_def,
                     def_file=def_file,
                     repeat_count=r_index,
                     factory_count=factory_count,
@@ -283,6 +283,15 @@ def main():
                     # 生成処理と出力処理
                     # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
                     if args.csv is not None:
+                        if args.output_linesep is not None:
+                            output_linesep = args.output_linesep
+                        elif (
+                            factory_def is not None
+                            and factory_def.output_linesep is not None
+                        ):
+                            output_linesep = factory_def.output_linesep.value
+                        else:
+                            output_linesep = None
                         generate_to_csv(
                             factory,
                             args.csv,
@@ -291,7 +300,7 @@ def main():
                             regenerate=args.regenerate,
                             discard=args.discard,
                             raise_on_factory_stopped=args.error_on_factory_stopped,
-                            linesep=args.output_linesep,
+                            linesep=output_linesep,
                         )
                         logger.debug(
                             "output to CSV; "

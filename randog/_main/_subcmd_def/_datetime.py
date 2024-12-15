@@ -4,7 +4,8 @@ import typing as t
 
 import randog.factory
 from ..._utils.type import datetime
-from .. import Args, Subcmd
+from ..._processmode import Subcmd
+from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
 

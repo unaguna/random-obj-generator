@@ -2,7 +2,8 @@ import argparse
 import typing as t
 from fractions import Fraction
 
-from .. import Args, Subcmd
+from ..._processmode import Subcmd
+from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from ..._utils.type import positive_int, probability
 from ...factory import REGENERATE_PROB_MAX

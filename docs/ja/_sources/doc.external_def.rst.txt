@@ -17,6 +17,8 @@ The external definition file is written as follows, in python code, so that the 
 
     # (optional) Settings used by 'byfile' mode of command executing
     CSV_COLUMNS = ["uuid", "name", "age"]
+    OUTPUT_LINESEP = "LF"
+    OUTPUT_ENCODING = "utf8"
 
 .. note::
     In factory definition file, :code:`import randog` can be omitted.
@@ -24,8 +26,6 @@ The external definition file is written as follows, in python code, so that the 
     .. warning::
         As discussed below, :code:`import randog` cannot be omitted if the factory definition file is used as python code other than in from_pyfile or byfile mode.
 
-.. note::
-    :code:`CSV_COLUMNS` is used when executing randog as command in byfile mode. See also :doc:`doc.as_command.byfile`.
 
 If you save this file under the name :code:`factory_def.py`, you can use it in your python code as follows:
 
@@ -41,6 +41,34 @@ If you save this file under the name :code:`factory_def.py`, you can use it in y
 
 .. seealso::
     The definition file can also be used when executing randog as command in byfile mode such as :code:`python -m randog byfile ./factory_def.py`. See also :doc:`doc.as_command.byfile`.
+
+
+Attributes
+----------
+
+The following attributes are defined in external definition file.
+
+- :code:`FACTORY`: :class:`Factory <randog.factory.Factory>`
+
+    - the factory to be loaded when using :func:`from_pyfile <randog.factory.from_pyfile>` and to be used when executing randog as command in byfile mode.
+
+- :code:`CSV_COLUMNS`: list[str | (dict) -> Any], optional
+
+    - the definitions of each column value. If it is defined with str, the value is taken from the generated object using that as the key. If it is defined with a function, the function is used with the generated object as an argument, and the return value is used.
+
+    - This attribute is used when executing commands in byfile mode. See also :doc:`doc.as_command.byfile`.
+
+- :code:`OUTPUT_LINESEP`: 'CRLF' | 'LF' | 'CR', optional
+
+    - line separator for output.
+
+    - This attribute is used when executing commands in byfile mode outputs to a file with the :code:`--output`/:code:`-O` option. If the :code:`--output-linesep`/:code:`--O-ls` option is specified, that takes precedence. See also :doc:`doc.as_command.common_option`.
+
+- :code:`OUTPUT_ENCODING`: str, optional
+
+    - encoding for output, such as 'utf-8'.
+
+    - This attribute is used when executing commands in byfile mode outputs to a file with the :code:`--output`/:code:`-O` option. If the :code:`--output-encoding`/:code:`-X` option is specified, that takes precedence. See also :doc:`doc.as_command.common_option`.
 
 
 .. _importable_definition_files:

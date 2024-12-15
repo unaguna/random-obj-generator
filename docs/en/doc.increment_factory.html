@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Incremental integer factory &mdash; random-obj-generator 0.15.0 documentation</title>
+  <title>Incremental Factory &mdash; random-obj-generator 0.16.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.15.0
+                0.16.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -61,13 +61,18 @@
 <li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#custom-factory">Custom Factory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#details-on-how-to-build-individual-factories">Details on how to build individual factories</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#special-factory">Special Factory</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Incremental integer factory</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Incremental Factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#incremental-integer-factory">Incremental Integer Factory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#incremental-datetime-date-factory">Incremental Datetime/Date Factory</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="doc.sqlalchemy.html">Factory from sqlalchemy</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.write_generated.html">Output Generated Values</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">External File Definition of Factory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">Run as Command</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.logging.html">Logging</a></li>
@@ -90,7 +95,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="doc.construct_factories.html">Construct Factories (generator of random values)</a></li>
-      <li class="breadcrumb-item active">Incremental integer factory</li>
+      <li class="breadcrumb-item active">Incremental Factory</li>
     <li class="spacer"></li>
     <li class="wy-breadcrumbs-aside">
         <select name="lang" onchange="location.href=value;">
@@ -108,26 +113,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="incremental-integer-factory">
-<h1>Incremental integer factory<a class="headerlink" href="#incremental-integer-factory" title="Permalink to this heading"></a></h1>
-<p>You can create a factory that generates incremental integers.</p>
+  <section id="incremental-factory">
+<h1>Incremental Factory<a class="headerlink" href="#incremental-factory" title="Permalink to this heading"></a></h1>
+<p>You can create a factory that generates incremental integers, datetimes or dates.</p>
+<section id="incremental-integer-factory">
+<h2>Incremental Integer Factory<a class="headerlink" href="#incremental-integer-factory" title="Permalink to this heading"></a></h2>
+<p>The most typical example is the use of generating integers, as in the following example:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">randog.factory</span> <span class="kn">import</span> <span class="n">DictItem</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory to generate integers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">increment</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span> <span class="o">==</span> <span class="mi">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span> <span class="o">==</span> <span class="mi">2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">3</span>
 </pre></div>
 </div>
 <p>If you wish to specify an initial value and a maximum value, such as when generating data to be added to an existing database, you can do so as follows:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">randog.factory</span> <span class="kn">import</span> <span class="n">DictItem</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory (initial_value = 101, maximum value is 2^31-1)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="mi">101</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">31</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -147,6 +153,28 @@ so the generated value is guaranteed to be a positive integer that fits into the
 <p class="admonition-title">Note</p>
 <p>Only one of the initial and maximum values may be specified.</p>
 </div>
+</section>
+<section id="incremental-datetime-date-factory">
+<h2>Incremental Datetime/Date Factory<a class="headerlink" href="#incremental-datetime-date-factory" title="Permalink to this heading"></a></h2>
+<p>If you specify a datetime or date value as the initial value, you can create a factory that will generate values of those types in sequence. You can specify the amount of increase for each generation by specifying the step as in the following example.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory to generate datetimes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
+<span class="go">2020-10-11 12:00:00</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
+<span class="go">2020-10-11 13:00:00</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
+<span class="go">2020-10-11 14:00:00</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 

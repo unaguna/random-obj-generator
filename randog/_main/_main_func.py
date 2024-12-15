@@ -1,4 +1,3 @@
-import csv
 import datetime
 import itertools
 import json
@@ -9,7 +8,9 @@ import typing as t
 import warnings
 
 import randog.factory
-from . import Args, Subcmd, get_subcmd_def
+from ..exceptions import RandogWarning
+from .._processmode import Subcmd, set_process_mode
+from . import Args, get_subcmd_def
 from ._logging import (
     logger,
     apply_stderr_logging_config,
@@ -17,14 +18,22 @@ from ._logging import (
     apply_default_logging_config,
 )
 from ._rnd import construct_random
-from ._warning import RandogCmdWarning, apply_formatwarning
+from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
-from ..factory import FactoryDef, FactoryStopException
+from ..factory import FactoryStopException, FactoryDef
+from .._output import generate_to_csv
 
 
 def _build_factories(
     args: Args,
-) -> t.Iterator[t.Tuple[int, str, randog.factory.Factory]]:
+) -> t.Iterator[
+    t.Tuple[
+        int,
+        str,
+        randog.factory.Factory,
+        FactoryDef,
+    ]
+]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
 
     if args.sub_cmd == Subcmd.Byfile:
@@ -44,11 +53,7 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
-            post_process = _gen_post_function_for_byfile_mode(args, factory_def)
-            if post_process is not None:
-                factory = factory.post_process(post_process)
-
-            yield factory_count, def_file_name, factory
+            yield factory_count, def_file_name, factory, factory_def
     else:
         iargs, kwargs = subcmd_def.build_args(args)
         construct_factory = subcmd_def.get_factory_constructor()
@@ -65,94 +70,7 @@ def _build_factories(
             factory = factory.post_process(
                 lambda x: format(x, args.format) if x is not None else None
             )
-        yield 0, "", factory
-
-
-def _get_csv_field(pre_value: t.Mapping, col) -> t.Any:
-    if isinstance(col, t.Callable):
-        return col(pre_value)
-    else:
-        return pre_value.get(col)
-
-
-def _gen_post_function_for_byfile_mode(
-    args: Args, factory_def: FactoryDef
-) -> t.Optional[t.Callable[[t.Any], t.Any]]:
-    """args に応じて、factory_def.factory に適用する post_process 関数を作成する。
-
-    この関数は、byfile モードでのみ使用する。
-    """
-    if args.sub_cmd is not Subcmd.Byfile:
-        raise RuntimeError("internal error; Unexpected function call")
-
-    # CSV 出力の場合、CSVの行 (Sequence[Any]) を生成するような post_process を作成する。
-    if args.get("csv", False):
-        if factory_def.csv_columns is not None:
-
-            def _post_function(pre_value) -> t.Optional[t.Sequence[t.Any]]:
-                if pre_value is None:
-                    return None
-                elif isinstance(pre_value, t.Mapping):
-                    return [
-                        _get_csv_field(pre_value, col)
-                        for col in factory_def.csv_columns
-                    ]
-                elif isinstance(pre_value, t.Sequence) and not isinstance(
-                    pre_value, str
-                ):
-                    return pre_value
-                else:
-                    warnings.warn(
-                        "--csv is recommended for only collections (such as "
-                        "dict, list, tuple, etc.); "
-                        "In CSV output, one generated value is treated as one row, "
-                        "so the result is the same as --repeat except for collections; "
-                        "CSV_COLUMNS in the definition file is ignored.",
-                        RandogCmdWarning,
-                    )
-                    return [pre_value]
-
-        else:
-
-            def _post_function(pre_value) -> t.Optional[t.Sequence[t.Any]]:
-                if pre_value is None:
-                    return None
-                elif isinstance(pre_value, t.Mapping):
-                    # Why msg_part is defined:
-                    #   Consider the possibility that future modifications will allow
-                    #   users to reach here in other than byfile mode,
-                    #   and branch the error message.
-                    msg_part = (
-                        " in the definition file"
-                        if args.sub_cmd is Subcmd.Byfile
-                        else ""
-                    )
-                    warnings.warn(
-                        f"Since CSV_COLUMNS is not defined{msg_part}, "
-                        "the fields are inserted in the order returned by the "
-                        "dictionary; In this case, fields may not be aligned "
-                        "depending on the FACTORY definition, "
-                        "so it is recommended to define CSV_COLUMNS.",
-                        RandogCmdWarning,
-                    )
-                    return list(pre_value.values())
-                elif isinstance(pre_value, t.Sequence) and not isinstance(
-                    pre_value, str
-                ):
-                    return pre_value
-                else:
-                    warnings.warn(
-                        "--csv is recommended for only collections (such as "
-                        "dict, list, tuple, etc.); "
-                        "In CSV output, one generated value is treated as one row, "
-                        "so the result is the same as --repeat except for collections.",
-                        RandogCmdWarning,
-                    )
-                    return [pre_value]
-
-        return _post_function
-    else:
-        return None
+        yield 0, "", factory, None
 
 
 class _DummyIO:
@@ -166,6 +84,7 @@ class _DummyIO:
 def _open_output_fp(
     args: Args,
     number: int,
+    factory_def: t.Optional[FactoryDef],
     *,
     def_file: str,
     repeat_count: int,
@@ -197,9 +116,13 @@ def _open_output_fp(
             options["newline"] = ""
         elif args.output_linesep is not None:
             options["newline"] = args.output_linesep
+        elif factory_def is not None and factory_def.output_linesep is not None:
+            options["newline"] = factory_def.output_linesep.value
 
         if args.output_encoding is not None:
             options["encoding"] = args.output_encoding
+        elif factory_def is not None and factory_def.output_encoding is not None:
+            options["encoding"] = factory_def.output_encoding
 
         logger.debug(f"open file: {output_path}")
 
@@ -214,39 +137,6 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
         fp.write("\n")
     else:
         print(generated, file=fp)
-
-
-def _output_to_csv(
-    factory: randog.factory.Factory[t.Optional[t.Sequence[t.Sequence[t.Any]]]],
-    line_num: int,
-    fp: t.TextIO,
-    regenerate: float,
-    discard: float,
-    raise_on_factory_stopped: bool,
-    linesep: t.Optional[str],
-):
-    writer_options = {}
-    if fp in (sys.stdout, sys.stderr):
-        # windows で "\r\n" にすると、標準出力時に改行が "\r\r\n" に変換されてしまう。
-        # よって、windows で改行を "\r\n" にしたい場合も、標準出力時はここには　"\n" を指定する。
-        writer_options["lineterminator"] = "\n"
-    elif linesep is None:
-        writer_options["lineterminator"] = os.linesep
-    else:
-        writer_options["lineterminator"] = linesep
-
-    csv_writer = csv.writer(fp, **writer_options)
-    csv_writer.writerows(
-        filter(
-            lambda x: x is not None,
-            factory.iter(
-                line_num,
-                regenerate=regenerate,
-                discard=discard,
-                raise_on_factory_stopped=raise_on_factory_stopped,
-            ),
-        )
-    )
 
 
 class _Discarded(Exception):
@@ -349,7 +239,7 @@ def _setup_primary_configuration(args: Args):
 
     # setup warning
     if args.hide_randog_warnings:
-        warnings.simplefilter("ignore", RandogCmdWarning)
+        warnings.simplefilter("ignore", RandogWarning)
 
 
 def main():
@@ -357,6 +247,7 @@ def main():
 
     args = Args(sys.argv)
     now = datetime.datetime.now()
+    set_process_mode(args.sub_cmd)
     already_written_files = set()
 
     _setup_primary_configuration(args)
@@ -368,11 +259,14 @@ def main():
 
     try:
         index = 0
-        for factory_count, def_file, factory in _build_factories(args):
+        for factory_count, def_file, factory, factory_def in _build_factories(args):
+            csv_columns = factory_def.csv_columns if factory_def is not None else None
+
             for r_index in range(args.repeat):
                 with _open_output_fp(
                     args,
                     index,
+                    factory_def,
                     def_file=def_file,
                     repeat_count=r_index,
                     factory_count=factory_count,
@@ -389,14 +283,24 @@ def main():
                     # 生成処理と出力処理
                     # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
                     if args.csv is not None:
-                        _output_to_csv(
+                        if args.output_linesep is not None:
+                            output_linesep = args.output_linesep
+                        elif (
+                            factory_def is not None
+                            and factory_def.output_linesep is not None
+                        ):
+                            output_linesep = factory_def.output_linesep.value
+                        else:
+                            output_linesep = None
+                        generate_to_csv(
                             factory,
                             args.csv,
                             fp,
+                            csv_columns=csv_columns,
                             regenerate=args.regenerate,
                             discard=args.discard,
                             raise_on_factory_stopped=args.error_on_factory_stopped,
-                            linesep=args.output_linesep,
+                            linesep=output_linesep,
                         )
                         logger.debug(
                             "output to CSV; "

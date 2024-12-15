@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-09 21:25+0900\n"
+"POT-Creation-Date: 2024-12-15 16:40+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -272,7 +272,7 @@ msgstr "指定した値を生成した値として返す factory を返す。"
 msgid "the value"
 msgstr "値"
 
-#: of randog.factory._const.const:5 randog.factory._increment.increment:9
+#: of randog.factory._const.const:5 randog.factory._increment.increment:11
 msgid ""
 "It is not normally used, but it can be accepted as an argument to match "
 "other Factory construction functions."
@@ -357,9 +357,13 @@ msgid ""
 "to 1."
 msgstr "最大値。生成値がこの値に達した場合、次の生成値は1になる。最大値が指定されない場合、生成値は1に戻されない。"
 
-#: of randog.factory._increment.increment:13
-msgid "if it is not satisfied `1 <= initial_value <= maximum`"
-msgstr "引数が `1 <= initial_value <= maximum` を満たさない場合"
+#: of randog.factory._increment.increment:9
+msgid "difference between generated values"
+msgstr "生成する値どうしの差"
+
+#: of randog.factory._increment.increment:15
+msgid "if it is not satisfied `initial_value <= maximum`"
+msgstr "引数が `initial_value <= maximum` を満たさない場合"
 
 #: of randog.factory._bool.randbool:1
 msgid "Return a factory generating random bool values."

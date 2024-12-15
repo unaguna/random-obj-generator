@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>randog.factory package &mdash; random-obj-generator 0.15.0 ドキュメント</title>
+  <title>randog.factory package &mdash; random-obj-generator 0.16.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.15.0
+                0.16.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -54,6 +54,7 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.write_generated.html">Factory で生成した値の出力</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.logging.html">ログ出力</a></li>
@@ -346,16 +347,26 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="randog.factory.FactoryDef">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">FactoryDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">randog.factory._base.Factory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NoneType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#randog.factory.FactoryDef" title="この定義へのパーマリンク"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">FactoryDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">randog.factory._base.Factory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Mapping</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NoneType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_linesep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">randog._utils.linesep.Linesep</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NoneType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NoneType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#randog.factory.FactoryDef" title="この定義へのパーマリンク"></a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="randog.factory.FactoryDef.csv_columns">
-<span class="sig-name descname"><span class="pre">csv_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#randog.factory.FactoryDef.csv_columns" title="この定義へのパーマリンク"></a></dt>
+<span class="sig-name descname"><span class="pre">csv_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Mapping</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#randog.factory.FactoryDef.csv_columns" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="randog.factory.FactoryDef.factory">
 <span class="sig-name descname"><span class="pre">factory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a></em><a class="headerlink" href="#randog.factory.FactoryDef.factory" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="randog.factory.FactoryDef.output_encoding">
+<span class="sig-name descname"><span class="pre">output_encoding</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#randog.factory.FactoryDef.output_encoding" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="randog.factory.FactoryDef.output_linesep">
+<span class="sig-name descname"><span class="pre">output_linesep</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Linesep</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#randog.factory.FactoryDef.output_linesep" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -504,18 +515,19 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="randog.factory.increment">
-<span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">increment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.increment" title="この定義へのパーマリンク"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">increment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.increment" title="この定義へのパーマリンク"></a></dt>
 <dd><p>連番を返す factory を返す。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>initial_value</strong> (<em>int</em><em>, </em><em>optional</em>) -- 最初に返す値</p></li>
-<li><p><strong>maximum</strong> (<em>int</em><em>, </em><em>optional</em>) -- 最大値。生成値がこの値に達した場合、次の生成値は1になる。最大値が指定されない場合、生成値は1に戻されない。</p></li>
+<li><p><strong>initial_value</strong> (<em>optional</em>) -- 最初に返す値</p></li>
+<li><p><strong>maximum</strong> (<em>optional</em>) -- 最大値。生成値がこの値に達した場合、次の生成値は1になる。最大値が指定されない場合、生成値は1に戻されない。</p></li>
+<li><p><strong>step</strong> (<em>optional</em>) -- 生成する値どうしの差</p></li>
 <li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 通常は使用しませんが、他の factory 作成関数と同様に引数として受け取ることができます。</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 引数が <cite>1 &lt;= initial_value &lt;= maximum</cite> を満たさない場合</p>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 引数が <cite>initial_value &lt;= maximum</cite> を満たさない場合</p>
 </dd>
 </dl>
 </dd></dl>

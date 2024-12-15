@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>External File Definition of Factory &mdash; random-obj-generator 0.15.0 documentation</title>
+  <title>External File Definition of Factory &mdash; random-obj-generator 0.16.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -23,7 +23,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Run as Command" href="doc.as_command.html" />
-    <link rel="prev" title="Use Factories" href="doc.use_factories.html" /> 
+    <link rel="prev" title="Output Generated Values" href="doc.write_generated.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
               <div class="version">
-                0.15.0
+                0.16.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -53,7 +53,9 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Construct Factories (generator of random values)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Use Factories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.write_generated.html">Output Generated Values</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">External File Definition of Factory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#attributes">Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#importable-definition-files">Importable definition files</a></li>
 </ul>
 </li>
@@ -109,6 +111,8 @@
 
 <span class="c1"># (optional) Settings used by &#39;byfile&#39; mode of command executing</span>
 <span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span>
+<span class="n">OUTPUT_LINESEP</span> <span class="o">=</span> <span class="s2">&quot;LF&quot;</span>
+<span class="n">OUTPUT_ENCODING</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -118,10 +122,6 @@
 <p class="admonition-title">Warning</p>
 <p>As discussed below, <code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> cannot be omitted if the factory definition file is used as python code other than in from_pyfile or byfile mode.</p>
 </div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> is used when executing randog as command in byfile mode. See also <a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile Mode</span></a>.</p>
 </div>
 <p>If you save this file under the name <code class="code docutils literal notranslate"><span class="pre">factory_def.py</span></code>, you can use it in your python code as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">randog.factory</span>
@@ -137,6 +137,43 @@
 <p class="admonition-title">See also</p>
 <p>The definition file can also be used when executing randog as command in byfile mode such as <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code>. See also <a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile Mode</span></a>.</p>
 </div>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
+<p>The following attributes are defined in external definition file.</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">FACTORY</span></code>: <a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory.Factory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Factory</span></code></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the factory to be loaded when using <a class="reference internal" href="randog.factory.html#randog.factory.from_pyfile" title="randog.factory.from_pyfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_pyfile</span></code></a> and to be used when executing randog as command in byfile mode.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code>: list[str | (dict) -&gt; Any], optional</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the definitions of each column value. If it is defined with str, the value is taken from the generated object using that as the key. If it is defined with a function, the function is used with the generated object as an argument, and the return value is used.</p></li>
+<li><p>This attribute is used when executing commands in byfile mode. See also <a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile Mode</span></a>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">OUTPUT_LINESEP</span></code>: ‘CRLF’ | ‘LF’ | ‘CR’, optional</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>line separator for output.</p></li>
+<li><p>This attribute is used when executing commands in byfile mode outputs to a file with the <code class="code docutils literal notranslate"><span class="pre">--output</span></code>/<code class="code docutils literal notranslate"><span class="pre">-O</span></code> option. If the <code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code>/<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code> option is specified, that takes precedence. See also <a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">Common Options</span></a>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">OUTPUT_ENCODING</span></code>: str, optional</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>encoding for output, such as ‘utf-8’.</p></li>
+<li><p>This attribute is used when executing commands in byfile mode outputs to a file with the <code class="code docutils literal notranslate"><span class="pre">--output</span></code>/<code class="code docutils literal notranslate"><span class="pre">-O</span></code> option. If the <code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code>/<code class="code docutils literal notranslate"><span class="pre">-X</span></code> option is specified, that takes precedence. See also <a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">Common Options</span></a>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
 <section id="importable-definition-files">
 <span id="id1"></span><h2>Importable definition files<a class="headerlink" href="#importable-definition-files" title="Permalink to this heading"></a></h2>
 <p>Since the definition file is written in python, it can be imported from other python files, but there are some points to note if it is intended to be imported.</p>
@@ -176,7 +213,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="doc.use_factories.html" class="btn btn-neutral float-left" title="Use Factories" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.write_generated.html" class="btn btn-neutral float-left" title="Output Generated Values" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="doc.as_command.html" class="btn btn-neutral float-right" title="Run as Command" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

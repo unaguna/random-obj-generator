@@ -1,6 +1,6 @@
 import typing as t
 
-from .. import Subcmd
+from ..._processmode import Subcmd
 from ._base import SubcmdDef
 from ._bool import SubcmdDefBool
 from ._byfile import SubcmdDefByfile

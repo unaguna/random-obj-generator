@@ -8,8 +8,8 @@ import datetime
 import itertools
 import typing as t
 
-from . import Linesep
-from ._subcmd import Subcmd
+from .._utils.linesep import Linesep
+from .._processmode import Subcmd
 
 
 class Args:

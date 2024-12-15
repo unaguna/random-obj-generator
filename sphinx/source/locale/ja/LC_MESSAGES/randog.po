@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-19 21:07+0900\n"
+"POT-Creation-Date: 2024-12-14 17:28+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -40,11 +40,72 @@ msgstr ""
 msgid "Bases: :py:class:`~typing.Sequence`"
 msgstr ""
 
-#: of randog._main._warning.RandogCmdWarning:1
-msgid "Bases: :py:class:`FutureWarning`"
+#: of randog._output.generate_to_csv:1
+msgid "Generate values randomly and output as CSV"
+msgstr "値をランダムに生成し、CSVとして出力する。"
+
+#: of randog._output.generate_to_csv
+msgid "Parameters"
 msgstr ""
 
-#: of randog._main._warning.RandogCmdWarning:1
-msgid "warning raised during command execution"
-msgstr "コマンド実行中に出される警告"
+#: of randog._output.generate_to_csv:3
+msgid "the factory to generate values"
+msgstr "値を生成する factory"
+
+#: of randog._output.generate_to_csv:5
+msgid ""
+"the number of the iterator. However, if the argument "
+"`raise_on_factory_stopped` is not True, fewer iterations than the "
+"specified `size` will be executed if the factory is stopped. Also, if the"
+" argument `discard` is specified, the size may be less."
+msgstr ""
+"繰り返しの回数。ただし、引数 raise_on_factory_stopped が True でない場合、"
+"factory が停止すると size より少ないイテレーションで停止する。"
+"また、引数 discard が指定されている場合、イテレーションの回数が少なくなる場合がある。"
+
+#: of randog._output.generate_to_csv:11
+msgid "CSV output destination"
+msgstr "CSVの出力先"
+
+#: of randog._output.generate_to_csv:13
+msgid ""
+"the definitions of each column value. If it is defined with str, the "
+"value is taken from the generated object using that as the key. If it is "
+"defined with a function, the function is used with the generated object "
+"as an argument, and the return value is used."
+msgstr ""
+"各列の定義。文字列で定義した場合、生成されたオブジェクトからその文字列をキーとして値を取り出す。"
+"関数で定義した場合、生成されたオブジェクトを引数としてその関数を実行し、戻り値を使用する。"
+
+#: of randog._output.generate_to_csv:20
+msgid ""
+"the probability that the original factory generation value is not "
+"returned as is, but is regenerated. It affects cases where the original "
+"factory returns a value that is not completely random."
+msgstr ""
+"factory が生成した値をそのまま使用せずに再生成する確率。"
+"このオプションは factory が完全にランダムでない値を生成する場合に効果がある。"
+
+#: of randog._output.generate_to_csv:25
+msgid ""
+"the probability that the original factory generation value is not "
+"returned as is, but is discarded. If discarded, the number of times the "
+"value is generated is less than `size`."
+msgstr ""
+"factory が生成した値をそのまま使用せずに廃棄する確率。"
+"廃棄が生じた場合、生成される数は size で指定した数より少なくなる"
+
+#: of randog._output.generate_to_csv:30
+msgid ""
+"If True, raises `FactoryStopException` in case the factory cannot "
+"generate value due to `StopIteration`. If False, simply raises "
+"`StopIteration`."
+msgstr ""
+"True を指定すると、factory が StopIteration によって生成を停止した場合に例外 "
+"FactoryStopException を発する。False "
+"を指定するか何も指定しない場合、先述のケースで単にイテレーションを停止する。"
+
+#: of randog._output.generate_to_csv:34
+msgid "If specified, CSV rows are separated by this string."
+msgstr "指定した場合、CSVの行は指定した文字列で区切られる。"
 

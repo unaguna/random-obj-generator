@@ -1329,11 +1329,14 @@ def test__main__option_output__error_with_illegal_linesep(
     ],
 )
 @pytest.mark.parametrize(
-    ("ls_value", "ls_expected"),
+    ("ls_filename", "ls_expected"),
     [
-        ("CRLF", b"\r\n"),
-        ("LF", b"\n"),
-        ("CR", b"\r"),
+        ("crlf", b"\r\n"),
+        ("lf", b"\n"),
+        ("cr", b"\r"),
+        ("crlf2", b"\r\n"),
+        ("lf2", b"\n"),
+        ("cr2", b"\r"),
     ],
 )
 @pytest.mark.parametrize(
@@ -1352,7 +1355,7 @@ def test__main__option_output__default_linesep(
     resources,
     output_fmt,
     output,
-    ls_value,
+    ls_filename,
     ls_expected,
     options,
     expected,
@@ -1362,7 +1365,7 @@ def test__main__option_output__default_linesep(
     args = [
         "randog",
         "byfile",
-        str(resources.joinpath(f"factory_def_ls_{ls_value.lower()}.py")),
+        str(resources.joinpath(f"factory_def_ls_{ls_filename}.py")),
         "--output",
         str(output_path_fmt),
         *options,
@@ -1398,11 +1401,14 @@ def test__main__option_output__default_linesep(
     ],
 )
 @pytest.mark.parametrize(
-    ("default_ls_value",),
+    ("ls_filename",),
     [
-        ("CRLF",),
-        ("LF",),
-        ("CR",),
+        ("crlf",),
+        ("lf",),
+        ("cr",),
+        ("crlf2",),
+        ("lf2",),
+        ("cr2",),
     ],
 )
 @pytest.mark.parametrize(
@@ -1423,7 +1429,7 @@ def test__main__option_output__ignore_default_linesep(
     output,
     ls_options,
     ls_expected,
-    default_ls_value,
+    ls_filename,
     options,
     expected,
 ):
@@ -1432,7 +1438,7 @@ def test__main__option_output__ignore_default_linesep(
     args = [
         "randog",
         "byfile",
-        str(resources.joinpath(f"factory_def_ls_{default_ls_value.lower()}.py")),
+        str(resources.joinpath(f"factory_def_ls_{ls_filename}.py")),
         "--output",
         str(output_path_fmt),
         *ls_options,

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-02 16:56+0900\n"
+"POT-Creation-Date: 2024-12-15 14:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -42,27 +42,18 @@ msgstr ""
 "外部定義ファイルは以下のように、factory を作成して変数 :code:`FACTORY` にバインドする python "
 "コードとして記載します。"
 
-#: ../../source/doc.external_def.rst:22
+#: ../../source/doc.external_def.rst:24
 msgid "In factory definition file, :code:`import randog` can be omitted."
 msgstr "factory定義ファイルでは、:code:`import randog` を省略できます。"
 
-#: ../../source/doc.external_def.rst:25
+#: ../../source/doc.external_def.rst:27
 msgid ""
 "As discussed below, :code:`import randog` cannot be omitted if the "
 "factory definition file is used as python code other than in from_pyfile "
 "or byfile mode."
 msgstr ""
-"後述するように、from_pyfile や byfile モード以外で "
-"factory 定義ファイルが python "
+"後述するように、from_pyfile や byfile モード以外で factory 定義ファイルが python "
 "コードとして使用される場合、:code:`import randog` を省略できません。"
-
-#: ../../source/doc.external_def.rst:28
-msgid ""
-":code:`CSV_COLUMNS` is used when executing randog as command in byfile "
-"mode. See also :doc:`doc.as_command.byfile`."
-msgstr ""
-":code:`CSV_COLUMNS` は byfile "
-"モードでコマンド実行する際に使用されます。:doc:`doc.as_command.byfile` もご覧ください。"
 
 #: ../../source/doc.external_def.rst:30
 msgid ""
@@ -80,27 +71,113 @@ msgstr ""
 "モードでコマンド実行する際にも使用できます。:doc:`doc.as_command.byfile` もご覧ください。"
 
 #: ../../source/doc.external_def.rst:47
+msgid "Attributes"
+msgstr "定義できる属性"
+
+#: ../../source/doc.external_def.rst:49
+msgid "The following attributes are defined in external definition file."
+msgstr "次の属性を外部定義ファイル内で定義することができます。"
+
+#: ../../source/doc.external_def.rst:51
+msgid ":code:`FACTORY`: :class:`Factory <randog.factory.Factory>`"
+msgstr ""
+
+#: ../../source/doc.external_def.rst:53
+msgid ""
+"the factory to be loaded when using :func:`from_pyfile "
+"<randog.factory.from_pyfile>` and to be used when executing randog as "
+"command in byfile mode."
+msgstr ""
+":func:`from_pyfile <randog.factory.from_pyfile>` を使用する際に読み込まれる "
+"factory であり、コマンドとして randog を byfile モードで実行する際に使用される "
+"factory です。"
+
+#: ../../source/doc.external_def.rst:55
+msgid ":code:`CSV_COLUMNS`: list[str | (dict) -> Any], optional"
+msgstr ""
+
+#: ../../source/doc.external_def.rst:57
+msgid ""
+"the definitions of each column value. If it is defined with str, the "
+"value is taken from the generated object using that as the key. If it is "
+"defined with a function, the function is used with the generated object "
+"as an argument, and the return value is used."
+msgstr ""
+"各列の定義。文字列で定義した場合、生成されたオブジェクトからその文字列をキーとして値を取り出します。"
+"関数で定義した場合、生成されたオブジェクトを引数としてその関数を実行し、戻り値を使用します。"
+
+#: ../../source/doc.external_def.rst:59
+msgid ""
+"This attribute is used when executing commands in byfile mode. See also "
+":doc:`doc.as_command.byfile`."
+msgstr ""
+"この属性は byfile "
+"モードでコマンド実行する際に使用されます。:doc:`doc.as_command.byfile` もご覧ください。"
+
+#: ../../source/doc.external_def.rst:61
+msgid ":code:`OUTPUT_LINESEP`: 'CRLF' | 'LF' | 'CR', optional"
+msgstr ""
+
+#: ../../source/doc.external_def.rst:63
+msgid "line separator for output."
+msgstr "ファイル出力時の改行文字"
+
+#: ../../source/doc.external_def.rst:65
+msgid ""
+"This attribute is used when executing commands in byfile mode outputs to "
+"a file with the :code:`--output`/:code:`-O` option. If the :code"
+":`--output-linesep`/:code:`--O-ls` option is specified, that takes "
+"precedence. See also :doc:`doc.as_command.common_option`."
+msgstr ""
+"この属性は byfile モードでコマンド実行し "
+":code:`--output`/:code:`-O` オプションでファイル出力する際に使用されます。"
+":code:`--output-linesep`/:code:`--O-ls` "
+"オプションが指定されている場合はそちらが優先されます。 "
+":doc:`doc.as_command.common_option` もご覧ください。"
+
+#: ../../source/doc.external_def.rst:67
+msgid ":code:`OUTPUT_ENCODING`: str, optional"
+msgstr ""
+
+#: ../../source/doc.external_def.rst:69
+msgid "encoding for output, such as 'utf-8'."
+msgstr "'utf-8' のような、ファイル出力時のエンコード"
+
+#: ../../source/doc.external_def.rst:71
+msgid ""
+"This attribute is used when executing commands in byfile mode outputs to "
+"a file with the :code:`--output`/:code:`-O` option. If the :code"
+":`--output-encoding`/:code:`-X` option is specified, that takes "
+"precedence. See also :doc:`doc.as_command.common_option`."
+msgstr ""
+"この属性は byfile モードでコマンド実行し "
+":code:`--output`/:code:`-O` オプションでファイル出力する際に使用されます。"
+":code:`--output-encoding`/:code:`-X` "
+"オプションが指定されている場合はそちらが優先されます。 "
+":doc:`doc.as_command.common_option` もご覧ください。"
+
+#: ../../source/doc.external_def.rst:77
 msgid "Importable definition files"
 msgstr "インポート可能な定義ファイル"
 
-#: ../../source/doc.external_def.rst:49
+#: ../../source/doc.external_def.rst:79
 msgid ""
 "Since the definition file is written in python, it can be imported from "
 "other python files, but there are some points to note if it is intended "
 "to be imported."
 msgstr "定義ファイルはpythonで書かれるため他のpythonファイルからインポートすることができますが、インポートされることを想定する場合には注意すべき点があります。"
 
-#: ../../source/doc.external_def.rst:51
+#: ../../source/doc.external_def.rst:81
 msgid "For example, see the definition file below:"
 msgstr "例えば、以下の定義ファイルを見てください。"
 
-#: ../../source/doc.external_def.rst:71
+#: ../../source/doc.external_def.rst:101
 msgid ""
 "The following points are noted in this definition file to make it "
 "importable:"
 msgstr "この定義ファイルではインポート可能にするために以下の点に注意しています。"
 
-#: ../../source/doc.external_def.rst:73
+#: ../../source/doc.external_def.rst:103
 msgid ""
 "write :code:`import randog`; This can only be omitted when this file is "
 "executed directly in from_pyfile or byfile mode of command execution, not"
@@ -109,7 +186,7 @@ msgstr ""
 ":code:`import randog` を記載する; これを省略できるのはこのファイルが from_pyfile やコマンド実行の "
 "byfile モードで直接実行されるときだけであり、インポートされる際には省略できません。"
 
-#: ../../source/doc.external_def.rst:75
+#: ../../source/doc.external_def.rst:105
 msgid ""
 "write the process that should not be executed at import in :code:`if "
 "__name__ == \"__randog__\"`; If this is not done, and the environment "
@@ -122,7 +199,7 @@ msgstr ""
 "が設定されていなかったり数字以外の文字が入っていたりすると、例外が発生してこのファイルをインポートしている python "
 "コードが実行不可になってしまいます。"
 
-#: ../../source/doc.external_def.rst:77
+#: ../../source/doc.external_def.rst:107
 msgid ""
 "You can avoid it by other means, such as proper handling of exceptions. "
 "Choose the method appropriate to your situation."

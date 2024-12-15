@@ -47,7 +47,7 @@ Output to file
 
 As above examples, by default, the file specified as the output destination is truncated if it already exists, but you can append it to the end of an existing file by using the option :code:`--output-appending` (:code:`--Oa`).
 
-As above examples, You can specify the `encoding <https://docs.python.org/3/library/codecs.html#standard-encodings>`_ and newline character for output with options :code:`--output-encoding` (:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`).
+As above examples, You can specify the `encoding <https://docs.python.org/3/library/codecs.html#standard-encodings>`_ and newline character for output with options :code:`--output-encoding` (:code:`-X`) and :code:`--output-linesep` (:code:`--O-ls`). In byfile mode, you can also define encoding and newline character in :doc:`doc.external_def`.
 
 As the examples above also uses {now}, the following placeholders can be used with `format specification <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
 

@@ -8,7 +8,7 @@ import datetime
 import itertools
 import typing as t
 
-from . import Linesep
+from .._utils.linesep import Linesep
 from .._processmode import Subcmd
 
 

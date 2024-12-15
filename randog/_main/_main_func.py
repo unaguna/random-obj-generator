@@ -20,7 +20,7 @@ from ._logging import (
 from ._rnd import construct_random
 from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
-from ..factory import FactoryStopException
+from ..factory import FactoryStopException, FactoryDef
 from .._output import generate_to_csv
 
 
@@ -31,7 +31,7 @@ def _build_factories(
         int,
         str,
         randog.factory.Factory,
-        t.Optional[t.Sequence[t.Union[str, t.Callable[[t.Mapping], t.Any]]]],
+        FactoryDef,
     ]
 ]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
@@ -53,7 +53,7 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
-            yield factory_count, def_file_name, factory, factory_def.csv_columns
+            yield factory_count, def_file_name, factory, factory_def
     else:
         iargs, kwargs = subcmd_def.build_args(args)
         construct_factory = subcmd_def.get_factory_constructor()
@@ -84,6 +84,7 @@ class _DummyIO:
 def _open_output_fp(
     args: Args,
     number: int,
+    factory_def: t.Optional[FactoryDef],
     *,
     def_file: str,
     repeat_count: int,
@@ -115,9 +116,13 @@ def _open_output_fp(
             options["newline"] = ""
         elif args.output_linesep is not None:
             options["newline"] = args.output_linesep
+        elif factory_def is not None and factory_def.output_linesep is not None:
+            options["newline"] = factory_def.output_linesep.value
 
         if args.output_encoding is not None:
             options["encoding"] = args.output_encoding
+        elif factory_def is not None and factory_def.output_encoding is not None:
+            options["encoding"] = factory_def.output_encoding
 
         logger.debug(f"open file: {output_path}")
 
@@ -254,11 +259,14 @@ def main():
 
     try:
         index = 0
-        for factory_count, def_file, factory, csv_columns in _build_factories(args):
+        for factory_count, def_file, factory, factory_def in _build_factories(args):
+            csv_columns = factory_def.csv_columns if factory_def is not None else None
+
             for r_index in range(args.repeat):
                 with _open_output_fp(
                     args,
                     index,
+                    factory_def,
                     def_file=def_file,
                     repeat_count=r_index,
                     factory_count=factory_count,
@@ -275,6 +283,15 @@ def main():
                     # 生成処理と出力処理
                     # CSV 出力の場合に生成の方法が異なるので、生成と出力をひとまとめにした。
                     if args.csv is not None:
+                        if args.output_linesep is not None:
+                            output_linesep = args.output_linesep
+                        elif (
+                            factory_def is not None
+                            and factory_def.output_linesep is not None
+                        ):
+                            output_linesep = factory_def.output_linesep.value
+                        else:
+                            output_linesep = None
                         generate_to_csv(
                             factory,
                             args.csv,
@@ -283,7 +300,7 @@ def main():
                             regenerate=args.regenerate,
                             discard=args.discard,
                             raise_on_factory_stopped=args.error_on_factory_stopped,
-                            linesep=args.output_linesep,
+                            linesep=output_linesep,
                         )
                         logger.debug(
                             "output to CSV; "

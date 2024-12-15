@@ -10,7 +10,7 @@ from randog.factory import Factory
 @dataclasses.dataclass
 class FactoryDef:
     factory: Factory
-    csv_columns: t.Optional[t.Sequence[str]]
+    csv_columns: t.Optional[t.Sequence[t.Union[str, t.Callable[[t.Mapping], t.Any]]]]
 
 
 @t.overload

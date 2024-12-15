@@ -20,7 +20,7 @@ from ._logging import (
 from ._rnd import construct_random
 from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
-from ..factory import FactoryStopException
+from ..factory import FactoryStopException, FactoryDef
 from .._output import generate_to_csv
 
 
@@ -31,7 +31,7 @@ def _build_factories(
         int,
         str,
         randog.factory.Factory,
-        t.Optional[t.Sequence[t.Union[str, t.Callable[[t.Mapping], t.Any]]]],
+        FactoryDef,
     ]
 ]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
@@ -53,7 +53,7 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
-            yield factory_count, def_file_name, factory, factory_def.csv_columns
+            yield factory_count, def_file_name, factory, factory_def
     else:
         iargs, kwargs = subcmd_def.build_args(args)
         construct_factory = subcmd_def.get_factory_constructor()
@@ -254,7 +254,9 @@ def main():
 
     try:
         index = 0
-        for factory_count, def_file, factory, csv_columns in _build_factories(args):
+        for factory_count, def_file, factory, factoryDef in _build_factories(args):
+            csv_columns = factoryDef.csv_columns if factoryDef is not None else None
+
             for r_index in range(args.repeat):
                 with _open_output_fp(
                     args,

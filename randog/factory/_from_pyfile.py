@@ -128,7 +128,8 @@ def _load_factory_module(
     except ValueError:
         raise AttributeError(
             f"attribute '{OUT_LINESEP_ATTR_NAME}' "
-            f"of factory file '{filename}' MUST be None or {','.join(Linesep)}"
+            f"of factory file '{filename}' MUST be None or "
+            f"{', '.join(v.name for v in Linesep)}"
         )
 
     output_encoding = getattr(module, OUT_ENCODING_ATTR_NAME, None)

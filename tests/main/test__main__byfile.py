@@ -1390,6 +1390,61 @@ def test__main__option_output__default_linesep(
     ],
 )
 @pytest.mark.parametrize(
+    ("ls_filename",),
+    [
+        ("aaa",),
+    ],
+)
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], b"aaa"),
+        (["--csv=1", "--quiet"], b"aaa"),
+        (["--json"], b'"aaa"'),
+        (["--list=1"], b"['aaa']"),
+        (["--repeat=1"], b"aaa"),
+    ],
+)
+def test__main__option_output__error_with_illegal_default_linesep(
+    capfd,
+    tmp_path,
+    resources,
+    output_fmt,
+    output,
+    ls_filename,
+    options,
+    expected,
+):
+    output_path_fmt = tmp_path.joinpath(output_fmt)
+    pyfile = str(resources.joinpath(f"factory_def_ls_{ls_filename}.py"))
+    args = [
+        "randog",
+        "byfile",
+        pyfile,
+        "--output",
+        str(output_path_fmt),
+        *options,
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "attribute 'OUTPUT_LINESEP' of factory file "
+            f"'{pyfile}' MUST be None or LF, CRLF, CR" in err
+        )
+
+
+@pytest.mark.parametrize(
+    ("output_fmt", "output"),
+    [
+        ("out.txt", "out.txt"),
+        ("out_{}.txt", "out_0.txt"),
+    ],
+)
+@pytest.mark.parametrize(
     ("ls_options", "ls_expected"),
     [
         (["--output-linesep", "CRLF"], b"\r\n"),

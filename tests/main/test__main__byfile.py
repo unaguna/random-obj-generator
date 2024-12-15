@@ -1128,6 +1128,62 @@ def test__main__option_output__default_encoding(
         ("out_{}.txt", "out_0.txt"),
     ],
 )
+@pytest.mark.parametrize("x_option", ["--output-encoding", "-X"])
+@pytest.mark.parametrize("encoding", ["utf_8", "utf_16_le", "shift_jis"])
+@pytest.mark.parametrize("def_encoding", ["utf8", "shift_jis"])
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], "テスト\n"),
+        (["--csv=1", "--quiet"], "テスト\n"),
+        (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
+        (["--list=1"], "['テスト']\n"),
+        (["--repeat=1"], "テスト\n"),
+    ],
+)
+def test__main__option_output__ignore_default_encoding(
+    capfd,
+    tmp_path,
+    resources,
+    output_fmt,
+    output,
+    x_option,
+    encoding,
+    def_encoding,
+    options,
+    expected,
+):
+    output_path_fmt = tmp_path.joinpath(output_fmt)
+    output_path = tmp_path.joinpath(output)
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath(f"factory_def_ja_{def_encoding}.py")),
+        "--output",
+        str(output_path_fmt),
+        x_option,
+        encoding,
+        *options,
+        "--output-linesep=LF",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        with open(output_path, mode="rb") as out_fp:
+            assert out_fp.read(50) == expected.encode(encoding=encoding)
+
+
+@pytest.mark.parametrize(
+    ("output_fmt", "output"),
+    [
+        ("out.txt", "out.txt"),
+        ("out_{}.txt", "out_0.txt"),
+    ],
+)
 @pytest.mark.parametrize(
     ("ls_options", "ls_expected"),
     [
@@ -1309,6 +1365,77 @@ def test__main__option_output__default_linesep(
         str(resources.joinpath(f"factory_def_ls_{ls_value.lower()}.py")),
         "--output",
         str(output_path_fmt),
+        *options,
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+        # mode="r" だと改行コードが '\n' に変換されてしまうため、mode="rb" でバイナリを取得する。
+        with open(output_path, mode="rb") as out_fp:
+            assert out_fp.read(50) == expected + ls_expected
+
+
+@pytest.mark.parametrize(
+    ("output_fmt", "output"),
+    [
+        ("out.txt", "out.txt"),
+        ("out_{}.txt", "out_0.txt"),
+    ],
+)
+@pytest.mark.parametrize(
+    ("ls_options", "ls_expected"),
+    [
+        (["--output-linesep", "CRLF"], b"\r\n"),
+        (["--output-linesep", "LF"], b"\n"),
+        (["--output-linesep", "CR"], b"\r"),
+        (["--O-ls", "CRLF"], b"\r\n"),
+        (["--O-ls", "LF"], b"\n"),
+        (["--O-ls", "CR"], b"\r"),
+    ],
+)
+@pytest.mark.parametrize(
+    ("default_ls_value",),
+    [
+        ("CRLF",),
+        ("LF",),
+        ("CR",),
+    ],
+)
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        ([], b"aaa"),
+        (["--csv=1", "--quiet"], b"aaa"),
+        (["--json"], b'"aaa"'),
+        (["--list=1"], b"['aaa']"),
+        (["--repeat=1"], b"aaa"),
+    ],
+)
+def test__main__option_output__ignore_default_linesep(
+    capfd,
+    tmp_path,
+    resources,
+    output_fmt,
+    output,
+    ls_options,
+    ls_expected,
+    default_ls_value,
+    options,
+    expected,
+):
+    output_path_fmt = tmp_path.joinpath(output_fmt)
+    output_path = tmp_path.joinpath(output)
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath(f"factory_def_ls_{default_ls_value.lower()}.py")),
+        "--output",
+        str(output_path_fmt),
+        *ls_options,
         *options,
     ]
     with patch.object(sys, "argv", args):

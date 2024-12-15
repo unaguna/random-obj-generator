@@ -1,17 +1,38 @@
-import math
+import datetime as dt
 from random import Random
 import typing as t
 
 from ._logging import logger
+from .._utils.comp import ANYWAY_MAXIMUM
 from ._base import Factory
 from ._by_iterator import by_iterator
 from ..exceptions import FactoryConstructionError
 
 
+@t.overload
 def increment(
     initial_value: t.Optional[int] = None,
     maximum: t.Optional[int] = None,
     step: t.Optional[int] = None,
+    *,
+    rnd: t.Optional[Random] = None,
+) -> Factory[int]: ...
+
+
+@t.overload
+def increment(
+    initial_value: dt.datetime,
+    maximum: t.Optional[dt.datetime] = None,
+    step: t.Optional[dt.timedelta] = None,
+    *,
+    rnd: t.Optional[Random] = None,
+) -> Factory[dt.datetime]: ...
+
+
+def increment(
+    initial_value: t.Optional[t.Any] = None,
+    maximum: t.Optional[t.Any] = None,
+    step: t.Optional[t.Any] = None,
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory[t.Any]:
@@ -19,9 +40,9 @@ def increment(
 
     Parameters
     ----------
-    initial_value : int, optional
+    initial_value : optional
         the first value
-    maximum : int, optional
+    maximum : optional
         the maximum value. If the generated value reaches the maximum value,
         1 is generated next.
         If the maximum value is not specified, it is not reset to 1.
@@ -39,9 +60,16 @@ def increment(
     if initial_value is None:
         initial_value = 1
     if maximum is None:
-        maximum = math.inf
+        maximum = ANYWAY_MAXIMUM
     if step is None:
-        step = 1
+        if isinstance(initial_value, dt.datetime):
+            step = dt.timedelta(seconds=1)
+        else:
+            step = 1
+    if isinstance(initial_value, dt.datetime):
+        resume_value = initial_value
+    else:
+        resume_value = 1
 
     if not (initial_value <= maximum):
         raise FactoryConstructionError(
@@ -49,15 +77,18 @@ def increment(
             "initial_value <= maximum"
         )
 
-    return by_iterator(_increment(initial_value, maximum, step))
+    return by_iterator(_increment(initial_value, maximum, step, resume_value))
 
 
-def _increment(initial_value: int, maximum: int, step: int) -> t.Iterator[int]:
+def _increment(initial_value, maximum, step, resume_value) -> t.Iterator:
     next_value = initial_value
     while True:
         yield next_value
         next_value += step
 
         if next_value > maximum:
-            logger.debug("increment() has reached its maximum value and resumes from 1")
-            next_value = 1
+            logger.debug(
+                "increment() has reached its maximum value and resumes "
+                f"from {resume_value}"
+            )
+            next_value = resume_value

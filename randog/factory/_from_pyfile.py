@@ -4,6 +4,7 @@ import types
 import typing as t
 from os import PathLike
 
+from .._utils.linesep import Linesep
 from randog.factory import Factory
 
 
@@ -11,6 +12,8 @@ from randog.factory import Factory
 class FactoryDef:
     factory: Factory
     csv_columns: t.Optional[t.Sequence[t.Union[str, t.Callable[[t.Mapping], t.Any]]]]
+    output_linesep: t.Optional[Linesep]
+    output_encoding: t.Optional[str]
 
 
 @t.overload
@@ -65,6 +68,8 @@ def from_pyfile(
 
 FACTORY_ATTR_NAME = "FACTORY"
 CSV_COL_ATTR_NAME = "CSV_COLUMNS"
+OUT_LINESEP_ATTR_NAME = "OUTPUT_LINESEP"
+OUT_ENCODING_ATTR_NAME = "OUTPUT_ENCODING"
 
 
 def _from_pyfile(
@@ -115,7 +120,27 @@ def _load_factory_module(
             f"of factory file '{filename}' MUST be None or a sequence of strings"
         )
 
+    output_linesep_str = getattr(module, OUT_LINESEP_ATTR_NAME, None)
+    try:
+        output_linesep = (
+            Linesep.of(output_linesep_str) if output_linesep_str is not None else None
+        )
+    except ValueError:
+        raise AttributeError(
+            f"attribute '{OUT_LINESEP_ATTR_NAME}' "
+            f"of factory file '{filename}' MUST be None or {','.join(Linesep)}"
+        )
+
+    output_encoding = getattr(module, OUT_ENCODING_ATTR_NAME, None)
+    if output_encoding is not None and not isinstance(output_encoding, str):
+        raise AttributeError(
+            f"attribute '{OUT_ENCODING_ATTR_NAME}' "
+            f"of factory file '{filename}' MUST be None or a string"
+        )
+
     return FactoryDef(
         factory=factory,
         csv_columns=csv_columns,
+        output_linesep=output_linesep,
+        output_encoding=output_encoding,
     )

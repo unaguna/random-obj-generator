@@ -84,6 +84,7 @@ class _DummyIO:
 def _open_output_fp(
     args: Args,
     number: int,
+    factory_def: t.Optional[FactoryDef],
     *,
     def_file: str,
     repeat_count: int,
@@ -115,9 +116,13 @@ def _open_output_fp(
             options["newline"] = ""
         elif args.output_linesep is not None:
             options["newline"] = args.output_linesep
+        elif factory_def is not None and factory_def.output_linesep is not None:
+            options["newline"] = factory_def.output_linesep.value
 
         if args.output_encoding is not None:
             options["encoding"] = args.output_encoding
+        elif factory_def is not None and factory_def.output_encoding is not None:
+            options["encoding"] = factory_def.output_encoding
 
         logger.debug(f"open file: {output_path}")
 
@@ -261,6 +266,7 @@ def main():
                 with _open_output_fp(
                     args,
                     index,
+                    factoryDef,
                     def_file=def_file,
                     repeat_count=r_index,
                     factory_count=factory_count,

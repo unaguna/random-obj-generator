@@ -1,3 +1,4 @@
+import codecs
 import dataclasses
 import random
 import types
@@ -133,11 +134,19 @@ def _load_factory_module(
         )
 
     output_encoding = getattr(module, OUT_ENCODING_ATTR_NAME, None)
-    if output_encoding is not None and not isinstance(output_encoding, str):
-        raise AttributeError(
-            f"attribute '{OUT_ENCODING_ATTR_NAME}' "
-            f"of factory file '{filename}' MUST be None or a string"
-        )
+    if output_encoding is not None:
+        if not isinstance(output_encoding, str):
+            raise AttributeError(
+                f"attribute '{OUT_ENCODING_ATTR_NAME}' "
+                f"of factory file '{filename}' MUST be None or an encoding string"
+            )
+        try:
+            codecs.lookup(output_encoding)
+        except LookupError:
+            raise AttributeError(
+                f"attribute '{OUT_ENCODING_ATTR_NAME}' "
+                f"of factory file '{filename}' MUST be None or an encoding string"
+            )
 
     return FactoryDef(
         factory=factory,

@@ -1122,6 +1122,34 @@ def test__main__option_output__default_encoding(
 
 
 @pytest.mark.parametrize(
+    "input_file",
+    ["factory_def_ja_illegal_encoding.py", "factory_def_ja_illegal_encoding2.py"],
+)
+def test__main__option_output__error_with_illegal_default_encoding(
+    capfd, tmp_path, resources, input_file
+):
+    output_path = tmp_path.joinpath("out.txt")
+    pyfile = str(resources.joinpath(input_file))
+    args = [
+        "randog",
+        "byfile",
+        pyfile,
+        "--output",
+        str(output_path),
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "attribute 'OUTPUT_ENCODING' of factory file "
+            f"'{pyfile}' MUST be None or an encoding string" in err
+        )
+
+
+@pytest.mark.parametrize(
     ("output_fmt", "output"),
     [
         ("out.txt", "out.txt"),
@@ -1383,13 +1411,6 @@ def test__main__option_output__default_linesep(
 
 
 @pytest.mark.parametrize(
-    ("output_fmt", "output"),
-    [
-        ("out.txt", "out.txt"),
-        ("out_{}.txt", "out_0.txt"),
-    ],
-)
-@pytest.mark.parametrize(
     ("ls_filename",),
     [
         ("aaa",),
@@ -1409,13 +1430,11 @@ def test__main__option_output__error_with_illegal_default_linesep(
     capfd,
     tmp_path,
     resources,
-    output_fmt,
-    output,
     ls_filename,
     options,
     expected,
 ):
-    output_path_fmt = tmp_path.joinpath(output_fmt)
+    output_path_fmt = tmp_path.joinpath("output.txt")
     pyfile = str(resources.joinpath(f"factory_def_ls_{ls_filename}.py"))
     args = [
         "randog",

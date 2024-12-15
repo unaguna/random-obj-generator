@@ -34,7 +34,7 @@ def increment(
     Raises
     ------
     FactoryConstructionError
-        if it is not satisfied `1 <= initial_value <= maximum`
+        if it is not satisfied `initial_value <= maximum`
     """
     if initial_value is None:
         initial_value = 1
@@ -43,10 +43,10 @@ def increment(
     if step is None:
         step = 1
 
-    if not (1 <= initial_value <= maximum):
+    if not (initial_value <= maximum):
         raise FactoryConstructionError(
             "arguments of increment(initial_value, maximum) must satisfy "
-            "1 <= initial_value <= maximum"
+            "initial_value <= maximum"
         )
 
     return by_iterator(_increment(initial_value, maximum, step))

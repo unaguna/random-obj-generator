@@ -121,30 +121,6 @@ def test__increment__initial_value__maximum(
         assert len(caplog.records) == 0
 
 
-@pytest.mark.parametrize("initial_value", (-1, 0))
-def test__increment__error_when_initial_value_is_lower_than_1(initial_value):
-    with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.increment(initial_value)
-    e = e_ctx.value
-
-    assert (
-        e.message == "arguments of increment(initial_value, maximum) must satisfy "
-        "1 <= initial_value <= maximum"
-    )
-
-
-@pytest.mark.parametrize("maximum", (-1, 0))
-def test__increment__error_when_maximum_is_lower_than_1(maximum):
-    with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.increment(maximum=maximum)
-    e = e_ctx.value
-
-    assert (
-        e.message == "arguments of increment(initial_value, maximum) must satisfy "
-        "1 <= initial_value <= maximum"
-    )
-
-
 @pytest.mark.parametrize(("initial_value", "maximum"), ((4, 3), (5, 3)))
 def test__increment__error_when_maximum_is_lower_than_initial_value(
     initial_value, maximum
@@ -155,5 +131,5 @@ def test__increment__error_when_maximum_is_lower_than_initial_value(
 
     assert (
         e.message == "arguments of increment(initial_value, maximum) must satisfy "
-        "1 <= initial_value <= maximum"
+        "initial_value <= maximum"
     )

@@ -25,6 +25,8 @@ def increment(
         the maximum value. If the generated value reaches the maximum value,
         1 is generated next.
         If the maximum value is not specified, it is not reset to 1.
+    step : optional
+        difference between generated values
     rnd : Random, optional
         It is not normally used, but it can be accepted as an argument
         to match other Factory construction functions.

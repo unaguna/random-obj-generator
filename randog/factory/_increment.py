@@ -88,6 +88,14 @@ def increment(
             "arguments of increment(initial_value, maximum) must satisfy "
             "initial_value <= maximum"
         )
+    if (
+        isinstance(initial_value, dt.date)
+        and not isinstance(initial_value, dt.datetime)
+        and step.microseconds + step.seconds > 0
+    ):
+        raise FactoryConstructionError(
+            "step must be a day/days if initial_value is date"
+        )
 
     return by_iterator(_increment(initial_value, maximum, step, resume_value))
 

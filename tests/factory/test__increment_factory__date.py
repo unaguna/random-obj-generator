@@ -135,6 +135,27 @@ def test__increment__date__step(step, expected, caplog):
 
 
 @pytest.mark.parametrize(
+    ("step",),
+    (
+        (dt.timedelta(hours=23),),
+        (dt.timedelta(hours=1),),
+        (dt.timedelta(minutes=1),),
+        (dt.timedelta(seconds=1),),
+        (dt.timedelta(milliseconds=1),),
+        (dt.timedelta(microseconds=1),),
+    ),
+)
+def test__increment__date__error_with_tiny_step(step, caplog):
+    initial_value = dt.date(2000, 1, 30)
+
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.increment(initial_value, step=step)
+    e = e_ctx.value
+
+    assert e.message == "step must be a day/days if initial_value is date"
+
+
+@pytest.mark.parametrize(
     ("initial_value", "maximum"),
     (
         (

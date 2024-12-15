@@ -56,6 +56,7 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.write_generated.html">Factory で生成した値の出力</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Factory の外部定義ファイル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#attributes">定義できる属性</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#importable-definition-files">インポート可能な定義ファイル</a></li>
 </ul>
 </li>
@@ -111,6 +112,8 @@
 
 <span class="c1"># (optional) Settings used by &#39;byfile&#39; mode of command executing</span>
 <span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span>
+<span class="n">OUTPUT_LINESEP</span> <span class="o">=</span> <span class="s2">&quot;LF&quot;</span>
+<span class="n">OUTPUT_ENCODING</span> <span class="o">=</span> <span class="s2">&quot;utf8&quot;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -120,10 +123,6 @@
 <p class="admonition-title">警告</p>
 <p>後述するように、from_pyfile や byfile モード以外で factory 定義ファイルが python コードとして使用される場合、<code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> を省略できません。</p>
 </div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p><code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> は byfile モードでコマンド実行する際に使用されます。<a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile モード</span></a> もご覧ください。</p>
 </div>
 <p>このファイルを <code class="code docutils literal notranslate"><span class="pre">factory_def.py</span></code> という名称で保存した場合、以下のような python プログラムから使用できます。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">randog.factory</span>
@@ -139,6 +138,43 @@
 <p class="admonition-title">参考</p>
 <p>外部定義ファイルは <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code> のように byfile モードでコマンド実行する際にも使用できます。<a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile モード</span></a> もご覧ください。</p>
 </div>
+<section id="attributes">
+<h2>定義できる属性<a class="headerlink" href="#attributes" title="この見出しへのパーマリンク"></a></h2>
+<p>次の属性を外部定義ファイル内で定義することができます。</p>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">FACTORY</span></code>: <a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory.Factory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Factory</span></code></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="randog.factory.html#randog.factory.from_pyfile" title="randog.factory.from_pyfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_pyfile</span></code></a> を使用する際に読み込まれる factory であり、コマンドとして randog を byfile モードで実行する際に使用される factory です。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code>: list[str | (dict) -&gt; Any], optional</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>各列の定義。文字列で定義した場合、生成されたオブジェクトからその文字列をキーとして値を取り出します。関数で定義した場合、生成されたオブジェクトを引数としてその関数を実行し、戻り値を使用します。</p></li>
+<li><p>この属性は byfile モードでコマンド実行する際に使用されます。<a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile モード</span></a> もご覧ください。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">OUTPUT_LINESEP</span></code>: 'CRLF' | 'LF' | 'CR', optional</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ファイル出力時の改行文字</p></li>
+<li><p>この属性は byfile モードでコマンド実行し <code class="code docutils literal notranslate"><span class="pre">--output</span></code>/<code class="code docutils literal notranslate"><span class="pre">-O</span></code> オプションでファイル出力する際に使用されます。<code class="code docutils literal notranslate"><span class="pre">--output-linesep</span></code>/<code class="code docutils literal notranslate"><span class="pre">--O-ls</span></code> オプションが指定されている場合はそちらが優先されます。 <a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">共通オプション</span></a> もご覧ください。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">OUTPUT_ENCODING</span></code>: str, optional</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>'utf-8' のような、ファイル出力時のエンコード</p></li>
+<li><p>この属性は byfile モードでコマンド実行し <code class="code docutils literal notranslate"><span class="pre">--output</span></code>/<code class="code docutils literal notranslate"><span class="pre">-O</span></code> オプションでファイル出力する際に使用されます。<code class="code docutils literal notranslate"><span class="pre">--output-encoding</span></code>/<code class="code docutils literal notranslate"><span class="pre">-X</span></code> オプションが指定されている場合はそちらが優先されます。 <a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">共通オプション</span></a> もご覧ください。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
 <section id="importable-definition-files">
 <span id="id1"></span><h2>インポート可能な定義ファイル<a class="headerlink" href="#importable-definition-files" title="この見出しへのパーマリンク"></a></h2>
 <p>定義ファイルはpythonで書かれるため他のpythonファイルからインポートすることができますが、インポートされることを想定する場合には注意すべき点があります。</p>

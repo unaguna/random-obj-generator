@@ -6,8 +6,8 @@ import randog.factory
 from randog.exceptions import FactoryConstructionError
 
 
-def test__increment():
-    factory = randog.factory.increment()
+def test__iterrange():
+    factory = randog.factory.iterrange()
 
     values = (*factory.iter(10),)
 
@@ -15,16 +15,16 @@ def test__increment():
     assert set(map(type, values)) == {int}
 
 
-def test__increment__or_none():
-    factory = randog.factory.increment().or_none()
+def test__iterrange__or_none():
+    factory = randog.factory.iterrange().or_none()
 
     values = set(map(lambda x: factory.next(), range(200)))
 
     assert set(map(type, values)) == {int, type(None)}
 
 
-def test__increment__or_none_0():
-    factory = randog.factory.increment().or_none(0)
+def test__iterrange__or_none_0():
+    factory = randog.factory.iterrange().or_none(0)
 
     values = set(map(lambda x: factory.next(), range(200)))
 
@@ -34,8 +34,8 @@ def test__increment__or_none_0():
 @pytest.mark.parametrize(
     ("initial_value", "expected"), ((None, (1, 2, 3)), (1, (1, 2, 3)), (3, (3, 4, 5)))
 )
-def test__increment__initial_value(initial_value, expected):
-    factory = randog.factory.increment(initial_value)
+def test__iterrange__initial_value(initial_value, expected):
+    factory = randog.factory.iterrange(initial_value)
 
     values = (*factory.iter(3),)
 
@@ -50,9 +50,9 @@ def test__increment__initial_value(initial_value, expected):
         (2, (1, 2, 1), True),
     ),
 )
-def test__increment__maximum(maximum, expected, resume, caplog):
+def test__iterrange__maximum(maximum, expected, resume, caplog):
     caplog.set_level(logging.DEBUG)
-    factory = randog.factory.increment(maximum=maximum)
+    factory = randog.factory.iterrange(maximum=maximum)
 
     values = (*factory.iter(3),)
 
@@ -64,7 +64,7 @@ def test__increment__maximum(maximum, expected, resume, caplog):
         assert caplog.record_tuples[0] == (
             "randog.factory",
             logging.DEBUG,
-            "increment() has reached its maximum value and resumes from 1",
+            "iterrange() has reached its maximum value and resumes from 1",
         )
     else:
         assert len(caplog.records) == 0
@@ -77,9 +77,9 @@ def test__increment__maximum(maximum, expected, resume, caplog):
         (2, (1, 3, 5)),
     ),
 )
-def test__increment__step(step, expected, caplog):
+def test__iterrange__step(step, expected, caplog):
     caplog.set_level(logging.DEBUG)
-    factory = randog.factory.increment(step=step)
+    factory = randog.factory.iterrange(step=step)
 
     values = (*factory.iter(3),)
 
@@ -99,11 +99,11 @@ def test__increment__step(step, expected, caplog):
         (5, 5, (5, 1, 2), True),
     ),
 )
-def test__increment__initial_value__maximum(
+def test__iterrange__initial_value__maximum(
     initial_value, maximum, expected, resume, caplog
 ):
     caplog.set_level(logging.DEBUG)
-    factory = randog.factory.increment(initial_value, maximum)
+    factory = randog.factory.iterrange(initial_value, maximum)
 
     values = (*factory.iter(3),)
 
@@ -115,21 +115,21 @@ def test__increment__initial_value__maximum(
         assert caplog.record_tuples[0] == (
             "randog.factory",
             logging.DEBUG,
-            "increment() has reached its maximum value and resumes from 1",
+            "iterrange() has reached its maximum value and resumes from 1",
         )
     else:
         assert len(caplog.records) == 0
 
 
 @pytest.mark.parametrize(("initial_value", "maximum"), ((4, 3), (5, 3)))
-def test__increment__error_when_maximum_is_lower_than_initial_value(
+def test__iterrange__error_when_maximum_is_lower_than_initial_value(
     initial_value, maximum
 ):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.increment(initial_value, maximum)
+        randog.factory.iterrange(initial_value, maximum)
     e = e_ctx.value
 
     assert (
-        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
         "initial_value <= maximum"
     )

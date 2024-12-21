@@ -28,8 +28,8 @@ from randog.exceptions import FactoryConstructionError
         ),
     ),
 )
-def test__increment__date(initial_value, expected):
-    factory = randog.factory.increment(initial_value)
+def test__iterrange__date(initial_value, expected):
+    factory = randog.factory.iterrange(initial_value)
 
     values = (*factory.iter(3),)
 
@@ -37,18 +37,18 @@ def test__increment__date(initial_value, expected):
     assert set(map(type, values)) == {dt.date}
 
 
-def test__increment__date__or_none():
+def test__iterrange__date__or_none():
     initial_value = dt.date(2000, 1, 2)
-    factory = randog.factory.increment(initial_value).or_none()
+    factory = randog.factory.iterrange(initial_value).or_none()
 
     values = [factory.next() for _ in range(200)]
 
     assert {type(v) for v in values} == {dt.date, type(None)}
 
 
-def test__increment__date__or_none_0():
+def test__iterrange__date__or_none_0():
     initial_value = dt.date(2000, 1, 2)
-    factory = randog.factory.increment(initial_value).or_none(0)
+    factory = randog.factory.iterrange(initial_value).or_none(0)
 
     values = [factory.next() for _ in range(200)]
 
@@ -78,10 +78,10 @@ def test__increment__date__or_none_0():
         ),
     ),
 )
-def test__increment__date__maximum(maximum, expected, resume, caplog):
+def test__iterrange__date__maximum(maximum, expected, resume, caplog):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.date(2000, 1, 30)
-    factory = randog.factory.increment(initial_value, maximum=maximum)
+    factory = randog.factory.iterrange(initial_value, maximum=maximum)
 
     values = (*factory.iter(3),)
 
@@ -93,7 +93,7 @@ def test__increment__date__maximum(maximum, expected, resume, caplog):
         assert caplog.record_tuples[0] == (
             "randog.factory",
             logging.DEBUG,
-            "increment() has reached its maximum value and resumes "
+            "iterrange() has reached its maximum value and resumes "
             f"from {initial_value}",
         )
     else:
@@ -121,10 +121,10 @@ def test__increment__date__maximum(maximum, expected, resume, caplog):
         ),
     ),
 )
-def test__increment__date__step(step, expected, caplog):
+def test__iterrange__date__step(step, expected, caplog):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.date(2000, 1, 30)
-    factory = randog.factory.increment(initial_value, step=step)
+    factory = randog.factory.iterrange(initial_value, step=step)
 
     values = (*factory.iter(3),)
 
@@ -145,11 +145,11 @@ def test__increment__date__step(step, expected, caplog):
         (dt.timedelta(microseconds=1),),
     ),
 )
-def test__increment__date__error_with_tiny_step(step, caplog):
+def test__iterrange__date__error_with_tiny_step(step, caplog):
     initial_value = dt.date(2000, 1, 30)
 
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.increment(initial_value, step=step)
+        randog.factory.iterrange(initial_value, step=step)
     e = e_ctx.value
 
     assert e.message == "step must be a day/days if initial_value is date"
@@ -168,14 +168,14 @@ def test__increment__date__error_with_tiny_step(step, caplog):
         ),
     ),
 )
-def test__increment__date__error_when_maximum_is_lower_than_initial_value(
+def test__iterrange__date__error_when_maximum_is_lower_than_initial_value(
     initial_value, maximum
 ):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.increment(initial_value, maximum)
+        randog.factory.iterrange(initial_value, maximum)
     e = e_ctx.value
 
     assert (
-        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
         "initial_value <= maximum"
     )

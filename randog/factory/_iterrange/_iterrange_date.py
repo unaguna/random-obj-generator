@@ -7,10 +7,10 @@ from ..._utils.comp import ANYWAY_MAXIMUM
 from .._base import Factory
 from .._by_iterator import by_iterator
 from ...exceptions import FactoryConstructionError
-from ._inner import _increment
+from ._inner import _iterrange
 
 
-def increment_date(
+def iterrange_date(
     initial_value: dt.date = None,
     maximum: t.Optional[dt.date] = None,
     step: t.Union[dt.timedelta, int, None] = None,
@@ -27,7 +27,7 @@ def increment_date(
 
     if not (initial_value <= maximum):
         raise FactoryConstructionError(
-            "arguments of increment(initial_value, maximum) must satisfy "
+            "arguments of iterrange(initial_value, maximum) must satisfy "
             "initial_value <= maximum"
         )
     if step.microseconds + step.seconds > 0:
@@ -35,4 +35,4 @@ def increment_date(
             "step must be a day/days if initial_value is date"
         )
 
-    return by_iterator(_increment(initial_value, maximum, step, resume_value))
+    return by_iterator(_iterrange(initial_value, maximum, step, resume_value))

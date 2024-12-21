@@ -28,8 +28,8 @@ from randog.exceptions import FactoryConstructionError
         ),
     ),
 )
-def test__increment__timedelta(initial_value, expected):
-    factory = randog.factory.increment(initial_value)
+def test__iterrange__timedelta(initial_value, expected):
+    factory = randog.factory.iterrange(initial_value)
 
     values = (*factory.iter(3),)
 
@@ -37,18 +37,18 @@ def test__increment__timedelta(initial_value, expected):
     assert set(map(type, values)) == {dt.timedelta}
 
 
-def test__increment__timedelta__or_none():
+def test__iterrange__timedelta__or_none():
     initial_value = dt.timedelta(hours=1)
-    factory = randog.factory.increment(initial_value).or_none()
+    factory = randog.factory.iterrange(initial_value).or_none()
 
     values = [factory.next() for _ in range(200)]
 
     assert {type(v) for v in values} == {dt.timedelta, type(None)}
 
 
-def test__increment__timedelta__or_none_0():
+def test__iterrange__timedelta__or_none_0():
     initial_value = dt.timedelta(hours=1)
-    factory = randog.factory.increment(initial_value).or_none(0)
+    factory = randog.factory.iterrange(initial_value).or_none(0)
 
     values = [factory.next() for _ in range(200)]
 
@@ -78,10 +78,10 @@ def test__increment__timedelta__or_none_0():
         ),
     ),
 )
-def test__increment__timedelta__maximum(maximum, expected, resume, caplog):
+def test__iterrange__timedelta__maximum(maximum, expected, resume, caplog):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.timedelta(seconds=59)
-    factory = randog.factory.increment(initial_value, maximum=maximum)
+    factory = randog.factory.iterrange(initial_value, maximum=maximum)
 
     values = (*factory.iter(3),)
 
@@ -93,7 +93,7 @@ def test__increment__timedelta__maximum(maximum, expected, resume, caplog):
         assert caplog.record_tuples[0] == (
             "randog.factory",
             logging.DEBUG,
-            "increment() has reached its maximum value and resumes "
+            "iterrange() has reached its maximum value and resumes "
             f"from {initial_value}",
         )
     else:
@@ -129,10 +129,10 @@ def test__increment__timedelta__maximum(maximum, expected, resume, caplog):
         ),
     ),
 )
-def test__increment__timedelta__step(step, expected, caplog):
+def test__iterrange__timedelta__step(step, expected, caplog):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.timedelta(seconds=59)
-    factory = randog.factory.increment(initial_value, step=step)
+    factory = randog.factory.iterrange(initial_value, step=step)
 
     values = (*factory.iter(3),)
 
@@ -155,14 +155,14 @@ def test__increment__timedelta__step(step, expected, caplog):
         ),
     ),
 )
-def test__increment__timedelta__error_when_maximum_is_lower_than_initial_value(
+def test__iterrange__timedelta__error_when_maximum_is_lower_than_initial_value(
     initial_value, maximum
 ):
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.increment(initial_value, maximum)
+        randog.factory.iterrange(initial_value, maximum)
     e = e_ctx.value
 
     assert (
-        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
         "initial_value <= maximum"
     )

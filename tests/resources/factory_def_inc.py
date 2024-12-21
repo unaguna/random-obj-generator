@@ -1,3 +1,3 @@
 import randog.factory
 
-FACTORY = randog.factory.increment(5, 7)
+FACTORY = randog.factory.iterrange(5, 7)

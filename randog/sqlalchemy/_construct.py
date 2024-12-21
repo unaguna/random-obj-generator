@@ -119,8 +119,8 @@ def factory_from_column(
         # use randchoice instead from_example(str) if it is enumeration
         factory_ = randog.factory.randchoice(*enums, rnd=rnd)
     elif autoincrement and column_python_type == int:
-        # use iterrange instead from_example(int) if it is auto incremental
-        factory_ = randog.factory.iterrange(maximum=2**31 - 1, rnd=rnd)
+        # use increment instead from_example(int) if it is auto incremental
+        factory_ = randog.factory.increment(maximum=2**31 - 1, rnd=rnd)
     elif column_python_type in __FACTORY_FOR_SPEC_TYPE:
         factory_ = __FACTORY_FOR_SPEC_TYPE[column_python_type](
             column_type,

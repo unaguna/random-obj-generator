@@ -56,6 +56,39 @@ def test__iterrange__timedelta__or_none_0():
 
 
 @pytest.mark.parametrize(
+    ("maximum", "expected"),
+    (
+        (
+            dt.timedelta(minutes=1),
+            (
+                dt.timedelta(seconds=59),
+                dt.timedelta(seconds=60),
+            ),
+        ),
+        (
+            dt.timedelta(minutes=1, seconds=1),
+            (
+                dt.timedelta(seconds=59),
+                dt.timedelta(seconds=60),
+                dt.timedelta(seconds=61),
+            ),
+        ),
+    ),
+)
+def test__iterrange__timedelta__maximum(maximum, expected, caplog):
+    caplog.set_level(logging.DEBUG)
+    initial_value = dt.timedelta(seconds=59)
+    factory = randog.factory.iterrange(initial_value, maximum=maximum)
+
+    values = (*factory.iter(3),)
+
+    assert values == expected
+
+    # assert logging
+    assert len(caplog.records) == 0
+
+
+@pytest.mark.parametrize(
     ("maximum", "expected", "resume"),
     (
         (
@@ -78,10 +111,10 @@ def test__iterrange__timedelta__or_none_0():
         ),
     ),
 )
-def test__iterrange__timedelta__maximum(maximum, expected, resume, caplog):
+def test__iterrange__timedelta__maximum__cyclic(maximum, expected, resume, caplog):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.timedelta(seconds=59)
-    factory = randog.factory.iterrange(initial_value, maximum=maximum)
+    factory = randog.factory.iterrange(initial_value, maximum=maximum, cyclic=True)
 
     values = (*factory.iter(3),)
 

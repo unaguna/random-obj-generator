@@ -14,6 +14,7 @@ def iterrange_timedelta(
     maximum: t.Optional[dt.timedelta] = None,
     step: t.Optional[dt.timedelta] = None,
     *,
+    cyclic: bool = False,
     rnd: t.Optional[Random] = None,
 ) -> Factory[dt.timedelta]:
     if maximum is None:
@@ -28,4 +29,6 @@ def iterrange_timedelta(
             "initial_value <= maximum"
         )
 
-    return by_iterator(_iterrange(initial_value, maximum, step, resume_value))
+    return by_iterator(
+        _iterrange(initial_value, maximum, step, resume_value, cyclic=cyclic)
+    )

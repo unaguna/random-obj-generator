@@ -13,6 +13,7 @@ def iterrange_number(
     maximum: t.Optional[t.Any] = None,
     step: t.Optional[t.Any] = None,
     *,
+    cyclic: bool = False,
     rnd: t.Optional[Random] = None,
 ) -> Factory[t.Any]:
     if initial_value is None:
@@ -29,4 +30,6 @@ def iterrange_number(
             "initial_value <= maximum"
         )
 
-    return by_iterator(_iterrange(initial_value, maximum, step, resume_value))
+    return by_iterator(
+        _iterrange(initial_value, maximum, step, resume_value, cyclic=cyclic)
+    )

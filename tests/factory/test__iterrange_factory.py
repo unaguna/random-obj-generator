@@ -43,6 +43,26 @@ def test__iterrange__initial_value(initial_value, expected):
 
 
 @pytest.mark.parametrize(
+    ("maximum", "expected"),
+    (
+        (None, (1, 2, 3)),
+        (3, (1, 2, 3)),
+        (2, (1, 2)),
+    ),
+)
+def test__iterrange__maximum(maximum, expected, caplog):
+    caplog.set_level(logging.DEBUG)
+    factory = randog.factory.iterrange(maximum=maximum)
+
+    values = (*factory.iter(3),)
+
+    assert values == expected
+
+    # assert logging
+    assert len(caplog.records) == 0
+
+
+@pytest.mark.parametrize(
     ("maximum", "expected", "resume"),
     (
         (None, (1, 2, 3), False),
@@ -50,9 +70,9 @@ def test__iterrange__initial_value(initial_value, expected):
         (2, (1, 2, 1), True),
     ),
 )
-def test__iterrange__maximum(maximum, expected, resume, caplog):
+def test__iterrange__maximum__cyclic(maximum, expected, resume, caplog):
     caplog.set_level(logging.DEBUG)
-    factory = randog.factory.iterrange(maximum=maximum)
+    factory = randog.factory.iterrange(maximum=maximum, cyclic=True)
 
     values = (*factory.iter(3),)
 
@@ -90,6 +110,28 @@ def test__iterrange__step(step, expected, caplog):
 
 
 @pytest.mark.parametrize(
+    ("initial_value", "maximum", "expected"),
+    (
+        (None, None, (1, 2, 3)),
+        (1, None, (1, 2, 3)),
+        (None, 3, (1, 2, 3)),
+        (4, 5, (4, 5)),
+        (5, 5, (5,)),
+    ),
+)
+def test__iterrange__initial_value__maximum(initial_value, maximum, expected, caplog):
+    caplog.set_level(logging.DEBUG)
+    factory = randog.factory.iterrange(initial_value, maximum)
+
+    values = (*factory.iter(3),)
+
+    assert values == expected
+
+    # assert logging0
+    assert len(caplog.records) == 0
+
+
+@pytest.mark.parametrize(
     ("initial_value", "maximum", "expected", "resume", "resume_cnt"),
     (
         (None, None, (1, 2, 3), False, 0),
@@ -99,11 +141,11 @@ def test__iterrange__step(step, expected, caplog):
         (5, 5, (5, 5, 5), True, 2),
     ),
 )
-def test__iterrange__initial_value__maximum(
+def test__iterrange__initial_value__maximum__cyclic(
     initial_value, maximum, expected, resume, resume_cnt, caplog
 ):
     caplog.set_level(logging.DEBUG)
-    factory = randog.factory.iterrange(initial_value, maximum)
+    factory = randog.factory.iterrange(initial_value, maximum, cyclic=True)
 
     values = (*factory.iter(3),)
 

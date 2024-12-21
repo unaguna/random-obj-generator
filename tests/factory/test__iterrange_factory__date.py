@@ -56,6 +56,39 @@ def test__iterrange__date__or_none_0():
 
 
 @pytest.mark.parametrize(
+    ("maximum", "expected"),
+    (
+        (
+            dt.date(2000, 1, 31),
+            (
+                dt.date(2000, 1, 30),
+                dt.date(2000, 1, 31),
+            ),
+        ),
+        (
+            dt.date(2000, 2, 1),
+            (
+                dt.date(2000, 1, 30),
+                dt.date(2000, 1, 31),
+                dt.date(2000, 2, 1),
+            ),
+        ),
+    ),
+)
+def test__iterrange__date__maximum(maximum, expected, caplog):
+    caplog.set_level(logging.DEBUG)
+    initial_value = dt.date(2000, 1, 30)
+    factory = randog.factory.iterrange(initial_value, maximum=maximum)
+
+    values = (*factory.iter(3),)
+
+    assert values == expected
+
+    # assert logging
+    assert len(caplog.records) == 0
+
+
+@pytest.mark.parametrize(
     ("maximum", "expected", "resume"),
     (
         (
@@ -78,10 +111,10 @@ def test__iterrange__date__or_none_0():
         ),
     ),
 )
-def test__iterrange__date__maximum(maximum, expected, resume, caplog):
+def test__iterrange__date__maximum__cyclic(maximum, expected, resume, caplog):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.date(2000, 1, 30)
-    factory = randog.factory.iterrange(initial_value, maximum=maximum)
+    factory = randog.factory.iterrange(initial_value, maximum=maximum, cyclic=True)
 
     values = (*factory.iter(3),)
 

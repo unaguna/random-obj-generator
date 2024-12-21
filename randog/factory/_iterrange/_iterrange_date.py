@@ -15,6 +15,7 @@ def iterrange_date(
     maximum: t.Optional[dt.date] = None,
     step: t.Union[dt.timedelta, int, None] = None,
     *,
+    cyclic: bool = False,
     rnd: t.Optional[Random] = None,
 ) -> Factory[t.Any]:
     if maximum is None:
@@ -35,4 +36,6 @@ def iterrange_date(
             "step must be a day/days if initial_value is date"
         )
 
-    return by_iterator(_iterrange(initial_value, maximum, step, resume_value))
+    return by_iterator(
+        _iterrange(initial_value, maximum, step, resume_value, cyclic=cyclic)
+    )

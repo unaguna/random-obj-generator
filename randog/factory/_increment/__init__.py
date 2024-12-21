@@ -6,7 +6,7 @@ from random import Random
 from ._increment_date import increment_date
 from ._increment_datetime import increment_datetime
 from ._increment_number import increment_number
-from ._inner import _increment
+from ._increment_timedelta import increment_timedelta
 from .._base import Factory
 
 
@@ -38,6 +38,16 @@ def increment(
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory[dt.date]: ...
+
+
+@t.overload
+def increment(
+    initial_value: dt.timedelta,
+    maximum: t.Optional[dt.timedelta] = None,
+    step: t.Optional[dt.timedelta] = None,
+    *,
+    rnd: t.Optional[Random] = None,
+) -> Factory[dt.timedelta]: ...
 
 
 def increment(
@@ -74,6 +84,8 @@ def increment(
         return increment_datetime(initial_value, maximum, step, rnd=rnd)
     elif isinstance(initial_value, dt.date):
         return increment_date(initial_value, maximum, step, rnd=rnd)
+    elif isinstance(initial_value, dt.timedelta):
+        return increment_timedelta(initial_value, maximum, step, rnd=rnd)
     else:
         raise TypeError(
             "cannot create 'increment' factory with initial_value "

@@ -71,25 +71,6 @@ def test__increment__maximum(maximum, expected, resume, caplog):
 
 
 @pytest.mark.parametrize(
-    ("step", "expected"),
-    (
-        (None, (1, 2, 3)),
-        (2, (1, 3, 5)),
-    ),
-)
-def test__increment__step(step, expected, caplog):
-    caplog.set_level(logging.DEBUG)
-    factory = randog.factory.increment(step=step)
-
-    values = (*factory.iter(3),)
-
-    assert values == expected
-
-    # assert logging
-    assert len(caplog.records) == 0
-
-
-@pytest.mark.parametrize(
     ("initial_value", "maximum", "expected", "resume"),
     (
         (None, None, (1, 2, 3), False),

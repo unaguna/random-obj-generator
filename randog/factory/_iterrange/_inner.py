@@ -19,4 +19,8 @@ def _iterrange(
                 )
                 next_value = resume_value
             else:
+                logger.debug(
+                    "iterrange() has reached its maximum value. "
+                    "This factory no longer generates values."
+                )
                 break

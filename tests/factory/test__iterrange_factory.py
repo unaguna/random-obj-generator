@@ -43,14 +43,14 @@ def test__iterrange__initial_value(initial_value, expected):
 
 
 @pytest.mark.parametrize(
-    ("maximum", "expected"),
+    ("maximum", "expected", "resume"),
     (
-        (None, (1, 2, 3)),
-        (3, (1, 2, 3)),
-        (2, (1, 2)),
+        (None, (1, 2, 3), False),
+        (3, (1, 2, 3), False),
+        (2, (1, 2), True),
     ),
 )
-def test__iterrange__maximum(maximum, expected, caplog):
+def test__iterrange__maximum(maximum, expected, resume, caplog):
     caplog.set_level(logging.DEBUG)
     factory = randog.factory.iterrange(maximum=maximum)
 
@@ -59,7 +59,16 @@ def test__iterrange__maximum(maximum, expected, caplog):
     assert values == expected
 
     # assert logging
-    assert len(caplog.records) == 0
+    if resume:
+        assert len(caplog.record_tuples) == 1
+        assert caplog.record_tuples[0] == (
+            "randog.factory",
+            logging.DEBUG,
+            "iterrange() has reached its maximum value. "
+            "This factory no longer generates values.",
+        )
+    else:
+        assert len(caplog.records) == 0
 
 
 @pytest.mark.parametrize(
@@ -110,16 +119,18 @@ def test__iterrange__step(step, expected, caplog):
 
 
 @pytest.mark.parametrize(
-    ("initial_value", "maximum", "expected"),
+    ("initial_value", "maximum", "expected", "resume"),
     (
-        (None, None, (1, 2, 3)),
-        (1, None, (1, 2, 3)),
-        (None, 3, (1, 2, 3)),
-        (4, 5, (4, 5)),
-        (5, 5, (5,)),
+        (None, None, (1, 2, 3), False),
+        (1, None, (1, 2, 3), False),
+        (None, 3, (1, 2, 3), False),
+        (4, 5, (4, 5), True),
+        (5, 5, (5,), True),
     ),
 )
-def test__iterrange__initial_value__maximum(initial_value, maximum, expected, caplog):
+def test__iterrange__initial_value__maximum(
+    initial_value, maximum, expected, resume, caplog
+):
     caplog.set_level(logging.DEBUG)
     factory = randog.factory.iterrange(initial_value, maximum)
 
@@ -127,8 +138,17 @@ def test__iterrange__initial_value__maximum(initial_value, maximum, expected, ca
 
     assert values == expected
 
-    # assert logging0
-    assert len(caplog.records) == 0
+    # assert logging
+    if resume:
+        assert len(caplog.records) == 1
+        assert caplog.record_tuples[0] == (
+            "randog.factory",
+            logging.DEBUG,
+            "iterrange() has reached its maximum value. "
+            "This factory no longer generates values.",
+        )
+    else:
+        assert len(caplog.records) == 0
 
 
 @pytest.mark.parametrize(

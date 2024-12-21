@@ -56,7 +56,7 @@ def test__iterrange__datetime__or_none_0():
 
 
 @pytest.mark.parametrize(
-    ("maximum", "expected"),
+    ("maximum", "expected", "resume"),
     (
         (
             dt.datetime(2000, 1, 2, 3, 4, 59, 999),
@@ -64,6 +64,7 @@ def test__iterrange__datetime__or_none_0():
                 dt.datetime(2000, 1, 2, 3, 4, 58),
                 dt.datetime(2000, 1, 2, 3, 4, 59),
             ),
+            True,
         ),
         (
             dt.datetime(2000, 1, 2, 4, 0, 0, 999),
@@ -72,10 +73,11 @@ def test__iterrange__datetime__or_none_0():
                 dt.datetime(2000, 1, 2, 3, 4, 59),
                 dt.datetime(2000, 1, 2, 3, 5, 0),
             ),
+            False,
         ),
     ),
 )
-def test__iterrange__datetime__maximum(maximum, expected, caplog):
+def test__iterrange__datetime__maximum(maximum, expected, resume, caplog):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.datetime(2000, 1, 2, 3, 4, 58)
     factory = randog.factory.iterrange(initial_value, maximum=maximum)
@@ -85,7 +87,16 @@ def test__iterrange__datetime__maximum(maximum, expected, caplog):
     assert values == expected
 
     # assert logging
-    assert len(caplog.records) == 0
+    if resume:
+        assert len(caplog.record_tuples) == 1
+        assert caplog.record_tuples[0] == (
+            "randog.factory",
+            logging.DEBUG,
+            "iterrange() has reached its maximum value. "
+            "This factory no longer generates values.",
+        )
+    else:
+        assert len(caplog.records) == 0
 
 
 @pytest.mark.parametrize(

@@ -1,3 +1,4 @@
+import datetime as dt
 from random import Random
 import typing as t
 
@@ -8,20 +9,18 @@ from ...exceptions import FactoryConstructionError
 from ._inner import _increment
 
 
-def increment_number(
-    initial_value: t.Optional[t.Any] = None,
-    maximum: t.Optional[t.Any] = None,
-    step: t.Optional[t.Any] = None,
+def increment_datetime(
+    initial_value: t.Optional[dt.datetime],
+    maximum: t.Optional[dt.datetime] = None,
+    step: t.Optional[dt.timedelta] = None,
     *,
     rnd: t.Optional[Random] = None,
-) -> Factory[t.Any]:
-    if initial_value is None:
-        initial_value = 1
+) -> Factory[dt.datetime]:
     if maximum is None:
         maximum = ANYWAY_MAXIMUM
     if step is None:
-        step = 1
-    resume_value = 1
+        step = dt.timedelta(seconds=1)
+    resume_value = initial_value
 
     if not (initial_value <= maximum):
         raise FactoryConstructionError(

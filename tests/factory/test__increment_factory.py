@@ -90,17 +90,17 @@ def test__iterrange__step(step, expected, caplog):
 
 
 @pytest.mark.parametrize(
-    ("initial_value", "maximum", "expected", "resume"),
+    ("initial_value", "maximum", "expected", "resume", "resume_cnt"),
     (
-        (None, None, (1, 2, 3), False),
-        (1, None, (1, 2, 3), False),
-        (None, 3, (1, 2, 3), False),
-        (4, 5, (4, 5, 1), True),
-        (5, 5, (5, 1, 2), True),
+        (None, None, (1, 2, 3), False, 0),
+        (1, None, (1, 2, 3), False, 0),
+        (None, 3, (1, 2, 3), False, 0),
+        (4, 5, (4, 5, 4), True, 1),
+        (5, 5, (5, 5, 5), True, 2),
     ),
 )
 def test__iterrange__initial_value__maximum(
-    initial_value, maximum, expected, resume, caplog
+    initial_value, maximum, expected, resume, resume_cnt, caplog
 ):
     caplog.set_level(logging.DEBUG)
     factory = randog.factory.iterrange(initial_value, maximum)
@@ -110,12 +110,19 @@ def test__iterrange__initial_value__maximum(
     assert values == expected
 
     # assert logging
+    assert len(caplog.record_tuples) == resume_cnt
     if resume:
-        assert len(caplog.record_tuples) == 1
-        assert caplog.record_tuples[0] == (
-            "randog.factory",
-            logging.DEBUG,
-            "iterrange() has reached its maximum value and resumes from 1",
+        assert (
+            tuple(caplog.record_tuples)
+            == (
+                (
+                    "randog.factory",
+                    logging.DEBUG,
+                    "iterrange() has reached its maximum value and resumes "
+                    f"from {initial_value}",
+                ),
+            )
+            * resume_cnt
         )
     else:
         assert len(caplog.records) == 0

@@ -21,7 +21,7 @@ def iterrange_number(
         maximum = ANYWAY_MAXIMUM
     if step is None:
         step = 1
-    resume_value = 1
+    resume_value = initial_value
 
     if not (initial_value <= maximum):
         raise FactoryConstructionError(

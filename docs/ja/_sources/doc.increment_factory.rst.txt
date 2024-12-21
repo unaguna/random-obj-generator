@@ -1,13 +1,7 @@
-Incremental Factory
-===================
+Incremental integer factory
+===========================
 
-You can create a factory that generates incremental integers, datetimes or dates.
-
-
-Incremental Integer Factory
----------------------------
-
-The most typical example is the use of generating integers, as in the following example:
+You can create a factory that generates incremental integers.
 
 .. doctest::
 
@@ -46,26 +40,3 @@ so the generated value is guaranteed to be a positive integer that fits into the
 .. note::
 
     Only one of the initial and maximum values may be specified.
-
-Incremental Datetime/Date Factory
----------------------------------
-
-If you specify a datetime or date value as the initial value, you can create a factory that will generate values of those types in sequence. You can specify the amount of increase for each generation by specifying the step as in the following example.
-
-.. doctest::
-
-    >>> import datetime as dt
-    >>> import randog.factory
-
-    >>> # create a factory to generate datetimes
-    >>> factory = randog.factory.increment(
-    ...     dt.datetime(2020, 10, 11, 12, 0, 0),
-    ...     step=dt.timedelta(hours=1),
-    ... )
-
-    >>> print(factory.next())
-    2020-10-11 12:00:00
-    >>> print(factory.next())
-    2020-10-11 13:00:00
-    >>> print(factory.next())
-    2020-10-11 14:00:00

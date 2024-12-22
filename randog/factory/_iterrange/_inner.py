@@ -12,13 +12,12 @@ S = t.TypeVar("S")
 
 
 class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
-    initial_value: F_T
-    minimum: F_T
-    maximum: F_T
-    step: S
-    cyclic: bool
-    resume_value: F_T
-    next_value: F_T
+    _initial_value: F_T
+    _minimum: F_T
+    _maximum: F_T
+    _step: S
+    _cyclic: bool
+    _resume_value: F_T
     _impl_iterator: t.Iterator[F_T]
 
     def __init__(
@@ -30,14 +29,14 @@ class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
         rnd: t.Optional[Random] = None,
     ):
         if initial_value is not None:
-            self.initial_value = initial_value
+            self._initial_value = initial_value
         else:
-            self.initial_value = self.default_initial_value()
+            self._initial_value = self.default_initial_value()
         if step is not None:
-            self.step = step
+            self._step = step
         else:
-            self.step = self.default_step()
-        self.cyclic = cyclic
+            self._step = self.default_step()
+        self._cyclic = cyclic
 
         if self.step_sign() < 0:
             minimum = maximum
@@ -48,10 +47,10 @@ class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
             maximum = ANYWAY_MAXIMUM
         if minimum is None:
             minimum = ANYWAY_MINIMUM
-        self.minimum = minimum
-        self.maximum = maximum
+        self._minimum = minimum
+        self._maximum = maximum
 
-        self.resume_value = self.initial_value
+        self._resume_value = self._initial_value
 
         arg_info = inspect.getargvalues(inspect.currentframe())
         self.validate_args(**{key: arg_info.locals[key] for key in arg_info.args[1:]})
@@ -72,13 +71,13 @@ class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
 
     def validate_args(self, **kwargs):
         if self.step_sign() >= 0:
-            if not (self.initial_value <= self.maximum):
+            if not (self._initial_value <= self._maximum):
                 raise FactoryConstructionError(
                     "arguments of iterrange(initial_value, maximum) must satisfy "
                     "initial_value <= maximum"
                 )
         else:
-            if not (self.initial_value >= self.minimum):
+            if not (self._initial_value >= self._minimum):
                 raise FactoryConstructionError(
                     "arguments of iterrange(initial_value, maximum) must satisfy "
                     "maximum <= initial_value if step < 0"
@@ -88,18 +87,18 @@ class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
         return next(self._impl_iterator)
 
     def _iterator(self) -> t.Iterator[F_T]:
-        next_value = self.initial_value
+        next_value = self._initial_value
         while True:
             yield next_value
-            next_value += self.step
+            next_value += self._step
 
-            if next_value > self.maximum or next_value < self.minimum:
-                if self.cyclic:
+            if next_value > self._maximum or next_value < self._minimum:
+                if self._cyclic:
                     logger.debug(
                         "iterrange() has reached its maximum value and resumes "
-                        f"from {self.resume_value}"
+                        f"from {self._resume_value}"
                     )
-                    next_value = self.resume_value
+                    next_value = self._resume_value
                 else:
                     logger.debug(
                         "iterrange() has reached its maximum value. "

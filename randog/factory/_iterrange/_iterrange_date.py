@@ -13,7 +13,7 @@ class IterrangeDate(Iterrange[dt.date, dt.timedelta]):
         return dt.timedelta(days=1)
 
     def step_sign(self) -> t.Literal[-1, 0, 1]:
-        value = self.step.total_seconds()
+        value = self._step.total_seconds()
         if value > 0:
             return 1
         elif value < 0:
@@ -24,7 +24,7 @@ class IterrangeDate(Iterrange[dt.date, dt.timedelta]):
     def validate_args(self, **kwargs):
         super().validate_args(**kwargs)
 
-        if self.step.microseconds + self.step.seconds > 0:
+        if self._step.microseconds + self._step.seconds > 0:
             raise FactoryConstructionError(
                 "step must be a day/days if initial_value is date"
             )

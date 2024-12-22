@@ -12,7 +12,7 @@ class IterrangeTimedelta(Iterrange[dt.timedelta, dt.timedelta]):
         return dt.timedelta(seconds=1)
 
     def step_sign(self) -> t.Literal[-1, 0, 1]:
-        value = self.step.total_seconds()
+        value = self._step.total_seconds()
         if value > 0:
             return 1
         elif value < 0:

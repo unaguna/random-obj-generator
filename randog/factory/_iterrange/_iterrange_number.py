@@ -6,9 +6,9 @@ from ._inner import Iterrange
 
 class IterrangeNumber(Iterrange[numbers.Real, numbers.Real]):
     def step_sign(self) -> t.Literal[-1, 0, 1]:
-        if self.step > 0:
+        if self._step > 0:
             return 1
-        elif self.step < 0:
+        elif self._step < 0:
             return -1
         else:
             return 0

@@ -272,12 +272,12 @@ def test__iterrange__date__error_with_tiny_step(step, step_sign, caplog):
     ("initial_value", "maximum"),
     (
         (
-            dt.datetime(2000, 1, 30),
-            dt.datetime(2000, 1, 29),
+            dt.date(2000, 1, 30),
+            dt.date(2000, 1, 29),
         ),
         (
-            dt.datetime(2000, 2, 1),
-            dt.datetime(2000, 1, 31),
+            dt.date(2000, 2, 1),
+            dt.date(2000, 1, 31),
         ),
     ),
 )
@@ -298,13 +298,13 @@ def test__iterrange__date__error_when_maximum_is_lower_than_initial_value(
     ("initial_value", "maximum", "step"),
     (
         (
-            dt.datetime(2000, 1, 29),
-            dt.datetime(2000, 1, 30),
+            dt.date(2000, 1, 29),
+            dt.date(2000, 1, 30),
             dt.timedelta(days=-1),
         ),
         (
-            dt.datetime(2000, 1, 29),
-            dt.datetime(2000, 1, 30),
+            dt.date(2000, 1, 29),
+            dt.date(2000, 1, 30),
             dt.timedelta(days=-10),
         ),
     ),

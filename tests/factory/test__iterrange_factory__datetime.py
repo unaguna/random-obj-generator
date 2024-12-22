@@ -100,10 +100,11 @@ def test__iterrange__datetime__maximum(maximum, expected, resume, caplog):
 
 
 @pytest.mark.parametrize(
-    ("maximum", "expected", "resume"),
+    ("maximum", "resume_from", "expected", "resume"),
     (
         (
             dt.datetime(2000, 1, 2, 3, 4, 59, 999),
+            None,
             (
                 dt.datetime(2000, 1, 2, 3, 4, 58),
                 dt.datetime(2000, 1, 2, 3, 4, 59),
@@ -113,6 +114,7 @@ def test__iterrange__datetime__maximum(maximum, expected, resume, caplog):
         ),
         (
             dt.datetime(2000, 1, 2, 4, 0, 0, 999),
+            None,
             (
                 dt.datetime(2000, 1, 2, 3, 4, 58),
                 dt.datetime(2000, 1, 2, 3, 4, 59),
@@ -120,12 +122,38 @@ def test__iterrange__datetime__maximum(maximum, expected, resume, caplog):
             ),
             False,
         ),
+        # resume_from < initial_value
+        (
+            dt.datetime(2000, 1, 2, 3, 4, 59, 999),
+            dt.datetime(2000, 1, 2, 3, 4, 0),
+            (
+                dt.datetime(2000, 1, 2, 3, 4, 58),
+                dt.datetime(2000, 1, 2, 3, 4, 59),
+                dt.datetime(2000, 1, 2, 3, 4, 0),
+            ),
+            True,
+        ),
+        # initial_value < resume_from
+        (
+            dt.datetime(2000, 1, 2, 3, 4, 59, 999),
+            dt.datetime(2000, 1, 2, 3, 4, 58, 500),
+            (
+                dt.datetime(2000, 1, 2, 3, 4, 58),
+                dt.datetime(2000, 1, 2, 3, 4, 59),
+                dt.datetime(2000, 1, 2, 3, 4, 58, 500),
+            ),
+            True,
+        ),
     ),
 )
-def test__iterrange__datetime__maximum__cyclic(maximum, expected, resume, caplog):
+def test__iterrange__datetime__maximum__cyclic(
+    maximum, resume_from, expected, resume, caplog
+):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.datetime(2000, 1, 2, 3, 4, 58)
-    factory = randog.factory.iterrange(initial_value, maximum=maximum, cyclic=True)
+    factory = randog.factory.iterrange(
+        initial_value, maximum=maximum, cyclic=True, resume_from=resume_from
+    )
 
     values = (*factory.iter(3),)
 
@@ -266,9 +294,33 @@ def test__iterrange__datetime__error_when_maximum_is_lower_than_initial_value(
         randog.factory.iterrange(initial_value, maximum)
     e = e_ctx.value
 
-    assert (
-        e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
-        "initial_value <= maximum"
+    assert e.message == (
+        "arguments of iterrange() must satisfy initial_value <= maximum"
+    )
+
+
+@pytest.mark.parametrize(
+    ("initial_value", "resume_from", "maximum"),
+    (
+        (
+            dt.datetime(2000, 1, 2, 3, 4, 58),
+            dt.datetime(2000, 1, 2, 3, 5, 0),
+            dt.datetime(2000, 1, 2, 3, 4, 59),
+        ),
+    ),
+)
+def test__iterrange__datetime__error_when_maximum_is_lower_than_resume_value(
+    initial_value, resume_from, maximum
+):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.iterrange(
+            initial_value, maximum, cyclic=True, resume_from=resume_from
+        )
+    e = e_ctx.value
+
+    assert e.message == (
+        "arguments of iterrange() must satisfy resume_from <= maximum "
+        "if resume_from is specified"
     )
 
 
@@ -294,7 +346,76 @@ def test__iterrange__datetime__err_when_maximum_is_great_than_initial_value__wit
         randog.factory.iterrange(initial_value, maximum, step=step)
     e = e_ctx.value
 
-    assert (
-        e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
-        "maximum <= initial_value if step < 0"
+    assert e.message == (
+        "arguments of iterrange() must satisfy maximum <= initial_value if step < 0"
     )
+
+
+@pytest.mark.parametrize(
+    ("initial_value", "resume_from", "maximum"),
+    (
+        (
+            dt.datetime(2000, 1, 2, 3, 4, 58),
+            dt.datetime(2000, 1, 2, 3, 4, 56),
+            dt.datetime(2000, 1, 2, 3, 4, 57),
+        ),
+    ),
+)
+def test__iterrange__date__err_when_maximum_is_greater_than_resume_value__with_neg_step(
+    initial_value, resume_from, maximum
+):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.iterrange(
+            initial_value,
+            maximum,
+            step=dt.timedelta(seconds=-1),
+            cyclic=True,
+            resume_from=resume_from,
+        )
+    e = e_ctx.value
+
+    assert e.message == (
+        "arguments of iterrange() must satisfy maximum <= resume_from "
+        "if resume_from is specified and step < 0"
+    )
+
+
+@pytest.mark.parametrize(
+    ("initial_value", "maximum", "step", "resume_from"),
+    (
+        (
+            dt.datetime(2000, 1, 29),
+            None,
+            None,
+            dt.datetime(2000, 1, 29),
+        ),
+        (
+            dt.datetime(2000, 1, 29),
+            dt.datetime(2000, 1, 30),
+            None,
+            dt.datetime(2000, 1, 29),
+        ),
+        (
+            dt.datetime(2000, 1, 29),
+            None,
+            dt.timedelta(days=2),
+            dt.datetime(2000, 1, 30),
+        ),
+        (
+            dt.datetime(2000, 1, 29),
+            dt.datetime(2000, 1, 31),
+            dt.timedelta(days=2),
+            dt.datetime(2000, 1, 30),
+        ),
+    ),
+)
+def test__iterrange__datetime__error_with_resume_from_and_non_cyclic(
+    initial_value, maximum, step, resume_from
+):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.iterrange(
+            initial_value, maximum, step=step, cyclic=False, resume_from=resume_from
+        )
+    e = e_ctx.value
+
+    assert e.message == "cannot specify 'resume_from' with cyclic=False"

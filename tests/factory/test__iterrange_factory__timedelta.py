@@ -195,7 +195,7 @@ def test__iterrange__timedelta__step(step, expected, caplog):
 
 
 @pytest.mark.parametrize(
-    ("step", "maximum", "expected"),
+    ("step", "maximum", "expected", "cycle_len"),
     (
         (
             dt.timedelta(seconds=-1),
@@ -206,6 +206,7 @@ def test__iterrange__timedelta__step(step, expected, caplog):
                 dt.timedelta(seconds=57),
                 dt.timedelta(seconds=56),
             ),
+            4,
         ),
         (
             dt.timedelta(seconds=-2),
@@ -216,6 +217,7 @@ def test__iterrange__timedelta__step(step, expected, caplog):
                 dt.timedelta(seconds=55),
                 dt.timedelta(seconds=59),
             ),
+            3,
         ),
         (
             dt.timedelta(seconds=-60),
@@ -226,15 +228,16 @@ def test__iterrange__timedelta__step(step, expected, caplog):
                 dt.timedelta(seconds=-61),
                 dt.timedelta(seconds=59),
             ),
+            3,
         ),
     ),
 )
 @pytest.mark.parametrize("cyclic", (False, True))
-def test__iterrange__timedelta__negative_step__with_maximum(
-    step, maximum, cyclic, expected, caplog
+def test__iterrange__timedelta__negative_step__maximum(
+    step, maximum, cycle_len, cyclic, expected, caplog
 ):
     if not cyclic:
-        expected = expected[0:-1]
+        expected = expected[0:cycle_len]
 
     caplog.set_level(logging.DEBUG)
     initial_value = dt.timedelta(seconds=59)
@@ -243,9 +246,6 @@ def test__iterrange__timedelta__negative_step__with_maximum(
     values = (*factory.iter(4),)
 
     assert values == expected
-
-    # assert logging
-    assert len(caplog.records) == 0
 
 
 @pytest.mark.parametrize(

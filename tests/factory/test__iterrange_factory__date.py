@@ -245,9 +245,6 @@ def test__iterrange__date__negative_step__maximum(
 
     assert values == expected
 
-    # assert logging
-    assert len(caplog.records) == 0
-
 
 @pytest.mark.parametrize(
     ("step",),

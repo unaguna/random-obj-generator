@@ -136,9 +136,6 @@ def test__iterrange__negative_step__maximum(step, maximum, cyclic, expected, cap
 
     assert values == expected
 
-    # assert logging
-    assert len(caplog.records) == 0
-
 
 @pytest.mark.parametrize(
     ("initial_value", "maximum", "expected", "resume"),

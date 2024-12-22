@@ -171,6 +171,14 @@ def test__iterrange__timedelta__maximum__cyclic(maximum, expected, resume, caplo
                 dt.timedelta(seconds=59, milliseconds=20),
             ),
         ),
+        (
+            dt.timedelta(milliseconds=-10),
+            (
+                dt.timedelta(seconds=59),
+                dt.timedelta(seconds=58, milliseconds=990),
+                dt.timedelta(seconds=58, milliseconds=980),
+            ),
+        ),
     ),
 )
 def test__iterrange__timedelta__step(step, expected, caplog):
@@ -179,6 +187,60 @@ def test__iterrange__timedelta__step(step, expected, caplog):
     factory = randog.factory.iterrange(initial_value, step=step)
 
     values = (*factory.iter(3),)
+
+    assert values == expected
+
+    # assert logging
+    assert len(caplog.records) == 0
+
+
+@pytest.mark.parametrize(
+    ("step", "maximum", "expected"),
+    (
+        (
+            dt.timedelta(seconds=-1),
+            dt.timedelta(seconds=56),
+            (
+                dt.timedelta(seconds=59),
+                dt.timedelta(seconds=58),
+                dt.timedelta(seconds=57),
+                dt.timedelta(seconds=56),
+            ),
+        ),
+        (
+            dt.timedelta(seconds=-2),
+            dt.timedelta(seconds=55),
+            (
+                dt.timedelta(seconds=59),
+                dt.timedelta(seconds=57),
+                dt.timedelta(seconds=55),
+                dt.timedelta(seconds=59),
+            ),
+        ),
+        (
+            dt.timedelta(seconds=-60),
+            dt.timedelta(seconds=-120),
+            (
+                dt.timedelta(seconds=59),
+                dt.timedelta(seconds=-1),
+                dt.timedelta(seconds=-61),
+                dt.timedelta(seconds=59),
+            ),
+        ),
+    ),
+)
+@pytest.mark.parametrize("cyclic", (False, True))
+def test__iterrange__timedelta__negative_step__with_maximum(
+    step, maximum, cyclic, expected, caplog
+):
+    if not cyclic:
+        expected = expected[0:-1]
+
+    caplog.set_level(logging.DEBUG)
+    initial_value = dt.timedelta(seconds=59)
+    factory = randog.factory.iterrange(initial_value, maximum, step=step, cyclic=cyclic)
+
+    values = (*factory.iter(4),)
 
     assert values == expected
 
@@ -209,4 +271,32 @@ def test__iterrange__timedelta__error_when_maximum_is_lower_than_initial_value(
     assert (
         e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
         "initial_value <= maximum"
+    )
+
+
+@pytest.mark.parametrize(
+    ("initial_value", "maximum", "step"),
+    (
+        (
+            dt.timedelta(days=1),
+            dt.timedelta(days=1, microseconds=1),
+            dt.timedelta(seconds=-1),
+        ),
+        (
+            dt.timedelta(0),
+            dt.timedelta(microseconds=1),
+            dt.timedelta(microseconds=-1),
+        ),
+    ),
+)
+def test__iterrange__timedelta__err_when_maximum_is_great_than_initial_value__with_n_s(
+    initial_value, maximum, step
+):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.iterrange(initial_value, maximum, step=step)
+    e = e_ctx.value
+
+    assert (
+        e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
+        "maximum <= initial_value if step < 0"
     )

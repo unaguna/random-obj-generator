@@ -104,6 +104,7 @@ def test__iterrange__maximum__cyclic(maximum, expected, resume, caplog):
     (
         (None, (1, 2, 3)),
         (2, (1, 3, 5)),
+        (-1, (1, 0, -1)),
     ),
 )
 def test__iterrange__step(step, expected, caplog):
@@ -111,6 +112,27 @@ def test__iterrange__step(step, expected, caplog):
     factory = randog.factory.iterrange(step=step)
 
     values = (*factory.iter(3),)
+
+    assert values == expected
+
+    # assert logging
+    assert len(caplog.records) == 0
+
+
+@pytest.mark.parametrize(
+    ("step", "maximum", "cyclic", "expected"),
+    (
+        (-1, -4, False, (1, 0, -1, -2)),
+        (-2, -4, False, (1, -1, -3)),
+        (-1, -4, True, (1, 0, -1, -2)),
+        (-2, -4, True, (1, -1, -3, 1)),
+    ),
+)
+def test__iterrange__negative_step__maximum(step, maximum, cyclic, expected, caplog):
+    caplog.set_level(logging.DEBUG)
+    factory = randog.factory.iterrange(maximum=maximum, step=step, cyclic=cyclic)
+
+    values = (*factory.iter(4),)
 
     assert values == expected
 
@@ -201,4 +223,18 @@ def test__iterrange__error_when_maximum_is_lower_than_initial_value(
     assert (
         e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
         "initial_value <= maximum"
+    )
+
+
+@pytest.mark.parametrize(("initial_value", "maximum", "step"), ((3, 4, -1), (2, 4, -1)))
+def test__iterrange__error_when_maximum_is_greater_than_initial_value__with_neg_step(
+    initial_value, maximum, step
+):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.iterrange(initial_value, maximum, step=step)
+    e = e_ctx.value
+
+    assert (
+        e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
+        "maximum <= initial_value if step < 0"
     )

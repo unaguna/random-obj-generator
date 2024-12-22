@@ -163,6 +163,14 @@ def test__iterrange__date__maximum__cyclic(maximum, expected, resume, caplog):
                 dt.date(2000, 2, 13),
             ),
         ),
+        (
+            dt.timedelta(days=-1),
+            (
+                dt.date(2000, 1, 30),
+                dt.date(2000, 1, 29),
+                dt.date(2000, 1, 28),
+            ),
+        ),
     ),
 )
 def test__iterrange__date__step(step, expected, caplog):
@@ -171,6 +179,69 @@ def test__iterrange__date__step(step, expected, caplog):
     factory = randog.factory.iterrange(initial_value, step=step)
 
     values = (*factory.iter(3),)
+
+    assert values == expected
+
+    # assert logging
+    assert len(caplog.records) == 0
+
+
+@pytest.mark.parametrize(
+    ("step", "maximum", "cyclic", "expected"),
+    (
+        (
+            dt.timedelta(days=-1),
+            dt.date(2000, 1, 26),
+            False,
+            (
+                dt.date(2000, 1, 30),
+                dt.date(2000, 1, 29),
+                dt.date(2000, 1, 28),
+                dt.date(2000, 1, 27),
+            ),
+        ),
+        (
+            dt.timedelta(days=-2),
+            dt.date(2000, 1, 26),
+            False,
+            (
+                dt.date(2000, 1, 30),
+                dt.date(2000, 1, 28),
+                dt.date(2000, 1, 26),
+            ),
+        ),
+        (
+            dt.timedelta(days=-1),
+            dt.date(2000, 1, 26),
+            True,
+            (
+                dt.date(2000, 1, 30),
+                dt.date(2000, 1, 29),
+                dt.date(2000, 1, 28),
+                dt.date(2000, 1, 27),
+            ),
+        ),
+        (
+            dt.timedelta(days=-2),
+            dt.date(2000, 1, 26),
+            True,
+            (
+                dt.date(2000, 1, 30),
+                dt.date(2000, 1, 28),
+                dt.date(2000, 1, 26),
+                dt.date(2000, 1, 30),
+            ),
+        ),
+    ),
+)
+def test__iterrange__date__negative_step__maximum(
+    step, maximum, cyclic, expected, caplog
+):
+    caplog.set_level(logging.DEBUG)
+    initial_value = dt.date(2000, 1, 30)
+    factory = randog.factory.iterrange(initial_value, maximum, step=step, cyclic=cyclic)
+
+    values = (*factory.iter(4),)
 
     assert values == expected
 
@@ -189,11 +260,12 @@ def test__iterrange__date__step(step, expected, caplog):
         (dt.timedelta(microseconds=1),),
     ),
 )
-def test__iterrange__date__error_with_tiny_step(step, caplog):
+@pytest.mark.parametrize("step_sign", (1, -1))
+def test__iterrange__date__error_with_tiny_step(step, step_sign, caplog):
     initial_value = dt.date(2000, 1, 30)
 
     with pytest.raises(FactoryConstructionError) as e_ctx:
-        randog.factory.iterrange(initial_value, step=step)
+        randog.factory.iterrange(initial_value, step=(step * step_sign))
     e = e_ctx.value
 
     assert e.message == "step must be a day/days if initial_value is date"
@@ -222,4 +294,32 @@ def test__iterrange__date__error_when_maximum_is_lower_than_initial_value(
     assert (
         e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
         "initial_value <= maximum"
+    )
+
+
+@pytest.mark.parametrize(
+    ("initial_value", "maximum", "step"),
+    (
+        (
+            dt.datetime(2000, 1, 29),
+            dt.datetime(2000, 1, 30),
+            dt.timedelta(days=-1),
+        ),
+        (
+            dt.datetime(2000, 1, 29),
+            dt.datetime(2000, 1, 30),
+            dt.timedelta(days=-10),
+        ),
+    ),
+)
+def test__iterrange__date__error_when_maximum_is_great_than_initial_value_with_neg_step(
+    initial_value, maximum, step
+):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.iterrange(initial_value, maximum, step=step)
+    e = e_ctx.value
+
+    assert (
+        e.message == "arguments of iterrange(initial_value, maximum) must satisfy "
+        "maximum <= initial_value if step < 0"
     )

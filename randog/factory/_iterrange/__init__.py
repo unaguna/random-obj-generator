@@ -98,7 +98,7 @@ def iterrange(
     Raises
     ------
     FactoryConstructionError
-        if it is not satisfied `initial_value <= maximum`
+        if there is a contradiction in the argument values
     """
     if initial_value is None or isinstance(initial_value, numbers.Real):
         return IterrangeNumber(

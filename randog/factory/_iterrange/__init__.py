@@ -17,6 +17,7 @@ def iterrange(
     step: t.Optional[int] = None,
     *,
     cyclic: bool = False,
+    resume_from: t.Optional[t.Any] = None,
     rnd: t.Optional[Random] = None,
 ) -> Factory[int]: ...
 
@@ -28,6 +29,7 @@ def iterrange(
     step: t.Optional[dt.timedelta] = None,
     *,
     cyclic: bool = False,
+    resume_from: t.Optional[t.Any] = None,
     rnd: t.Optional[Random] = None,
 ) -> Factory[dt.datetime]: ...
 
@@ -39,6 +41,7 @@ def iterrange(
     step: t.Optional[dt.timedelta] = None,
     *,
     cyclic: bool = False,
+    resume_from: t.Optional[t.Any] = None,
     rnd: t.Optional[Random] = None,
 ) -> Factory[dt.date]: ...
 
@@ -50,6 +53,7 @@ def iterrange(
     step: t.Optional[dt.timedelta] = None,
     *,
     cyclic: bool = False,
+    resume_from: t.Optional[t.Any] = None,
     rnd: t.Optional[Random] = None,
 ) -> Factory[dt.timedelta]: ...
 

@@ -60,6 +60,7 @@ def iterrange(
     step: t.Optional[t.Any] = None,
     *,
     cyclic: bool = False,
+    resume_from: t.Optional[t.Any] = None,
     rnd: t.Optional[Random] = None,
 ) -> Factory[t.Any]:
     """Return a factory which returns sequential numbers.
@@ -80,7 +81,12 @@ def iterrange(
     step : optional
         difference between generated values
     cyclic : bool
-        If it is True, the next value of `maximum` will be `initial_value`.
+        If it is True, it does not terminate after generating values up to the maximum.
+        The next value depends on the other arguments;
+        by default initial_value is returned.
+    resume_from : optional
+        If cyclic is True and this value is specified,
+        the value specified here is the next value after maximum.
     rnd : Random, optional
         It is not normally used, but it can be accepted as an argument
         to match other Factory construction functions.
@@ -91,13 +97,41 @@ def iterrange(
         if it is not satisfied `initial_value <= maximum`
     """
     if initial_value is None or isinstance(initial_value, numbers.Real):
-        return IterrangeNumber(initial_value, maximum, step, cyclic=cyclic, rnd=rnd)
+        return IterrangeNumber(
+            initial_value,
+            maximum,
+            step,
+            cyclic=cyclic,
+            resume_from=resume_from,
+            rnd=rnd,
+        )
     elif isinstance(initial_value, dt.datetime):
-        return IterrangeDatetime(initial_value, maximum, step, cyclic=cyclic, rnd=rnd)
+        return IterrangeDatetime(
+            initial_value,
+            maximum,
+            step,
+            cyclic=cyclic,
+            resume_from=resume_from,
+            rnd=rnd,
+        )
     elif isinstance(initial_value, dt.date):
-        return IterrangeDate(initial_value, maximum, step, cyclic=cyclic, rnd=rnd)
+        return IterrangeDate(
+            initial_value,
+            maximum,
+            step,
+            cyclic=cyclic,
+            resume_from=resume_from,
+            rnd=rnd,
+        )
     elif isinstance(initial_value, dt.timedelta):
-        return IterrangeTimedelta(initial_value, maximum, step, cyclic=cyclic, rnd=rnd)
+        return IterrangeTimedelta(
+            initial_value,
+            maximum,
+            step,
+            cyclic=cyclic,
+            resume_from=resume_from,
+            rnd=rnd,
+        )
     else:
         raise TypeError(
             "cannot create 'iterrange' factory with initial_value "

@@ -26,6 +26,7 @@ class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
         maximum: t.Optional[F_T],
         step: t.Optional[S],
         cyclic: bool,
+        resume_from: t.Optional[F_T],
         rnd: t.Optional[Random] = None,
     ):
         if initial_value is not None:
@@ -50,7 +51,9 @@ class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
         self._minimum = minimum
         self._maximum = maximum
 
-        self._resume_value = self._initial_value
+        self._resume_value = (
+            resume_from if resume_from is not None else self._initial_value
+        )
 
         arg_info = inspect.getargvalues(inspect.currentframe())
         self.validate_args(**{key: arg_info.locals[key] for key in arg_info.args[1:]})

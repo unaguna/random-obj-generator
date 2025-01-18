@@ -190,6 +190,7 @@ def test__iterrange__initial_value__maximum__cyclic(
     factory = randog.factory.iterrange(
         initial_value, maximum, cyclic=True, resume_from=resume_from
     )
+    expected_resume_by = resume_from if resume_from is not None else initial_value
 
     values = (*factory.iter(4),)
 
@@ -205,7 +206,7 @@ def test__iterrange__initial_value__maximum__cyclic(
                     "randog.factory",
                     logging.DEBUG,
                     "iterrange() has reached its maximum value and resumes "
-                    f"from {initial_value}",
+                    f"from {expected_resume_by}",
                 ),
             )
             * resume_cnt

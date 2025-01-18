@@ -73,13 +73,12 @@ class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
         if self.step_sign() >= 0:
             if not (self._initial_value <= self._maximum):
                 raise FactoryConstructionError(
-                    "arguments of iterrange(initial_value, maximum) must satisfy "
-                    "initial_value <= maximum"
+                    "arguments of iterrange() must satisfy initial_value <= maximum"
                 )
         else:
             if not (self._initial_value >= self._minimum):
                 raise FactoryConstructionError(
-                    "arguments of iterrange(initial_value, maximum) must satisfy "
+                    "arguments of iterrange() must satisfy "
                     "maximum <= initial_value if step < 0"
                 )
 

@@ -338,4 +338,5 @@ Although any factory can be created with the :ref:`custom factory <custom_factor
    :maxdepth: 1
 
    doc.increment_factory
+   doc.iterrange_factory
    doc.sqlalchemy

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 16:47+0900\n"
+"POT-Creation-Date: 2024-12-21 19:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -21,33 +21,21 @@ msgstr ""
 "Generated-By: Babel 2.12.1\n"
 
 #: ../../source/doc.increment_factory.rst:2
-msgid "Incremental Factory"
+msgid "Incremental integer factory"
 msgstr ""
 
 #: ../../source/doc.increment_factory.rst:4
-msgid ""
-"You can create a factory that generates incremental integers, datetimes "
-"or dates."
-msgstr "連番の整数、日時、日付を生成する factory を作成することができます。"
+msgid "You can create a factory that generates incremental integers."
+msgstr "連番の整数を生成する factory を作成することができます。"
 
-#: ../../source/doc.increment_factory.rst:8
-msgid "Incremental Integer Factory"
-msgstr ""
-
-#: ../../source/doc.increment_factory.rst:10
-msgid ""
-"The most typical example is the use of generating integers, as in the "
-"following example:"
-msgstr "最も典型的な例は、次の例のように整数を生成する利用法です。"
-
-#: ../../source/doc.increment_factory.rst:26
+#: ../../source/doc.increment_factory.rst:20
 msgid ""
 "If you wish to specify an initial value and a maximum value, such as when"
 " generating data to be added to an existing database, you can do so as "
 "follows:"
 msgstr "既存のデータベースに追加するデータを作成する場合など、初期値や最大値を指定したい場合は下記のように指定できます。"
 
-#: ../../source/doc.increment_factory.rst:42
+#: ../../source/doc.increment_factory.rst:36
 msgid ""
 "If a maximum value is specified, the next generated value for that value "
 "will be 1. In the example above, the next value after 2^31-1 would be 1, "
@@ -57,20 +45,7 @@ msgstr ""
 "最大値が指定された場合、生成値がその値に達した後の生成値は1になります。上の例では、2^31-1 の次は 1 "
 "が生成されるため、生成値が符号付き32bit整数型に収まる正整数であることが保証されます。"
 
-#: ../../source/doc.increment_factory.rst:48
+#: ../../source/doc.increment_factory.rst:42
 msgid "Only one of the initial and maximum values may be specified."
 msgstr "初期値と最大値のうち一方のみを指定することもできます。"
 
-#: ../../source/doc.increment_factory.rst:51
-msgid "Incremental Datetime/Date Factory"
-msgstr ""
-
-#: ../../source/doc.increment_factory.rst:53
-msgid ""
-"If you specify a datetime or date value as the initial value, you can "
-"create a factory that will generate values of those types in sequence. "
-"You can specify the amount of increase for each generation by specifying "
-"the step as in the following example."
-msgstr ""
-"初期値として datetime や date の値を指定すると、それらの型の値を順に生成する factory を生成できます。"
-"次の例のように step を指定することで生成ごとの増加量を指定できます。"

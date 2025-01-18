@@ -73,16 +73,31 @@ class Iterrange(Factory[F_T], abc.ABC, t.Generic[F_T, S]):
         pass
 
     def validate_args(self, **kwargs):
+        if not self._cyclic and kwargs["resume_from"] is not None:
+            raise FactoryConstructionError(
+                "cannot specify 'resume_from' with cyclic=False"
+            )
+
         if self.step_sign() >= 0:
             if not (self._initial_value <= self._maximum):
                 raise FactoryConstructionError(
                     "arguments of iterrange() must satisfy initial_value <= maximum"
+                )
+            if not (self._resume_value <= self._maximum):
+                raise FactoryConstructionError(
+                    "arguments of iterrange() must satisfy resume_from <= maximum "
+                    "if resume_from is specified"
                 )
         else:
             if not (self._initial_value >= self._minimum):
                 raise FactoryConstructionError(
                     "arguments of iterrange() must satisfy "
                     "maximum <= initial_value if step < 0"
+                )
+            if not (self._resume_value >= self._minimum):
+                raise FactoryConstructionError(
+                    "arguments of iterrange() must satisfy "
+                    "maximum <= resume_from if resume_from is specified and step < 0"
                 )
 
     def _next(self) -> F_T:

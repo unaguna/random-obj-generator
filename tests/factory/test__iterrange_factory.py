@@ -258,7 +258,7 @@ def test__iterrange__error_when_maximum_is_greater_than_initial_value__with_neg_
 
 
 @pytest.mark.parametrize(
-    ("initial_value", "resume_from", "maximum"), ((3, 4, 5), (2, -2, -1))
+    ("initial_value", "resume_from", "maximum"), ((6, 4, 5), (2, -2, -1))
 )
 def test__iterrange__error_when_maximum_is_greater_than_resume_value__with_neg_step(
     initial_value, resume_from, maximum

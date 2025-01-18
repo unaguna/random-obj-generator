@@ -151,6 +151,7 @@ def test__iterrange__datetime__maximum__cyclic(
 ):
     caplog.set_level(logging.DEBUG)
     initial_value = dt.datetime(2000, 1, 2, 3, 4, 58)
+    expected_resume_by = resume_from if resume_from is not None else initial_value
     factory = randog.factory.iterrange(
         initial_value, maximum=maximum, cyclic=True, resume_from=resume_from
     )
@@ -166,7 +167,7 @@ def test__iterrange__datetime__maximum__cyclic(
             "randog.factory",
             logging.DEBUG,
             "iterrange() has reached its maximum value and resumes "
-            f"from {initial_value}",
+            f"from {expected_resume_by}",
         )
     else:
         assert len(caplog.records) == 0

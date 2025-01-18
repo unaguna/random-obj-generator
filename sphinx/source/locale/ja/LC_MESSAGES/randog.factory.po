@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-21 19:56+0900\n"
+"POT-Creation-Date: 2025-01-18 17:32+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -273,8 +273,8 @@ msgstr "指定した値を生成した値として返す factory を返す。"
 msgid "the value"
 msgstr "値"
 
-#: of randog.factory._const.const:5 randog.factory._increment.increment:11
-#: randog.factory._iterrange.iterrange:11
+#: of randog.factory._const.const:5 randog.factory._increment.increment:9
+#: randog.factory._iterrange.iterrange:22
 msgid ""
 "It is not normally used, but it can be accepted as an argument to match "
 "other Factory construction functions."
@@ -350,30 +350,62 @@ msgid "Return a factory which returns sequential numbers."
 msgstr "連番を返す factory を返す。"
 
 #: of randog.factory._increment.increment:3
-#: randog.factory._iterrange.iterrange:3
+#: randog.factory._iterrange.iterrange:10
 msgid "the first value"
 msgstr "最初に返す値"
 
 #: of randog.factory._increment.increment:5
-#: randog.factory._iterrange.iterrange:5
 msgid ""
 "the maximum value. If the generated value reaches the maximum value, 1 is"
 " generated next. If the maximum value is not specified, it is not reset "
 "to 1."
 msgstr "最大値。生成値がこの値に達した場合、次の生成値は1になる。最大値が指定されない場合、生成値は1に戻されない。"
 
-#: of randog.factory._increment.increment:9
-#: randog.factory._iterrange.iterrange:9
-msgid "difference between generated values"
-msgstr "生成する値どうしの差"
-
-#: of randog.factory._increment.increment:15
+#: of randog.factory._increment.increment:13
 msgid "if it is not satisfied `1 <= initial_value <= maximum`"
 msgstr "引数が `1 <= initial_value <= maximum` を満たさない場合"
 
+#: of randog.factory._iterrange.iterrange:3
+msgid ""
+"This is a factory that generates values that are shifted by the value "
+"specified in step from `initial_value`."
+msgstr "`initial_value` に指定した値から `step` に指定した値ずつずらした値を生成する。"
+
+#: of randog.factory._iterrange.iterrange:6
+msgid ""
+"If you specify maximum, it will emit StopIterator when a value that "
+"exceeds it is about to be generated. However, if cyclic is True, it will "
+"not emit StopIterator, but will restart generating from initial_value."
+msgstr ""
+"`maximum` を指定した場合、それを超える値が生成されそうになると StopIterator を発するようになる。ただし、`cycle` が"
+" True である場合、StopIterator を発するのではなく initial_value から生成を再開する。"
+
+#: of randog.factory._iterrange.iterrange:11
+msgid "the maximum value"
+msgstr "最大値"
+
+#: of randog.factory._iterrange.iterrange:13
+msgid "difference between generated values"
+msgstr "生成する値どうしの差"
+
 #: of randog.factory._iterrange.iterrange:15
-msgid "if it is not satisfied `initial_value <= maximum`"
-msgstr "引数が `initial_value <= maximum` を満たさない場合"
+msgid ""
+"If it is True, it does not terminate after generating values up to the "
+"maximum. The next value depends on the other arguments; by default "
+"initial_value is returned."
+msgstr ""
+"True の場合、`maximum` まで値を生成しても生成を終了しない。次の値は他の引数によって決まるが、デフォルトでは "
+"`initial_value` の値を返す。"
+
+#: of randog.factory._iterrange.iterrange:19
+msgid ""
+"If cyclic is True and this value is specified, the value specified here "
+"is the next value after maximum."
+msgstr "`cyclic` が True でかつこの値が指定された場合、最大値の次の値はここで指定した値となる。"
+
+#: of randog.factory._iterrange.iterrange:26
+msgid "if there is a contradiction in the argument values"
+msgstr "引数の値に矛盾がある場合"
 
 #: of randog.factory._bool.randbool:1
 msgid "Return a factory generating random bool values."

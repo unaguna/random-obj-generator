@@ -15,6 +15,7 @@ from ._dict import DictItem, DictRandomFactory, randdict
 from ._by_callable import ByCallableFactory, by_callable
 from ._by_iterator import ByIteratorFactory, by_iterator
 from ._increment import increment
+from ._iterrange import iterrange
 from ._union import UnionRandomFactory, union
 from ._from_example import from_example, FromExampleContext
 from ._from_pyfile import from_pyfile, FactoryDef
@@ -41,6 +42,7 @@ __all__ = [
     "by_callable",
     "by_iterator",
     "increment",
+    "iterrange",
     "union",
     "DictItem",
     "FactoryDef",

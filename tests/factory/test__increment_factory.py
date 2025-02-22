@@ -71,25 +71,6 @@ def test__increment__maximum(maximum, expected, resume, caplog):
 
 
 @pytest.mark.parametrize(
-    ("step", "expected"),
-    (
-        (None, (1, 2, 3)),
-        (2, (1, 3, 5)),
-    ),
-)
-def test__increment__step(step, expected, caplog):
-    caplog.set_level(logging.DEBUG)
-    factory = randog.factory.increment(step=step)
-
-    values = (*factory.iter(3),)
-
-    assert values == expected
-
-    # assert logging
-    assert len(caplog.records) == 0
-
-
-@pytest.mark.parametrize(
     ("initial_value", "maximum", "expected", "resume"),
     (
         (None, None, (1, 2, 3), False),
@@ -121,6 +102,30 @@ def test__increment__initial_value__maximum(
         assert len(caplog.records) == 0
 
 
+@pytest.mark.parametrize("initial_value", (-1, 0))
+def test__increment__error_when_initial_value_is_lower_than_1(initial_value):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.increment(initial_value)
+    e = e_ctx.value
+
+    assert (
+        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        "1 <= initial_value <= maximum"
+    )
+
+
+@pytest.mark.parametrize("maximum", (-1, 0))
+def test__increment__error_when_maximum_is_lower_than_1(maximum):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.increment(maximum=maximum)
+    e = e_ctx.value
+
+    assert (
+        e.message == "arguments of increment(initial_value, maximum) must satisfy "
+        "1 <= initial_value <= maximum"
+    )
+
+
 @pytest.mark.parametrize(("initial_value", "maximum"), ((4, 3), (5, 3)))
 def test__increment__error_when_maximum_is_lower_than_initial_value(
     initial_value, maximum
@@ -131,5 +136,5 @@ def test__increment__error_when_maximum_is_lower_than_initial_value(
 
     assert (
         e.message == "arguments of increment(initial_value, maximum) must satisfy "
-        "initial_value <= maximum"
+        "1 <= initial_value <= maximum"
     )

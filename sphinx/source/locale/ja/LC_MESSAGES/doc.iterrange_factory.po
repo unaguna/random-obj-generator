@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-18 18:16+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.iterrange_factory.rst:2
+msgid "Iteration of range"
+msgstr ""
+
+#: ../../source/doc.iterrange_factory.rst:4
+msgid "You can create a factory that generates the values of the specified range."
+msgstr "区間の値を順に生成する factory を作ることができます。"
+
+#: ../../source/doc.iterrange_factory.rst:20
+msgid ""
+"If you do not specify a maximum value, it will generate values "
+"indefinitely."
+msgstr "最大値を指定しない場合、factory は際限なく値を生成します。"
+
+#: ../../source/doc.iterrange_factory.rst:30
+msgid "Step"
+msgstr ""
+
+#: ../../source/doc.iterrange_factory.rst:32
+msgid "You can specify an incremental value."
+msgstr "増分を指定することができます。"
+
+#: ../../source/doc.iterrange_factory.rst:48
+msgid ""
+"You can also specify a negative increment so that the generated value "
+"decreases."
+msgstr "負の増分を指定することで、生成する値が減少していくようにすることができます。"
+
+#: ../../source/doc.iterrange_factory.rst:65
+msgid "Cyclic"
+msgstr ""
+
+#: ../../source/doc.iterrange_factory.rst:67
+msgid ""
+"If you want the factory to return values cyclically without limit, you "
+"can do so as follows:"
+msgstr ""
+"循環的に際限なく値を生成するようにしたい場合、次のようにします。"
+
+#: ../../source/doc.iterrange_factory.rst:79
+msgid ""
+"You can also set the value returned when the cycle is complete to be "
+"different from the initial value."
+msgstr "循環した際に返す値を初期値と異なる値にすることもできます。"
+
+#: ../../source/doc.iterrange_factory.rst:92
+msgid "Types of values"
+msgstr "値の型"
+
+#: ../../source/doc.iterrange_factory.rst:94
+msgid ""
+"In addition to int values, datetime, date, and timedelta values can also "
+"be generated in the same way."
+msgstr "int 値の他に、datetime, date, timedelta の値も同様に生成できます。"
+

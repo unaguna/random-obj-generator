@@ -11,6 +11,11 @@ def load_readme() -> str:
 setup(
     name="randog",
     version=randog.__version__,
+    entry_points={
+        "console_scripts": [
+            "randog = randog._main:main",
+        ],
+    },
     project_urls={
         "Bug Tracker": "https://github.com/unaguna/random-obj-generator/issues",
         "Documentation": "https://unaguna.github.io/random-obj-generator/",
@@ -35,6 +40,7 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "License :: OSI Approved :: MIT License",
         "Operating System :: POSIX",
         "Operating System :: Microsoft :: Windows",

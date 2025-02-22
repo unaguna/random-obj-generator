@@ -11,6 +11,11 @@ def load_readme() -> str:
 setup(
     name="randog",
     version=randog.__version__,
+    entry_points={
+        "console_scripts": [
+            "randog = randog._main:main",
+        ],
+    },
     project_urls={
         "Bug Tracker": "https://github.com/unaguna/random-obj-generator/issues",
         "Documentation": "https://unaguna.github.io/random-obj-generator/",

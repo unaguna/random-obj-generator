@@ -7,6 +7,7 @@ from ._byfile import SubcmdDefByfile
 from ._date import SubcmdDefDate
 from ._datetime import SubcmdDefDatetime
 from ._decimal import SubcmdDefDecimal
+from ._dice import SubcmdDefDice
 from ._float import SubcmdDefFloat
 from ._int import SubcmdDefInt
 from ._str import SubcmdDefString
@@ -19,6 +20,7 @@ _subcmd_def_list: t.Sequence[SubcmdDef] = (
     SubcmdDefDate(),
     SubcmdDefDatetime(),
     SubcmdDefDecimal(),
+    SubcmdDefDice(),
     SubcmdDefFloat(),
     SubcmdDefInt(),
     SubcmdDefString(),

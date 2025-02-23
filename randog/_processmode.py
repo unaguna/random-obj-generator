@@ -9,6 +9,7 @@ class Subcmd(Enum):
     Byfile = "byfile"
     Bool = "bool"
     Int = "int"
+    Dice = "dice"
     Float = "float"
     String = "str"
     Decimal = "decimal"

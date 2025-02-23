@@ -121,7 +121,7 @@
   <section id="timedelta-mode">
 <h1>timedelta モード<a class="headerlink" href="#timedelta-mode" title="この見出しへのパーマリンク"></a></h1>
 <p>timedelta モードでは、経過時間を生成します。コマンドの形式は次の通りです：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--unit<span class="w"> </span>UNIT<span class="o">]</span><span class="w"> </span><span class="o">[</span>--iso<span class="w"> </span><span class="p">|</span><span class="w"> </span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--unit<span class="w"> </span>UNIT<span class="o">]</span><span class="w"> </span><span class="o">[</span>--iso<span class="w"> </span><span class="p">|</span><span class="w"> </span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
@@ -174,29 +174,29 @@
 <section id="examples">
 <h2>実行例<a class="headerlink" href="#examples" title="この見出しへのパーマリンク"></a></h2>
 <p>最も簡素な例は次の通りです。timedelta の値を出力します。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>timedelta
 </pre></div>
 </div>
 <p>次の例のように、生成する値の範囲を指定することができます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value between 1 day and 7 day</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>1d<span class="w"> </span>7d
+randog<span class="w"> </span>timedelta<span class="w"> </span>1d<span class="w"> </span>7d
 </pre></div>
 </div>
 <p>生成される値の最小単位を指定しない場合、適当な長さに調整されます。多くの場合は次のように手動で指定する必要でしょう。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value between 0 day and 1 day with minimum unit 1 second</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s
+randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s
 </pre></div>
 </div>
 <section id="format-iso-8601-etc">
 <h3>出力フォーマット (ISO-8601 等)<a class="headerlink" href="#format-iso-8601-etc" title="この見出しへのパーマリンク"></a></h3>
 <p>デフォルトでは <a class="reference internal" href="#timedelta-simple-format"><span class="std std-ref">簡易書式</span></a> で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference internal" href="#format-codes"><span class="std std-ref">独自の書式コード</span></a> で指定したフォーマットや <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> に変更できます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--iso
+randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>1d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--iso
 
 <span class="c1"># generates a value with the specified format　(x days xx:xx:xx)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>7d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;%D days %H:%M:%S&#39;</span>
+randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>7d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;%D days %H:%M:%S&#39;</span>
 <span class="c1"># generates a value with the specified format　(x:xx:xx)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>7d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;%tH:%M:%S&#39;</span>
+randog<span class="w"> </span>timedelta<span class="w"> </span><span class="m">0</span><span class="w"> </span>7d<span class="w"> </span>--unit<span class="w"> </span>1s<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;%tH:%M:%S&#39;</span>
 </pre></div>
 </div>
 </section>
@@ -204,10 +204,10 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="この見出しへのパーマリンク"></a></h3>
 <p>たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>timedelta<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
 
 <span class="c1"># Generate list which contains 10 values</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>timedelta<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span><span class="w"> </span>--json<span class="w"> </span>--iso
+randog<span class="w"> </span>timedelta<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span><span class="w"> </span>--json<span class="w"> </span>--iso
 </pre></div>
 </div>
 </section>

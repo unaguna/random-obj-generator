@@ -118,7 +118,7 @@
   <section id="bool-mode">
 <h1>bool Mode<a class="headerlink" href="#bool-mode" title="Permalink to this heading"></a></h1>
 <p>In bool mode, boolean values are generated. The format of the command is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>bool<span class="w"> </span><span class="o">[</span>PROP_TRUE<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>bool<span class="w"> </span><span class="o">[</span>PROP_TRUE<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
@@ -150,27 +150,27 @@
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <p>The simplest example is the following, which outputs True or False with a 50% probability of each.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>bool
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>bool
 </pre></div>
 </div>
 <p>You can specify the probability of True.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output True with 80% probability and False with 20% probability</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>bool<span class="w"> </span><span class="m">0</span>.8
+randog<span class="w"> </span>bool<span class="w"> </span><span class="m">0</span>.8
 </pre></div>
 </div>
 <section id="format-lowercase-or-numeric">
 <h3>Format: Lowercase or Numeric<a class="headerlink" href="#format-lowercase-or-numeric" title="Permalink to this heading"></a></h3>
 <p>It may be necessary to output in lower case, for example, if the output is to be processed by a program in another language. In that case, the desired format can be obtained by outputting in json format as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Output True or False</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>bool
+randog<span class="w"> </span>bool
 
 <span class="c1"># Output true or false</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>bool<span class="w"> </span>--json
+randog<span class="w"> </span>bool<span class="w"> </span>--json
 </pre></div>
 </div>
 <p>If you want to make it numeric, you can use <code class="code docutils literal notranslate"><span class="pre">--fmt</span></code>.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Output 1 or 0</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>bool<span class="w"> </span>--fmt<span class="w"> </span><span class="m">1</span>
+randog<span class="w"> </span>bool<span class="w"> </span>--fmt<span class="w"> </span><span class="m">1</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -182,10 +182,10 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <h3>Repeatedly Generate<a class="headerlink" href="#repeatedly-generate" title="Permalink to this heading"></a></h3>
 <p>Most likely, you will not be satisfied with just one generated, so you will probably want to output multiple times as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>bool<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>bool<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
 
 <span class="c1"># Generate list which contains 10 values</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>bool<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>bool<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 </section>

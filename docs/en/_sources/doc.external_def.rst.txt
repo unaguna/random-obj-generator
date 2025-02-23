@@ -40,7 +40,7 @@ If you save this file under the name :code:`factory_def.py`, you can use it in y
     assert isinstance(generated["name"], str)
 
 .. seealso::
-    The definition file can also be used when executing randog as command in byfile mode such as :code:`python -m randog byfile ./factory_def.py`. See also :doc:`doc.as_command.byfile`.
+    The definition file can also be used when executing randog as command in byfile mode such as :code:`randog byfile ./factory_def.py`. See also :doc:`doc.as_command.byfile`.
 
 
 Attributes

@@ -5,7 +5,7 @@ In float mode, floating-point numeric values are generated. The format of the co
 
 .. code-block:: shell
 
-    python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [--exp-uniform] [--fmt FORMAT] [common-options]
+    randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [--exp-uniform] [--fmt FORMAT] [common-options]
 
 
 Arguments and Options
@@ -51,14 +51,14 @@ The simplest example is the following, which outputs a value between 0 and 1.
 
 .. code-block:: shell
 
-    python -m randog float
+    randog float
 
 You can specify a range of values to be generated, as in the following example:
 
 .. code-block:: shell
 
     # generates a value between 0.01 and 10^100
-    python -m randog float 0.01 1e+100
+    randog float 0.01 1e+100
 
 .. note::
 
@@ -74,10 +74,10 @@ Infinity and NaN can be included as candidates for generation by specifying opti
 .. code-block:: shell
 
     # Generates positive infinity with 10% probability
-    python -m randog float 0 1e+100 --p-inf 0.1
+    randog float 0 1e+100 --p-inf 0.1
 
     # Generates NaN with 15% probability
-    python -m randog float --nan 0.15
+    randog float --nan 0.15
 
 Use python standard for representing infinity and NaN such as :code:`inf`, :code:`-inf`, and, :code:`nan`.
 The output can also be in JSON format, such as :code:`Infinity`, :code:`-Infinity`, and, :code:`NaN`, by :code:`--json` option if there is a problem, such as when reading the output in programs written in other languages.
@@ -85,7 +85,7 @@ The output can also be in JSON format, such as :code:`Infinity`, :code:`-Infinit
 .. code-block:: shell
 
     # Generates Infinity, -Infinity, or, NaN
-    python -m randog float --p-inf 0.4 --n-inf 0.4 --nan 0.2 --json
+    randog float --p-inf 0.4 --n-inf 0.4 --nan 0.2 --json
 
 Format: Significant Digits, etc.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,7 +95,7 @@ The output format can be specified in `format specification mini-language <https
 .. code-block:: shell
 
     # output numeric such as '4.20e+98', which has (2+1) significant digits
-    python -m randog float 0.01 1e+100 --fmt .2e
+    randog float 0.01 1e+100 --fmt .2e
 
 .. note::
 
@@ -109,10 +109,10 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 .. code-block:: shell
 
     # Repeat 10 times
-    python -m randog float -r 10
+    randog float -r 10
 
     # Generate list which contains 10 values
-    python -m randog float -L 10
+    randog float -L 10
 
 Probability Distribution; uniform distribution of digits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

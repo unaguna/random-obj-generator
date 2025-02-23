@@ -5,7 +5,7 @@ In datetime mode, datetime values are generated. The format of the command is as
 
 .. code-block:: shell
 
-    python -m randog datetime [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] [common-options]
+    randog datetime [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] [common-options]
 
 
 Arguments and Options
@@ -56,10 +56,10 @@ You can specify the arguments :code:`MINIMUM` and :code:`MAXIMUM` with following
     .. code-block:: shell
 
         # valid (example for usage with --repeat)
-        python -m randog datetime --repeat 10 -- -30m +30m
+        randog datetime --repeat 10 -- -30m +30m
 
         # invalid (unknown option -30m)
-        python -m randog datetime --repeat 10 -30m +30m
+        randog datetime --repeat 10 -30m +30m
 
 
 Examples
@@ -69,23 +69,23 @@ The simplest example is the following, which outputs a datetime value.
 
 .. code-block:: shell
 
-    python -m randog datetime
+    randog datetime
 
 You can specify a range of values to be generated, as in the following example:
 
 .. code-block:: shell
 
     # generates a value between 2021-01-01T00:00:00 and 2021-01-01T12:00:00
-    python -m randog datetime 2021-01-01 2021-01-01T12:00:00
+    randog datetime 2021-01-01 2021-01-01T12:00:00
 
     # generates a value between yesterday and tomorrow
-    python -m randog datetime -- -1d +1d
+    randog datetime -- -1d +1d
 
     # generates a value between 7 days ago and now
-    python -m randog datetime -- -7d
+    randog datetime -- -7d
 
     # generates a value between now and 1 hour later
-    python -m randog datetime +1h
+    randog datetime +1h
 
 .. note::
 
@@ -99,10 +99,10 @@ By default, the output is in the standard python format, but you can change the 
 .. code-block:: shell
 
     # generates a value with ISO-8601 format
-    python -m randog datetime --iso
+    randog datetime --iso
 
     # generates a value with the specified format
-    python -m randog datetime --fmt '%Y/%m/%d %H:%M'
+    randog datetime --fmt '%Y/%m/%d %H:%M'
 
 Repeatedly Generate
 ~~~~~~~~~~~~~~~~~~~
@@ -112,10 +112,10 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 .. code-block:: shell
 
     # Repeat 10 times
-    python -m randog datetime -r 10
+    randog datetime -r 10
 
     # Generate list which contains 10 values
-    python -m randog datetime -L 10 --json --fmt '%Y/%m/%d %H:%M'
+    randog datetime -L 10 --json --fmt '%Y/%m/%d %H:%M'
 
 .. note::
     In datetime mode, date and time are generated simultaneously. If only one is wanted, use :doc:`date mode <doc.as_command.date>` or :doc:`time mode <doc.as_command.time>`.

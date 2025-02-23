@@ -124,10 +124,10 @@
 <li><p><code class="code docutils literal notranslate"><span class="pre">--json-indent</span> <span class="pre">&lt;INDENT&gt;</span></code>: <code class="code docutils literal notranslate"><span class="pre">--json</span></code> とともに指定することで、出力のJSONが指定したインデントでフォーマットされます。INDENT の例： <code class="code docutils literal notranslate"><span class="pre">2</span></code> (スペース2つ)、<code class="code docutils literal notranslate"><span class="pre">\t</span></code> (タブ文字1つ) 等</p></li>
 </ul>
 <p>例:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
 </pre></div>
 </div>
 </section>
@@ -135,17 +135,17 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <span id="output-file"></span><h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
 <p>以下の例のように <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用することで、結果をファイル出力することができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to ./out.txt; if already exists, it will be truncated</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
 
 <span class="c1"># output to ./out.txt;</span>
 <span class="c1"># if already exists, it will be kept and generated values will be appended at the end of the file</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt<span class="w"> </span>--output-appending
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt<span class="w"> </span>--output-appending
 
 <span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
+randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
 
 <span class="c1"># {now} will be replaced by the current time</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
 </pre></div>
 </div>
 <p>上の例のように、デフォルトでは指定の出力先ファイルが既に存在する場合はその内容が削除されてから生成した内容が出力されますが、 <code class="code docutils literal notranslate"><span class="pre">--output-appending</span></code> (<code class="code docutils literal notranslate"><span class="pre">--Oa</span></code>) オプションを使用することで、既存のファイルの末尾に追記させることもできます。</p>
@@ -189,22 +189,22 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>繰り返し値を生成するオプションには、 <code class="code docutils literal notranslate"><span class="pre">--list</span></code> (<code class="code docutils literal notranslate"><span class="pre">-L</span></code>) と <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>) があります。</p>
 <p>繰り返し生成した値を1つのリストにまとめて出力したい場合は、以下のように <code class="code docutils literal notranslate"><span class="pre">--list</span></code> オプションを使用します。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate ONE list which contains 3 objects; each element conforms to factory_def.py.</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--list<span class="w"> </span><span class="m">3</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--list<span class="w"> </span><span class="m">3</span>
 </pre></div>
 </div>
 <p>一方で、繰り返し生成した値を1つずつ個別に出力したい場合、以下のように <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> オプションを使用します。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate and output 3 times</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p><code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> を使用して生成した値を別々のファイルへ1つずつ出力したい場合、以下のようにプレースホルダーとともに <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用します。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to &#39;out_1.txt&#39;, &#39;out_2.txt&#39;, and &#39;out_3.txt&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{}.txt&#39;</span>
+randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{}.txt&#39;</span>
 
 <span class="c1"># output to &#39;out_0001.txt&#39;, &#39;out_0002.txt&#39;, and &#39;out_0003.txt&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{:04}.txt&#39;</span>
+randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{:04}.txt&#39;</span>
 </pre></div>
 </div>
 <p>プレースホルダーのルールは <a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-string-syntax">標準的な python のフォーマット</a> と同一です。</p>
@@ -215,10 +215,10 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <h2>シード値<a class="headerlink" href="#seed" title="この見出しへのパーマリンク"></a></h2>
 <p>通常はランダムに値を生成しますが、出力結果をコントロールしたい場合、<code class="code docutils literal notranslate"><span class="pre">--seed</span></code> を使ってシード値を指定します。以下の例のようにシード値が同じであれば同じ結果を返します。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># first</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
+randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
 
 <span class="c1"># second; the result is the same as the first</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
+randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -228,16 +228,16 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 <p>シード値を指定しない場合はランダムなシード値が使用されます。使用されるシード値は <a class="reference internal" href="#cmd-logging"><span class="std std-ref">ログ出力される</span></a> ため、以下のようにしてシード値を確認することができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate str with log</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class="w"> </span>DEBUG
+randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class="w"> </span>DEBUG
 </pre></div>
 </div>
 <p>確認したシード値をメモしておけば、次回、そのシード値を使用することで生成を再現できます。</p>
 </section>
 <section id="modify-environment-variable">
 <h2>環境変数を変更<a class="headerlink" href="#modify-environment-variable" title="この見出しへのパーマリンク"></a></h2>
-<p>とくに byfile モードで、定義ファイルに値を受け渡す目的で環境変数を指定したいかもしれません。bash 等では <code class="code docutils literal notranslate"><span class="pre">VAR=VAL</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">...</span></code> のように1行で環境変数を指定できますが、powershellなど一部のシェルではそれができません。</p>
+<p>とくに byfile モードで、定義ファイルに値を受け渡す目的で環境変数を指定したいかもしれません。bash 等では <code class="code docutils literal notranslate"><span class="pre">VAR=VAL</span> <span class="pre">randog</span> <span class="pre">...</span></code> のように1行で環境変数を指定できますが、powershellなど一部のシェルではそれができません。</p>
 <p>そこで、randog では環境変数を指定するオプションを用意しています。次のように <code class="code docutils literal notranslate"><span class="pre">--env</span></code> を使用することで環境変数を指定できます。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">CHARSET</span><span class="o">=</span>0123456789abcdef
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">CHARSET</span><span class="o">=</span>0123456789abcdef
 </pre></div>
 </div>
 <p>このような実行は、例えば以下のような定義ファイルを使用する際に有用です。</p>

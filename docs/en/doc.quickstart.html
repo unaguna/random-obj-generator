@@ -52,7 +52,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quick start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#minimal-use">Minimal use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#minimal-use-as-command">Minimal use (as command)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#minimal-use-in-programs">Minimal use (in programs)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Construct Factories (generator of random values)</a></li>
@@ -107,8 +108,16 @@
 </pre></div>
 </div>
 </section>
-<section id="minimal-use">
-<h2>Minimal use<a class="headerlink" href="#minimal-use" title="Permalink to this heading"></a></h2>
+<section id="minimal-use-as-command">
+<h2>Minimal use (as command)<a class="headerlink" href="#minimal-use-as-command" title="Permalink to this heading"></a></h2>
+<p>randog can be executed as a command. Here is an example of one of the simplest command executions:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>str
+</pre></div>
+</div>
+<p>For other uses of command execution, please refer to <a class="reference internal" href="doc.as_command.html"><span class="doc">Run as Command</span></a>.</p>
+</section>
+<section id="minimal-use-in-programs">
+<h2>Minimal use (in programs)<a class="headerlink" href="#minimal-use-in-programs" title="Permalink to this heading"></a></h2>
 <p>By passing an example of the object you want to generate to the <code class="code docutils literal notranslate"><span class="pre">from_example</span></code> function, you can create a factory that randomly generates objects.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">uuid</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>

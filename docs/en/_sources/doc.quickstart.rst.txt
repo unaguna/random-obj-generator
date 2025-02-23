@@ -13,9 +13,19 @@ Prepare python 3.8 or newer and install randog using the pip command as follows:
 
    pip install randog
 
+Minimal use (as command)
+------------------------
 
-Minimal use
------------
+randog can be executed as a command. Here is an example of one of the simplest command executions:
+
+.. code-block:: shell
+
+    randog str
+
+For other uses of command execution, please refer to :doc:`doc.as_command`.
+
+Minimal use (in programs)
+-------------------------
 
 By passing an example of the object you want to generate to the :code:`from_example` function, you can create a factory that randomly generates objects.
 

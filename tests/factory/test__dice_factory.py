@@ -3,6 +3,7 @@ import random
 import pytest
 
 import randog.factory
+from randog.exceptions import FactoryConstructionError
 
 
 @pytest.mark.parametrize(
@@ -84,7 +85,7 @@ def test__random_dice__or_none_0(code, expected_value):
     ],
 )
 def test__random_dice_error_with_invalid_code(code):
-    with pytest.raises(ValueError) as e_ctx:
+    with pytest.raises(FactoryConstructionError) as e_ctx:
         randog.factory.dice(code)
     e = e_ctx.value
 

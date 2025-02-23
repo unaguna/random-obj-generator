@@ -4,6 +4,7 @@ from random import Random
 
 from ._base import Factory, decide_rnd
 from ._int import randint
+from ..exceptions import FactoryConstructionError
 
 _RE_DICE_NOTATION = re.compile("([0-9]*)[dD]([0-9]+)")
 
@@ -21,6 +22,11 @@ def dice(
         dice notation
     rnd : Random, optional
         random number generator to be used
+
+    Raises
+    ------
+    FactoryConstructionError
+        When the specified code is invalid.
     """
     return DiceRandomFactory(code, rnd=rnd)
 
@@ -46,12 +52,17 @@ class DiceRandomFactory(Factory[int]):
             dice notation
         rnd : Random, optional
             random number generator to be used
+
+        Raises
+        ------
+        FactoryConstructionError
+            When the specified code is invalid.
         """
         self._random = decide_rnd(rnd)
 
         code_match = re.fullmatch(_RE_DICE_NOTATION, code)
         if code_match is None:
-            raise ValueError(f"invalid dice notation: {code}")
+            raise FactoryConstructionError(f"invalid dice notation: {code}")
 
         self._dice_num = int(code_match.group(1) or "1")
         dice_max = int(code_match.group(2))

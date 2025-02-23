@@ -70,6 +70,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.by_callable"><code class="docutils literal notranslate"><span class="pre">by_callable()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.by_iterator"><code class="docutils literal notranslate"><span class="pre">by_iterator()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.const"><code class="docutils literal notranslate"><span class="pre">const()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#randog.factory.dice"><code class="docutils literal notranslate"><span class="pre">dice()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.from_example"><code class="docutils literal notranslate"><span class="pre">from_example()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.from_pyfile"><code class="docutils literal notranslate"><span class="pre">from_pyfile()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.increment"><code class="docutils literal notranslate"><span class="pre">increment()</span></code></a></li>
@@ -504,6 +505,23 @@ whose items is modified by <cite>processes</cite></p>
 <li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) – It is not normally used, but it can be accepted as an argument
 to match other Factory construction functions.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="randog.factory.dice">
+<span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">dice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.dice" title="Permalink to this definition"></a></dt>
+<dd><p>Return a factory generating random int values by total of the dice faces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code</strong> (<em>str</em>) – dice notation</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) – random number generator to be used</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> – When the specified code is invalid.</p>
 </dd>
 </dl>
 </dd></dl>

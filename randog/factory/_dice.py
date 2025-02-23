@@ -21,6 +21,16 @@ def parse_dice_notation(
     dice_num = int(code_match.group(1) or "1")
     dice_max = int(code_match.group(2))
 
+    if dice_num <= 0:
+        raise exception(
+            f"invalid dice notation; the number of dice must be at least 1: {code}"
+        )
+    if dice_max <= 0:
+        raise exception(
+            f"invalid dice notation; the number of faces on the dice must be at "
+            f"least 1: {code}"
+        )
+
     return dice_num, dice_max
 
 

@@ -93,6 +93,40 @@ def test__random_dice_error_with_invalid_code(code):
 
 
 @pytest.mark.parametrize(
+    ("code",),
+    [
+        ("0d100",),
+    ],
+)
+def test__random_dice_error_with_invalid_dice_num(code):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.dice(code)
+    e = e_ctx.value
+
+    assert (
+        e.args[0]
+        == f"invalid dice notation; the number of dice must be at least 1: {code}"
+    )
+
+
+@pytest.mark.parametrize(
+    ("code",),
+    [
+        ("1d0",),
+    ],
+)
+def test__random_dice_error_with_invalid_dice_face(code):
+    with pytest.raises(FactoryConstructionError) as e_ctx:
+        randog.factory.dice(code)
+    e = e_ctx.value
+
+    assert e.args[0] == (
+        f"invalid dice notation; the number of faces on the dice must be at least 1: "
+        f"{code}"
+    )
+
+
+@pytest.mark.parametrize(
     ("rnd1", "rnd2", "expect_same_output"),
     [
         (lambda: {"rnd": random.Random(12)}, lambda: {"rnd": random.Random(12)}, True),

@@ -63,6 +63,8 @@ def test__main__dice__code2(capfd, code, maximum):
     [
         ("100",),
         ("10d",),
+        ("0d100",),
+        ("1d0",),
     ],
 )
 def test__main__dice__error_when_illegal_code(capfd, code):

@@ -9,10 +9,14 @@ from ..exceptions import FactoryConstructionError
 _RE_DICE_NOTATION = re.compile("([0-9]*)[dD]([0-9]+)")
 
 
-def parse_dice_notation(code: str) -> t.Tuple[int, int]:
+def parse_dice_notation(
+    code: str,
+    *,
+    exception: t.Type[Exception] = ValueError,
+) -> t.Tuple[int, int]:
     code_match = re.fullmatch(_RE_DICE_NOTATION, code)
     if code_match is None:
-        raise FactoryConstructionError(f"invalid dice notation: {code}")
+        raise exception(f"invalid dice notation: {code}")
 
     dice_num = int(code_match.group(1) or "1")
     dice_max = int(code_match.group(2))
@@ -71,7 +75,9 @@ class DiceRandomFactory(Factory[int]):
         """
         self._random = decide_rnd(rnd)
 
-        self._dice_num, dice_max = parse_dice_notation(code)
+        self._dice_num, dice_max = parse_dice_notation(
+            code, exception=FactoryConstructionError
+        )
 
         self._base_factory = randint(1, dice_max, rnd=self._random)
 

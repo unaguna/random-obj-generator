@@ -6,6 +6,7 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
+from ..._utils.type import dice_roll
 from ...exceptions import FactoryConstructionError
 from ...factory import parse_dice_notation
 
@@ -24,7 +25,7 @@ class SubcmdDefDice(SubcmdDef):
         dice_args_group = dice_parser.add_argument_group("arguments")
         dice_args_group.add_argument(
             "code",
-            type=str,
+            type=dice_roll,
             metavar="DICE_ROLL",
             help="the dice notation",
         )

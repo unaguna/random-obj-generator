@@ -3,6 +3,7 @@ from ._choice import ChoiceRandomFactory, randchoice, randenum
 from ._const import const
 from ._bool import BoolRandomFactory, randbool
 from ._int import IntRandomFactory, randint
+from ._dice import DiceRandomFactory, dice, parse_dice_notation
 from ._float import FloatRandomFactory, randfloat
 from ._decimal import DecimalRandomFactory, randdecimal
 from ._str import StrRandomFactory, randstr
@@ -28,6 +29,8 @@ __all__ = [
     "randchoice",
     "randenum",
     "const",
+    "dice",
+    "parse_dice_notation",
     "randbool",
     "randint",
     "randfloat",

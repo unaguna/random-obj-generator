@@ -78,6 +78,12 @@ The following modes are available for command execution. Arguments and options a
      - :code:`17h`
      - :doc:`detail <doc.as_command.timedelta>`
 
+   * - dice
+     - :code:`int`
+     - :code:`randog dice 2d6`
+     - :code:`9`
+     - :doc:`detail <doc.as_command.dice>`
+
    * - byfile
      - | according to
        | the definition file
@@ -115,4 +121,5 @@ Details of Modes
    doc.as_command.time
    doc.as_command.timedelta
    doc.as_command.byfile
+   doc.as_command.dice
 

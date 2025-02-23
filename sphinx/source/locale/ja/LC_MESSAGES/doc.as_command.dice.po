@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-23 21:52+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.as_command.dice.rst:2
+msgid "dice Mode"
+msgstr "dice モード"
+
+#: ../../source/doc.as_command.dice.rst:4
+msgid ""
+"In dice mode, integer values are generated as total of the dice faces. "
+"The format of the command is as follows:"
+msgstr "dice モードでは、サイコロの目の和として整数を生成します。コマンドの形式は次の通りです："
+
+#: ../../source/doc.as_command.dice.rst:12
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.dice.rst:14
+msgid ":code:`DICE_ROLL`:"
+msgstr ""
+
+#: ../../source/doc.as_command.dice.rst:16
+msgid ""
+"the dice roll value in `dice notation "
+"<https://en.wikipedia.org/wiki/Dice_notation>`_ such as :code:`2d6`."
+msgstr ""
+":code:`2d6` のような `ダイスロール記法 "
+"<https://en.wikipedia.org/wiki/Dice_notation>`_ によるダイスロール指定"
+
+#: ../../source/doc.as_command.dice.rst:18
+msgid ":code:`common-options`"
+msgstr ""
+
+#: ../../source/doc.as_command.dice.rst:20
+msgid ":doc:`common options <doc.as_command.common_option>`"
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
+
+#: ../../source/doc.as_command.dice.rst:24
+msgid "Examples"
+msgstr "実行例"
+
+#: ../../source/doc.as_command.dice.rst:26
+msgid ""
+"The simplest example is the following, which outputs the sum of two rolls"
+" of 6-sided dice."
+msgstr "最も簡素な例は次の通りです。2つの6面サイコロの合計を出力します。"
+
+#: ../../source/doc.as_command.dice.rst:36
+msgid "Repeatedly Generate"
+msgstr "繰り返し生成"
+
+#: ../../source/doc.as_command.dice.rst:38
+msgid "A single command execution can output results multiple times:"
+msgstr "1回のコマンド実行で複数回結果を出力することができます："
+

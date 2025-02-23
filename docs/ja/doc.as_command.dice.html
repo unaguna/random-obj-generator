@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bool モード &mdash; random-obj-generator 0.17.0 ドキュメント</title>
+  <title>dice モード &mdash; random-obj-generator 0.17.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -23,8 +23,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="next" title="int モード" href="doc.as_command.int.html" />
-    <link rel="prev" title="共通オプション" href="doc.as_command.common_option.html" /> 
+    <link rel="next" title="ログ出力" href="doc.logging.html" />
+    <link rel="prev" title="byfile モード" href="doc.as_command.byfile.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -60,11 +60,7 @@
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#modes">モード</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#arguments-and-options">引数とオプション</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="doc.as_command.html#details-of-modes">各モードの詳細</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">bool モード</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#arguments-and-options">引数とオプション</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#examples">実行例</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.bool.html">bool モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.int.html">int モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.float.html">float モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.str.html">str モード</a></li>
@@ -74,7 +70,11 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.time.html">time モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.byfile.html">byfile モード</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doc.as_command.dice.html">dice モード</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">dice モード</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#arguments-and-options">引数とオプション</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">実行例</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -99,13 +99,13 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="doc.as_command.html">コマンドとして実行</a></li>
-      <li class="breadcrumb-item active">bool モード</li>
+      <li class="breadcrumb-item active">dice モード</li>
     <li class="spacer"></li>
     <li class="wy-breadcrumbs-aside">
         <select name="lang" onchange="location.href=value;">
-            <option value="../en/doc.as_command.bool.html"
+            <option value="../en/doc.as_command.dice.html"
             >English</option>
-            <option value="../ja/doc.as_command.bool.html"
+            <option value="../ja/doc.as_command.dice.html"
                 selected
             >日本語</option>
         </select>
@@ -117,26 +117,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="bool-mode">
-<h1>bool モード<a class="headerlink" href="#bool-mode" title="この見出しへのパーマリンク"></a></h1>
-<p>bool モードでは、真偽値を生成します。コマンドの形式は次の通りです：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>bool<span class="w"> </span><span class="o">[</span>PROP_TRUE<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+  <section id="dice-mode">
+<h1>dice モード<a class="headerlink" href="#dice-mode" title="この見出しへのパーマリンク"></a></h1>
+<p>dice モードでは、サイコロの目の和として整数を生成します。コマンドの形式は次の通りです：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>dice<span class="w"> </span>DICE_ROLL<span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
 <h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
 <ul>
-<li><p><code class="code docutils literal notranslate"><span class="pre">PROP_TRUE</span></code> (optional, default=0.5):</p>
+<li><p><code class="code docutils literal notranslate"><span class="pre">DICE_ROLL</span></code>:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>True を生成する確率。</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/string.html?highlight=string#format-specification-mini-language">書式指定ミニ言語</a> で記載された出力フォーマット</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">2d6</span></code> のような <a class="reference external" href="https://en.wikipedia.org/wiki/Dice_notation">ダイスロール記法</a> によるダイスロール指定</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -151,43 +144,18 @@
 </section>
 <section id="examples">
 <h2>実行例<a class="headerlink" href="#examples" title="この見出しへのパーマリンク"></a></h2>
-<p>最も簡素な例は次の通りです。True または False を 50% ずつの確率で出力します。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>bool
+<p>最も簡素な例は次の通りです。2つの6面サイコロの合計を出力します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>dice<span class="w"> </span>2d6
 </pre></div>
 </div>
-<p>True を生成する確率を指定することができます。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output True with 80% probability and False with 20% probability</span>
-randog<span class="w"> </span>bool<span class="w"> </span><span class="m">0</span>.8
-</pre></div>
-</div>
-<section id="format-lowercase-or-numeric">
-<h3>出力フォーマット (小文字、数値)<a class="headerlink" href="#format-lowercase-or-numeric" title="この見出しへのパーマリンク"></a></h3>
-<p>出力を他の言語のプログラムで処理する場合などでは小文字で出力する必要があるかもしれません。その場合、次のように json 形式で出力すると目的の形式で得られます。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Output True or False</span>
-randog<span class="w"> </span>bool
-
-<span class="c1"># Output true or false</span>
-randog<span class="w"> </span>bool<span class="w"> </span>--json
-</pre></div>
-</div>
-<p>数値として出力したい場合、<code class="code docutils literal notranslate"><span class="pre">--fmt</span></code> を利用できます。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Output 1 or 0</span>
-randog<span class="w"> </span>bool<span class="w"> </span>--fmt<span class="w"> </span><span class="m">1</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p>これは、<a class="reference external" href="https://docs.python.org/ja/3/library/stdtypes.html#bltin-boolean-values">bool型の値が一部の文脈で整数値として扱われる性質</a> を利用しています。</p>
-</div>
-</section>
 <section id="repeatedly-generate">
 <h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="この見出しへのパーマリンク"></a></h3>
-<p>たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。</p>
+<p>1回のコマンド実行で複数回結果を出力することができます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
-randog<span class="w"> </span>bool<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>dice<span class="w"> </span>2d6<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
 
 <span class="c1"># Generate list which contains 10 values</span>
-randog<span class="w"> </span>bool<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>dice<span class="w"> </span>2d6<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 </section>
@@ -198,8 +166,8 @@ randog<span class="w"> </span>bool<span class="w"> </span>-L<span class="w"> </s
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="doc.as_command.common_option.html" class="btn btn-neutral float-left" title="共通オプション" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="doc.as_command.int.html" class="btn btn-neutral float-right" title="int モード" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.as_command.byfile.html" class="btn btn-neutral float-left" title="byfile モード" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.logging.html" class="btn btn-neutral float-right" title="ログ出力" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

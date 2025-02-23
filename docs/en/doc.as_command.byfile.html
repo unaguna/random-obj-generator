@@ -118,7 +118,7 @@
   <section id="byfile-mode">
 <h1>byfile Mode<a class="headerlink" href="#byfile-mode" title="Permalink to this heading"></a></h1>
 <p>In byfile mode, values are generated using the factories defined in <a class="reference internal" href="doc.external_def.html"><span class="doc">a factory definition</span></a>. The format of the command is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--regenerate<span class="w"> </span>PROB_REGEN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--discard<span class="w"> </span>PROB_DISCARD<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--error-on-factory-stopped<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--regenerate<span class="w"> </span>PROB_REGEN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--discard<span class="w"> </span>PROB_DISCARD<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--error-on-factory-stopped<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <p>The argument FACTORY_PATH is <a class="reference internal" href="doc.external_def.html"><span class="doc">a filename of the factory definition</span></a>. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:</p>
@@ -188,33 +188,33 @@
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <p>The simplest example is the following:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
 </pre></div>
 </div>
 <p>If the definition file defines a factory that generates a dict equivalent to one record in the database, you can obtain data for testing by generating multiple dict as shown below:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate list which contains 10 values</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 <p>You may want to generate multiple values while outputting each one to a separate file. In that case, you can utilize <code class="code docutils literal notranslate"><span class="pre">-O</span></code> and <code class="code docutils literal notranslate"><span class="pre">-r</span></code> as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times and output each of them into out_001.json, out_002.json, ... with json format</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.json&#39;</span><span class="w"> </span>--json
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.json&#39;</span><span class="w"> </span>--json
 </pre></div>
 </div>
 <p>You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
 In the case, the output can be made missing by <code class="code docutils literal notranslate"><span class="pre">--discard</span></code> or <code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code>. For example:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 values (each value will be discarded at 10% probability)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
 
 <span class="c1"># output exactly 20 values (each value will be regenerated at 10% probability)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
 </pre></div>
 </div>
 <section id="output-as-csv">
 <span id="id1"></span><h3>output as CSV<a class="headerlink" href="#output-as-csv" title="Permalink to this heading"></a></h3>
 <p>To output in CSV format, use the <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> option. The value of each field is determined by the <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> defined in the definition file.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output CSV which contains 20 rows</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -224,7 +224,7 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>CSV output can also be output to multiple files with the <code class="code docutils literal notranslate"><span class="pre">--repeat/-r</span></code> and <code class="code docutils literal notranslate"><span class="pre">--output/-O</span></code> options.
 In the following example, it outputs 20 lines to each of 10 CSV files.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output 10 CSV files; each file contains 20 rows</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.csv&#39;</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.csv&#39;</span>
 </pre></div>
 </div>
 <p>In the example at the top of this page, <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> was defined as a list of strings, but you can also specify a function that returns a field instead of a string that specifies a dictionary key.
@@ -267,10 +267,10 @@ In the case, the output can be made missing by <code class="code docutils litera
 </pre></div>
 </div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 rows (each row will be discarded at 10% probability)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
 
 <span class="c1"># output exactly 20 rows (Gaps of &#39;timestamp&#39; at 10% probability)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
 </pre></div>
 </div>
 <div class="admonition note">
@@ -302,17 +302,17 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 <p>In addition to the standard shell method, the env option of randog can be used to specify environment variables. All of the following examples work the same way:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Can use it in bash, etc., but not in powershell</span>
-<span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+<span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
 
 <span class="c1"># Can use it in any shell</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Multiple environment variables can also be specified as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
 </pre></div>
 </div>
 </div>

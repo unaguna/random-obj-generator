@@ -117,7 +117,7 @@
   <section id="run-as-command">
 <h1>コマンドとして実行<a class="headerlink" href="#run-as-command" title="この見出しへのパーマリンク"></a></h1>
 <p>randog はコマンドとして実行することもできます。コマンド実行の基本的な形式は次の通りです。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>&lt;MODE&gt;<span class="w"> </span>...
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>&lt;MODE&gt;<span class="w"> </span>...
 </pre></div>
 </div>
 <p>生成したい値に応じたモードを <code class="code docutils literal notranslate"><span class="pre">&lt;MODE&gt;</span></code> に指定し、より詳しい条件を指定するためにさらに引数を指定してください。</p>
@@ -136,55 +136,55 @@
 <tbody>
 <tr class="row-even"><td><p>bool</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">bool</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">bool</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">bool</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">True</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.bool.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>int</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">int</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">int</span> <span class="pre">-100</span> <span class="pre">100</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">int</span> <span class="pre">-100</span> <span class="pre">100</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">42</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.int.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>float</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">float</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">float</span> <span class="pre">-10</span> <span class="pre">10</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">float</span> <span class="pre">-10</span> <span class="pre">10</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">2.826684165562185</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.float.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>str</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">str</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">str</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">str</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">XTGh3VH1</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.str.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>decimal</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">Decimal</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">decimal</span> <span class="pre">-10</span> <span class="pre">10</span> <span class="pre">--decimal-len</span> <span class="pre">2</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">decimal</span> <span class="pre">-10</span> <span class="pre">10</span> <span class="pre">--decimal-len</span> <span class="pre">2</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">3.91</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>datetime</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">datetime</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">datetime</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">datetime</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">2022-03-20</span> <span class="pre">12:43:51.110244</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.datetime.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>date</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">date</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">date</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">date</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">2022-03-20</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.date.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>time</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">time</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">time</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">time</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">12:43:51.110244</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.time.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>timedelta</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">timedelta</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">timedelta</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">timedelta</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">17h</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.timedelta.html"><span class="doc">detail</span></a></p></td>
 </tr>
@@ -194,7 +194,7 @@
 <div class="line">the definition file</div>
 </div>
 </td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code></p></td>
 <td><div class="line-block">
 <div class="line">according to</div>
 <div class="line">./factory_def.py</div>

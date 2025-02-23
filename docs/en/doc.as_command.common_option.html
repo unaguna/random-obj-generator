@@ -123,10 +123,10 @@
 <li><p><code class="code docutils literal notranslate"><span class="pre">--json-indent</span> <span class="pre">&lt;INDENT&gt;</span></code>: If specified with <code class="code docutils literal notranslate"><span class="pre">--json</span></code>, the output JSON will be formatted with the specified indent. Examples of INDENT: <code class="code docutils literal notranslate"><span class="pre">2</span></code> (two spaces), <code class="code docutils literal notranslate"><span class="pre">\t</span></code> (a tab character), etc.</p></li>
 </ul>
 <p>For example:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
 </pre></div>
 </div>
 </section>
@@ -134,17 +134,17 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <span id="output-file"></span><h2>Output to file<a class="headerlink" href="#output-to-file" title="Permalink to this heading"></a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">--output</span></code> option can be used to output to a file, as in the following example.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to ./out.txt; if already exists, it will be truncated</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
 
 <span class="c1"># output to ./out.txt;</span>
 <span class="c1"># if already exists, it will be kept and generated values will be appended at the end of the file</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt<span class="w"> </span>--output-appending
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt<span class="w"> </span>--output-appending
 
 <span class="c1"># output to out.txt in UTF-16 LE with line-separator &#39;\r\n&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
+randog<span class="w"> </span>byfile<span class="w"> </span>./factory_def.py<span class="w"> </span>-O<span class="w"> </span>out.txt<span class="w"> </span>-X<span class="w"> </span>utf_16_le<span class="w"> </span>--O-ls<span class="w"> </span>CRLF
 
 <span class="c1"># {now} will be replaced by the current time</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{now:%Y%m%d%H%M%S}.txt&#39;</span>
 </pre></div>
 </div>
 <p>As above examples, by default, the file specified as the output destination is truncated if it already exists, but you can append it to the end of an existing file by using the option <code class="code docutils literal notranslate"><span class="pre">--output-appending</span></code> (<code class="code docutils literal notranslate"><span class="pre">--Oa</span></code>).</p>
@@ -188,22 +188,22 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>There are two types of repeat generation options: <code class="code docutils literal notranslate"><span class="pre">--list</span></code> (<code class="code docutils literal notranslate"><span class="pre">-L</span></code>) and <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>).</p>
 <p>If you want to output repeatedly generated objects in a single list, use <code class="code docutils literal notranslate"><span class="pre">--list</span></code> as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate ONE list which contains 3 objects; each element conforms to factory_def.py.</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--list<span class="w"> </span><span class="m">3</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--list<span class="w"> </span><span class="m">3</span>
 </pre></div>
 </div>
 <p>On the other hand, if you want to output each repeatedly generated object separately, use <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate and output 3 times</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want to output to different files one at a time using <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code>, use <code class="code docutils literal notranslate"><span class="pre">--output</span></code> with a placeholder as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to &#39;out_1.txt&#39;, &#39;out_2.txt&#39;, and &#39;out_3.txt&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{}.txt&#39;</span>
+randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{}.txt&#39;</span>
 
 <span class="c1"># output to &#39;out_0001.txt&#39;, &#39;out_0002.txt&#39;, and &#39;out_0003.txt&#39;</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{:04}.txt&#39;</span>
+randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">3</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;./out_{:04}.txt&#39;</span>
 </pre></div>
 </div>
 <p>The rules for placeholders are the same as <a class="reference external" href="https://docs.python.org/3/library/string.html#format-string-syntax">the standard python format</a>.</p>
@@ -215,10 +215,10 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>Normally, the values are generated randomly, but if you want to control the output results, use <code class="code docutils literal notranslate"><span class="pre">--seed</span></code> to specify a seed value.
 If the seed values are the same, as in the following example, the same result is returned.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># first</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
+randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
 
 <span class="c1"># second; the result is the same as the first</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
+randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -229,16 +229,16 @@ See also <a class="reference external" href="https://docs.python.org/3/library/r
 </div>
 <p>If no seed value is specified, a random seed value is used. The seed value used is <a class="reference internal" href="#cmd-logging"><span class="std std-ref">logged out</span></a> so that the seed value can be checked as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate str with log</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class="w"> </span>DEBUG
+randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class="w"> </span>DEBUG
 </pre></div>
 </div>
 <p>If you note the observed seed value, you can reproduce the generation the next time by using that seed value.</p>
 </section>
 <section id="modify-environment-variable">
 <h2>Modify environment variable<a class="headerlink" href="#modify-environment-variable" title="Permalink to this heading"></a></h2>
-<p>In particular, in byfile mode, you may want to specify environment variables for the purpose of passing values to the definition file. In bash and other shells, you can specify environment variables on a single line, such as <code class="code docutils literal notranslate"><span class="pre">VAR=VAL</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">...</span></code>, but this is not possible in some shells, such as powershell.</p>
+<p>In particular, in byfile mode, you may want to specify environment variables for the purpose of passing values to the definition file. In bash and other shells, you can specify environment variables on a single line, such as <code class="code docutils literal notranslate"><span class="pre">VAR=VAL</span> <span class="pre">randog</span> <span class="pre">...</span></code>, but this is not possible in some shells, such as powershell.</p>
 <p>Therefore, randog provides an option to specify environment variables. You can specify environment variables by using <code class="code docutils literal notranslate"><span class="pre">--env</span></code> as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">CHARSET</span><span class="o">=</span>0123456789abcdef
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">CHARSET</span><span class="o">=</span>0123456789abcdef
 </pre></div>
 </div>
 <p>The above mentioned execution is useful, for example, when using a definition file such as the following:</p>

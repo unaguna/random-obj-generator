@@ -5,7 +5,7 @@ In decimal mode, decimal values are generated. The format of the command is as f
 
 .. code-block:: shell
 
-    python -m randog decimal [MINIMUM MAXIMUM] [--decimal-len DECIMAL_LENGTH] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [--exp-uniform] [--fmt FORMAT] [common-options]
+    randog decimal [MINIMUM MAXIMUM] [--decimal-len DECIMAL_LENGTH] [--p-inf PROB_P_INF] [--n-inf PROB_N_INF] [--nan PROB_NAN] [--exp-uniform] [--fmt FORMAT] [common-options]
 
 
 Arguments and Options
@@ -55,21 +55,21 @@ The simplest example is the following, which outputs a value between 0 and 1.
 
 .. code-block:: shell
 
-    python -m randog decimal
+    randog decimal
 
 You can specify a range of values to be generated, as in the following example:
 
 .. code-block:: shell
 
     # generates a value between 0.01 and 10^100
-    python -m randog decimal 0.01 1e+100
+    randog decimal 0.01 1e+100
 
 When using decimal numbers, you will often want to limit the number of decimal places. In that case, use :code:`--decimal-len` as in the following example:
 
 .. code-block:: shell
 
     # generates a value such as 245.91
-    python -m randog decimal 0 1000 --decimal-len 2
+    randog decimal 0 1000 --decimal-len 2
 
 Infinity and NaN
 ~~~~~~~~~~~~~~~~
@@ -79,10 +79,10 @@ Infinity and NaN can be included as candidates for generation by specifying opti
 .. code-block:: shell
 
     # Generates positive infinity with 10% probability
-    python -m randog decimal 0 1e+100 --p-inf 0.1
+    randog decimal 0 1e+100 --p-inf 0.1
 
     # Generates NaN with 15% probability
-    python -m randog decimal --nan 0.15
+    randog decimal --nan 0.15
 
 Format: Thousands Separator, etc.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,7 +92,7 @@ The output format can be specified in `format specification mini-language <https
 .. code-block:: shell
 
     # output separated numeric such as '12,345.67'
-    python -m randog decimal 0.01 99999.99 --decimal-len 2 --fmt ','
+    randog decimal 0.01 99999.99 --decimal-len 2 --fmt ','
 
 
 Repeatedly Generate
@@ -103,10 +103,10 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 .. code-block:: shell
 
     # Repeat 10 times
-    python -m randog decimal --decimal-len 2 -r 10
+    randog decimal --decimal-len 2 -r 10
 
     # Generate list which contains 10 values
-    python -m randog decimal --decimal-len 2 -L 10 --json
+    randog decimal --decimal-len 2 -L 10 --json
 
 Probability Distribution; uniform distribution of digits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

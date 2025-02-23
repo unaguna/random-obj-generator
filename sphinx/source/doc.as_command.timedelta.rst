@@ -5,7 +5,7 @@ In timedelta mode, timedelta values are generated. The format of the command is 
 
 .. code-block:: shell
 
-    python -m randog timedelta [MINIMUM MAXIMUM] [--unit UNIT] [--iso | --fmt FORMAT] [common-options]
+    randog timedelta [MINIMUM MAXIMUM] [--unit UNIT] [--iso | --fmt FORMAT] [common-options]
 
 
 Arguments and Options
@@ -43,21 +43,21 @@ The simplest example is the following, which outputs a timedelta value.
 
 .. code-block:: shell
 
-    python -m randog timedelta
+    randog timedelta
 
 You can specify a range of values to be generated, as in the following example:
 
 .. code-block:: shell
 
     # generates a value between 1 day and 7 day
-    python -m randog timedelta 1d 7d
+    randog timedelta 1d 7d
 
 If the minimum unit is not specified, it will be adjusted to the appropriate length. In many cases, it may be necessary to specify this manually as follows
 
 .. code-block:: shell
 
     # generates a value between 0 day and 1 day with minimum unit 1 second
-    python -m randog timedelta 0 1d --unit 1s
+    randog timedelta 0 1d --unit 1s
 
 Format: ISO-8601, etc.
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -67,12 +67,12 @@ By default, the output is in :ref:`the simple format <timedelta-simple-format>`,
 .. code-block:: shell
 
     # generates a value with ISO-8601 format
-    python -m randog timedelta 0 1d --unit 1s --iso
+    randog timedelta 0 1d --unit 1s --iso
 
     # generates a value with the specified format　(x days xx:xx:xx)
-    python -m randog timedelta 0 7d --unit 1s --fmt '%D days %H:%M:%S'
+    randog timedelta 0 7d --unit 1s --fmt '%D days %H:%M:%S'
     # generates a value with the specified format　(x:xx:xx)
-    python -m randog timedelta 0 7d --unit 1s --fmt '%tH:%M:%S'
+    randog timedelta 0 7d --unit 1s --fmt '%tH:%M:%S'
 
 Repeatedly Generate
 ~~~~~~~~~~~~~~~~~~~
@@ -82,10 +82,10 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 .. code-block:: shell
 
     # Repeat 10 times
-    python -m randog timedelta -r 10
+    randog timedelta -r 10
 
     # Generate list which contains 10 values
-    python -m randog timedelta -L 10 --json --iso
+    randog timedelta -L 10 --json --iso
 
 
 .. _timedelta-simple-format:

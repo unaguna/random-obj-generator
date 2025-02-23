@@ -5,7 +5,7 @@ In int mode, integer values are generated. The format of the command is as follo
 
 .. code-block:: shell
 
-    python -m randog int MINIMUM MAXIMUM [--exp-uniform] [--fmt FORMAT] [common-options]
+    randog int MINIMUM MAXIMUM [--exp-uniform] [--fmt FORMAT] [common-options]
 
 
 Arguments and Options
@@ -39,7 +39,7 @@ The simplest example is the following, which outputs a value in the specified ra
 
 .. code-block:: shell
 
-    python -m randog int 0 100
+    randog int 0 100
 
 .. note::
 
@@ -53,10 +53,10 @@ The output format can be specified in `format specification mini-language <https
 .. code-block:: shell
 
     # output 0-padded integer such as '00000042'
-    python -m randog int 0 100 --fmt 08
+    randog int 0 100 --fmt 08
 
     # output 0-padded integer such as '+42'
-    python -m randog int 0 100 --fmt +
+    randog int 0 100 --fmt +
 
 Repeatedly Generate
 ~~~~~~~~~~~~~~~~~~~
@@ -66,10 +66,10 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 .. code-block:: shell
 
     # Repeat 10 times
-    python -m randog int -r 10
+    randog int -r 10
 
     # Generate list which contains 10 values
-    python -m randog int -L 10
+    randog int -L 10
 
 Probability Distribution; uniform distribution of digits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

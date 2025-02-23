@@ -5,7 +5,7 @@ In byfile mode, values are generated using the factories defined in :doc:`a fact
 
 .. code-block:: shell
 
-    python -m randog byfile FACTORY_PATH [...] [--regenerate PROB_REGEN] [--discard PROB_DISCARD] [--csv ROW_NUM] [--error-on-factory-stopped] [common-options]
+    randog byfile FACTORY_PATH [...] [--regenerate PROB_REGEN] [--discard PROB_DISCARD] [--csv ROW_NUM] [--error-on-factory-stopped] [common-options]
 
 The argument FACTORY_PATH is :doc:`a filename of the factory definition <doc.external_def>`. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:
 
@@ -61,21 +61,21 @@ The simplest example is the following:
 
 .. code-block:: shell
 
-    python -m randog byfile factory_def.py
+    randog byfile factory_def.py
 
 If the definition file defines a factory that generates a dict equivalent to one record in the database, you can obtain data for testing by generating multiple dict as shown below:
 
 .. code-block:: shell
 
     # Generate list which contains 10 values
-    python -m randog byfile factory_def.py -L 10
+    randog byfile factory_def.py -L 10
 
 You may want to generate multiple values while outputting each one to a separate file. In that case, you can utilize :code:`-O` and :code:`-r` as follows:
 
 .. code-block:: shell
 
     # Repeat 10 times and output each of them into out_001.json, out_002.json, ... with json format
-    python -m randog byfile factory_def.py -r 10 -O 'out_{:03}.json' --json
+    randog byfile factory_def.py -r 10 -O 'out_{:03}.json' --json
 
 You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
 In the case, the output can be made missing by :code:`--discard` or :code:`--regenerate`. For example:
@@ -83,10 +83,10 @@ In the case, the output can be made missing by :code:`--discard` or :code:`--reg
 .. code-block:: shell
 
     # output at most 20 values (each value will be discarded at 10% probability)
-    python -m randog byfile factory_def.py --repeat 20 --discard 0.1
+    randog byfile factory_def.py --repeat 20 --discard 0.1
 
     # output exactly 20 values (each value will be regenerated at 10% probability)
-    python -m randog byfile factory_def.py --repeat 20 --regenerate 0.1
+    randog byfile factory_def.py --repeat 20 --regenerate 0.1
 
 
 .. _output_as_csv:
@@ -99,7 +99,7 @@ To output in CSV format, use the :code:`--csv` option. The value of each field i
 .. code-block:: shell
 
     # output CSV which contains 20 rows
-    python -m randog byfile factory_def.py --csv 20
+    randog byfile factory_def.py --csv 20
 
 .. warning::
     Even if factory generates objects other than dict or :code:`CSV_COLUMNS` is not defined in the definition file, it will output something in CSV format if the :code:`--csv` option is specified, but this is not recommended. This behavior may be changed in the future.
@@ -110,7 +110,7 @@ In the following example, it outputs 20 lines to each of 10 CSV files.
 .. code-block:: shell
 
     # output 10 CSV files; each file contains 20 rows
-    python -m randog byfile factory_def.py --csv 20 -r 10 -O 'out_{:03}.csv'
+    randog byfile factory_def.py --csv 20 -r 10 -O 'out_{:03}.csv'
 
 In the example at the top of this page, :code:`CSV_COLUMNS` was defined as a list of strings, but you can also specify a function that returns a field instead of a string that specifies a dictionary key.
 In the following example, the third field is a string that is processed from the value of age.
@@ -158,10 +158,10 @@ In the case, the output can be made missing by :code:`--discard` or :code:`--reg
 .. code-block:: shell
 
     # output at most 20 rows (each row will be discarded at 10% probability)
-    python -m randog byfile factory_def.py --csv 20 --discard 0.1
+    randog byfile factory_def.py --csv 20 --discard 0.1
 
     # output exactly 20 rows (Gaps of 'timestamp' at 10% probability)
-    python -m randog byfile factory_def.py --csv 20 --regenerate 0.1
+    randog byfile factory_def.py --csv 20 --regenerate 0.1
 
 .. note::
     Missing rows by :code:`--discard` will result in fewer rows of output than the number specified by :code:`--csv`.
@@ -196,18 +196,18 @@ In addition to the standard shell method, the env option of randog can be used t
 .. code-block:: shell
 
     # Can use it in bash, etc., but not in powershell
-    INIT_ID=5 python -m randog byfile factory_def.py
+    INIT_ID=5 randog byfile factory_def.py
 
     # Can use it in any shell
-    python -m randog byfile factory_def.py --env INIT_ID=5
+    randog byfile factory_def.py --env INIT_ID=5
 
 .. note::
     Multiple environment variables can also be specified as follows:
 
     .. code-block:: shell
 
-        python -m randog byfile factory_def.py --env INIT_ID=5 VAR=foo
-        python -m randog byfile factory_def.py --env INIT_ID=5 --env VAR=foo
+        randog byfile factory_def.py --env INIT_ID=5 VAR=foo
+        randog byfile factory_def.py --env INIT_ID=5 --env VAR=foo
 
 .. note::
 

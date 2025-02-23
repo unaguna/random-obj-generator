@@ -5,7 +5,7 @@ In time mode, time values are generated. The format of the command is as follows
 
 .. code-block:: shell
 
-    python -m randog time [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] [common-options]
+    randog time [MINIMUM MAXIMUM] [--iso | --fmt FORMAT] [common-options]
 
 
 Arguments and Options
@@ -56,10 +56,10 @@ You can specify the arguments :code:`MINIMUM` and :code:`MAXIMUM` with following
     .. code-block:: shell
 
         # valid (example for usage with --repeat)
-        python -m randog time --repeat 10 -- -30m +30m
+        randog time --repeat 10 -- -30m +30m
 
         # invalid (unknown option -30m)
-        python -m randog time --repeat 10 -30m +30m
+        randog time --repeat 10 -30m +30m
 
 
 Examples
@@ -69,23 +69,23 @@ The simplest example is the following, which outputs a time value.
 
 .. code-block:: shell
 
-    python -m randog time
+    randog time
 
 You can specify a range of values to be generated, as in the following example:
 
 .. code-block:: shell
 
     # generates a value between 00:00:00 and 12:00:00
-    python -m randog time 00:00:00 12:00:00
+    randog time 00:00:00 12:00:00
 
     # generates a value between 1 hour ago and 1 hour later
-    python -m randog time -- -1h +1h
+    randog time -- -1h +1h
 
     # generates a value between 12 hours ago and now
-    python -m randog time -- -12h
+    randog time -- -12h
 
     # generates a value between now and 30 minutes later
-    python -m randog time +30m
+    randog time +30m
 
 .. note::
 
@@ -99,10 +99,10 @@ By default, the output is in the standard python format, but you can change the 
 .. code-block:: shell
 
     # generates a value with ISO-8601 format
-    python -m randog time --iso
+    randog time --iso
 
     # generates a value with the specified format
-    python -m randog time --fmt '%H:%M'
+    randog time --fmt '%H:%M'
 
 Repeatedly Generate
 ~~~~~~~~~~~~~~~~~~~
@@ -112,10 +112,10 @@ Most likely, you will not be satisfied with just one generated, so you will prob
 .. code-block:: shell
 
     # Repeat 10 times
-    python -m randog time -r 10
+    randog time -r 10
 
     # Generate list which contains 10 values
-    python -m randog time -L 10 --json --iso
+    randog time -L 10 --json --iso
 
 .. note::
     In time mode, date is not generated simultaneously. If both is wanted, use :doc:`datetime mode <doc.as_command.datetime>`.

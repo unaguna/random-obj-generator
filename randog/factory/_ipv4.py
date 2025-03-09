@@ -9,7 +9,9 @@ from ..exceptions import FactoryConstructionError
 
 
 def randipv4(
-    network: t.Union[ipaddress.IPv4Network, t.Iterable[ipaddress.IPv4Network]],
+    network: t.Union[
+        ipaddress.IPv4Network, t.Iterable[ipaddress.IPv4Network], None
+    ] = None,
     *,
     rnd: t.Optional[Random] = None,
 ) -> Factory[ipaddress.IPv4Address]:
@@ -52,12 +54,14 @@ class Ipv4RandomFactory(Factory[ipaddress.IPv4Address]):
     """factory generating random IPv4Address values"""
 
     _random: Random
-    _networks: t.Sequence[ipaddress.IPv4Network]
+    _networks: t.Optional[t.Sequence[ipaddress.IPv4Network]]
     _factory: Factory[int]
 
     def __init__(
         self,
-        network: t.Union[ipaddress.IPv4Network, t.Iterable[ipaddress.IPv4Network]],
+        network: t.Union[
+            ipaddress.IPv4Network, t.Iterable[ipaddress.IPv4Network], None
+        ],
         *,
         rnd: t.Optional[Random] = None,
     ):
@@ -77,14 +81,20 @@ class Ipv4RandomFactory(Factory[ipaddress.IPv4Address]):
         """
         self._random = decide_rnd(rnd)
 
-        if isinstance(network, ipaddress.IPv4Network):
+        if network is None:
+            self._networks = None
+        elif isinstance(network, ipaddress.IPv4Network):
             self._networks = [network]
         else:
             self._networks = list(network)
-        if len(self._networks) <= 0:
+        if self._networks is not None and len(self._networks) <= 0:
             raise FactoryConstructionError("empty address space for randipv4")
 
-        ranges = [_network_to_range(net) for net in self._networks]
+        ranges = (
+            [_network_to_range(net) for net in self._networks]
+            if self._networks is not None
+            else _DEFAULT_NETWORK_RANGES
+        )
         child_factories = [
             randint(minimum, maximum, rnd=rnd) for minimum, maximum, _ in ranges
         ]
@@ -94,3 +104,6 @@ class Ipv4RandomFactory(Factory[ipaddress.IPv4Address]):
 
     def _next(self) -> ipaddress.IPv4Address:
         return ipaddress.ip_address(self._factory.next())
+
+
+_DEFAULT_NETWORK_RANGES = (_network_to_range(ipaddress.IPv4Network("192.0.2.0/24")),)

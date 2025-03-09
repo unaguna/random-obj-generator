@@ -8,6 +8,14 @@ import randog.factory
 from randog.exceptions import FactoryConstructionError
 
 
+def test__random_ipv4():
+    factory = randog.factory.randipv4()
+
+    value = factory.next()
+
+    assert isinstance(value, ipaddress.IPv4Address)
+
+
 @pytest.mark.parametrize(
     ("network", "expected_values"),
     [
@@ -16,7 +24,7 @@ from randog.exceptions import FactoryConstructionError
         ("192.168.0.0/30", ["192.168.0.1", "192.168.0.2"]),
     ],
 )
-def test__random_ipv4(network, expected_values):
+def test__random_ipv4__with_network(network, expected_values):
     factory = randog.factory.randipv4(ipaddress.ip_network(network))
 
     values = set(factory.iter(200))

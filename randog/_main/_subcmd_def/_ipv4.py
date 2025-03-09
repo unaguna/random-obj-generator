@@ -18,7 +18,7 @@ class SubcmdDefIPV4(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         ipv4_parser = subparsers.add_parser(
             Subcmd.IPV4.value,
-            usage="python -m randog ipv4 [NETWORK...] [common-options]",
+            usage="python -m randog ipv4 [NETWORK...] [--fmt FORMAT] [common-options]",
             description="It generates values of type IPv4Address.",
             add_help=False,
         )

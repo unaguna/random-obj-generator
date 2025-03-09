@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-16 17:30+0900\n"
+"POT-Creation-Date: 2025-03-09 19:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -255,27 +255,47 @@ msgstr ""
 msgid "a timedelta value"
 msgstr ""
 
+#: ../../source/doc.construct_factories.rst:103
+msgid ""
+"`ipaddress.IPv4Address "
+"<https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address>`_"
+msgstr ""
+"`ipaddress.IPv4Address "
+"<https://docs.python.org/ja/3/library/ipaddress.html#ipaddress.IPv4Address>`_"
+
 #: ../../source/doc.construct_factories.rst:104
-msgid "An `enumeration <https://docs.python.org/3/library/enum.html>`_"
-msgstr "`列挙型 <https://docs.python.org/ja/3/library/enum.html>`_"
+msgid "`randipv4 <randog.factory.html#randog.factory.randipv4>`_"
+msgstr ""
 
 #: ../../source/doc.construct_factories.rst:105
-msgid "`randenum <randog.factory.html#randog.factory.randenum>`_"
+msgid "an IPv4Address value"
 msgstr ""
 
 #: ../../source/doc.construct_factories.rst:106
+msgid ":doc:`detail <doc.ipv4_factory>`"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:108
+msgid "An `enumeration <https://docs.python.org/3/library/enum.html>`_"
+msgstr "`列挙型 <https://docs.python.org/ja/3/library/enum.html>`_"
+
+#: ../../source/doc.construct_factories.rst:109
+msgid "`randenum <randog.factory.html#randog.factory.randenum>`_"
+msgstr ""
+
+#: ../../source/doc.construct_factories.rst:110
 msgid "a value of the enumeration"
 msgstr "列挙子"
 
-#: ../../source/doc.construct_factories.rst:107
+#: ../../source/doc.construct_factories.rst:111
 msgid ":doc:`detail <doc.enum_factory>`"
 msgstr ""
 
-#: ../../source/doc.construct_factories.rst:113
+#: ../../source/doc.construct_factories.rst:117
 msgid "Nullable"
 msgstr ""
 
-#: ../../source/doc.construct_factories.rst:115
+#: ../../source/doc.construct_factories.rst:119
 msgid ""
 "If you want None to be a candidate for generation, use `or_none "
 "<randog.factory.html#randog.factory.Factory.or_none>`_."
@@ -283,13 +303,13 @@ msgstr ""
 "None も生成されることがある factory を作りたい場合は `or_none "
 "<randog.factory.html#randog.factory.Factory.or_none>`_ メソッドを使用します。"
 
-#: ../../source/doc.construct_factories.rst:131
+#: ../../source/doc.construct_factories.rst:135
 msgid ""
 "If you want to get a factory that always returns None, use :ref:`const "
 "<constance>` instead."
 msgstr "常に None を返す factory を作りたい場合は :ref:`const <constance>` を使用してください。"
 
-#: ../../source/doc.construct_factories.rst:134
+#: ../../source/doc.construct_factories.rst:138
 msgid ""
 "Normally, when an or_null factory generates a value, it first randomly "
 "determines whether to return None or generate a value and return it, and "
@@ -303,22 +323,22 @@ msgstr ""
 "のように引数を指定した場合、その or_null factory が値を生成する際は、まず factory "
 "で値を生成した後で、それを採用するかNoneを返すかをランダムに決定します。"
 
-#: ../../source/doc.construct_factories.rst:137
-#: ../../source/doc.construct_factories.rst:184
+#: ../../source/doc.construct_factories.rst:141
+#: ../../source/doc.construct_factories.rst:188
 msgid "This difference affects, for example, the use of non-random factories."
 msgstr "この違いは、非ランダムな factory を使用する場合等に影響します。"
 
-#: ../../source/doc.construct_factories.rst:143
+#: ../../source/doc.construct_factories.rst:147
 msgid "Union type"
 msgstr "合成型 (Union type)"
 
-#: ../../source/doc.construct_factories.rst:145
+#: ../../source/doc.construct_factories.rst:149
 msgid ""
 "Several methods can be used to determine randomly generated values from "
 "multiple types."
 msgstr "複数の型のうちのいずれかの値をランダムに生成する factory をいくつかの方法で作ることができます。"
 
-#: ../../source/doc.construct_factories.rst:149
+#: ../../source/doc.construct_factories.rst:153
 msgid ""
 "If you want to make it nullable, i.e., union type with None, use "
 ":ref:`or_none <nullable>` instead."
@@ -326,7 +346,7 @@ msgstr ""
 "factory を nullable にしたい場合、つまり None との合成型にしたい場合、代わりに :ref:`or_none "
 "<nullable>` を使用してください。"
 
-#: ../../source/doc.construct_factories.rst:151
+#: ../../source/doc.construct_factories.rst:155
 msgid ""
 "If you use `from_example "
 "<randog.factory.html#randog.factory.from_example>`_, you can use "
@@ -338,7 +358,7 @@ msgstr ""
 "を使用する場合、引数に :code:`Example` を使用してください。以下の例では :code:`-1`, :code:`\"\"`, "
 "and :code:`True` を例として使用しているため、factory は整数値、文字列、真偽値のいずれかを生成します。"
 
-#: ../../source/doc.construct_factories.rst:164
+#: ../../source/doc.construct_factories.rst:168
 msgid ""
 "If you create candidate factories, you can use `union "
 "<randog.factory.html#randog.factory.union>`_. The following example "
@@ -349,7 +369,7 @@ msgstr ""
 " を使用します。以下の例の factory は、値の生成のたびに、2つの factory (randint と randbool) "
 "からランダムに選び、それが生成した値を結果として返します。"
 
-#: ../../source/doc.construct_factories.rst:181
+#: ../../source/doc.construct_factories.rst:185
 msgid ""
 "Normally, when a union factory generates a value, it first randomly "
 "determines which factory to use, and only that factory generates the "
@@ -362,11 +382,11 @@ msgstr ""
 "にのみ値を生成させます。ただし、:code:`union(..., lazy_choice=True)` のように引数を指定した場合、その "
 "union factory が値を生成する際は、まずすべての factory で値を生成した後でそのうちどの値を採用するかをランダムに決定します。"
 
-#: ../../source/doc.construct_factories.rst:189
+#: ../../source/doc.construct_factories.rst:193
 msgid "Randomly choice"
 msgstr "ランダムな選択 (Randomly choice)"
 
-#: ../../source/doc.construct_factories.rst:191
+#: ../../source/doc.construct_factories.rst:195
 msgid ""
 "If you want a factory to randomly return one of specific values, you can "
 "use `randchoice <randog.factory.html#randog.factory.randchoice>`_."
@@ -374,7 +394,7 @@ msgstr ""
 "指定した値のうちのいずれかをランダムに返す factory を作る場合は `randchoice "
 "<randog.factory.html#randog.factory.randchoice>`_ を使用します。"
 
-#: ../../source/doc.construct_factories.rst:206
+#: ../../source/doc.construct_factories.rst:210
 msgid ""
 "If you want to randomly generate values of a particular enumeration type,"
 " you can also use `randenum "
@@ -385,11 +405,11 @@ msgstr ""
 "<randog.factory.html#randog.factory.randenum>`_ を使用します。こちらもご参照ください： "
 ":doc:`doc.enum_factory`"
 
-#: ../../source/doc.construct_factories.rst:212
+#: ../../source/doc.construct_factories.rst:216
 msgid "Constance"
 msgstr "定数"
 
-#: ../../source/doc.construct_factories.rst:214
+#: ../../source/doc.construct_factories.rst:218
 msgid ""
 "If you want a factory that always returns the same value, you can use "
 "`const <randog.factory.html#randog.factory.const>`_."
@@ -397,40 +417,40 @@ msgstr ""
 "常に同じ値を返す factory を作る場合は `const "
 "<randog.factory.html#randog.factory.const>`_ を使用します。"
 
-#: ../../source/doc.construct_factories.rst:229
+#: ../../source/doc.construct_factories.rst:233
 msgid "Processing output"
 msgstr "結果の加工"
 
-#: ../../source/doc.construct_factories.rst:231
+#: ../../source/doc.construct_factories.rst:235
 msgid ""
 "The processing of factory output can be predefined. This can be used to "
 "change the type of output."
 msgstr "factory の生成値に対する加工をあらかじめ定義することができます。この加工で生成値の型を変更することもできます。"
 
-#: ../../source/doc.construct_factories.rst:249
+#: ../../source/doc.construct_factories.rst:253
 msgid ""
 "If the value to be generated is a dict and you want to process the items,"
 " you can easily code it by using :code:`post_process_items` instead of "
 ":code:`post_process`, as in the following example."
 msgstr ""
-"生成される値が dict であってその要素に処理をしたい場合、以下の例のように "
-":code:`post_process` の代わりに :code:`post_process_items` を使うことで簡単に書けます。"
+"生成される値が dict であってその要素に処理をしたい場合、以下の例のように :code:`post_process` の代わりに "
+":code:`post_process_items` を使うことで簡単に書けます。"
 
-#: ../../source/doc.construct_factories.rst:269
+#: ../../source/doc.construct_factories.rst:273
 msgid ""
 "If a non-dict value is generated, conversion by "
 ":code:`post_process_items` is skipped, so it can be used in combination "
 "with :ref:`or_none <nullable>` and :ref:`union <construct_union>`."
 msgstr ""
 "dict でない値が生成された場合は :code:`post_process_items` "
-"による変換がスキップされるため、:ref:`or_none <nullable>` や "
-":ref:`union <construct_union>` と組み合わせて使うこともできます。"
+"による変換がスキップされるため、:ref:`or_none <nullable>` や :ref:`union "
+"<construct_union>` と組み合わせて使うこともできます。"
 
-#: ../../source/doc.construct_factories.rst:275
+#: ../../source/doc.construct_factories.rst:279
 msgid "Custom Factory"
 msgstr "カスタム Factory"
 
-#: ../../source/doc.construct_factories.rst:277
+#: ../../source/doc.construct_factories.rst:281
 msgid ""
 "Values of type not provided by randog can also be generated in the "
 "context of randog by using functions, iterators (include `generator "
@@ -444,7 +464,7 @@ msgstr ""
 "iterator>`_ も含む) やカスタム factory を使用します。通常、わざわざ randog "
 "を通さずとも関数やイテレータをそのまま使えばよいのですが、dict や list の要素を生成するためにはこの方法が必要になります。"
 
-#: ../../source/doc.construct_factories.rst:312
+#: ../../source/doc.construct_factories.rst:316
 msgid ""
 "You can also create a factory using the factory constructor: `by_callable"
 " <randog.factory.html#randog.factory.by_callable>`_, `by_iterator "
@@ -455,21 +475,21 @@ msgstr ""
 "<randog.factory.html#randog.factory.by_iterator>`_ を使用して factory "
 "を作ることもできます。"
 
-#: ../../source/doc.construct_factories.rst:315
+#: ../../source/doc.construct_factories.rst:319
 msgid ""
 "A finite iterator can be used as an example, but once the iterator "
 "terminates, the factory cannot generate any more values."
 msgstr "有限のイテレータを使用することもできますが、一度そのイテレータが使い切られるとその factory は値を生成することができなくなります。"
 
-#: ../../source/doc.construct_factories.rst:319
+#: ../../source/doc.construct_factories.rst:323
 msgid "Details on how to build individual factories"
 msgstr "各 factory の詳細な生成方法"
 
-#: ../../source/doc.construct_factories.rst:333
+#: ../../source/doc.construct_factories.rst:338
 msgid "Special Factory"
 msgstr "特殊な Factory"
 
-#: ../../source/doc.construct_factories.rst:335
+#: ../../source/doc.construct_factories.rst:340
 msgid ""
 "Although any factory can be created with the :ref:`custom factory "
 "<custom_factory>`, some of the most commonly used factories are provided "

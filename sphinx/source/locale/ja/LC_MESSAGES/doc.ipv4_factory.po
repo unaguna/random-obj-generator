@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-09 19:19+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.ipv4_factory.rst:2
+msgid "IPv4 address factory"
+msgstr ""
+
+#: ../../source/doc.ipv4_factory.rst:4
+msgid ""
+"You can create a factory that generates `IPv4Address "
+"<https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address>`_"
+" values with `randipv4 <randog.factory.html#randog.factory.randipv4>`_."
+msgstr ""
+"`randipv4 <randog.factory.html#randog.factory.randipv4>`_ "
+"を使用することで、`IPv4Address "
+"<https://docs.python.org/ja/3/library/ipaddress.html#ipaddress.IPv4Address>`_"
+" の値を生成する factory を作成できます。"
+
+#: ../../source/doc.ipv4_factory.rst:7
+msgid ""
+"Although a factory of IPv4Address can be created by passing a IPv4Address"
+" value as an example to `from_example "
+"<randog.factory.html#randog.factory.from_example>`_, it is not possible "
+"to specify the creation condition."
+msgstr ""
+"`from_example <randog.factory.html#randog.factory.from_example>`_ に "
+"IPv4Address の値を例として渡しても IPv4Address の factory を作成できますが、生成条件の指定ができません。"
+
+#: ../../source/doc.ipv4_factory.rst:11
+msgid "Simple factory"
+msgstr "単純な factory"
+
+#: ../../source/doc.ipv4_factory.rst:13
+msgid ""
+"If all that is needed is for the generated value to be an IPv4 address, "
+"use `randipv4 <randog.factory.html#randog.factory.randipv4>`_ with no "
+"arguments as follows:"
+msgstr ""
+"生成される値が IPv4 アドレスでありさえすればよい場合には、次のように引数を指定せずに `\"randipv4 "
+"<randog.factory.html#randog.factory.randipv4>`_ を使用します。"
+
+#: ../../source/doc.ipv4_factory.rst:28
+msgid "Specify the address space"
+msgstr "アドレス空間を指定する"
+
+#: ../../source/doc.ipv4_factory.rst:30
+msgid "You can specify the network(s) of generated IPv4 addresses as follows:"
+msgstr "次の例のように、生成される IPv4 アドレスが属するネットワークを指定することができます。"

@@ -1,6 +1,7 @@
 import datetime
 import datetime as dt
 import enum
+import ipaddress
 import math
 import random
 from decimal import Decimal
@@ -215,6 +216,18 @@ def test__from_example__time_value(obj):
     value = factory.next()
     assert isinstance(value, dt.time)
     assert value.tzinfo == obj.tzinfo
+
+
+def test__from_example__ipv4_type():
+    factory = randog.factory.from_example(ipaddress.IPv4Address)
+    value = factory.next()
+    assert isinstance(value, ipaddress.IPv4Address)
+
+
+def test__from_example__ipv4_value():
+    factory = randog.factory.from_example(ipaddress.IPv4Address("192.168.0.1"))
+    value = factory.next()
+    assert isinstance(value, ipaddress.IPv4Address)
 
 
 def test__from_example__list_type():

@@ -23,6 +23,7 @@ exclude = '''
 [tool.pytest.ini_options]
 addopts = "--doctest-modules --doctest-glob='*.rst' --ignore=tests/resources"
 markers = [
+    "require_python: mark a test that requires Python of specified version.",
     "require_sqlalchemy: mark a test that requires SQLAlchemy.",
     "require_rstr: mark a test that requires rstr.",
     "without_rstr: mark a test that is skipped if rstr is installed.",

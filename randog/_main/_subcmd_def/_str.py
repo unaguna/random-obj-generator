@@ -14,7 +14,7 @@ class SubcmdDefString(SubcmdDef):
         return Subcmd.String
 
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
-        str_parser = subparsers.add_parser(
+        ipv4_parser = subparsers.add_parser(
             Subcmd.String.value,
             usage=(
                 "python -m randog str [--length LENGTH] [--charset CHARSET] "
@@ -23,8 +23,8 @@ class SubcmdDefString(SubcmdDef):
             description="It generates values of type str.",
             add_help=False,
         )
-        str_args_group = str_parser.add_argument_group("arguments")
-        str_args_group.add_argument(
+        ipv4_args_group = ipv4_parser.add_argument_group("arguments")
+        ipv4_args_group.add_argument(
             "--length",
             type=non_negative_int_range,
             default=None,
@@ -35,14 +35,14 @@ class SubcmdDefString(SubcmdDef):
                 "'--length 3:8'."
             ),
         )
-        str_args_group.add_argument(
+        ipv4_args_group.add_argument(
             "--charset",
             type=str,
             default=None,
             metavar="CHARSET",
             help="the characters which contained by generated strings",
         )
-        str_args_group.add_argument(
+        ipv4_args_group.add_argument(
             "--regex",
             type=str,
             default=None,
@@ -52,16 +52,16 @@ class SubcmdDefString(SubcmdDef):
                 "It cannot be used with `--length` or `--charset`."
             ),
         )
-        str_args_group.add_argument(
+        ipv4_args_group.add_argument(
             "--fmt",
             dest="format",
             metavar="FORMAT",
             help="if specified, it outputs generated value with the specified format, "
             "such as '>10'",
         )
-        add_common_arguments(str_parser)
+        add_common_arguments(ipv4_parser)
 
-        return str_parser
+        return ipv4_parser
 
     def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
         iargs, kwargs = self.build_args(args)

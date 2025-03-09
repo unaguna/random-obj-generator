@@ -1,5 +1,6 @@
 import codecs
 import datetime as dt
+import ipaddress
 import re
 import typing as t
 from decimal import Decimal, InvalidOperation
@@ -225,3 +226,7 @@ def indent(value):
 def dice_roll(value):
     parse_dice_notation(value)
     return value
+
+
+def ipv4_network(value):
+    return ipaddress.IPv4Network(value)

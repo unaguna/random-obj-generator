@@ -55,7 +55,7 @@ msgid ""
 "use `randipv4 <randog.factory.html#randog.factory.randipv4>`_ with no "
 "arguments as follows:"
 msgstr ""
-"生成される値が IPv4 アドレスでありさえすればよい場合には、次のように引数を指定せずに `\"randipv4 "
+"生成される値が IPv4 アドレスでありさえすればよい場合には、次のように引数を指定せずに `randipv4 "
 "<randog.factory.html#randog.factory.randipv4>`_ を使用します。"
 
 #: ../../source/doc.ipv4_factory.rst:28

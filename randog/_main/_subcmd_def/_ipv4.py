@@ -1,5 +1,6 @@
 import argparse
 import ipaddress
+import sys
 import typing as t
 
 import randog.factory
@@ -44,8 +45,7 @@ class SubcmdDefIPV4(SubcmdDef):
         return ipv4_parser
 
     def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
-        # TODO: --fmt が python<3.9 で使われていたらエラー
-        if False:
+        if args.format is not None and sys.version_info < (3, 9):
             subparser.error(
                 "argument --fmt: python>=3.9.0 is required to use --fmt for ipv4"
             )

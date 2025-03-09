@@ -78,6 +78,12 @@ The following modes are available for command execution. Arguments and options a
      - :code:`17h`
      - :doc:`detail <doc.as_command.timedelta>`
 
+   * - ipv4
+     - :code:`IPv4Address`
+     - :code:`randog ipv4`
+     - :code:`192.0.2.71`
+     - :doc:`detail <doc.as_command.ipv4>`
+
    * - dice
      - :code:`int`
      - :code:`randog dice 2d6`
@@ -120,6 +126,7 @@ Details of Modes
    doc.as_command.date
    doc.as_command.time
    doc.as_command.timedelta
+   doc.as_command.ipv4
    doc.as_command.byfile
    doc.as_command.dice
 

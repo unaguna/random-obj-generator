@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-23 21:52+0900\n"
+"POT-Creation-Date: 2025-03-09 19:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -89,7 +89,7 @@ msgstr ""
 msgid "int"
 msgstr ""
 
-#: ../../source/doc.as_command.rst:34 ../../source/doc.as_command.rst:82
+#: ../../source/doc.as_command.rst:34 ../../source/doc.as_command.rst:88
 msgid ":code:`int`"
 msgstr ""
 
@@ -246,22 +246,42 @@ msgid ":doc:`detail <doc.as_command.timedelta>`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:81
-msgid "dice"
+msgid "ipv4"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:82
+msgid ":code:`IPv4Address`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:83
-msgid ":code:`randog dice 2d6`"
+msgid ":code:`randog ipv4`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:84
-msgid ":code:`9`"
+msgid ":code:`192.0.2.71`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:85
-msgid ":doc:`detail <doc.as_command.dice>`"
+msgid ":doc:`detail <doc.as_command.ipv4>`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:87
+msgid "dice"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:89
+msgid ":code:`randog dice 2d6`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:90
+msgid ":code:`9`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:91
+msgid ":doc:`detail <doc.as_command.dice>`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:93
 msgid "byfile"
 msgstr ""
 
@@ -273,7 +293,7 @@ msgstr ""
 msgid "the definition file"
 msgstr ""
 
-#: ../../source/doc.as_command.rst:90
+#: ../../source/doc.as_command.rst:96
 msgid ":code:`randog byfile ./factory_def.py`"
 msgstr ""
 
@@ -281,25 +301,25 @@ msgstr ""
 msgid "./factory_def.py"
 msgstr ""
 
-#: ../../source/doc.as_command.rst:93
+#: ../../source/doc.as_command.rst:99
 msgid ":doc:`detail <doc.as_command.byfile>`"
 msgstr ""
 
-#: ../../source/doc.as_command.rst:97
+#: ../../source/doc.as_command.rst:103
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.rst:99
+#: ../../source/doc.as_command.rst:105
 msgid ""
 "For mode-specific arguments and options, see the detailed page for each "
 "mode."
 msgstr "モードごとの引数やオプションの説明は、各モードの詳細ページで確認してください。"
 
-#: ../../source/doc.as_command.rst:101
+#: ../../source/doc.as_command.rst:107
 msgid "Several options can be used in any mode; see also:"
 msgstr "いくつかのオプションは全てのモードで指定できます。次のページをご覧ください："
 
-#: ../../source/doc.as_command.rst:109
+#: ../../source/doc.as_command.rst:115
 msgid "Details of Modes"
 msgstr "各モードの詳細"
 

@@ -17,6 +17,7 @@ class Subcmd(Enum):
     Date = "date"
     Time = "time"
     Timedelta = "timedelta"
+    IPV4 = "ipv4"
 
 
 def set_process_mode(mode: t.Optional[Subcmd]):

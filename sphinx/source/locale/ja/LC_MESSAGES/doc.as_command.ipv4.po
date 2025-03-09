@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, k-izumi
+# This file is distributed under the same license as the
+# random-obj-generator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: random-obj-generator 0.17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-09 19:44+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/doc.as_command.ipv4.rst:2
+msgid "ipv4 Mode"
+msgstr ""
+
+#: ../../source/doc.as_command.ipv4.rst:4
+msgid ""
+"In ipv4 mode, IPv4 addresses are generated. The format of the command is "
+"as follows:"
+msgstr "ipv4 モードでは、IPv4 アドレスを生成します。コマンドの形式は次の通りです："
+
+#: ../../source/doc.as_command.ipv4.rst:11
+#: ../../source/doc.as_command.ipv4.rst:27
+msgid "The option :code:`--fmt` is only available in Python>=3.9.0."
+msgstr "オプション :code:`--fmt` は Python 3.9.0 以上でのみ使用できます。"
+
+#: ../../source/doc.as_command.ipv4.rst:15
+msgid "Arguments and Options"
+msgstr "引数とオプション"
+
+#: ../../source/doc.as_command.ipv4.rst:17
+msgid ":code:`NETWORK` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.ipv4.rst:19
+msgid ""
+"the space of generated addresses. If multiple addresses are specified, "
+"the network will be selected at random each time an address is generated."
+msgstr "生成するアドレスの空間。複数指定した場合、アドレス生成のたびにネットワークが抽選される。"
+
+#: ../../source/doc.as_command.ipv4.rst:22
+msgid ":code:`--fmt FORMAT` (optional):"
+msgstr ""
+
+#: ../../source/doc.as_command.ipv4.rst:24
+msgid ""
+"the output format written in `document of IPv4Address.__format__ "
+"<https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.__format__>`_"
+msgstr ""
+"`IPv4Address.__format__ のドキュメント "
+"<https://docs.python.org/ja/3/library/ipaddress.html#ipaddress.IPv4Address.__format__>`_"
+" で記載された出力フォーマット"
+
+#: ../../source/doc.as_command.ipv4.rst:29
+msgid ":code:`common-options`"
+msgstr ""
+
+#: ../../source/doc.as_command.ipv4.rst:31
+msgid ":doc:`common options <doc.as_command.common_option>`"
+msgstr ":doc:`共通オプション <doc.as_command.common_option>`"
+
+#: ../../source/doc.as_command.ipv4.rst:35
+msgid "Examples"
+msgstr "実行例"
+
+#: ../../source/doc.as_command.ipv4.rst:37
+msgid "The simplest example is the following:"
+msgstr "最も簡素な例は次の通りです："
+
+#: ../../source/doc.as_command.ipv4.rst:43
+msgid "You can specify the network as follows:"
+msgstr "次の例のように、ネットワークを指定することができます。"
+
+#: ../../source/doc.as_command.ipv4.rst:55
+msgid "Format: binary numeral system, etc."
+msgstr "出力フォーマット (二進法等)"
+
+#: ../../source/doc.as_command.ipv4.rst:57
+msgid ""
+"You can use the output format written in `document of "
+"IPv4Address.__format__ "
+"<https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.__format__>`_"
+" as follows:"
+msgstr ""
+"以下のように `IPv4Address.__format__ のドキュメント "
+"<https://docs.python.org/ja/3/library/ipaddress.html#ipaddress.IPv4Address.__format__>`_"
+" に記載されている出力フォーマットを使用することができます。"

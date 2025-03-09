@@ -100,6 +100,10 @@ You can create a factory that generates values of the following types:
      - a timedelta value
      -
 
+   * - `ipaddress.IPv4Address <https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address>`_
+     - `randipv4 <randog.factory.html#randog.factory.randipv4>`_
+     - an IPv4Address value
+     - :doc:`detail <doc.ipv4_factory>`
 
    * - An `enumeration <https://docs.python.org/3/library/enum.html>`_
      - `randenum <randog.factory.html#randog.factory.randenum>`_
@@ -324,6 +328,7 @@ Details on how to build individual factories
    doc.dict_factory
    doc.list_factory
    doc.str_factory
+   doc.ipv4_factory
    doc.enum_factory
 
 

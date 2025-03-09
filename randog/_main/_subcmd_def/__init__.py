@@ -13,6 +13,7 @@ from ._int import SubcmdDefInt
 from ._str import SubcmdDefString
 from ._time import SubcmdDefTime
 from ._timedelta import SubcmdDefTimedelta
+from ._ipv4 import SubcmdDefIPV4
 
 _subcmd_def_list: t.Sequence[SubcmdDef] = (
     SubcmdDefBool(),
@@ -26,6 +27,7 @@ _subcmd_def_list: t.Sequence[SubcmdDef] = (
     SubcmdDefString(),
     SubcmdDefTime(),
     SubcmdDefTimedelta(),
+    SubcmdDefIPV4(),
 )
 
 _subcmd_def_dict: t.Mapping[Subcmd, SubcmdDef] = {

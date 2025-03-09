@@ -18,6 +18,7 @@ from ._by_iterator import ByIteratorFactory, by_iterator
 from ._increment import increment
 from ._iterrange import iterrange
 from ._union import UnionRandomFactory, union
+from ._ipv4 import Ipv4RandomFactory, randipv4
 from ._from_example import from_example, FromExampleContext
 from ._from_pyfile import from_pyfile, FactoryDef
 
@@ -40,6 +41,7 @@ __all__ = [
     "randdate",
     "randtimedelta",
     "randdatetime",
+    "randipv4",
     "randlist",
     "randdict",
     "by_callable",

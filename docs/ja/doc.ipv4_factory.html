@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPv4 address factory &mdash; random-obj-generator 0.17.0 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Enum factory" href="doc.enum_factory.html" />
+    <link rel="prev" title="Str factory" href="doc.str_factory.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+              <div class="version">
+                0.17.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#elemental-types">基本的な型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#nullable">Nullable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#union-type">合成型 (Union type)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#randomly-choice">ランダムな選択 (Randomly choice)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#constance">定数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#processing-output">結果の加工</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#custom-factory">カスタム Factory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.construct_factories.html#details-on-how-to-build-individual-factories">各 factory の詳細な生成方法</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.str_factory.html">Str factory</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">IPv4 address factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simple-factory">単純な factory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specify-the-address-space">アドレス空間を指定する</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="doc.construct_factories.html#special-factory">特殊な Factory</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.write_generated.html">Factory で生成した値の出力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.logging.html">ログ出力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="doc.construct_factories.html">Factory の生成</a></li>
+      <li class="breadcrumb-item active">IPv4 address factory</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.ipv4_factory.html"
+            >English</option>
+            <option value="../ja/doc.ipv4_factory.html"
+                selected
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ipv4-address-factory">
+<h1>IPv4 address factory<a class="headerlink" href="#ipv4-address-factory" title="この見出しへのパーマリンク"></a></h1>
+<p><a class="reference external" href="randog.factory.html#randog.factory.randipv4">randipv4</a> を使用することで、<a class="reference external" href="https://docs.python.org/ja/3/library/ipaddress.html#ipaddress.IPv4Address">IPv4Address</a> の値を生成する factory を作成できます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> に IPv4Address の値を例として渡しても IPv4Address の factory を作成できますが、生成条件の指定ができません。</p>
+</div>
+<section id="simple-factory">
+<h2>単純な factory<a class="headerlink" href="#simple-factory" title="この見出しへのパーマリンク"></a></h2>
+<p>生成される値が IPv4 アドレスでありさえすればよい場合には、次のように引数を指定せずに <a class="reference external" href="randog.factory.html#randog.factory.randipv4">randipv4</a> を使用します。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ipaddress</span> <span class="kn">import</span> <span class="n">IPv4Address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randipv4</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">IPv4Address</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="specify-the-address-space">
+<h2>アドレス空間を指定する<a class="headerlink" href="#specify-the-address-space" title="この見出しへのパーマリンク"></a></h2>
+<p>次の例のように、生成される IPv4 アドレスが属するネットワークを指定することができます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ipaddress</span> <span class="kn">import</span> <span class="n">IPv4Address</span><span class="p">,</span> <span class="n">ip_network</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory1</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randipv4</span><span class="p">(</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory2</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randipv4</span><span class="p">([</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">),</span> <span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.2.0/24&quot;</span><span class="p">)])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated1</span> <span class="o">=</span> <span class="n">factory1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated1</span> <span class="ow">in</span> <span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">hosts</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated2</span> <span class="o">=</span> <span class="n">factory2</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated2</span> <span class="ow">in</span> <span class="p">[</span><span class="o">*</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">hosts</span><span class="p">(),</span> <span class="o">*</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.2.0/24&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">hosts</span><span class="p">()]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.str_factory.html" class="btn btn-neutral float-left" title="Str factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.enum_factory.html" class="btn btn-neutral float-right" title="Enum factory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

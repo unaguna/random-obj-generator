@@ -1,5 +1,6 @@
 import datetime as dt
 import enum
+import ipaddress
 from decimal import Decimal
 import typing as t
 from random import Random
@@ -23,6 +24,7 @@ from . import (
     randstr,
     union,
     const,
+    randipv4,
 )
 from ._timedelta import calc_unit
 from ._logging import logger
@@ -89,6 +91,9 @@ _FACTORY_CONSTRUCTOR_BY_TYPE: t.Dict[
     dt.datetime: lambda rnd: randdatetime(rnd=rnd),
     dt.date: lambda rnd: randdate(rnd=rnd),
     dt.time: lambda rnd: randtime(rnd=rnd),
+    ipaddress.IPv4Address: lambda rnd: randipv4(
+        network=ipaddress.IPv4Network("192.0.2.0/24"), rnd=rnd
+    ),
     list: lambda rnd: randlist(randstr(), rnd=rnd),
     tuple: lambda rnd: randlist(randstr(), type=tuple, rnd=rnd),
     dict: lambda rnd: randdict({"key": randint(0, 100, rnd=rnd)}, rnd=rnd),

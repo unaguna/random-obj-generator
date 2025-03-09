@@ -27,7 +27,7 @@ class SubcmdDefIPV4(SubcmdDef):
             "network",
             type=ipv4_network,
             nargs="*",
-            default=("192.0.2.0/24",),
+            default=None,
             metavar="NETWORK",
             help="the network(s) which contain generated IP addresses.",
         )
@@ -53,9 +53,14 @@ class SubcmdDefIPV4(SubcmdDef):
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
+        network_str = args.get("network")
         rnd = construct_random(args.seed)
         kwargs = {
-            "network": tuple(ipaddress.IPv4Network(v) for v in args.get("network")),
+            "network": (
+                tuple(ipaddress.IPv4Network(v) for v in network_str)
+                if len(network_str) > 0
+                else None
+            ),
             "rnd": rnd,
         }
 

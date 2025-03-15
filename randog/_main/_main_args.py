@@ -83,6 +83,10 @@ class Args:
             return None
 
     @property
+    def json_unescaped_unicode(self) -> bool:
+        return self._args.json_unescaped_unicode
+
+    @property
     def output_path(self) -> t.Optional[str]:
         return self._args.output
 

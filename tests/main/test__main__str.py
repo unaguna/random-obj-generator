@@ -194,6 +194,26 @@ def test__main__str__option_json(capfd, options, expected):
 @pytest.mark.parametrize(
     ("options", "expected"),
     [
+        (["--charset=あ", "--length=3"], r'"\u3042\u3042\u3042"'),
+        (
+            ["--charset=あ", "--length=3", "--json-unescaped-unicode"],
+            r'"あああ"',
+        ),
+    ],
+)
+def test__main__str__option_json_unicode(capfd, options, expected):
+    args = ["randog", "str", *options, "--json"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == f"{expected}\n"
+        assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
         (["--charset=a", "--length=3", "--fmt", ">5"], "  aaa"),
     ],
 )

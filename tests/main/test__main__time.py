@@ -592,5 +592,5 @@ def test__main__time__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog time")
+        assert out.startswith("usage: randog time")
         assert err == ""

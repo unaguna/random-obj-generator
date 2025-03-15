@@ -18,7 +18,7 @@ class SubcmdDefDice(SubcmdDef):
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         dice_parser = subparsers.add_parser(
             Subcmd.Dice.value,
-            usage="python -m randog dice DICE_ROLL [common-options]",
+            usage="randog dice DICE_ROLL [common-options]",
             description="It generates integer values as total of the dice faces.",
             add_help=False,
         )

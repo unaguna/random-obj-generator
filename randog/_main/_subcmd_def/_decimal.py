@@ -17,7 +17,7 @@ class SubcmdDefDecimal(SubcmdDef):
         decimal_parser = subparsers.add_parser(
             Subcmd.Decimal.value,
             usage=(
-                "python -m randog decimal [MINIMUM MAXIMUM] "
+                "randog decimal [MINIMUM MAXIMUM] "
                 "[--decimal-len DECIMAL_LENGTH] [--p-inf PROB_P_INF] "
                 "[--n-inf PROB_N_INF] [--nan PROB_NAN] [--exp-uniform] [--fmt FORMAT] "
                 "[common-options]"

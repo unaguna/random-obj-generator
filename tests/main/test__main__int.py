@@ -389,5 +389,5 @@ def test__main__int__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog int")
+        assert out.startswith("usage: randog int")
         assert err == ""

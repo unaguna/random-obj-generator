@@ -17,7 +17,7 @@ class SubcmdDefString(SubcmdDef):
         ipv4_parser = subparsers.add_parser(
             Subcmd.String.value,
             usage=(
-                "python -m randog str [--length LENGTH] [--charset CHARSET] "
+                "randog str [--length LENGTH] [--charset CHARSET] "
                 "[--regex REGEX] [--fmt FORMAT] [common-options]"
             ),
             description="It generates values of type str.",

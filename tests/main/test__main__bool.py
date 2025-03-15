@@ -322,5 +322,5 @@ def test__main__bool__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog bool")
+        assert out.startswith("usage: randog bool")
         assert err == ""

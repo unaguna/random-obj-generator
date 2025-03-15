@@ -83,6 +83,10 @@ class Args:
             return None
 
     @property
+    def json_ensure_ascii(self) -> bool:
+        return self._args.json_ensure_ascii
+
+    @property
     def output_path(self) -> t.Optional[str]:
         return self._args.output
 

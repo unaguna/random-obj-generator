@@ -561,5 +561,5 @@ def test__main__float__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog float")
+        assert out.startswith("usage: randog float")
         assert err == ""

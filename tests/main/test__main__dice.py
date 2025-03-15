@@ -326,5 +326,5 @@ def test__main__dice__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog dice")
+        assert out.startswith("usage: randog dice")
         assert err == ""

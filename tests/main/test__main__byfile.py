@@ -1701,5 +1701,5 @@ def test__main__byfile__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog byfile")
+        assert out.startswith("usage: randog byfile")
         assert err == ""

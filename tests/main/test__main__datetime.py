@@ -641,5 +641,5 @@ def test__main__datetime__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog datetime")
+        assert out.startswith("usage: randog datetime")
         assert err == ""

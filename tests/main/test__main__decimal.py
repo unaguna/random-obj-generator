@@ -633,5 +633,5 @@ def test__main__decimal__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog decimal")
+        assert out.startswith("usage: randog decimal")
         assert err == ""

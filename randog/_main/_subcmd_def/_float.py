@@ -17,7 +17,7 @@ class SubcmdDefFloat(SubcmdDef):
         float_parser = subparsers.add_parser(
             Subcmd.Float.value,
             usage=(
-                "python -m randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] "
+                "randog float [MINIMUM MAXIMUM] [--p-inf PROB_P_INF] "
                 "[--n-inf PROB_N_INF] [--nan PROB_NAN] [--exp-uniform] [--fmt FORMAT] "
                 "[common-options]"
             ),

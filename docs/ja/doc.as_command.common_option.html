@@ -122,12 +122,15 @@
 <li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: 生成されたオブジェクトを <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> 関数で変換して出力します。</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">--json</span></code>: 生成されたオブジェクトをJSON形式で出力します。標準的なJSON形式が定められていないオブジェクトは <code class="code docutils literal notranslate"><span class="pre">str()</span></code> 関数で文字列に変換してからJSON化されます。</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">--json-indent</span> <span class="pre">&lt;INDENT&gt;</span></code>: <code class="code docutils literal notranslate"><span class="pre">--json</span></code> とともに指定することで、出力のJSONが指定したインデントでフォーマットされます。INDENT の例： <code class="code docutils literal notranslate"><span class="pre">2</span></code> (スペース2つ)、<code class="code docutils literal notranslate"><span class="pre">\t</span></code> (タブ文字1つ) 等</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--json-ensure-ascii</span></code>: <code class="code docutils literal notranslate"><span class="pre">--json</span></code> とともに指定することで、出力のJSON内の非 ASCII 文字が Unicode にエスケープされます。</p></li>
 </ul>
 <p>例:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
-randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
-randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
-randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--repr
+
+randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--json
+randog<span class="w"> </span>byfile<span class="w"> </span>def.py<span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="m">2</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>def.py<span class="w"> </span>--json<span class="w"> </span>--json-indent<span class="w"> </span><span class="se">\t</span>
+randog<span class="w"> </span>str<span class="w"> </span>--charset<span class="w"> </span>あいう<span class="w"> </span>--length<span class="w"> </span><span class="m">5</span><span class="w"> </span>--json<span class="w"> </span>--json-ensure-ascii
 </pre></div>
 </div>
 </section>

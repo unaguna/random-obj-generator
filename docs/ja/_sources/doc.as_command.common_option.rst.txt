@@ -11,15 +11,18 @@ Normally, the generated objects are output as is with :code:`print()`, but the o
 - :code:`--repr`: The generated object is converted by using :code:`repr()` before output.
 - :code:`--json`: Outputs the generated object in JSON format. Objects for which no standard JSON format is defined are converted to JSON after being converted to strings with :code:`str()`.
 - :code:`--json-indent <INDENT>`: If specified with :code:`--json`, the output JSON will be formatted with the specified indent. Examples of INDENT: :code:`2` (two spaces), :code:`\\t` (a tab character), etc.
+- :code:`--json-ensure-ascii`: If specified with :code:`--json`, the output JSON will be escaped unicode.
 
 For example:
 
 .. code-block:: shell
 
-    randog time --json
-    randog time --json --json-indent 2
-    randog time --json --json-indent \t
     randog time --repr
+
+    randog time --json
+    randog byfile def.py --json --json-indent 2
+    randog byfile def.py --json --json-indent \t
+    randog str --charset あいう --length 5 --json --json-ensure-ascii
 
 
 .. _output_file:

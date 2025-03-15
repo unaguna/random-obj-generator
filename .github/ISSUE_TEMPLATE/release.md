@@ -1,7 +1,7 @@
 ---
 name: Release
 about: package release operations
-title: Release vx.x.x.x
+title: Release vx.x.x
 labels: ''
 assignees: ''
 

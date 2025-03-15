@@ -95,9 +95,9 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         ),
     )
     common_opt_group.add_argument(
-        "--json-unescaped-unicode",
+        "--json-ensure-ascii",
         action="store_true",
-        help="if specified with '--json', it outputs JSON without to escape unicode",
+        help="if specified with '--json', it outputs JSON escaped unicode",
     )
     common_opt_group.add_argument(
         "--output",

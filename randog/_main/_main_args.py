@@ -83,8 +83,8 @@ class Args:
             return None
 
     @property
-    def json_unescaped_unicode(self) -> bool:
-        return self._args.json_unescaped_unicode
+    def json_ensure_ascii(self) -> bool:
+        return self._args.json_ensure_ascii
 
     @property
     def output_path(self) -> t.Optional[str]:

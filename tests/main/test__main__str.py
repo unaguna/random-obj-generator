@@ -194,9 +194,12 @@ def test__main__str__option_json(capfd, options, expected):
 @pytest.mark.parametrize(
     ("options", "expected"),
     [
-        (["--charset=あ", "--length=3"], r'"\u3042\u3042\u3042"'),
         (
-            ["--charset=あ", "--length=3", "--json-unescaped-unicode"],
+            ["--charset=あ", "--length=3", "--json-ensure-ascii"],
+            r'"\u3042\u3042\u3042"',
+        ),
+        (
+            ["--charset=あ", "--length=3"],
             r'"あああ"',
         ),
     ],

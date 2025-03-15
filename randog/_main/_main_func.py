@@ -138,7 +138,7 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
             fp,
             default=str,
             indent=args.json_indent,
-            ensure_ascii=not args.json_unescaped_unicode,
+            ensure_ascii=args.json_ensure_ascii,
         )
         fp.write("\n")
     else:

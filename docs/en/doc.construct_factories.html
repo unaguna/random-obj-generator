@@ -1,24 +1,24 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Construct Factories (generator of random values) &mdash; random-obj-generator 0.17.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Construct Factories (generator of random values) &mdash; random-obj-generator 0.18.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ba2e7b09"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,9 +37,9 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
+            <div class="version">
+              0.18.0
+            </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -63,6 +63,7 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.str_factory.html">Str factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.ipv4_factory.html">IPv4 address factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
 </ul>
 </li>
@@ -116,10 +117,10 @@
            <div itemprop="articleBody">
              
   <section id="construct-factories-generator-of-random-values">
-<h1>Construct Factories (generator of random values)<a class="headerlink" href="#construct-factories-generator-of-random-values" title="Permalink to this heading"></a></h1>
+<h1>Construct Factories (generator of random values)<a class="headerlink" href="#construct-factories-generator-of-random-values" title="Link to this heading"></a></h1>
 <p>In randog, factory is an object that generates values at random. The rules for generation are specified when the factory is created.</p>
 <p>If you do not care about conditions other than type, you can create a factory by simply supplying an example value to <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>. If you want to specify the conditions in detail, create a factory using the factory constructor corresponding to the type.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory simply</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory_a</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -134,7 +135,7 @@
 </pre></div>
 </div>
 <section id="elemental-types">
-<h2>Elemental types<a class="headerlink" href="#elemental-types" title="Permalink to this heading"></a></h2>
+<h2>Elemental types<a class="headerlink" href="#elemental-types" title="Link to this heading"></a></h2>
 <p>You can create a factory that generates values of the following types:</p>
 <table class="docutils align-default">
 <thead>
@@ -214,7 +215,12 @@
 <td><p>a timedelta value</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>An <a class="reference external" href="https://docs.python.org/3/library/enum.html">enumeration</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address">ipaddress.IPv4Address</a></p></td>
+<td><p><a class="reference external" href="randog.factory.html#randog.factory.randipv4">randipv4</a></p></td>
+<td><p>an IPv4Address value</p></td>
+<td><p><a class="reference internal" href="doc.ipv4_factory.html"><span class="doc">detail</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>An <a class="reference external" href="https://docs.python.org/3/library/enum.html">enumeration</a></p></td>
 <td><p><a class="reference external" href="randog.factory.html#randog.factory.randenum">randenum</a></p></td>
 <td><p>a value of the enumeration</p></td>
 <td><p><a class="reference internal" href="doc.enum_factory.html"><span class="doc">detail</span></a></p></td>
@@ -223,9 +229,9 @@
 </table>
 </section>
 <section id="nullable">
-<span id="id3"></span><h2>Nullable<a class="headerlink" href="#nullable" title="Permalink to this heading"></a></h2>
+<span id="id3"></span><h2>Nullable<a class="headerlink" href="#nullable" title="Link to this heading"></a></h2>
 <p>If you want None to be a candidate for generation, use <a class="reference external" href="randog.factory.html#randog.factory.Factory.or_none">or_none</a>.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory_nullable</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">or_none</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
@@ -248,15 +254,15 @@ However, if the argument is specified as in <code class="code docutils literal n
 </div>
 </section>
 <section id="union-type">
-<span id="construct-union"></span><h2>Union type<a class="headerlink" href="#union-type" title="Permalink to this heading"></a></h2>
+<span id="construct-union"></span><h2>Union type<a class="headerlink" href="#union-type" title="Link to this heading"></a></h2>
 <p>Several methods can be used to determine randomly generated values from multiple types.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want to make it nullable, i.e., union type with None, use <a class="reference internal" href="#nullable"><span class="std std-ref">or_none</span></a> instead.</p>
 </div>
 <p>If you use <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>, you can use <code class="code docutils literal notranslate"><span class="pre">Example</span></code> as the argument. The following example uses <code class="code docutils literal notranslate"><span class="pre">-1</span></code>, <code class="code docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, and <code class="code docutils literal notranslate"><span class="pre">True</span></code> as examples, so generated values will be integer, string, or boolean values.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">randog</span> <span class="kn">import</span> <span class="n">Example</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">randog</span><span class="w"> </span><span class="kn">import</span> <span class="n">Example</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="n">Example</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
 
@@ -266,7 +272,7 @@ However, if the argument is specified as in <code class="code docutils literal n
 </pre></div>
 </div>
 <p>If you create candidate factories, you can use <a class="reference external" href="randog.factory.html#randog.factory.union">union</a>. The following example creates a factory, which chooses either randint or randbool each time randomly and returns the result of the chosen factory.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">union</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># integer</span>
@@ -286,9 +292,9 @@ However, if the argument is specified as in <code class="code docutils literal n
 </div>
 </section>
 <section id="randomly-choice">
-<h2>Randomly choice<a class="headerlink" href="#randomly-choice" title="Permalink to this heading"></a></h2>
+<h2>Randomly choice<a class="headerlink" href="#randomly-choice" title="Link to this heading"></a></h2>
 <p>If you want a factory to randomly return one of specific values, you can use <a class="reference external" href="randog.factory.html#randog.factory.randchoice">randchoice</a>.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randchoice</span><span class="p">(</span><span class="s2">&quot;allow&quot;</span><span class="p">,</span> <span class="s2">&quot;deny&quot;</span><span class="p">)</span>
 
@@ -303,9 +309,9 @@ However, if the argument is specified as in <code class="code docutils literal n
 </div>
 </section>
 <section id="constance">
-<span id="id6"></span><h2>Constance<a class="headerlink" href="#constance" title="Permalink to this heading"></a></h2>
+<span id="id6"></span><h2>Constance<a class="headerlink" href="#constance" title="Link to this heading"></a></h2>
 <p>If you want a factory that always returns the same value, you can use <a class="reference external" href="randog.factory.html#randog.factory.const">const</a>.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># same as `factory = randog.factory.randchoice(&quot;python&quot;)`</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s2">&quot;python&quot;</span><span class="p">)</span>
@@ -317,9 +323,9 @@ However, if the argument is specified as in <code class="code docutils literal n
 </div>
 </section>
 <section id="processing-output">
-<h2>Processing output<a class="headerlink" href="#processing-output" title="Permalink to this heading"></a></h2>
+<h2>Processing output<a class="headerlink" href="#processing-output" title="Link to this heading"></a></h2>
 <p>The processing of factory output can be predefined. This can be used to change the type of output.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># use post_process to format the random decimal value</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="p">(</span>
@@ -334,7 +340,7 @@ However, if the argument is specified as in <code class="code docutils literal n
 </pre></div>
 </div>
 <p>If the value to be generated is a dict and you want to process the items, you can easily code it by using <code class="code docutils literal notranslate"><span class="pre">post_process_items</span></code> instead of <code class="code docutils literal notranslate"><span class="pre">post_process</span></code>, as in the following example.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># use post_process_items to format the random decimal value &#39;[&quot;count&quot;]&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="p">(</span>
@@ -356,16 +362,16 @@ However, if the argument is specified as in <code class="code docutils literal n
 </div>
 </section>
 <section id="custom-factory">
-<span id="id8"></span><h2>Custom Factory<a class="headerlink" href="#custom-factory" title="Permalink to this heading"></a></h2>
+<span id="id8"></span><h2>Custom Factory<a class="headerlink" href="#custom-factory" title="Link to this heading"></a></h2>
 <p>Values of type not provided by randog can also be generated in the context of randog by using functions, iterators (include <a class="reference external" href="https://docs.python.org/3/glossary.html#term-generator-iterator">generator iterators</a>), or custom factories. Normally, you would think that you could just use that function or iterator directly, but this method is needed to generate elements when generating dict or list in randog.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">uuid</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># define custom factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MailAddressFactory</span><span class="p">(</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">Factory</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-<span class="gp">... </span>    <span class="k">def</span> <span class="nf">_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MailAddressFactory</span><span class="p">(</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">Factory</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="nf">_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="s2">&quot;a&quot;</span> <span class="o">+</span> <span class="s2">&quot;@example.com&quot;</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
@@ -399,18 +405,19 @@ However, if the argument is specified as in <code class="code docutils literal n
 </div>
 </section>
 <section id="details-on-how-to-build-individual-factories">
-<h2>Details on how to build individual factories<a class="headerlink" href="#details-on-how-to-build-individual-factories" title="Permalink to this heading"></a></h2>
+<h2>Details on how to build individual factories<a class="headerlink" href="#details-on-how-to-build-individual-factories" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.str_factory.html">Str factory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.ipv4_factory.html">IPv4 address factory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
 </ul>
 </div>
 </section>
 <section id="special-factory">
-<span id="id9"></span><h2>Special Factory<a class="headerlink" href="#special-factory" title="Permalink to this heading"></a></h2>
+<span id="id9"></span><h2>Special Factory<a class="headerlink" href="#special-factory" title="Link to this heading"></a></h2>
 <p>Although any factory can be created with the <a class="reference internal" href="#custom-factory"><span class="std std-ref">custom factory</span></a>, some of the most commonly used factories are provided by randog.</p>
 <div class="toctree-wrapper compound">
 <ul>

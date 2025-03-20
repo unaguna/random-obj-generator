@@ -1,10 +1,12 @@
 import codecs
 import datetime as dt
+import ipaddress
 import re
 import typing as t
 from decimal import Decimal, InvalidOperation
 
 from .. import timedelta_util
+from ..factory import parse_dice_notation
 
 
 def decimal(value):
@@ -219,3 +221,12 @@ def indent(value):
         return codecs.decode(value, "unicode-escape")
 
     return non_negative_int(value_int)
+
+
+def dice_roll(value):
+    parse_dice_notation(value)
+    return value
+
+
+def ipv4_network(value):
+    return ipaddress.IPv4Network(value)

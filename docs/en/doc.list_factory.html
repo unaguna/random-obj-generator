@@ -1,24 +1,24 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>List factory &mdash; random-obj-generator 0.17.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>List factory &mdash; random-obj-generator 0.18.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ba2e7b09"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,9 +37,9 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
+            <div class="version">
+              0.18.0
+            </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -69,6 +69,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="doc.str_factory.html">Str factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.ipv4_factory.html">IPv4 address factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
 </ul>
 </li>
@@ -118,10 +119,10 @@
            <div itemprop="articleBody">
              
   <section id="list-factory">
-<h1>List factory<a class="headerlink" href="#list-factory" title="Permalink to this heading"></a></h1>
+<h1>List factory<a class="headerlink" href="#list-factory" title="Link to this heading"></a></h1>
 <p>You can create a factory that generates <code class="code docutils literal notranslate"><span class="pre">list</span></code> (or <code class="code docutils literal notranslate"><span class="pre">tuple</span></code>). The elements of the list are always randomly generated each time.</p>
 <p>In many cases, the factory is created with <a class="reference external" href="randog.factory.html#randog.factory.randlist">randlist</a> instead of <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> because the generation of the list needs to be tailored to the application.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -137,7 +138,7 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want to generate multiple records by a single factory, it may be appropriate to use <code class="code docutils literal notranslate"><span class="pre">iter</span></code> rather than <code class="code docutils literal notranslate"><span class="pre">randlist</span></code>.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="nb">id</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">999_999</span><span class="p">),</span>
@@ -151,9 +152,9 @@
 <p>The same can be done for <a class="reference internal" href="doc.as_command.html"><span class="doc">command execution</span></a> by using <code class="code docutils literal notranslate"><span class="pre">--list</span></code> or <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> option.</p>
 </div>
 <section id="each-elements">
-<h2>Each elements<a class="headerlink" href="#each-elements" title="Permalink to this heading"></a></h2>
+<h2>Each elements<a class="headerlink" href="#each-elements" title="Link to this heading"></a></h2>
 <p>You can specify a factory for each element. Normally, the i-th factory is used to generate the i-th element, but if you are generating a list longer than the number of factories, repeat the last factory.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">el_factories</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -175,7 +176,7 @@
 </pre></div>
 </div>
 <p>Therefore, if you want to generate a typical list where each element has no specific meaning, specify only one element factory.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -191,9 +192,9 @@
 </div>
 </section>
 <section id="length">
-<h2>Length<a class="headerlink" href="#length" title="Permalink to this heading"></a></h2>
+<h2>Length<a class="headerlink" href="#length" title="Link to this heading"></a></h2>
 <p>The length of the list can also be randomized.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -206,7 +207,7 @@
 </pre></div>
 </div>
 <p>If no length is specified, the length will be the same as the number of pieces in the factory.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">el_factories</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -224,9 +225,9 @@
 </div>
 </section>
 <section id="generate-tuple">
-<h2>Generate tuple<a class="headerlink" href="#generate-tuple" title="Permalink to this heading"></a></h2>
+<h2>Generate tuple<a class="headerlink" href="#generate-tuple" title="Link to this heading"></a></h2>
 <p>The attribute <code class="code docutils literal notranslate"><span class="pre">type</span></code> can be used to generate a tuple instead of a list.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -248,9 +249,9 @@
 </div>
 </section>
 <section id="factory-by-from-example">
-<h2>Factory by <code class="code docutils literal notranslate"><span class="pre">from_example</span></code><a class="headerlink" href="#factory-by-from-example" title="Permalink to this heading"></a></h2>
+<h2>Factory by <code class="code docutils literal notranslate"><span class="pre">from_example</span></code><a class="headerlink" href="#factory-by-from-example" title="Link to this heading"></a></h2>
 <p>If you use <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>, for example, the code would look like this:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">])</span>
 

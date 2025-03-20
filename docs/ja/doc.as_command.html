@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>コマンドとして実行 &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>コマンドとして実行 &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,9 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
+            <div class="version">
+              0.18.0
+            </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -72,7 +72,9 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.date.html">date モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.time.html">time モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.ipv4.html">ipv4 Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.byfile.html">byfile モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.dice.html">dice モード</a></li>
 </ul>
 </li>
 </ul>
@@ -115,14 +117,14 @@
            <div itemprop="articleBody">
              
   <section id="run-as-command">
-<h1>コマンドとして実行<a class="headerlink" href="#run-as-command" title="この見出しへのパーマリンク"></a></h1>
+<h1>コマンドとして実行<a class="headerlink" href="#run-as-command" title="Link to this heading"></a></h1>
 <p>randog はコマンドとして実行することもできます。コマンド実行の基本的な形式は次の通りです。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>&lt;MODE&gt;<span class="w"> </span>...
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>&lt;MODE&gt;<span class="w"> </span>...
 </pre></div>
 </div>
 <p>生成したい値に応じたモードを <code class="code docutils literal notranslate"><span class="pre">&lt;MODE&gt;</span></code> に指定し、より詳しい条件を指定するためにさらに引数を指定してください。</p>
 <section id="modes">
-<h2>モード<a class="headerlink" href="#modes" title="この見出しへのパーマリンク"></a></h2>
+<h2>モード<a class="headerlink" href="#modes" title="Link to this heading"></a></h2>
 <p>下記のモードを使用することができます。各モードで使用できる引数やオプションはそれぞれのモードの詳細ページで確認できます。</p>
 <table class="docutils align-default">
 <thead>
@@ -136,57 +138,69 @@
 <tbody>
 <tr class="row-even"><td><p>bool</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">bool</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">bool</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">bool</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">True</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.bool.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>int</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">int</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">int</span> <span class="pre">-100</span> <span class="pre">100</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">int</span> <span class="pre">-100</span> <span class="pre">100</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">42</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.int.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>float</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">float</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">float</span> <span class="pre">-10</span> <span class="pre">10</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">float</span> <span class="pre">-10</span> <span class="pre">10</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">2.826684165562185</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.float.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>str</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">str</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">str</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">str</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">XTGh3VH1</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.str.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>decimal</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">Decimal</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">decimal</span> <span class="pre">-10</span> <span class="pre">10</span> <span class="pre">--decimal-len</span> <span class="pre">2</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">decimal</span> <span class="pre">-10</span> <span class="pre">10</span> <span class="pre">--decimal-len</span> <span class="pre">2</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">3.91</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>datetime</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">datetime</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">datetime</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">datetime</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">2022-03-20</span> <span class="pre">12:43:51.110244</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.datetime.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>date</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">date</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">date</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">date</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">2022-03-20</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.date.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>time</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">time</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">time</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">time</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">12:43:51.110244</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.time.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>timedelta</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">timedelta</span></code></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">timedelta</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">timedelta</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">17h</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.timedelta.html"><span class="doc">detail</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>ipv4</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">IPv4Address</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">ipv4</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">192.0.2.71</span></code></p></td>
+<td><p><a class="reference internal" href="doc.as_command.ipv4.html"><span class="doc">detail</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>dice</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">dice</span> <span class="pre">2d6</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">9</span></code></p></td>
+<td><p><a class="reference internal" href="doc.as_command.dice.html"><span class="doc">detail</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>byfile</p></td>
 <td><div class="line-block">
@@ -194,7 +208,7 @@
 <div class="line">the definition file</div>
 </div>
 </td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code></p></td>
 <td><div class="line-block">
 <div class="line">according to</div>
 <div class="line">./factory_def.py</div>
@@ -206,7 +220,7 @@
 </table>
 </section>
 <section id="arguments-and-options">
-<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
+<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="Link to this heading"></a></h2>
 <p>モードごとの引数やオプションの説明は、各モードの詳細ページで確認してください。</p>
 <p>いくつかのオプションは全てのモードで指定できます。次のページをご覧ください：</p>
 <div class="toctree-wrapper compound">
@@ -225,7 +239,7 @@
 </div>
 </section>
 <section id="details-of-modes">
-<h2>各モードの詳細<a class="headerlink" href="#details-of-modes" title="この見出しへのパーマリンク"></a></h2>
+<h2>各モードの詳細<a class="headerlink" href="#details-of-modes" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.bool.html">bool モード</a></li>
@@ -237,7 +251,9 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.date.html">date モード</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.time.html">time モード</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta モード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.ipv4.html">ipv4 Mode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.byfile.html">byfile モード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.dice.html">dice モード</a></li>
 </ul>
 </div>
 </section>

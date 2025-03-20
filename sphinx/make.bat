@@ -32,9 +32,9 @@ goto end
 
 :doc
 set SPHINXOPTS=-D language=en
-%SPHINXBUILD% -M html -d %DOCTREESDIR% %SOURCEDIR% "../docs/en" %SPHINXOPTS% %O%
+%SPHINXBUILD% -M html -d %DOCTREESDIR% %SOURCEDIR% "../docs_loc/en" %SPHINXOPTS% %O%
 set SPHINXOPTS=-D language=ja
-%SPHINXBUILD% -M html -d %DOCTREESDIR% %SOURCEDIR% "../docs/ja" %SPHINXOPTS% %O%
+%SPHINXBUILD% -M html -d %DOCTREESDIR% %SOURCEDIR% "../docs_loc/ja" %SPHINXOPTS% %O%
 goto end
 
 :help

@@ -999,7 +999,7 @@ def test__main__csv__option_output__option_repeat__separate(capfd, tmp_path, res
     [
         ([], "テスト\n"),
         (["--csv=1", "--quiet"], "テスト\n"),
-        (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
+        (["--json"], '"テスト"\n'),
         (["--list=1"], "['テスト']\n"),
         (["--repeat=1"], "テスト\n"),
     ],
@@ -1084,7 +1084,7 @@ def test__main__option_output__error_with_illegal_encoding(
     [
         ([], "テスト\n"),
         (["--csv=1", "--quiet"], "テスト\n"),
-        (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
+        (["--json"], '"テスト"\n'),
         (["--list=1"], "['テスト']\n"),
         (["--repeat=1"], "テスト\n"),
     ],
@@ -1164,7 +1164,7 @@ def test__main__option_output__error_with_illegal_default_encoding(
     [
         ([], "テスト\n"),
         (["--csv=1", "--quiet"], "テスト\n"),
-        (["--json"], '"\\u30c6\\u30b9\\u30c8"\n'),
+        (["--json"], '"テスト"\n'),
         (["--list=1"], "['テスト']\n"),
         (["--repeat=1"], "テスト\n"),
     ],
@@ -1701,5 +1701,5 @@ def test__main__byfile__help(capfd):
         assert ex.value.code == 0
 
         out, err = capfd.readouterr()
-        assert out.startswith("usage: python -m randog byfile")
+        assert out.startswith("usage: randog byfile")
         assert err == ""

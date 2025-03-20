@@ -11,15 +11,18 @@ Normally, the generated objects are output as is with :code:`print()`, but the o
 - :code:`--repr`: The generated object is converted by using :code:`repr()` before output.
 - :code:`--json`: Outputs the generated object in JSON format. Objects for which no standard JSON format is defined are converted to JSON after being converted to strings with :code:`str()`.
 - :code:`--json-indent <INDENT>`: If specified with :code:`--json`, the output JSON will be formatted with the specified indent. Examples of INDENT: :code:`2` (two spaces), :code:`\\t` (a tab character), etc.
+- :code:`--json-ensure-ascii`: If specified with :code:`--json`, the output JSON will be escaped unicode.
 
 For example:
 
 .. code-block:: shell
 
-    python -m randog time --json
-    python -m randog time --json --json-indent 2
-    python -m randog time --json --json-indent \t
-    python -m randog time --repr
+    randog time --repr
+
+    randog time --json
+    randog byfile def.py --json --json-indent 2
+    randog byfile def.py --json --json-indent \t
+    randog str --charset あいう --length 5 --json --json-ensure-ascii
 
 
 .. _output_file:
@@ -32,17 +35,17 @@ Output to file
 .. code-block:: shell
 
     # output to ./out.txt; if already exists, it will be truncated
-    python -m randog time --output ./out.txt
+    randog time --output ./out.txt
 
     # output to ./out.txt;
     # if already exists, it will be kept and generated values will be appended at the end of the file
-    python -m randog time --output ./out.txt --output-appending
+    randog time --output ./out.txt --output-appending
 
     # output to out.txt in UTF-16 LE with line-separator '\r\n'
-    python -m randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
+    randog byfile ./factory_def.py -O out.txt -X utf_16_le --O-ls CRLF
 
     # {now} will be replaced by the current time
-    python -m randog time --output './out_{now:%Y%m%d%H%M%S}.txt'
+    randog time --output './out_{now:%Y%m%d%H%M%S}.txt'
 
 
 As above examples, by default, the file specified as the output destination is truncated if it already exists, but you can append it to the end of an existing file by using the option :code:`--output-appending` (:code:`--Oa`).
@@ -82,14 +85,14 @@ If you want to output repeatedly generated objects in a single list, use :code:`
 .. code-block:: shell
 
     # generate ONE list which contains 3 objects; each element conforms to factory_def.py.
-    python -m randog byfile factory_def.py --list 3
+    randog byfile factory_def.py --list 3
 
 On the other hand, if you want to output each repeatedly generated object separately, use :code:`--repeat` as follows:
 
 .. code-block:: shell
 
     # generate and output 3 times
-    python -m randog byfile factory_def.py --repeat 3
+    randog byfile factory_def.py --repeat 3
 
 .. note::
     If you want to output to different files one at a time using :code:`--repeat`, use :code:`--output` with a placeholder as follows:
@@ -97,10 +100,10 @@ On the other hand, if you want to output each repeatedly generated object separa
     .. code-block:: shell
 
         # output to 'out_1.txt', 'out_2.txt', and 'out_3.txt'
-        python -m randog factory_def.py --repeat 3 --output './out_{}.txt'
+        randog factory_def.py --repeat 3 --output './out_{}.txt'
 
         # output to 'out_0001.txt', 'out_0002.txt', and 'out_0003.txt'
-        python -m randog factory_def.py --repeat 3 --output './out_{:04}.txt'
+        randog factory_def.py --repeat 3 --output './out_{:04}.txt'
 
     The rules for placeholders are the same as `the standard python format <https://docs.python.org/3/library/string.html#format-string-syntax>`_.
 
@@ -116,10 +119,10 @@ If the seed values are the same, as in the following example, the same result is
 .. code-block:: shell
 
     # first
-    python -m randog str --seed 42
+    randog str --seed 42
 
     # second; the result is the same as the first
-    python -m randog str --seed 42
+    randog str --seed 42
 
 .. warning::
     Even though the seed value is the same, the generated value may change if the python version changes.
@@ -132,7 +135,7 @@ If no seed value is specified, a random seed value is used. The seed value used 
 .. code-block:: shell
 
     # generate str with log
-    python -m randog str --log-stderr DEBUG
+    randog str --log-stderr DEBUG
 
 If you note the observed seed value, you can reproduce the generation the next time by using that seed value.
 
@@ -140,13 +143,13 @@ If you note the observed seed value, you can reproduce the generation the next t
 Modify environment variable
 ---------------------------
 
-In particular, in byfile mode, you may want to specify environment variables for the purpose of passing values to the definition file. In bash and other shells, you can specify environment variables on a single line, such as :code:`VAR=VAL python -m randog ...`, but this is not possible in some shells, such as powershell.
+In particular, in byfile mode, you may want to specify environment variables for the purpose of passing values to the definition file. In bash and other shells, you can specify environment variables on a single line, such as :code:`VAR=VAL randog ...`, but this is not possible in some shells, such as powershell.
 
 Therefore, randog provides an option to specify environment variables. You can specify environment variables by using :code:`--env` as follows:
 
 .. code-block:: shell
 
-    python -m randog byfile factory_def.py --env CHARSET=0123456789abcdef
+    randog byfile factory_def.py --env CHARSET=0123456789abcdef
 
 The above mentioned execution is useful, for example, when using a definition file such as the following:
 

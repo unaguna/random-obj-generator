@@ -17,7 +17,7 @@ class SubcmdDefByfile(SubcmdDef):
         byfile_parser = subparsers.add_parser(
             Subcmd.Byfile.value,
             usage=(
-                "python -m randog byfile FACTORY_PATH [FACTORY_PATH ...] "
+                "randog byfile FACTORY_PATH [FACTORY_PATH ...] "
                 "[--regenerate PROB_REGEN] [--discard PROB_DISCARD] [--csv ROW_NUM] "
                 "[--error-on-factory-stopped] [common-options]"
             ),

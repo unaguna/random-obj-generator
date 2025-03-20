@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-18 17:32+0900\n"
+"POT-Creation-Date: 2025-03-09 19:04+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -82,13 +82,14 @@ msgstr ""
 #: randog.factory._by_iterator.by_iterator randog.factory._choice.randchoice
 #: randog.factory._choice.randenum randog.factory._const.const
 #: randog.factory._date.randdate randog.factory._datetime.randdatetime
-#: randog.factory._decimal.randdecimal randog.factory._dict.randdict
-#: randog.factory._float.randfloat randog.factory._from_example.from_example
+#: randog.factory._decimal.randdecimal randog.factory._dice.dice
+#: randog.factory._dict.randdict randog.factory._float.randfloat
+#: randog.factory._from_example.from_example
 #: randog.factory._from_pyfile.from_pyfile randog.factory._increment.increment
-#: randog.factory._int.randint randog.factory._iterrange.iterrange
-#: randog.factory._list.randlist randog.factory._str.randstr
-#: randog.factory._time.randtime randog.factory._timedelta.randtimedelta
-#: randog.factory._union.union
+#: randog.factory._int.randint randog.factory._ipv4.randipv4
+#: randog.factory._iterrange.iterrange randog.factory._list.randlist
+#: randog.factory._str.randstr randog.factory._time.randtime
+#: randog.factory._timedelta.randtimedelta randog.factory._union.union
 msgid "Parameters"
 msgstr ""
 
@@ -117,13 +118,13 @@ msgstr ""
 #: randog.factory._bool.randbool:5 randog.factory._choice.randchoice:8
 #: randog.factory._choice.randenum:7 randog.factory._date.randdate:7
 #: randog.factory._datetime.randdatetime:12
-#: randog.factory._decimal.randdecimal:18 randog.factory._dict.randdict:8
-#: randog.factory._float.randfloat:16
+#: randog.factory._decimal.randdecimal:18 randog.factory._dice.dice:5
+#: randog.factory._dict.randdict:8 randog.factory._float.randfloat:16
 #: randog.factory._from_example.from_example:20
 #: randog.factory._from_pyfile.from_pyfile:8 randog.factory._int.randint:10
-#: randog.factory._list.randlist:12 randog.factory._str.randstr:10
-#: randog.factory._time.randtime:12 randog.factory._timedelta.randtimedelta:9
-#: randog.factory._union.union:13
+#: randog.factory._ipv4.randipv4:5 randog.factory._list.randlist:12
+#: randog.factory._str.randstr:10 randog.factory._time.randtime:12
+#: randog.factory._timedelta.randtimedelta:9 randog.factory._union.union:13
 msgid "random number generator to be used"
 msgstr "乱数生成に使用するインスタンス"
 
@@ -280,6 +281,31 @@ msgid ""
 "other Factory construction functions."
 msgstr "通常は使用しませんが、他の factory 作成関数と同様に引数として受け取ることができます。"
 
+#: of randog.factory._dice.dice:1
+msgid "Return a factory generating random int values by total of the dice faces."
+msgstr "サイコロの目の合計としてランダムに int 型の値を生成する factory を返す。"
+
+#: of randog.factory._dice.dice:3
+msgid "dice notation"
+msgstr "ダイスロール記法による指定"
+
+#: of randog.factory._bool.randbool randog.factory._choice.randchoice
+#: randog.factory._choice.randenum randog.factory._date.randdate
+#: randog.factory._datetime.randdatetime randog.factory._decimal.randdecimal
+#: randog.factory._dice.dice randog.factory._float.randfloat
+#: randog.factory._from_example.from_example
+#: randog.factory._increment.increment randog.factory._int.randint
+#: randog.factory._ipv4.randipv4 randog.factory._iterrange.iterrange
+#: randog.factory._list.randlist randog.factory._str.randstr
+#: randog.factory._time.randtime randog.factory._timedelta.randtimedelta
+#: randog.factory._union.union
+msgid "Raises"
+msgstr ""
+
+#: of randog.factory._dice.dice:8
+msgid "When the specified code is invalid."
+msgstr "指定されたダイスロール指定が誤っている場合"
+
 #: of randog.factory._from_example.from_example:1
 msgid "Returns a factory generating value like specified example or type."
 msgstr "指定された例に似た値を生成する factory を返す。"
@@ -314,17 +340,6 @@ msgid ""
 "the context of generation. Normally, you should not specify it. If "
 "specified, the context property takes precedence over other arguments."
 msgstr "factory 作成のコンテキスト。通常、指定するべきではありません。もし指定した場合、他の引数よりも優先されます。"
-
-#: of randog.factory._bool.randbool randog.factory._choice.randchoice
-#: randog.factory._choice.randenum randog.factory._date.randdate
-#: randog.factory._datetime.randdatetime randog.factory._decimal.randdecimal
-#: randog.factory._float.randfloat randog.factory._from_example.from_example
-#: randog.factory._increment.increment randog.factory._int.randint
-#: randog.factory._iterrange.iterrange randog.factory._list.randlist
-#: randog.factory._str.randstr randog.factory._time.randtime
-#: randog.factory._timedelta.randtimedelta randog.factory._union.union
-msgid "Raises"
-msgstr ""
 
 #: of randog.factory._from_example.from_example:26
 msgid "When the specified example or type is not supported."
@@ -418,9 +433,9 @@ msgstr "True を生成する確率"
 #: of randog.factory._bool.randbool:8 randog.factory._date.randdate:10
 #: randog.factory._datetime.randdatetime:15
 #: randog.factory._decimal.randdecimal:21 randog.factory._float.randfloat:19
-#: randog.factory._int.randint:13 randog.factory._list.randlist:17
-#: randog.factory._str.randstr:13 randog.factory._time.randtime:15
-#: randog.factory._timedelta.randtimedelta:12
+#: randog.factory._int.randint:13 randog.factory._ipv4.randipv4:8
+#: randog.factory._list.randlist:17 randog.factory._str.randstr:13
+#: randog.factory._time.randtime:15 randog.factory._timedelta.randtimedelta:12
 msgid "When the specified generating conditions are inconsistent."
 msgstr "指定した生成条件に矛盾がある場合。"
 
@@ -537,9 +552,13 @@ msgid ""
 "uniform."
 msgstr "確率分布。'uniform' の場合は一様分布になる。'exp_uniform' を指定すると桁数 (2を底とする対数) が一様分布になる。"
 
-#: of randog.factory._int.randint:1
+#: of randog.factory._int.randint:1 randog.factory._ipv4.randipv4:1
 msgid "Return a factory generating random int values."
 msgstr "ランダムに int 型の値を生成する factory を返す。"
+
+#: of randog.factory._ipv4.randipv4:3
+msgid "address space that is a candidate for the generated IP address"
+msgstr "生成されるIPアドレスのアドレス空間"
 
 #: of randog.factory._list.randlist:1
 msgid "Return a factory generating random list."

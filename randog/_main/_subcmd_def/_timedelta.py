@@ -20,7 +20,7 @@ class SubcmdDefTimedelta(SubcmdDef):
         timedelta_parser = subparsers.add_parser(
             Subcmd.Timedelta.value,
             usage=(
-                "python -m randog timedelta [MINIMUM MAXIMUM] [--unit UNIT] "
+                "randog timedelta [MINIMUM MAXIMUM] [--unit UNIT] "
                 "[--iso | --fmt FORMAT] [common-options]"
             ),
             description=(

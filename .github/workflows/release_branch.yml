@@ -4,22 +4,27 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: '作成するバージョンを入力してください'
+        description: '作成するバージョンを入力してください。例: 1.23.4'
         required: true
 
 jobs:
-  version:
-    name: Version
+  preparing:
+    name: Preparing for release
     permissions:
       contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     env:
+      PYTHON_VERSION: 3.12
       # githubのコンソールから入力したリリース名を環境変数へ保存
       RELEASE_BRANCH_NAME: release/${{ github.event.inputs.version }}
       RELEASE_VERSION: ${{ github.event.inputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Validate branch
+        run: |
+          test ${{ github.ref_name }} = 'develop'
       - name: Create and push release branch
         run: |
           git checkout -b ${{ env.RELEASE_BRANCH_NAME }}
@@ -29,10 +34,36 @@ jobs:
         run: |
           git config --global user.email "github.action@example.com"
           git config --global user.name "GitHub Action"
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r sphinx/requirements_sphinx.lock.txt
       - name: Increment version number
         run: |
           python -c 'import randog; print(randog.__version__)' | xargs -I {} sed -i 's/{}/${{ env.RELEASE_VERSION }}/' README.md randog/__init__.py
-      - name: Commit changes
+      - name: Commit changes (version)
         run: |
           git add .
-          git diff --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push)
+          git diff --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push --set-upstream origin ${{ env.RELEASE_BRANCH_NAME }})
+      - name: Sphinx
+        run: |
+          cd sphinx
+          sphinx-build -M gettext source build
+          sphinx-intl update -p build/gettext -l ja
+          sphinx-build -M html -d build/.doctrees source '../docs/en' -D language=en
+          sphinx-build -M html -d build/.doctrees source '../docs/ja' -D language=ja
+      - name: Commit changes (sphinx)
+        run: |
+          git add .
+          git diff --name-only --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push --set-upstream origin ${{ env.RELEASE_BRANCH_NAME }})
+      - name: Create pull request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ env.RELEASE_BRANCH_NAME }}
+          destination_branch: ${{ github.ref_name }}
+          pr_title: Release/v${{ env.RELEASE_VERSION }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

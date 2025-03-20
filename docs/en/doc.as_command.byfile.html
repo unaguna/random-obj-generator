@@ -1,29 +1,29 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>byfile Mode &mdash; random-obj-generator 0.17.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>byfile Mode &mdash; random-obj-generator 0.18.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ba2e7b09"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Logging" href="doc.logging.html" />
-    <link rel="prev" title="timedelta Mode" href="doc.as_command.timedelta.html" /> 
+    <link rel="next" title="dice Mode" href="doc.as_command.dice.html" />
+    <link rel="prev" title="ipv4 Mode" href="doc.as_command.ipv4.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -37,9 +37,9 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
+            <div class="version">
+              0.18.0
+            </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -68,11 +68,13 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.date.html">date Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.time.html">time Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.ipv4.html">ipv4 Mode</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">byfile Mode</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#arguments-and-options">Arguments and Options</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.dice.html">dice Mode</a></li>
 </ul>
 </li>
 </ul>
@@ -116,13 +118,13 @@
            <div itemprop="articleBody">
              
   <section id="byfile-mode">
-<h1>byfile Mode<a class="headerlink" href="#byfile-mode" title="Permalink to this heading"></a></h1>
+<h1>byfile Mode<a class="headerlink" href="#byfile-mode" title="Link to this heading"></a></h1>
 <p>In byfile mode, values are generated using the factories defined in <a class="reference internal" href="doc.external_def.html"><span class="doc">a factory definition</span></a>. The format of the command is as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--regenerate<span class="w"> </span>PROB_REGEN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--discard<span class="w"> </span>PROB_DISCARD<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--error-on-factory-stopped<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>FACTORY_PATH<span class="w"> </span><span class="o">[</span>...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--regenerate<span class="w"> </span>PROB_REGEN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--discard<span class="w"> </span>PROB_DISCARD<span class="o">]</span><span class="w"> </span><span class="o">[</span>--csv<span class="w"> </span>ROW_NUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--error-on-factory-stopped<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <p>The argument FACTORY_PATH is <a class="reference internal" href="doc.external_def.html"><span class="doc">a filename of the factory definition</span></a>. It must be python code that creates an instance of factory in the variable FACTORY as in the following example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
 
 <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
     <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
@@ -139,7 +141,7 @@
 <p>In factory definition file, <code class="code docutils literal notranslate"><span class="pre">import</span> <span class="pre">randog</span></code> can be omitted.</p>
 </div>
 <section id="arguments-and-options">
-<h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
+<h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Link to this heading"></a></h2>
 <ul>
 <li><p><code class="code docutils literal notranslate"><span class="pre">FACTORY_PATH</span> <span class="pre">[...]</span></code>:</p>
 <blockquote>
@@ -186,35 +188,35 @@
 </ul>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p>The simplest example is the following:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
 </pre></div>
 </div>
 <p>If the definition file defines a factory that generates a dict equivalent to one record in the database, you can obtain data for testing by generating multiple dict as shown below:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate list which contains 10 values</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 <p>You may want to generate multiple values while outputting each one to a separate file. In that case, you can utilize <code class="code docutils literal notranslate"><span class="pre">-O</span></code> and <code class="code docutils literal notranslate"><span class="pre">-r</span></code> as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times and output each of them into out_001.json, out_002.json, ... with json format</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.json&#39;</span><span class="w"> </span>--json
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.json&#39;</span><span class="w"> </span>--json
 </pre></div>
 </div>
 <p>You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
 In the case, the output can be made missing by <code class="code docutils literal notranslate"><span class="pre">--discard</span></code> or <code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code>. For example:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 values (each value will be discarded at 10% probability)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
 
 <span class="c1"># output exactly 20 values (each value will be regenerated at 10% probability)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
 </pre></div>
 </div>
 <section id="output-as-csv">
-<span id="id1"></span><h3>output as CSV<a class="headerlink" href="#output-as-csv" title="Permalink to this heading"></a></h3>
+<span id="id1"></span><h3>output as CSV<a class="headerlink" href="#output-as-csv" title="Link to this heading"></a></h3>
 <p>To output in CSV format, use the <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> option. The value of each field is determined by the <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> defined in the definition file.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output CSV which contains 20 rows</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -224,12 +226,12 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>CSV output can also be output to multiple files with the <code class="code docutils literal notranslate"><span class="pre">--repeat/-r</span></code> and <code class="code docutils literal notranslate"><span class="pre">--output/-O</span></code> options.
 In the following example, it outputs 20 lines to each of 10 CSV files.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output 10 CSV files; each file contains 20 rows</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.csv&#39;</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>-O<span class="w"> </span><span class="s1">&#39;out_{:03}.csv&#39;</span>
 </pre></div>
 </div>
 <p>In the example at the top of this page, <code class="code docutils literal notranslate"><span class="pre">CSV_COLUMNS</span></code> was defined as a list of strings, but you can also specify a function that returns a field instead of a string that specifies a dictionary key.
 In the following example, the third field is a string that is processed from the value of age.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
 
 <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
     <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
@@ -247,11 +249,11 @@ In the following example, the third field is a string that is processed from the
 </div>
 <p>You may want to discard some of the generated values, for example, if you are using PK with missing some timestamps.
 In the case, the output can be made missing by <code class="code docutils literal notranslate"><span class="pre">--discard</span></code> or <code class="code docutils literal notranslate"><span class="pre">--regenerate</span></code>. For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">import</span> <span class="nn">randog</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
 
-<span class="k">def</span> <span class="nf">timestamp_iter</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">timestamp_iter</span><span class="p">():</span>
     <span class="nb">next</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2002</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">yield</span> <span class="nb">next</span>
@@ -267,10 +269,10 @@ In the case, the output can be made missing by <code class="code docutils litera
 </pre></div>
 </div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output at most 20 rows (each row will be discarded at 10% probability)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--discard<span class="w"> </span><span class="m">0</span>.1
 
 <span class="c1"># output exactly 20 rows (Gaps of &#39;timestamp&#39; at 10% probability)</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--csv<span class="w"> </span><span class="m">20</span><span class="w"> </span>--regenerate<span class="w"> </span><span class="m">0</span>.1
 </pre></div>
 </div>
 <div class="admonition note">
@@ -283,11 +285,11 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="change-behavior-patterns-by-environment-variables">
-<h3>Change behavior patterns by environment variables<a class="headerlink" href="#change-behavior-patterns-by-environment-variables" title="Permalink to this heading"></a></h3>
+<h3>Change behavior patterns by environment variables<a class="headerlink" href="#change-behavior-patterns-by-environment-variables" title="Link to this heading"></a></h3>
 <p>One useful idea is to allow the detailed settings of the factory definition to be changed by environment variables. For example, the following definition file allows the initial value of <code class="code docutils literal notranslate"><span class="pre">id</span></code> to be specified by an environment variable.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">randog</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
 
 <span class="n">initial_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
     <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;INIT_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
@@ -302,17 +304,17 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 <p>In addition to the standard shell method, the env option of randog can be used to specify environment variables. All of the following examples work the same way:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Can use it in bash, etc., but not in powershell</span>
-<span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
+<span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py
 
 <span class="c1"># Can use it in any shell</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span>
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Multiple environment variables can also be specified as follows:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
+randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">INIT_ID</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">VAR</span><span class="o">=</span>foo
 </pre></div>
 </div>
 </div>
@@ -328,8 +330,8 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="doc.as_command.timedelta.html" class="btn btn-neutral float-left" title="timedelta Mode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="doc.logging.html" class="btn btn-neutral float-right" title="Logging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.as_command.ipv4.html" class="btn btn-neutral float-left" title="ipv4 Mode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.as_command.dice.html" class="btn btn-neutral float-right" title="dice Mode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

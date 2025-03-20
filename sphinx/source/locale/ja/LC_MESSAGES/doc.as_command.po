@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-16 15:19+0900\n"
+"POT-Creation-Date: 2025-03-09 19:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -74,7 +74,7 @@ msgid ":code:`bool`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:29
-msgid ":code:`python -m randog bool`"
+msgid ":code:`randog bool`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:30
@@ -89,12 +89,12 @@ msgstr ""
 msgid "int"
 msgstr ""
 
-#: ../../source/doc.as_command.rst:34
+#: ../../source/doc.as_command.rst:34 ../../source/doc.as_command.rst:88
 msgid ":code:`int`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:35
-msgid ":code:`python -m randog int -100 100`"
+msgid ":code:`randog int -100 100`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:36
@@ -114,7 +114,7 @@ msgid ":code:`float`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:41
-msgid ":code:`python -m randog float -10 10`"
+msgid ":code:`randog float -10 10`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:42
@@ -134,7 +134,7 @@ msgid ":code:`str`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:47
-msgid ":code:`python -m randog str`"
+msgid ":code:`randog str`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:48
@@ -154,7 +154,7 @@ msgid ":code:`Decimal`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:53
-msgid ":code:`python -m randog decimal -10 10 --decimal-len 2`"
+msgid ":code:`randog decimal -10 10 --decimal-len 2`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:54
@@ -174,7 +174,7 @@ msgid ":code:`datetime`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:59
-msgid ":code:`python -m randog datetime 2022-01-01 2023-01-01`"
+msgid ":code:`randog datetime 2022-01-01 2023-01-01`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:60
@@ -194,7 +194,7 @@ msgid ":code:`date`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:65
-msgid ":code:`python -m randog date 2022-01-01 2023-01-01`"
+msgid ":code:`randog date 2022-01-01 2023-01-01`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:66
@@ -214,7 +214,7 @@ msgid ":code:`time`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:71
-msgid ":code:`python -m randog time`"
+msgid ":code:`randog time`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:72
@@ -234,7 +234,7 @@ msgid ":code:`timedelta`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:77
-msgid ":code:`python -m randog timedelta`"
+msgid ":code:`randog timedelta`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:78
@@ -246,6 +246,42 @@ msgid ":doc:`detail <doc.as_command.timedelta>`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst:81
+msgid "ipv4"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:82
+msgid ":code:`IPv4Address`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:83
+msgid ":code:`randog ipv4`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:84
+msgid ":code:`192.0.2.71`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:85
+msgid ":doc:`detail <doc.as_command.ipv4>`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:87
+msgid "dice"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:89
+msgid ":code:`randog dice 2d6`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:90
+msgid ":code:`9`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:91
+msgid ":doc:`detail <doc.as_command.dice>`"
+msgstr ""
+
+#: ../../source/doc.as_command.rst:93
 msgid "byfile"
 msgstr ""
 
@@ -257,33 +293,33 @@ msgstr ""
 msgid "the definition file"
 msgstr ""
 
-#: ../../source/doc.as_command.rst:84
-msgid ":code:`python -m randog byfile ./factory_def.py`"
+#: ../../source/doc.as_command.rst:96
+msgid ":code:`randog byfile ./factory_def.py`"
 msgstr ""
 
 #: ../../source/doc.as_command.rst
 msgid "./factory_def.py"
 msgstr ""
 
-#: ../../source/doc.as_command.rst:87
+#: ../../source/doc.as_command.rst:99
 msgid ":doc:`detail <doc.as_command.byfile>`"
 msgstr ""
 
-#: ../../source/doc.as_command.rst:91
+#: ../../source/doc.as_command.rst:103
 msgid "Arguments and Options"
 msgstr "引数とオプション"
 
-#: ../../source/doc.as_command.rst:93
+#: ../../source/doc.as_command.rst:105
 msgid ""
 "For mode-specific arguments and options, see the detailed page for each "
 "mode."
 msgstr "モードごとの引数やオプションの説明は、各モードの詳細ページで確認してください。"
 
-#: ../../source/doc.as_command.rst:95
+#: ../../source/doc.as_command.rst:107
 msgid "Several options can be used in any mode; see also:"
 msgstr "いくつかのオプションは全てのモードで指定できます。次のページをご覧ください："
 
-#: ../../source/doc.as_command.rst:103
+#: ../../source/doc.as_command.rst:115
 msgid "Details of Modes"
 msgstr "各モードの詳細"
 

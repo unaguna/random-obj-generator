@@ -3,6 +3,7 @@ from ._choice import ChoiceRandomFactory, randchoice, randenum
 from ._const import const
 from ._bool import BoolRandomFactory, randbool
 from ._int import IntRandomFactory, randint
+from ._dice import DiceRandomFactory, dice, parse_dice_notation
 from ._float import FloatRandomFactory, randfloat
 from ._decimal import DecimalRandomFactory, randdecimal
 from ._str import StrRandomFactory, randstr
@@ -17,6 +18,7 @@ from ._by_iterator import ByIteratorFactory, by_iterator
 from ._increment import increment
 from ._iterrange import iterrange
 from ._union import UnionRandomFactory, union
+from ._ipv4 import Ipv4RandomFactory, randipv4
 from ._from_example import from_example, FromExampleContext
 from ._from_pyfile import from_pyfile, FactoryDef
 
@@ -28,6 +30,8 @@ __all__ = [
     "randchoice",
     "randenum",
     "const",
+    "dice",
+    "parse_dice_notation",
     "randbool",
     "randint",
     "randfloat",
@@ -37,6 +41,7 @@ __all__ = [
     "randdate",
     "randtimedelta",
     "randdatetime",
+    "randipv4",
     "randlist",
     "randdict",
     "by_callable",

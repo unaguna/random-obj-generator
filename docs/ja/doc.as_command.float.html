@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>float モード &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>float モード &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,9 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
+            <div class="version">
+              0.18.0
+            </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -73,7 +73,9 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.date.html">date モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.time.html">time モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.ipv4.html">ipv4 Mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.byfile.html">byfile モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.dice.html">dice モード</a></li>
 </ul>
 </li>
 </ul>
@@ -117,13 +119,13 @@
            <div itemprop="articleBody">
              
   <section id="float-mode">
-<h1>float モード<a class="headerlink" href="#float-mode" title="この見出しへのパーマリンク"></a></h1>
+<h1>float モード<a class="headerlink" href="#float-mode" title="Link to this heading"></a></h1>
 <p>float モードでは、浮動小数点数を生成します。コマンドの形式は次の通りです：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--exp-uniform<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>float<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--p-inf<span class="w"> </span>PROB_P_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--n-inf<span class="w"> </span>PROB_N_INF<span class="o">]</span><span class="w"> </span><span class="o">[</span>--nan<span class="w"> </span>PROB_NAN<span class="o">]</span><span class="w"> </span><span class="o">[</span>--exp-uniform<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
-<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
+<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="Link to this heading"></a></h2>
 <ul>
 <li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
 <blockquote>
@@ -184,14 +186,14 @@
 </ul>
 </section>
 <section id="examples">
-<h2>実行例<a class="headerlink" href="#examples" title="この見出しへのパーマリンク"></a></h2>
+<h2>実行例<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p>最も簡素な例は次の通りです。0から1の間の数値を出力します。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>float
 </pre></div>
 </div>
 <p>次の例のように、生成する値の範囲を指定することができます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value between 0.01 and 10^100</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>1e+100
+randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>1e+100
 </pre></div>
 </div>
 <div class="admonition note">
@@ -200,26 +202,26 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 <p>小数部がない整数を生成したい場合は <a class="reference internal" href="doc.as_command.int.html"><span class="doc">int モード</span></a> を使用してください。</p>
 </div>
 <section id="infinity-and-nan">
-<h3>Infinity and NaN<a class="headerlink" href="#infinity-and-nan" title="この見出しへのパーマリンク"></a></h3>
+<h3>Infinity and NaN<a class="headerlink" href="#infinity-and-nan" title="Link to this heading"></a></h3>
 <p>オプション引数を指定することで無限大やNaNを生成の候補に含めることができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generates positive infinity with 10% probability</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span><span class="w"> </span>1e+100<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.1
+randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span><span class="w"> </span>1e+100<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.1
 
 <span class="c1"># Generates NaN with 15% probability</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>--nan<span class="w"> </span><span class="m">0</span>.15
+randog<span class="w"> </span>float<span class="w"> </span>--nan<span class="w"> </span><span class="m">0</span>.15
 </pre></div>
 </div>
 <p>無限大やNaNの表現は python の標準 (<code class="code docutils literal notranslate"><span class="pre">inf</span></code>, <code class="code docutils literal notranslate"><span class="pre">-inf</span></code>, <code class="code docutils literal notranslate"><span class="pre">nan</span></code>) を使用します。出力を他の言語で書かれたプログラムで読み込む場合などで支障があれば、<code class="code docutils literal notranslate"><span class="pre">--json</span></code> オプションを使用してJSON形式 (<code class="code docutils literal notranslate"><span class="pre">Infinity</span></code>, <code class="code docutils literal notranslate"><span class="pre">-Infinity</span></code>, <code class="code docutils literal notranslate"><span class="pre">NaN</span></code>) で出力することもできます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generates Infinity, -Infinity, or, NaN</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--n-inf<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--nan<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span>--json
+randog<span class="w"> </span>float<span class="w"> </span>--p-inf<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--n-inf<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--nan<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span>--json
 </pre></div>
 </div>
 </section>
 <section id="format-significant-digits-etc">
-<h3>出力フォーマット (有効桁数等)<a class="headerlink" href="#format-significant-digits-etc" title="この見出しへのパーマリンク"></a></h3>
+<h3>出力フォーマット (有効桁数等)<a class="headerlink" href="#format-significant-digits-etc" title="Link to this heading"></a></h3>
 <p>以下のように出力フォーマットを <a class="reference external" href="https://docs.python.org/ja/3/library/string.html?highlight=string#format-specification-mini-language">書式指定ミニ言語</a> で指定することができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output numeric such as &#39;4.20e+98&#39;, which has (2+1) significant digits</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>1e+100<span class="w"> </span>--fmt<span class="w"> </span>.2e
+randog<span class="w"> </span>float<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>1e+100<span class="w"> </span>--fmt<span class="w"> </span>.2e
 </pre></div>
 </div>
 <div class="admonition note">
@@ -228,18 +230,18 @@ python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> <
 </div>
 </section>
 <section id="repeatedly-generate">
-<h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="この見出しへのパーマリンク"></a></h3>
+<h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="Link to this heading"></a></h3>
 <p>たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>float<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
 
 <span class="c1"># Generate list which contains 10 values</span>
-python<span class="w"> </span>-m<span class="w"> </span>randog<span class="w"> </span>float<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
+randog<span class="w"> </span>float<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 </section>
 <section id="probability-distribution-uniform-distribution-of-digits">
-<h3>確率分布 (桁数の分布を一様に)<a class="headerlink" href="#probability-distribution-uniform-distribution-of-digits" title="この見出しへのパーマリンク"></a></h3>
+<h3>確率分布 (桁数の分布を一様に)<a class="headerlink" href="#probability-distribution-uniform-distribution-of-digits" title="Link to this heading"></a></h3>
 <p>デフォルトでは生成の確率分布は一様分布です。たとえば、0.1 から 1000.0 の値を生成する場合、0.1 が生成される確率、5.0 が生成される確率、500.0 が生成される確率はすべて同一です。</p>
 <p>特にこだわらない場合は一様分布でも問題ありませんが、様々な桁数の値が生成されてほしい場合はこれでは問題があります。上述の例だと3桁の数値 (100.0 - 1000.0) が生成される確率は 90% であり、1未満の数が生成される確率はわずか 0.1% しかありません。つまり、生成される値の大半が3桁なのです。</p>
 <p>桁数の分布を均一にするためには <code class="code docutils literal notranslate"><span class="pre">--exp-uniform</span></code> を使用します。このオプションを使用することで桁数が小さい数に大きい比重がかけられ、桁数はおおむね均一になります。より正確には、2進数表記した際の桁数 <code class="code docutils literal notranslate"><span class="pre">floor(log2(x))</span></code> の分布が一様になります。ただし、0の桁数は0とし、正の数と負の数は別々に確率を持ちます。たとえば、-8 から 24 までの整数を生成する場合、以下の事象はすべて同じ確率です。</p>

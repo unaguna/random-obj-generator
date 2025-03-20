@@ -9,4 +9,4 @@ __all__ = [
     "generate_to_csv",
 ]
 
-__version__ = "0.17.0"
+__version__ = "0.18.0"

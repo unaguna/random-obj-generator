@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Factory from sqlalchemy &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Factory from sqlalchemy &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,9 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
+            <div class="version">
+              0.18.0
+            </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -120,7 +120,7 @@
            <div itemprop="articleBody">
              
   <section id="factory-from-sqlalchemy">
-<h1>Factory from sqlalchemy<a class="headerlink" href="#factory-from-sqlalchemy" title="この見出しへのパーマリンク"></a></h1>
+<h1>Factory from sqlalchemy<a class="headerlink" href="#factory-from-sqlalchemy" title="Link to this heading"></a></h1>
 <p>SQLAlchemy のモデルのインスタンスを生成する factory を作成することができます。この factory では各フィールドの値も毎回ランダムに生成します。</p>
 <p>他の factory と同様に、model factory も2つの方法 (<a class="reference external" href="randog.sqlalchemy.html#randog.sqlalchemy.factory">randog.sqlalchemy.factory</a>, <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>) で作成することができます。</p>
 <div class="admonition warning">
@@ -136,16 +136,16 @@
 <p>以降の例では sqlalchemy 1.4 のモデルを使用していますが、<code class="code docutils literal notranslate"><span class="pre">mapped_column</span></code> を使う2.0のモデルにも対応しています。</p>
 </div>
 <section id="factory-by-randog-sqlalchemy-factory">
-<h2><code class="code docutils literal notranslate"><span class="pre">randog.sqlalchemy.factory</span></code> を使用して作成<a class="headerlink" href="#factory-by-randog-sqlalchemy-factory" title="この見出しへのパーマリンク"></a></h2>
+<h2><code class="code docutils literal notranslate"><span class="pre">randog.sqlalchemy.factory</span></code> を使用して作成<a class="headerlink" href="#factory-by-randog-sqlalchemy-factory" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="randog.sqlalchemy.html#randog.sqlalchemy.factory">randog.sqlalchemy.factory</a> を使用する場合、以下の例のようになります。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.sqlalchemy</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.sqlalchemy</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -184,16 +184,16 @@
 </div>
 </section>
 <section id="factory-by-from-example">
-<h2><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成<a class="headerlink" href="#factory-by-from-example" title="この見出しへのパーマリンク"></a></h2>
+<h2><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成<a class="headerlink" href="#factory-by-from-example" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> を使用する場合、以下の例のようになります。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.sqlalchemy</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.sqlalchemy</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -223,7 +223,7 @@
 </div>
 </section>
 <section id="supported-column-type">
-<h2>対応しているカラムの型<a class="headerlink" href="#supported-column-type" title="この見出しへのパーマリンク"></a></h2>
+<h2>対応しているカラムの型<a class="headerlink" href="#supported-column-type" title="Link to this heading"></a></h2>
 <p>以下の型のカラムに対応しています。</p>
 <ul class="simple">
 <li><p>Integer, BigInteger</p></li>
@@ -238,7 +238,7 @@
 </ul>
 </section>
 <section id="limitations">
-<span id="id3"></span><h2>制限事項<a class="headerlink" href="#limitations" title="この見出しへのパーマリンク"></a></h2>
+<span id="id3"></span><h2>制限事項<a class="headerlink" href="#limitations" title="Link to this heading"></a></h2>
 <p>randog は sqlalchemy や RDB の全ての機能には対応していません。とくに、下記の点に注意してください。</p>
 <ul class="simple">
 <li><p>モデルが relationship を含む場合、factory を作成できません。</p></li>
@@ -252,16 +252,16 @@
 </div>
 </section>
 <section id="specify-factories-for-individual-fields">
-<span id="override-columns"></span><h2>各フィールドの factory の指定<a class="headerlink" href="#specify-factories-for-individual-fields" title="この見出しへのパーマリンク"></a></h2>
+<span id="override-columns"></span><h2>各フィールドの factory の指定<a class="headerlink" href="#specify-factories-for-individual-fields" title="Link to this heading"></a></h2>
 <p>各フィールドを生成する factory はモデルクラスのカラム定義から自動で作成されますが、以下の例のように一部またはすべての factory を明示的に指定することができます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.sqlalchemy</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.sqlalchemy</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -291,7 +291,7 @@
 <p>上の例では、実際のデータベースの外部キー制約とチェック制約を満たすレコードを生成するために、<code class="code docutils literal notranslate"><span class="pre">type</span></code> と <code class="code docutils literal notranslate"><span class="pre">group_id</span></code> の factory を指定しています。指定されていない <code class="code docutils literal notranslate"><span class="pre">id</span></code> と <code class="code docutils literal notranslate"><span class="pre">name</span></code> はカラム定義から作成される factory で生成されます。</p>
 </section>
 <section id="generate-a-dict-instance">
-<h2>dict オブジェクトの生成<a class="headerlink" href="#generate-a-dict-instance" title="この見出しへのパーマリンク"></a></h2>
+<h2>dict オブジェクトの生成<a class="headerlink" href="#generate-a-dict-instance" title="Link to this heading"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
 <p>再掲：これは実験的な機能です。将来、削除もしくは大幅な修正をする可能性があります。様々な <a class="reference internal" href="#limitations"><span class="std std-ref">制限事項</span></a> があります。</p>
@@ -302,14 +302,14 @@
 <p>モデルクラスと無関係に単にdictオブジェクトを生成したい場合は、<a class="reference internal" href="doc.dict_factory.html"><span class="doc">randdict</span></a> を使用してください。</p>
 </div>
 <p><code class="code docutils literal notranslate"><span class="pre">randog.sqlalchemy.factory</span></code> を使用する場合、次の例のように、引数に <code class="code docutils literal notranslate"><span class="pre">as_dict=True</span></code> を指定することでdict オブジェクトを生成する factory を作成することができます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.sqlalchemy</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.sqlalchemy</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -331,14 +331,14 @@
 </pre></div>
 </div>
 <p><code class="code docutils literal notranslate"><span class="pre">from_example</span></code>　を使用する場合、次の例のように、<a class="reference external" href="doc.construct_factories.html#processing-output">post_process</a> を使用することでdict オブジェクトを生成する factory を作成することができます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">inspect</span><span class="p">,</span> <span class="n">String</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.sqlalchemy</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">inspect</span><span class="p">,</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.sqlalchemy</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

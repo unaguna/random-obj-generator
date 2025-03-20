@@ -1,24 +1,24 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>str Mode &mdash; random-obj-generator 0.17.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>str Mode &mdash; random-obj-generator 0.18.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ba2e7b09"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,9 +37,9 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
+            <div class="version">
+              0.18.0
+            </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -118,7 +118,7 @@
            <div itemprop="articleBody">
              
   <section id="str-mode">
-<h1>str Mode<a class="headerlink" href="#str-mode" title="Permalink to this heading"></a></h1>
+<h1>str Mode<a class="headerlink" href="#str-mode" title="Link to this heading"></a></h1>
 <p>In str mode, string values are generated. The format of the command is as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>str<span class="w"> </span><span class="o">[</span>--length<span class="w"> </span>LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--charset<span class="w"> </span>CHARSET<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 
@@ -131,7 +131,7 @@ randog<span class="w"> </span>str<span class="w"> </span><span class="o">[</span
 In cases where there are security requirements, such as the generation of tokens for authentication, consider using <a class="reference external" href="https://docs.python.org/3/library/secrets.html">secrets</a> module or similar.</p>
 </div>
 <section id="arguments-and-options">
-<h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
+<h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Link to this heading"></a></h2>
 <ul>
 <li><p><code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">LENGTH</span></code> (optional):</p>
 <blockquote>
@@ -171,7 +171,7 @@ In cases where there are security requirements, such as the generation of tokens
 </ul>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p>The simplest example is the following:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>str
 </pre></div>
@@ -204,7 +204,7 @@ randog<span class="w"> </span>str<span class="w"> </span>--regex<span class="w">
 If you use it, please review and follow the license terms of rstr.</p>
 </div>
 <section id="format-align-etc">
-<h3>Format: align, etc.<a class="headerlink" href="#format-align-etc" title="Permalink to this heading"></a></h3>
+<h3>Format: align, etc.<a class="headerlink" href="#format-align-etc" title="Link to this heading"></a></h3>
 <p>The output format can be specified in <a class="reference external" href="https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language">format specification mini-language</a> as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output string such as &#39;      zy7q&#39;</span>
 randog<span class="w"> </span>str<span class="w"> </span>--length<span class="w"> </span><span class="m">4</span><span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;&gt;10&#39;</span>

@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>str モード &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>str モード &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,9 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
+            <div class="version">
+              0.18.0
+            </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -119,7 +119,7 @@
            <div itemprop="articleBody">
              
   <section id="str-mode">
-<h1>str モード<a class="headerlink" href="#str-mode" title="この見出しへのパーマリンク"></a></h1>
+<h1>str モード<a class="headerlink" href="#str-mode" title="Link to this heading"></a></h1>
 <p>str モードでは、文字列を生成します。コマンドの形式は次の通りです：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>str<span class="w"> </span><span class="o">[</span>--length<span class="w"> </span>LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--charset<span class="w"> </span>CHARSET<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 
@@ -131,7 +131,7 @@ randog<span class="w"> </span>str<span class="w"> </span><span class="o">[</span
 <p>この文字列生成では、暗号学的に安全であることは保証されません。認証用トークンの生成など、セキュリティ要件があるケースでは、<a class="reference external" href="https://docs.python.org/ja/3/library/secrets.html">secrets</a> モジュール等の使用を検討してください。</p>
 </div>
 <section id="arguments-and-options">
-<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
+<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="Link to this heading"></a></h2>
 <ul>
 <li><p><code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">LENGTH</span></code> (optional):</p>
 <blockquote>
@@ -171,7 +171,7 @@ randog<span class="w"> </span>str<span class="w"> </span><span class="o">[</span
 </ul>
 </section>
 <section id="examples">
-<h2>実行例<a class="headerlink" href="#examples" title="この見出しへのパーマリンク"></a></h2>
+<h2>実行例<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p>最も簡素な例は次の通りです：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>str
 </pre></div>
@@ -202,7 +202,7 @@ randog<span class="w"> </span>str<span class="w"> </span>--regex<span class="w">
 <p>正規表現を使用した文字列生成には <a class="reference external" href="https://pypi.org/project/rstr/">rstr</a> パッケージを使用します。使用する場合、rstr のライセンス条項を確認して従ってください。</p>
 </div>
 <section id="format-align-etc">
-<h3>出力フォーマット (右寄せ等)<a class="headerlink" href="#format-align-etc" title="この見出しへのパーマリンク"></a></h3>
+<h3>出力フォーマット (右寄せ等)<a class="headerlink" href="#format-align-etc" title="Link to this heading"></a></h3>
 <p>以下のように出力フォーマットを <a class="reference external" href="https://docs.python.org/ja/3/library/string.html?highlight=string#format-specification-mini-language">書式指定ミニ言語</a> で指定することができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output string such as &#39;      zy7q&#39;</span>
 randog<span class="w"> </span>str<span class="w"> </span>--length<span class="w"> </span><span class="m">4</span><span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;&gt;10&#39;</span>

@@ -1,0 +1,38 @@
+name: Create Release Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '作成するバージョンを入力してください'
+        required: true
+
+jobs:
+  version:
+    name: Version
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    env:
+      # githubのコンソールから入力したリリース名を環境変数へ保存
+      RELEASE_BRANCH_NAME: release/${{ github.event.inputs.version }}
+      RELEASE_VERSION: ${{ github.event.inputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Create and push release branch
+        run: |
+          git checkout -b ${{ env.RELEASE_BRANCH_NAME }}
+          git push origin ${{ env.RELEASE_BRANCH_NAME }}
+      - name: Setup Git user
+        shell: bash
+        run: |
+          git config --global user.email "github.action@example.com"
+          git config --global user.name "GitHub Action"
+      - name: Increment version number
+        run: |
+          python -c 'import randog; print(randog.__version__)' | xargs -I {} sed -i 's/{}/${{ env.RELEASE_VERSION }}/' README.md randog/__init__.py
+      - name: Commit changes
+        run: |
+          git add .
+          git diff --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push)

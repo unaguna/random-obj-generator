@@ -1,13 +1,13 @@
 ---
 name: Release
 about: package release operations
-title: Release vx.x.x.x
+title: Release vx.x.x
 labels: ''
 assignees: ''
 
 ---
 
-- [ ] create branch `release` and checkout it
+- [ ] create branch `release/vx.x.x` and checkout it
 - [ ] increment version number of `./randog/__init__.py`
 - [ ] increment version number of `./README.md`
 - [ ] build sphinx document

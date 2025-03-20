@@ -26,7 +26,7 @@ assert isinstance(generated["name"], str)
 assert isinstance(generated["age"], int)
 ```
 
-See the [documentation](https://unaguna.github.io/random-obj-generator/en/) for more details.
+See the [documentation](https://unaguna.github.io/random-obj-generator/) for more details.
 
 
 ## Types that can be generated
@@ -34,4 +34,5 @@ See the [documentation](https://unaguna.github.io/random-obj-generator/en/) for 
 - int, float, str, etc.
 - [tuple](https://unaguna.github.io/random-obj-generator/en/doc.list_factory.html), [list](https://unaguna.github.io/random-obj-generator/en/doc.list_factory.html), [dict](https://unaguna.github.io/random-obj-generator/en/doc.dict_factory.html)
 - datetime, date, time, timedelta
+- [IPv4Address](https://unaguna.github.io/random-obj-generator/en/doc.ipv4_factory.html)
 - (Experimental feature) [Model instance of SQLAlchemy](https://unaguna.github.io/random-obj-generator/en/doc.sqlalchemy.html)

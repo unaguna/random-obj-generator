@@ -35,4 +35,4 @@ jobs:
       - name: Commit changes
         run: |
           git add .
-          git diff --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push)
+          git diff --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push --set-upstream origin ${{ env.RELEASE_BRANCH_NAME }})

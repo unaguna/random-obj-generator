@@ -55,5 +55,12 @@ jobs:
       - name: Commit changes (sphinx)
         run: |
           git add .
-          git diff --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push --set-upstream origin ${{ env.RELEASE_BRANCH_NAME }})
-
+          git diff --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push --set-upstream origin ${{ env.RELEASE_BRANCH_NAME }})H }}
+      - name: Create pull request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ env.RELEASE_BRANCH_NAME }}
+          destination_branch: ${{ env.DEST_BRANCH }}
+          pr_title: Release/v${{ env.RELEASE_VERSION }}
+          pr_template: Release
+          github_token: ${{ secrets.GITHUB_TOKEN }}

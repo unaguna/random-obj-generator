@@ -288,5 +288,6 @@ poetry.toml
 
 .venv_*/
 /memo.txt
+/docs_loc/
 
 /.idea/misc.xml

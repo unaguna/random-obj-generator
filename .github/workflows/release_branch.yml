@@ -12,6 +12,7 @@ jobs:
     name: Version
     permissions:
       contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     env:
       PYTHON_VERSION: 3.12

@@ -1,24 +1,24 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>datetime Mode &mdash; random-obj-generator 0.17.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>datetime Mode &mdash; random-obj-generator 0.18.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=3ed670ff" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ba2e7b09"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,9 +37,6 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -119,13 +116,13 @@
            <div itemprop="articleBody">
              
   <section id="datetime-mode">
-<h1>datetime Mode<a class="headerlink" href="#datetime-mode" title="Permalink to this heading"></a></h1>
+<h1>datetime Mode<a class="headerlink" href="#datetime-mode" title="Link to this heading"></a></h1>
 <p>In datetime mode, datetime values are generated. The format of the command is as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>datetime<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--iso<span class="w"> </span><span class="p">|</span><span class="w"> </span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
-<h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Permalink to this heading"></a></h2>
+<h2>Arguments and Options<a class="headerlink" href="#arguments-and-options" title="Link to this heading"></a></h2>
 <ul>
 <li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
 <blockquote>
@@ -165,7 +162,7 @@
 </ul>
 </section>
 <section id="expression-of-minimum-and-maximum">
-<span id="datetime-min-max-expression"></span><h2>Expression of MINIMUM and MAXIMUM<a class="headerlink" href="#expression-of-minimum-and-maximum" title="Permalink to this heading"></a></h2>
+<span id="datetime-min-max-expression"></span><h2>Expression of MINIMUM and MAXIMUM<a class="headerlink" href="#expression-of-minimum-and-maximum" title="Link to this heading"></a></h2>
 <p>You can specify the arguments <code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> and <code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> with following expressions:</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">now</span></code>: it means current datetime</p></li>
@@ -191,7 +188,7 @@ randog<span class="w"> </span>datetime<span class="w"> </span>--repeat<span clas
 </div>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p>The simplest example is the following, which outputs a datetime value.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>datetime
 </pre></div>
@@ -215,7 +212,7 @@ randog<span class="w"> </span>datetime<span class="w"> </span>+1h
 <p>See <a class="reference internal" href="#datetime-min-max-expression"><span class="std std-ref">Expression of MINIMUM and MAXIMUM</span></a> for expressions such as <code class="code docutils literal notranslate"><span class="pre">+1d</span></code>.</p>
 </div>
 <section id="format-iso-8601-etc">
-<h3>Format: ISO-8601, etc.<a class="headerlink" href="#format-iso-8601-etc" title="Permalink to this heading"></a></h3>
+<h3>Format: ISO-8601, etc.<a class="headerlink" href="#format-iso-8601-etc" title="Link to this heading"></a></h3>
 <p>By default, the output is in the standard python format, but you can change the output format to the format specified in <a class="reference external" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes">the form of strftime or strptime</a> or <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO-8601 format</a> by specifying options as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 randog<span class="w"> </span>datetime<span class="w"> </span>--iso
@@ -226,7 +223,7 @@ randog<span class="w"> </span>datetime<span class="w"> </span>--fmt<span class="
 </div>
 </section>
 <section id="repeatedly-generate">
-<h3>Repeatedly Generate<a class="headerlink" href="#repeatedly-generate" title="Permalink to this heading"></a></h3>
+<h3>Repeatedly Generate<a class="headerlink" href="#repeatedly-generate" title="Link to this heading"></a></h3>
 <p>Most likely, you will not be satisfied with just one generated, so you will probably want to output multiple times as follows:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
 randog<span class="w"> </span>datetime<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>

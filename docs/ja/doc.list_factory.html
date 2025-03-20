@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>List factory &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>List factory &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=3ed670ff" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,6 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -120,10 +117,10 @@
            <div itemprop="articleBody">
              
   <section id="list-factory">
-<h1>List factory<a class="headerlink" href="#list-factory" title="この見出しへのパーマリンク"></a></h1>
+<h1>List factory<a class="headerlink" href="#list-factory" title="Link to this heading"></a></h1>
 <p>list 型のオブジェクトを生成する factory を作成することができます。この factory では list の各要素も毎回ランダムに生成します。</p>
 <p>多くのケースでは、用途に応じた調整が必要となるため <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> よりも <a class="reference external" href="randog.factory.html#randog.factory.randlist">randlist</a> を使用します。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -139,7 +136,7 @@
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>もし1つの factory から複数のレコードを作成したい場合、<code class="code docutils literal notranslate"><span class="pre">randlist</span></code> よりも <code class="code docutils literal notranslate"><span class="pre">iter</span></code> を使うべきかもしれません。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="nb">id</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">999_999</span><span class="p">),</span>
@@ -153,9 +150,9 @@
 <p><a class="reference internal" href="doc.as_command.html"><span class="doc">コマンド実行</span></a> の場合も <code class="code docutils literal notranslate"><span class="pre">--list</span></code> オプションや <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> オプションを使用することで同様のことができます。</p>
 </div>
 <section id="each-elements">
-<h2>それぞれの要素の生成<a class="headerlink" href="#each-elements" title="この見出しへのパーマリンク"></a></h2>
+<h2>それぞれの要素の生成<a class="headerlink" href="#each-elements" title="Link to this heading"></a></h2>
 <p>それぞれの要素の factory を指定することができます。通常、i番目の要素の生成にはi番目に指定した factory が使用されますが、指定した factory の数よりも長い list を生成する場合、最後の factory が繰り返し使用されます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">el_factories</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -177,7 +174,7 @@
 </pre></div>
 </div>
 <p>したがって、それぞれの要素が特別な意味を持たない典型的なリストを生成したい場合は、要素の factory を1つだけ指定してください。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -193,9 +190,9 @@
 </div>
 </section>
 <section id="length">
-<h2>長さ<a class="headerlink" href="#length" title="この見出しへのパーマリンク"></a></h2>
+<h2>長さ<a class="headerlink" href="#length" title="Link to this heading"></a></h2>
 <p>生成されるリストの長さをランダムにすることもできます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -208,7 +205,7 @@
 </pre></div>
 </div>
 <p>もし長さを指定しない場合、factory の数と同じ長さのリストが生成されます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">el_factories</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -226,9 +223,9 @@
 </div>
 </section>
 <section id="generate-tuple">
-<h2>tuple の生成<a class="headerlink" href="#generate-tuple" title="この見出しへのパーマリンク"></a></h2>
+<h2>tuple の生成<a class="headerlink" href="#generate-tuple" title="Link to this heading"></a></h2>
 <p>引数 <code class="code docutils literal notranslate"><span class="pre">type</span></code> を使うことで、list ではなく tuple を生成することもできます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randlist</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
@@ -250,9 +247,9 @@
 </div>
 </section>
 <section id="factory-by-from-example">
-<h2><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成<a class="headerlink" href="#factory-by-from-example" title="この見出しへのパーマリンク"></a></h2>
+<h2><code class="code docutils literal notranslate"><span class="pre">from_example</span></code> を使用して作成<a class="headerlink" href="#factory-by-from-example" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> を使用する場合、以下の例のようになります。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">])</span>
 

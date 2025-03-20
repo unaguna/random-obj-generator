@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Factory の生成 &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Factory の生成 &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=3ed670ff" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,6 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -118,10 +115,10 @@
            <div itemprop="articleBody">
              
   <section id="construct-factories-generator-of-random-values">
-<h1>Factory の生成<a class="headerlink" href="#construct-factories-generator-of-random-values" title="この見出しへのパーマリンク"></a></h1>
+<h1>Factory の生成<a class="headerlink" href="#construct-factories-generator-of-random-values" title="Link to this heading"></a></h1>
 <p>randog ではランダムに値を生成するために factory オブジェクトを使用します。生成のルールは factory を作る際に指定します。</p>
 <p>もし型以外の生成条件にこだわらないのであれば、単に値の例を <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> に渡すだけで factory を作ることができます。他の条件も指定したい場合は、生成する値の型に応じた factory のコンストラクタを使用してください。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory simply</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory_a</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -136,7 +133,7 @@
 </pre></div>
 </div>
 <section id="elemental-types">
-<h2>基本的な型<a class="headerlink" href="#elemental-types" title="この見出しへのパーマリンク"></a></h2>
+<h2>基本的な型<a class="headerlink" href="#elemental-types" title="Link to this heading"></a></h2>
 <p>以下の型の値を生成する factory を使用できます。</p>
 <table class="docutils align-default">
 <thead>
@@ -230,9 +227,9 @@
 </table>
 </section>
 <section id="nullable">
-<span id="id3"></span><h2>Nullable<a class="headerlink" href="#nullable" title="この見出しへのパーマリンク"></a></h2>
+<span id="id3"></span><h2>Nullable<a class="headerlink" href="#nullable" title="Link to this heading"></a></h2>
 <p>None も生成されることがある factory を作りたい場合は <a class="reference external" href="randog.factory.html#randog.factory.Factory.or_none">or_none</a> メソッドを使用します。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory_nullable</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">or_none</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
@@ -254,15 +251,15 @@
 </div>
 </section>
 <section id="union-type">
-<span id="construct-union"></span><h2>合成型 (Union type)<a class="headerlink" href="#union-type" title="この見出しへのパーマリンク"></a></h2>
+<span id="construct-union"></span><h2>合成型 (Union type)<a class="headerlink" href="#union-type" title="Link to this heading"></a></h2>
 <p>複数の型のうちのいずれかの値をランダムに生成する factory をいくつかの方法で作ることができます。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>factory を nullable にしたい場合、つまり None との合成型にしたい場合、代わりに <a class="reference internal" href="#nullable"><span class="std std-ref">or_none</span></a> を使用してください。</p>
 </div>
 <p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> を使用する場合、引数に <code class="code docutils literal notranslate"><span class="pre">Example</span></code> を使用してください。以下の例では <code class="code docutils literal notranslate"><span class="pre">-1</span></code>, <code class="code docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, and <code class="code docutils literal notranslate"><span class="pre">True</span></code> を例として使用しているため、factory は整数値、文字列、真偽値のいずれかを生成します。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">randog</span> <span class="kn">import</span> <span class="n">Example</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">randog</span><span class="w"> </span><span class="kn">import</span> <span class="n">Example</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">(</span><span class="n">Example</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
 
@@ -272,7 +269,7 @@
 </pre></div>
 </div>
 <p>候補となる factory を用意する場合、<a class="reference external" href="randog.factory.html#randog.factory.union">union</a> を使用します。以下の例の factory は、値の生成のたびに、2つの factory (randint と randbool) からランダムに選び、それが生成した値を結果として返します。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">union</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># integer</span>
@@ -291,9 +288,9 @@
 </div>
 </section>
 <section id="randomly-choice">
-<h2>ランダムな選択 (Randomly choice)<a class="headerlink" href="#randomly-choice" title="この見出しへのパーマリンク"></a></h2>
+<h2>ランダムな選択 (Randomly choice)<a class="headerlink" href="#randomly-choice" title="Link to this heading"></a></h2>
 <p>指定した値のうちのいずれかをランダムに返す factory を作る場合は <a class="reference external" href="randog.factory.html#randog.factory.randchoice">randchoice</a> を使用します。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randchoice</span><span class="p">(</span><span class="s2">&quot;allow&quot;</span><span class="p">,</span> <span class="s2">&quot;deny&quot;</span><span class="p">)</span>
 
@@ -308,9 +305,9 @@
 </div>
 </section>
 <section id="constance">
-<span id="id6"></span><h2>定数<a class="headerlink" href="#constance" title="この見出しへのパーマリンク"></a></h2>
+<span id="id6"></span><h2>定数<a class="headerlink" href="#constance" title="Link to this heading"></a></h2>
 <p>常に同じ値を返す factory を作る場合は <a class="reference external" href="randog.factory.html#randog.factory.const">const</a> を使用します。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># same as `factory = randog.factory.randchoice(&quot;python&quot;)`</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s2">&quot;python&quot;</span><span class="p">)</span>
@@ -322,9 +319,9 @@
 </div>
 </section>
 <section id="processing-output">
-<h2>結果の加工<a class="headerlink" href="#processing-output" title="この見出しへのパーマリンク"></a></h2>
+<h2>結果の加工<a class="headerlink" href="#processing-output" title="Link to this heading"></a></h2>
 <p>factory の生成値に対する加工をあらかじめ定義することができます。この加工で生成値の型を変更することもできます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># use post_process to format the random decimal value</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="p">(</span>
@@ -339,7 +336,7 @@
 </pre></div>
 </div>
 <p>生成される値が dict であってその要素に処理をしたい場合、以下の例のように <code class="code docutils literal notranslate"><span class="pre">post_process</span></code> の代わりに <code class="code docutils literal notranslate"><span class="pre">post_process_items</span></code> を使うことで簡単に書けます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># use post_process_items to format the random decimal value &#39;[&quot;count&quot;]&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="p">(</span>
@@ -361,16 +358,16 @@
 </div>
 </section>
 <section id="custom-factory">
-<span id="id8"></span><h2>カスタム Factory<a class="headerlink" href="#custom-factory" title="この見出しへのパーマリンク"></a></h2>
+<span id="id8"></span><h2>カスタム Factory<a class="headerlink" href="#custom-factory" title="Link to this heading"></a></h2>
 <p>randog が提供していない型の値も、randog の文脈でランダムに生成することができます。そのためには、関数やイテレータ (<a class="reference external" href="https://docs.python.org/ja/3/glossary.html#term-generator-iterator">ジェネレータイテレータ</a> も含む) やカスタム factory を使用します。通常、わざわざ randog を通さずとも関数やイテレータをそのまま使えばよいのですが、dict や list の要素を生成するためにはこの方法が必要になります。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">uuid</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># define custom factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MailAddressFactory</span><span class="p">(</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">Factory</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-<span class="gp">... </span>    <span class="k">def</span> <span class="nf">_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MailAddressFactory</span><span class="p">(</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">Factory</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="nf">_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="s2">&quot;a&quot;</span> <span class="o">+</span> <span class="s2">&quot;@example.com&quot;</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
@@ -404,7 +401,7 @@
 </div>
 </section>
 <section id="details-on-how-to-build-individual-factories">
-<h2>各 factory の詳細な生成方法<a class="headerlink" href="#details-on-how-to-build-individual-factories" title="この見出しへのパーマリンク"></a></h2>
+<h2>各 factory の詳細な生成方法<a class="headerlink" href="#details-on-how-to-build-individual-factories" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
@@ -416,7 +413,7 @@
 </div>
 </section>
 <section id="special-factory">
-<span id="id9"></span><h2>特殊な Factory<a class="headerlink" href="#special-factory" title="この見出しへのパーマリンク"></a></h2>
+<span id="id9"></span><h2>特殊な Factory<a class="headerlink" href="#special-factory" title="Link to this heading"></a></h2>
 <p>あらゆる factory は <a class="reference internal" href="#custom-factory"><span class="std std-ref">カスタム Factory</span></a> で作成できますが、一般的によく使用されるものは randog によって提供されます。</p>
 <div class="toctree-wrapper compound">
 <ul>

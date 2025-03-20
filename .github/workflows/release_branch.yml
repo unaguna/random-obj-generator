@@ -48,9 +48,10 @@ jobs:
       - name: Sphinx
         run: |
           cd sphinx
-          make gettext
+          sphinx-build -M gettext source build
           sphinx-intl update -p build/gettext -l ja
-          make doc
+          sphinx-build -M html -d build/.doctrees source '../docs/en' -D language=en
+          sphinx-build -M html -d build/.doctrees source '../docs/ja' -D language=ja
       - name: Commit changes (sphinx)
         run: |
           git add .

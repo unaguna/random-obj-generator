@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>datetime モード &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>datetime モード &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=3ed670ff" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,6 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -120,13 +117,13 @@
            <div itemprop="articleBody">
              
   <section id="datetime-mode">
-<h1>datetime モード<a class="headerlink" href="#datetime-mode" title="この見出しへのパーマリンク"></a></h1>
+<h1>datetime モード<a class="headerlink" href="#datetime-mode" title="Link to this heading"></a></h1>
 <p>datetime モードでは、日時を生成します。コマンドの形式は次の通りです：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>datetime<span class="w"> </span><span class="o">[</span>MINIMUM<span class="w"> </span>MAXIMUM<span class="o">]</span><span class="w"> </span><span class="o">[</span>--iso<span class="w"> </span><span class="p">|</span><span class="w"> </span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
 </pre></div>
 </div>
 <section id="arguments-and-options">
-<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="この見出しへのパーマリンク"></a></h2>
+<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="Link to this heading"></a></h2>
 <ul>
 <li><p><code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code> (optional):</p>
 <blockquote>
@@ -166,7 +163,7 @@
 </ul>
 </section>
 <section id="expression-of-minimum-and-maximum">
-<span id="datetime-min-max-expression"></span><h2>MINIMUM と MAXIMUM の表現方法<a class="headerlink" href="#expression-of-minimum-and-maximum" title="この見出しへのパーマリンク"></a></h2>
+<span id="datetime-min-max-expression"></span><h2>MINIMUM と MAXIMUM の表現方法<a class="headerlink" href="#expression-of-minimum-and-maximum" title="Link to this heading"></a></h2>
 <p>引数 <code class="code docutils literal notranslate"><span class="pre">MINIMUM</span></code>, <code class="code docutils literal notranslate"><span class="pre">MAXIMUM</span></code> はそれぞれ以下の記法で指定できます。</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">now</span></code>: 現在日時を意味します。</p></li>
@@ -192,7 +189,7 @@ randog<span class="w"> </span>datetime<span class="w"> </span>--repeat<span clas
 </div>
 </section>
 <section id="examples">
-<h2>実行例<a class="headerlink" href="#examples" title="この見出しへのパーマリンク"></a></h2>
+<h2>実行例<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p>最も簡素な例は次の通りです。日時を出力します。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>datetime
 </pre></div>
@@ -216,7 +213,7 @@ randog<span class="w"> </span>datetime<span class="w"> </span>+1h
 <p><code class="code docutils literal notranslate"><span class="pre">+1d</span></code> 等の表現については <a class="reference internal" href="#datetime-min-max-expression"><span class="std std-ref">MINIMUM と MAXIMUM の表現方法</span></a> を参照してください。</p>
 </div>
 <section id="format-iso-8601-etc">
-<h3>出力フォーマット (ISO-8601 等)<a class="headerlink" href="#format-iso-8601-etc" title="この見出しへのパーマリンク"></a></h3>
+<h3>出力フォーマット (ISO-8601 等)<a class="headerlink" href="#format-iso-8601-etc" title="Link to this heading"></a></h3>
 <p>デフォルトではpythonの標準的な形式で出力されますが、次のようにオプションを指定することで出力形式を <a class="reference external" href="https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-format-codes">strftime や strptime と同じ形式</a> で指定したフォーマットや <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_8601">ISO-8601 形式</a> に変更できます：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value with ISO-8601 format</span>
 randog<span class="w"> </span>datetime<span class="w"> </span>--iso
@@ -227,7 +224,7 @@ randog<span class="w"> </span>datetime<span class="w"> </span>--fmt<span class="
 </div>
 </section>
 <section id="repeatedly-generate">
-<h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="この見出しへのパーマリンク"></a></h3>
+<h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="Link to this heading"></a></h3>
 <p>たいてい、1つ生成しただけでは足りないので、次のようにして複数回出力することになるでしょう。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times</span>
 randog<span class="w"> </span>datetime<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>

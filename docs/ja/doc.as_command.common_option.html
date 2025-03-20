@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>共通オプション &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>共通オプション &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=3ed670ff" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,6 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -113,10 +110,10 @@
            <div itemprop="articleBody">
              
   <section id="common-options">
-<h1>共通オプション<a class="headerlink" href="#common-options" title="この見出しへのパーマリンク"></a></h1>
+<h1>共通オプション<a class="headerlink" href="#common-options" title="Link to this heading"></a></h1>
 <p>コマンド実行のいくつかのオプションは全てのモードで使用することができます。</p>
 <section id="output-format">
-<h2>出力形式の変更<a class="headerlink" href="#output-format" title="この見出しへのパーマリンク"></a></h2>
+<h2>出力形式の変更<a class="headerlink" href="#output-format" title="Link to this heading"></a></h2>
 <p>通常、生成されたオブジェクトはそのまま <code class="code docutils literal notranslate"><span class="pre">print()</span></code> 関数で出力されますが、以下のオプションを使用することで出力形式を変更することができます。</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">--repr</span></code>: 生成されたオブジェクトを <code class="code docutils literal notranslate"><span class="pre">repr()</span></code> 関数で変換して出力します。</p></li>
@@ -135,7 +132,7 @@ randog<span class="w"> </span>str<span class="w"> </span>--charset<span class="w
 </div>
 </section>
 <section id="output-to-file">
-<span id="output-file"></span><h2>ファイル出力<a class="headerlink" href="#output-to-file" title="この見出しへのパーマリンク"></a></h2>
+<span id="output-file"></span><h2>ファイル出力<a class="headerlink" href="#output-to-file" title="Link to this heading"></a></h2>
 <p>以下の例のように <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用することで、結果をファイル出力することができます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output to ./out.txt; if already exists, it will be truncated</span>
 randog<span class="w"> </span><span class="nb">time</span><span class="w"> </span>--output<span class="w"> </span>./out.txt
@@ -188,7 +185,7 @@ randog<span class="w"> </span><span class="nb">time</span><span class="w"> </spa
 </ul>
 </section>
 <section id="iteration">
-<span id="id1"></span><h2>繰り返し<a class="headerlink" href="#iteration" title="この見出しへのパーマリンク"></a></h2>
+<span id="id1"></span><h2>繰り返し<a class="headerlink" href="#iteration" title="Link to this heading"></a></h2>
 <p>繰り返し値を生成するオプションには、 <code class="code docutils literal notranslate"><span class="pre">--list</span></code> (<code class="code docutils literal notranslate"><span class="pre">-L</span></code>) と <code class="code docutils literal notranslate"><span class="pre">--repeat</span></code> (<code class="code docutils literal notranslate"><span class="pre">-r</span></code>) があります。</p>
 <p>繰り返し生成した値を1つのリストにまとめて出力したい場合は、以下のように <code class="code docutils literal notranslate"><span class="pre">--list</span></code> オプションを使用します。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate ONE list which contains 3 objects; each element conforms to factory_def.py.</span>
@@ -215,7 +212,7 @@ randog<span class="w"> </span>factory_def.py<span class="w"> </span>--repeat<spa
 </div>
 </section>
 <section id="seed">
-<h2>シード値<a class="headerlink" href="#seed" title="この見出しへのパーマリンク"></a></h2>
+<h2>シード値<a class="headerlink" href="#seed" title="Link to this heading"></a></h2>
 <p>通常はランダムに値を生成しますが、出力結果をコントロールしたい場合、<code class="code docutils literal notranslate"><span class="pre">--seed</span></code> を使ってシード値を指定します。以下の例のようにシード値が同じであれば同じ結果を返します。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># first</span>
 randog<span class="w"> </span>str<span class="w"> </span>--seed<span class="w"> </span><span class="m">42</span>
@@ -237,15 +234,15 @@ randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class
 <p>確認したシード値をメモしておけば、次回、そのシード値を使用することで生成を再現できます。</p>
 </section>
 <section id="modify-environment-variable">
-<h2>環境変数を変更<a class="headerlink" href="#modify-environment-variable" title="この見出しへのパーマリンク"></a></h2>
+<h2>環境変数を変更<a class="headerlink" href="#modify-environment-variable" title="Link to this heading"></a></h2>
 <p>とくに byfile モードで、定義ファイルに値を受け渡す目的で環境変数を指定したいかもしれません。bash 等では <code class="code docutils literal notranslate"><span class="pre">VAR=VAL</span> <span class="pre">randog</span> <span class="pre">...</span></code> のように1行で環境変数を指定できますが、powershellなど一部のシェルではそれができません。</p>
 <p>そこで、randog では環境変数を指定するオプションを用意しています。次のように <code class="code docutils literal notranslate"><span class="pre">--env</span></code> を使用することで環境変数を指定できます。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>byfile<span class="w"> </span>factory_def.py<span class="w"> </span>--env<span class="w"> </span><span class="nv">CHARSET</span><span class="o">=</span>0123456789abcdef
 </pre></div>
 </div>
 <p>このような実行は、例えば以下のような定義ファイルを使用する際に有用です。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span>
     <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
@@ -256,7 +253,7 @@ randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class
 </div>
 </section>
 <section id="logging">
-<span id="cmd-logging"></span><h2>ログ<a class="headerlink" href="#logging" title="この見出しへのパーマリンク"></a></h2>
+<span id="cmd-logging"></span><h2>ログ<a class="headerlink" href="#logging" title="Link to this heading"></a></h2>
 <p>デフォルトでは randog が出力するものも含めてすべてのログが無視されます (例外は後述) が、ログ出力するように設定することができます。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
@@ -294,7 +291,7 @@ randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class
 </div>
 </section>
 <section id="warning">
-<span id="id2"></span><h2>警告<a class="headerlink" href="#warning" title="この見出しへのパーマリンク"></a></h2>
+<span id="id2"></span><h2>警告<a class="headerlink" href="#warning" title="Link to this heading"></a></h2>
 <p>デフォルトで、<a class="reference external" href="https://docs.python.org/ja/3/library/warnings.html">警告</a> は標準エラー出力に出力されますが、設定を変えることができます。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>

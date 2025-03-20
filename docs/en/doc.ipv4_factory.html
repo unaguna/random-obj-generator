@@ -1,24 +1,24 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IPv4 address factory &mdash; random-obj-generator 0.17.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>IPv4 address factory &mdash; random-obj-generator 0.18.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=3ed670ff" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ba2e7b09"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,9 +37,6 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -117,17 +114,17 @@
            <div itemprop="articleBody">
              
   <section id="ipv4-address-factory">
-<h1>IPv4 address factory<a class="headerlink" href="#ipv4-address-factory" title="Permalink to this heading"></a></h1>
+<h1>IPv4 address factory<a class="headerlink" href="#ipv4-address-factory" title="Link to this heading"></a></h1>
 <p>You can create a factory that generates <a class="reference external" href="https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address">IPv4Address</a> values with <a class="reference external" href="randog.factory.html#randog.factory.randipv4">randipv4</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Although a factory of IPv4Address can be created by passing a IPv4Address value as an example to <a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a>, it is not possible to specify the creation condition.</p>
 </div>
 <section id="simple-factory">
-<h2>Simple factory<a class="headerlink" href="#simple-factory" title="Permalink to this heading"></a></h2>
+<h2>Simple factory<a class="headerlink" href="#simple-factory" title="Link to this heading"></a></h2>
 <p>If all that is needed is for the generated value to be an IPv4 address, use <a class="reference external" href="randog.factory.html#randog.factory.randipv4">randipv4</a> with no arguments as follows:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ipaddress</span> <span class="kn">import</span> <span class="n">IPv4Address</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ipaddress</span><span class="w"> </span><span class="kn">import</span> <span class="n">IPv4Address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randipv4</span><span class="p">()</span>
@@ -138,10 +135,10 @@
 </div>
 </section>
 <section id="specify-the-address-space">
-<h2>Specify the address space<a class="headerlink" href="#specify-the-address-space" title="Permalink to this heading"></a></h2>
+<h2>Specify the address space<a class="headerlink" href="#specify-the-address-space" title="Link to this heading"></a></h2>
 <p>You can specify the network(s) of generated IPv4 addresses as follows:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ipaddress</span> <span class="kn">import</span> <span class="n">IPv4Address</span><span class="p">,</span> <span class="n">ip_network</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ipaddress</span><span class="w"> </span><span class="kn">import</span> <span class="n">IPv4Address</span><span class="p">,</span> <span class="n">ip_network</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory1</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randipv4</span><span class="p">(</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">))</span>

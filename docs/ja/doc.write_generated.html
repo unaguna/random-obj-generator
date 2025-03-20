@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Factory で生成した値の出力 &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Factory で生成した値の出力 &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=3ed670ff" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,6 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -99,10 +96,10 @@
            <div itemprop="articleBody">
              
   <section id="output-generated-values">
-<h1>Factory で生成した値の出力<a class="headerlink" href="#output-generated-values" title="この見出しへのパーマリンク"></a></h1>
+<h1>Factory で生成した値の出力<a class="headerlink" href="#output-generated-values" title="Link to this heading"></a></h1>
 <p>Factory で生成した値をプログラムの外部で使用したい場合、何らかの方法で出力しましょう。</p>
 <p>もっとも単純な方法は、次の例のように print 関数を使用することです。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># factory which generates &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot; in order non-randomly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="s2">&quot;abcde&quot;</span><span class="p">))</span>
@@ -118,21 +115,21 @@
 </div>
 <p>場合によっては、次に示す方法が役に立ちます</p>
 <section id="as-json">
-<h2>JSONとして出力<a class="headerlink" href="#as-json" title="この見出しへのパーマリンク"></a></h2>
+<h2>JSONとして出力<a class="headerlink" href="#as-json" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="doc.tips_json.html"><span class="doc">JSON をランダムに生成する</span></a> を参照してください。</p>
 </section>
 <section id="as-csv">
-<h2>CSVとして出力<a class="headerlink" href="#as-csv" title="この見出しへのパーマリンク"></a></h2>
+<h2>CSVとして出力<a class="headerlink" href="#as-csv" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="randog.factory.html#randog.generate_to_csv">generate_to_csv</a> 関数を使用することで、生成された辞書を簡単にCSV出力できます。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>コマンド実行の際には <code class="code docutils literal notranslate"><span class="pre">--csv</span></code> オプションを使用することで同様の出力が可能です。<a class="reference internal" href="doc.as_command.byfile.html#output-as-csv"><span class="std std-ref">CSV として出力</span></a> も参照してください。</p>
 </div>
 <p>generate_to_csv を使用する際は次の例のように、引数に辞書の factory、行数、出力先、各列のキーを指定します。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">count</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">f1</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">by_iterator</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span>
@@ -148,8 +145,8 @@
 </pre></div>
 </div>
 <p>csv_columnsには列のキーだけでなく次に示す例のように、列の値を生成するラムダ式を指定することもできます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">randog</span>
-<span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span>

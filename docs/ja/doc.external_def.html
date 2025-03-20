@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Factory の外部定義ファイル &mdash; random-obj-generator 0.17.0 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/my_theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Factory の外部定義ファイル &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=3ed670ff" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script src="_static/translations.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -38,9 +38,6 @@
           <a href="index.html" class="icon icon-home">
             random-obj-generator
           </a>
-              <div class="version">
-                0.17.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -99,10 +96,10 @@
            <div itemprop="articleBody">
              
   <section id="external-file-definition-of-factory">
-<h1>Factory の外部定義ファイル<a class="headerlink" href="#external-file-definition-of-factory" title="この見出しへのパーマリンク"></a></h1>
+<h1>Factory の外部定義ファイル<a class="headerlink" href="#external-file-definition-of-factory" title="Link to this heading"></a></h1>
 <p>これまでに示したほとんどの factory 作成では実行する python ファイルに直接 factory の定義を記載していましたが、外部ファイルに factory の定義を記載してそれをロードすることでも factory を作ることができます。</p>
 <p>外部定義ファイルは以下のように、factory を作成して変数 <code class="code docutils literal notranslate"><span class="pre">FACTORY</span></code> にバインドする python コードとして記載します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
 
 <span class="n">FACTORY</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_example</span><span class="p">({</span>
     <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
@@ -125,7 +122,7 @@
 </div>
 </div>
 <p>このファイルを <code class="code docutils literal notranslate"><span class="pre">factory_def.py</span></code> という名称で保存した場合、以下のような python プログラムから使用できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">randog.factory</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="c1"># load factory definition</span>
 <span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">from_pyfile</span><span class="p">(</span><span class="s2">&quot;./factory_def.py&quot;</span><span class="p">)</span>
@@ -139,7 +136,7 @@
 <p>外部定義ファイルは <code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">byfile</span> <span class="pre">./factory_def.py</span></code> のように byfile モードでコマンド実行する際にも使用できます。<a class="reference internal" href="doc.as_command.byfile.html"><span class="doc">byfile モード</span></a> もご覧ください。</p>
 </div>
 <section id="attributes">
-<h2>定義できる属性<a class="headerlink" href="#attributes" title="この見出しへのパーマリンク"></a></h2>
+<h2>定義できる属性<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
 <p>次の属性を外部定義ファイル内で定義することができます。</p>
 <ul>
 <li><p><code class="code docutils literal notranslate"><span class="pre">FACTORY</span></code>: <a class="reference internal" href="randog.factory.html#randog.factory.Factory" title="randog.factory.Factory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Factory</span></code></a></p>
@@ -176,16 +173,16 @@
 </ul>
 </section>
 <section id="importable-definition-files">
-<span id="id1"></span><h2>インポート可能な定義ファイル<a class="headerlink" href="#importable-definition-files" title="この見出しへのパーマリンク"></a></h2>
+<span id="id1"></span><h2>インポート可能な定義ファイル<a class="headerlink" href="#importable-definition-files" title="Link to this heading"></a></h2>
 <p>定義ファイルはpythonで書かれるため他のpythonファイルからインポートすることができますが、インポートされることを想定する場合には注意すべき点があります。</p>
 <p>例えば、以下の定義ファイルを見てください。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">randog</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">randog</span>
 
 <span class="n">CSV_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">]</span>
 
 <span class="c1"># other python file can import and reuse this</span>
-<span class="k">def</span> <span class="nf">create_factory</span><span class="p">(</span><span class="n">initial_id</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_factory</span><span class="p">(</span><span class="n">initial_id</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randdict</span><span class="p">(</span>
         <span class="nb">id</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">initial_id</span><span class="p">),</span>
         <span class="n">name</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randstr</span><span class="p">(),</span>

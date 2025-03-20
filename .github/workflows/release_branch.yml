@@ -21,6 +21,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Validate branch
+        run: |
+          test ${{ github.ref_name }} = 'develop'
       - name: Create and push release branch
         run: |
           git checkout -b ${{ env.RELEASE_BRANCH_NAME }}
@@ -60,6 +63,6 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           source_branch: ${{ env.RELEASE_BRANCH_NAME }}
-          destination_branch: ${{ env.DEST_BRANCH }}
+          destination_branch: ${{ github.ref_name }}
           pr_title: Release/v${{ env.RELEASE_VERSION }}
           github_token: ${{ secrets.GITHUB_TOKEN }}

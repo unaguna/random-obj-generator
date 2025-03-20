@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: '作成するバージョンを入力してください'
+        description: '作成するバージョンを入力してください。例: 1.23.4'
         required: true
 
 jobs:
@@ -55,12 +55,11 @@ jobs:
       - name: Commit changes (sphinx)
         run: |
           git add .
-          git diff --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push --set-upstream origin ${{ env.RELEASE_BRANCH_NAME }})H }}
+          git diff --name-only --staged --exit-code || (git commit -m 'ci(changelog): update version' && git push --set-upstream origin ${{ env.RELEASE_BRANCH_NAME }})
       - name: Create pull request
         uses: repo-sync/pull-request@v2
         with:
           source_branch: ${{ env.RELEASE_BRANCH_NAME }}
           destination_branch: ${{ env.DEST_BRANCH }}
           pr_title: Release/v${{ env.RELEASE_VERSION }}
-          pr_template: Release
           github_token: ${{ secrets.GITHUB_TOKEN }}

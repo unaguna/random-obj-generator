@@ -8,8 +8,8 @@ on:
         required: true
 
 jobs:
-  version:
-    name: Version
+  preparing:
+    name: Preparing for release
     permissions:
       contents: write
       pull-requests: write
@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f sphinx/requirements_sphinx.txt ]; then pip install -r sphinx/requirements_sphinx.txt; fi
+          pip install -r sphinx/requirements_sphinx.lock.txt
       - name: Increment version number
         run: |
           python -c 'import randog; print(randog.__version__)' | xargs -I {} sed -i 's/{}/${{ env.RELEASE_VERSION }}/' README.md randog/__init__.py

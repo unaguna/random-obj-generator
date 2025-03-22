@@ -6,7 +6,7 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from ..._utils.type import positive_int, probability
-from ...factory import REGENERATE_PROB_MAX
+from ...factory import REGENERATE_PROB_MAX, Factory
 
 
 class SubcmdDefByfile(SubcmdDef):
@@ -98,5 +98,5 @@ class SubcmdDefByfile(SubcmdDef):
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
         pass
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory]:
         pass

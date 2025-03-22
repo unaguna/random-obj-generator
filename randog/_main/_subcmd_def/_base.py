@@ -6,6 +6,7 @@ from ..._utils.linesep import Linesep
 from ..._processmode import Subcmd
 from .._main_args import Args
 from ..._utils.type import positive_int, encoding, indent
+from ...factory import Factory
 
 
 class SubcmdDef(ABC):
@@ -41,7 +42,7 @@ class SubcmdDef(ABC):
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]: ...
 
     @abstractmethod
-    def get_factory_constructor(self) -> t.Callable: ...
+    def get_factory_constructor(self) -> t.Callable[..., Factory]: ...
 
 
 def add_common_arguments(parser: argparse.ArgumentParser):

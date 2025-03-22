@@ -31,7 +31,7 @@ def _build_factories(
         int,
         str,
         randog.factory.Factory,
-        FactoryDef,
+        t.Optional[FactoryDef],
     ]
 ]:
     subcmd_def = get_subcmd_def(args.sub_cmd)

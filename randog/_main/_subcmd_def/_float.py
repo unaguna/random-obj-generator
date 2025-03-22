@@ -7,6 +7,7 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
+from ...factory import Factory
 
 
 class SubcmdDefFloat(SubcmdDef):
@@ -116,5 +117,5 @@ class SubcmdDefFloat(SubcmdDef):
             "rnd": rnd,
         }
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[float]]:
         return randog.factory.randfloat

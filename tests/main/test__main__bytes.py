@@ -109,6 +109,16 @@ def test__main__bytes__option_repr(capfd):
             assert len(actual) == expected_length
 
 
+def test__main__bytes__option_json(capfd):
+    args = ["randog", "bytes", "--json", "--fmt=b"]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+        assert re.fullmatch(r"\"[01]{64}\"\n", out)
+
+
 def test__main__bytes__error_with_option_json(capfd):
     args = ["randog", "bytes", "--json"]
     with patch.object(sys, "argv", args):
@@ -118,7 +128,10 @@ def test__main__bytes__error_with_option_json(capfd):
         out, err = capfd.readouterr()
         assert out == ""
         assert err.startswith("usage:")
-        assert "bytes: error: argument --json is not available with bytes mode" in err
+        assert (
+            "bytes: error: argument --json can only be used with --fmt in bytes mode."
+            in err
+        )
 
 
 @pytest.mark.parametrize(

@@ -45,7 +45,10 @@ class SubcmdDefBytes(SubcmdDef):
         return bytes_parser
 
     def _validate_parser(self, args: Args, subparser: argparse.ArgumentParser):
-        pass
+        if args.output_fmt == "json" and args.format is None:
+            subparser.error(
+                "argument --json can only be used with --fmt in bytes mode."
+            )
 
     def build_args(
         self, args: Args

@@ -10,6 +10,7 @@ import typing as t
 
 from .._utils.linesep import Linesep
 from .._processmode import Subcmd
+import randog
 
 
 class Args:
@@ -27,6 +28,9 @@ class Args:
             prog="randog",
             description="It generates values randomly according to the specified mode "
             "and arguments.",
+        )
+        parser.add_argument(
+            "--version", action="version", version=f"%(prog)s {randog.__version__}"
         )
         subparsers = parser.add_subparsers(
             required=True,

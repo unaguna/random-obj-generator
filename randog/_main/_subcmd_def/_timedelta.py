@@ -1,5 +1,5 @@
 import argparse
-import datetime
+import datetime as dt
 import math
 import typing as t
 
@@ -10,6 +10,7 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
+from ...factory import Factory
 
 
 class SubcmdDefTimedelta(SubcmdDef):
@@ -111,16 +112,16 @@ class SubcmdDefTimedelta(SubcmdDef):
             "rnd": rnd,
         }
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[dt.timedelta]]:
         return lambda *a, **kw: randog.factory.randtimedelta(*a, **kw).post_process(
             _TimedeltaWrapper
         )
 
 
-class _TimedeltaWrapper(datetime.timedelta):
-    _base: datetime.timedelta
+class _TimedeltaWrapper(dt.timedelta):
+    _base: dt.timedelta
 
-    def __new__(cls, base: datetime.timedelta):
+    def __new__(cls, base: dt.timedelta):
         ins = super(_TimedeltaWrapper, cls).__new__(
             cls,
             days=base.days,

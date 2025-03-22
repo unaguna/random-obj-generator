@@ -8,7 +8,7 @@ from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
 from ..._utils.type import dice_roll
 from ...exceptions import FactoryConstructionError
-from ...factory import parse_dice_notation
+from ...factory import parse_dice_notation, Factory
 
 
 class SubcmdDefDice(SubcmdDef):
@@ -50,5 +50,5 @@ class SubcmdDefDice(SubcmdDef):
             "rnd": rnd,
         }
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[int]]:
         return randog.factory.dice

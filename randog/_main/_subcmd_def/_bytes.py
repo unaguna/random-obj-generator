@@ -8,6 +8,7 @@ from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
 from ...factory import Factory
+from .fmt_wrapper.bytes import BytesWrapper
 
 
 class SubcmdDefBytes(SubcmdDef):
@@ -67,7 +68,9 @@ class SubcmdDefBytes(SubcmdDef):
         return tuple(), kwargs
 
     def get_factory_constructor(self) -> t.Callable[..., Factory[bytes]]:
-        return randog.factory.randbytes
+        return lambda *a, **kw: randog.factory.randbytes(*a, **kw).post_process(
+            BytesWrapper
+        )
 
 
 # TODO: _str.py と重複する定義なので、統一する

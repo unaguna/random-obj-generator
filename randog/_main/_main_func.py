@@ -8,6 +8,7 @@ import typing as t
 import warnings
 
 import randog.factory
+from ._subcmd_def.fmt_wrapper.bytes import BytesWrapper
 from ..exceptions import RandogWarning
 from .._processmode import Subcmd, set_process_mode
 from . import Args, get_subcmd_def
@@ -134,6 +135,8 @@ def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
         print(repr(generated), file=fp)
     elif isinstance(generated, bytes):
         fp.buffer.write(generated)
+    elif isinstance(generated, BytesWrapper):
+        fp.buffer.write(generated.base)
     elif args.output_fmt == "json":
         json.dump(
             generated,

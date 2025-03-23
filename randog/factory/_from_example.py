@@ -22,6 +22,7 @@ from . import (
     randlist,
     randint,
     randstr,
+    randbytes,
     union,
     const,
     randipv4,
@@ -87,6 +88,7 @@ _FACTORY_CONSTRUCTOR_BY_TYPE: t.Dict[
     float: lambda rnd: randfloat(0, 1.0, rnd=rnd),
     Decimal: lambda rnd: randdecimal(0, 1.0, rnd=rnd),
     str: lambda rnd: randstr(rnd=rnd),
+    bytes: lambda rnd: randbytes(rnd=rnd),
     dt.timedelta: lambda rnd: randtimedelta(rnd=rnd),
     dt.datetime: lambda rnd: randdatetime(rnd=rnd),
     dt.date: lambda rnd: randdate(rnd=rnd),
@@ -391,7 +393,7 @@ def from_example(
             return construct(example, rnd)
     if isinstance(example, t.Mapping):
         return randdict({k: _dict_item(v, k, context) for k, v in example.items()})
-    if isinstance(example, t.Sequence) and not isinstance(example, str):
+    if isinstance(example, t.Sequence) and not isinstance(example, (str, bytes)):
         if isinstance(example, (tuple, list)):
             _type = type(example)
         else:

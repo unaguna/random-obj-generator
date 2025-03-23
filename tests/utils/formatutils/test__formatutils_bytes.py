@@ -36,7 +36,6 @@ from randog._utils.formatutils import format_bytes
         ("09X", b"\x40\x88\xff", "4088FF000"),
         ("011_X", b"\x40\x88\xff", "4088_FF00_0"),
         ("0<11_X", b"\x40\x88\xff", "4088_FF0000"),
-        # TODO: base64 形式にするオプション
         ("c", b"\x40\x88\xff", r"@\x88\xff"),
         (">16c", b"\x40\x88\xff", r"       @\x88\xff"),
         ("<16c", b"\x40\x88\xff", r"@\x88\xff       "),

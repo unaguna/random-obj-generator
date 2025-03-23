@@ -10,7 +10,7 @@ from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
 from ...factory import Factory
-from ._fmt_wrapper.timedelta import TimedeltaWrapper
+from .fmt_wrapper.timedelta import TimedeltaWrapper
 
 
 class SubcmdDefTimedelta(SubcmdDef):

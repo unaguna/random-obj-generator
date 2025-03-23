@@ -32,6 +32,16 @@ _SEP_LENGTH = defaultdict(
 )
 """length of groups separated by '_' or ','"""
 
+_DIGIT_PREFIX: t.Mapping[t.Optional[str], str] = defaultdict(
+    lambda: "",
+    {
+        "b": "0b",
+        "o": "0o",
+        "X": "0X",
+        "x": "0x",
+    },
+)
+
 
 class StandardFormatSpec:
     """the format by Standard Format Specification
@@ -120,6 +130,10 @@ class StandardFormatSpec:
         else:
             return ""
 
+    def get_digit_prefix(self) -> str:
+        """Returns the prefix such as '0x'."""
+        return _DIGIT_PREFIX[self.s_type] if self.n_sign else ""
+
 
 def analyze_standard_fmt(fmt: str) -> StandardFormatSpec:
     match = re.fullmatch(STANDARD_FORMAT_SPECIFIER_REGEX, fmt)
@@ -165,25 +179,39 @@ def apply_format_char(
     grp_sep = fmt_ana.get_grp_sep()
     # グループのセパレータの長さ
     sep_len = len(grp_sep)
+    # 何進数かを表す接頭辞
+    dig_prefix = fmt_ana.get_digit_prefix()
+    # 何進数かを表す接頭辞の長さ
+    dig_prefix_len = len(dig_prefix)
 
     # 0埋め箇所も込みでグループごとに _ や , で区切る場合
     if fill_char == "0" and fmt_ana.get_align() == "=":
-        # min_width を満たすために必要なグループ数 (セパレータは除く)
-        min_group_num = math.ceil((min_width + sep_len) / (grp_len + sep_len))
-        # min_width を満たすために必要な桁数 (セパレータは除く)
-        min_len_exclude_sep = min_width - (min_group_num - 1) * sep_len
+        # min_width を満たすために必要なグループ数 (セパレータとprefixは除く)
+        min_group_num = math.ceil(
+            (min_width + sep_len - dig_prefix_len) / (grp_len + sep_len)
+        )
+        # min_width を満たすために必要な桁数 (セパレータとprefixは除く)
+        min_len_exclude_sep_prefix = (
+            min_width - dig_prefix_len - (min_group_num - 1) * sep_len
+        )
 
-        filled_str = fill(pre_str, fill_char, min_len_exclude_sep, zero_padding_align)
+        filled_str = fill(
+            pre_str, fill_char, min_len_exclude_sep_prefix, zero_padding_align
+        )
         separated_filled_str = separate_grp(
             filled_str, grp_sep, grp_len, align=zero_padding_align
         )
+        separated_filled_str = dig_prefix + separated_filled_str
     # グループごとに _ や , で区切った後に fill する場合
     else:
         separated_str = separate_grp(
             pre_str, grp_sep, grp_len, align=fmt_ana.get_align_for_sep(default_align)
         )
         separated_filled_str = fill(
-            separated_str, fill_char, min_width, fmt_ana.get_align(default_align)
+            dig_prefix + separated_str,
+            fill_char,
+            min_width,
+            fmt_ana.get_align(default_align),
         )
 
     return separated_filled_str

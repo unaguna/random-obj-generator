@@ -157,21 +157,25 @@ def test__main__bytes__fmt(capfd, options, expected_regex):
 
 
 @pytest.mark.parametrize(
-    ("options",),
+    ("options", "parse"),
     [
-        (["--fmt", "c"],),
-        (["--fmt", "s"],),
+        (
+            ["--fmt", "c"],
+            lambda s: ast.literal_eval("b'" + s.replace("'", r"\'") + "'"),
+        ),
+        (["--fmt", "s"], lambda s: ast.literal_eval(s)),
     ],
 )
-def test__main__bytes__fmt_c(capfd, options):
+def test__main__bytes__fmt_c(capfd, options, parse):
     args = ["randog", "bytes", *options]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
         assert err == ""
-        actual = ast.literal_eval("b" + repr(out.strip("\n")))
+        actual = parse(out.strip("\n"))
         assert isinstance(actual, bytes)
+        assert len(actual) == 8
 
 
 @pytest.mark.parametrize(

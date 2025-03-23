@@ -169,9 +169,9 @@ def apply_format_char(
     # 0埋め箇所も込みでグループごとに _ や , で区切る場合
     if fill_char == "0" and fmt_ana.get_align() == "=":
         # min_width を満たすために必要なグループ数 (セパレータは除く)
-        min_group_num = math.ceil((min_width + 1) / (grp_len + sep_len))
+        min_group_num = math.ceil((min_width + sep_len) / (grp_len + sep_len))
         # min_width を満たすために必要な桁数 (セパレータは除く)
-        min_len_exclude_sep = (min_group_num - 1) * grp_len + 1
+        min_len_exclude_sep = min_width - (min_group_num - 1) * sep_len
 
         filled_str = fill(pre_str, fill_char, min_len_exclude_sep, zero_padding_align)
         separated_filled_str = separate_grp(

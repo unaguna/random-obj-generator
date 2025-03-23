@@ -179,6 +179,38 @@ def test__main__bytes__fmt_c(capfd, options, parse):
 
 
 @pytest.mark.parametrize(
+    ("options", "mock_bytes", "expected"),
+    [
+        (["--fmt", "b"], b"\x88\xff", "000000001000100011111111"),
+        (["--fmt", "_b"], b"\x88\xff", "0000_0000_1000_1000_1111_1111"),
+        (["--fmt", ">26b"], b"\x88\xff", "  000000001000100011111111"),
+        (["--fmt", "<26b"], b"\x88\xff", "000000001000100011111111  "),
+        (["--fmt", "L>26b"], b"\x88\xff", "LL000000001000100011111111"),
+        (["--fmt", "L<26b"], b"\x88\xff", "000000001000100011111111LL"),
+        (["--fmt", "026b"], b"\x88\xff", "00000000100010001111111100"),
+        (["--fmt", "031_b"], b"\x88\xff", "0000_0000_1000_1000_1111_1111_0"),
+        (["--fmt", "x"], b"\x40\x88\xff", "4088ff"),
+        (["--fmt", "_x"], b"\x40\x88\xff", "4088_ff"),
+        (["--fmt", "X"], b"\x40\x88\xff", "4088FF"),
+        (["--fmt", "_X"], b"\x40\x88\xff", "4088_FF"),
+        # TODO: base64 形式にするオプション
+        (["--fmt", "c"], b"\x40\x88\xff", r"@\x88\xff"),
+        (["--fmt", "s"], b"\x40\x88\xff", r"b'@\x88\xff'"),
+    ],
+)
+def test__main__bytes__fmt_value(capfd, options, mock_bytes, expected):
+    args = ["randog", "bytes", "--length=3", *options]
+    with patch.object(sys, "argv", args):
+        with patch("random.Random.getrandbits") as m:
+            m.return_value = int.from_bytes(mock_bytes, "big")
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == expected + "\n"
+        assert err == ""
+
+
+@pytest.mark.parametrize(
     ("option", "count"),
     [
         ("--repeat", 3),

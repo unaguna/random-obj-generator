@@ -24,7 +24,7 @@ from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryStopException, FactoryDef
 from .._output import generate_to_csv
-from ..postprocess import Base64PostProcess
+from ..postprocess import Base64PostProcess, FormatPostProcess, IsoFormatPostProcess
 
 
 def _build_factories(
@@ -39,6 +39,7 @@ def _build_factories(
 ]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
     post_process_of_binary_fmt = _post_process_of_binary_fmt(args.binary_fmt)
+    post_process_of_value_fmt = _post_process_of_value_fmt(args)
 
     if args.sub_cmd == Subcmd.Byfile:
         for factory_count, filepath in enumerate(args.factories):
@@ -59,6 +60,7 @@ def _build_factories(
 
             if post_process_of_binary_fmt is not None:
                 factory = factory.post_process(post_process_of_binary_fmt)
+            # Don't use post_process_of_value_fmt
 
             yield factory_count, def_file_name, factory, factory_def
     else:
@@ -71,14 +73,8 @@ def _build_factories(
         factory = construct_factory(*iargs, **kwargs)
         if post_process_of_binary_fmt is not None:
             factory = factory.post_process(post_process_of_binary_fmt)
-        if args.iso:
-            factory = factory.post_process(
-                lambda x: x.isoformat() if x is not None else None
-            )
-        elif args.format:
-            factory = factory.post_process(
-                lambda x: format(x, args.format) if x is not None else None
-            )
+        if post_process_of_value_fmt is not None:
+            factory = factory.post_process(post_process_of_value_fmt)
         yield 0, "", factory, None
 
 
@@ -92,6 +88,18 @@ def _post_process_of_binary_fmt(
         return StripWrapper(Base64PostProcess())
     else:
         raise ValueError(f"unknown binary format: {binary_fmt}")
+
+
+def _post_process_of_value_fmt(
+    args: Args,
+) -> t.Optional[t.Callable[[t.Any], t.Any]]:
+    """callable object to convert value to str according Args.format etc."""
+    if args.iso:
+        return IsoFormatPostProcess()
+    elif args.format:
+        return FormatPostProcess(args.format)
+    else:
+        return None
 
 
 class _DummyIO:

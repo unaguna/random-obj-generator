@@ -56,6 +56,11 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
+            if args.binary_fmt == "base64":
+                factory = factory.post_process(strip_wrapper).post_process(
+                    Base64PostProcess()
+                )
+
             yield factory_count, def_file_name, factory, factory_def
     else:
         iargs, kwargs = subcmd_def.build_args(args)

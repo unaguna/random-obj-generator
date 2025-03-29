@@ -65,6 +65,11 @@ You can create a factory that generates values of the following types:
      - a 'bytes' value
      - :doc:`detail <doc.bytes_factory>`
 
+   * - :code:`bytearray`
+     - `randbytearray <randog.factory.html#randog.factory.randbytearray>`_
+     - a bytearray value
+     - :doc:`detail <doc.bytes_factory>`
+
    * - :code:`list`
      - `randlist <randog.factory.html#randog.factory.randlist>`_
      - a list

@@ -6,6 +6,8 @@ You can create a factory that generates bytes values with `randbytes <randog.fac
 .. note::
     Although a factory of bytes can be created by passing a bytes as an example to `from_example <randog.factory.html#randog.factory.from_example>`_, it is not possible to specify the creation condition.
 
+.. note::
+    You can also create a factory that generates bytearray (mutable bytes) values with `randbytearray <randog.factory.html#randog.factory.randbytearray>`_. Arguments is same as for randbytes.
 
 Simple factory
 --------------

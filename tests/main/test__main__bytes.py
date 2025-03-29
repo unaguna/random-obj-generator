@@ -129,8 +129,8 @@ def test__main__bytes__error_with_option_json(capfd):
         assert out == ""
         assert err.startswith("usage:")
         assert (
-            "bytes: error: argument --json can only be used with --fmt in bytes mode."
-            in err
+            "bytes: error: argument --json can only be used with --fmt or --base64 "
+            "in bytes mode." in err
         )
 
 

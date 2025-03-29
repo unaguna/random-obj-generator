@@ -8,7 +8,7 @@ import typing as t
 import warnings
 
 import randog.factory
-from ._subcmd_def.fmt_wrapper import strip_wrapper
+from ._subcmd_def.fmt_wrapper import StripWrapper
 from ._subcmd_def.fmt_wrapper.bytes import BytesWrapper
 from ..exceptions import RandogWarning
 from .._processmode import Subcmd, set_process_mode
@@ -38,6 +38,7 @@ def _build_factories(
     ]
 ]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
+    post_process_of_binary_fmt = _post_process_of_binary_fmt(args.binary_fmt)
 
     if args.sub_cmd == Subcmd.Byfile:
         for factory_count, filepath in enumerate(args.factories):
@@ -56,10 +57,8 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
-            if args.binary_fmt == "base64":
-                factory = factory.post_process(strip_wrapper).post_process(
-                    Base64PostProcess()
-                )
+            if post_process_of_binary_fmt is not None:
+                factory = factory.post_process(post_process_of_binary_fmt)
 
             yield factory_count, def_file_name, factory, factory_def
     else:
@@ -70,10 +69,8 @@ def _build_factories(
             _repr_function_call(construct_factory, iargs, kwargs),
         )
         factory = construct_factory(*iargs, **kwargs)
-        if args.binary_fmt == "base64":
-            factory = factory.post_process(strip_wrapper).post_process(
-                Base64PostProcess()
-            )
+        if post_process_of_binary_fmt is not None:
+            factory = factory.post_process(post_process_of_binary_fmt)
         if args.iso:
             factory = factory.post_process(
                 lambda x: x.isoformat() if x is not None else None
@@ -83,6 +80,18 @@ def _build_factories(
                 lambda x: format(x, args.format) if x is not None else None
             )
         yield 0, "", factory, None
+
+
+def _post_process_of_binary_fmt(
+    binary_fmt: t.Optional[str],
+) -> t.Optional[t.Callable[[t.Any], t.Any]]:
+    """callable object to convert bytes to str according binary_fmt"""
+    if binary_fmt is None:
+        return None
+    elif binary_fmt == "base64":
+        return StripWrapper(Base64PostProcess())
+    else:
+        raise ValueError(f"unknown binary format: {binary_fmt}")
 
 
 class _DummyIO:

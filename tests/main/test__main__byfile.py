@@ -151,6 +151,36 @@ def test__main__option_base64(capfd, resources):
         assert err == ""
 
 
+def test__main__option_base64__dict(capfd, resources):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_bytes_const_in_dict.py")),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == "{'int': 1, 'str': 'aaa', 'bytes': 'QIj/'}\n"
+        assert err == ""
+
+
+def test__main__option_base64__list(capfd, resources):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_bytes_const_in_list.py")),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == "[1, 'aaa', 'QIj/']\n"
+        assert err == ""
+
+
 def test__main__option_base64__error_with_non_bytes(capfd, resources):
     args = [
         "randog",

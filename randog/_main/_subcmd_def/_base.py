@@ -72,6 +72,11 @@ def add_common_arguments(parser: argparse.ArgumentParser):
         ),
     )
     common_opt_group.add_argument(
+        "--pickle",
+        action="store_true",
+        help="if specified, it outputs pickle-encoded bytes of generated values",
+    )
+    common_opt_group.add_argument(
         "--base64",
         action="store_true",
         help=(

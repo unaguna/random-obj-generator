@@ -1,4 +1,6 @@
+import base64
 import filecmp
+import pickle
 import sys
 from unittest.mock import patch
 
@@ -77,6 +79,80 @@ def test__main__dice__error_when_illegal_code(capfd, code):
         assert out == ""
         assert err.startswith("usage:")
         assert "dice: error: argument DICE_ROLL: invalid dice_roll value: " in err
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__dice__pickle(capfd, tmp_path, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "dice",
+        "1d1",
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [1] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__dice__pickle_base64(capfd, repeat):
+    args = [
+        "randog",
+        "dice",
+        "1d1",
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [1] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__dice__pickle_fmt(capfd, tmp_path, repeat):
+    args = [
+        "randog",
+        "dice",
+        "1d1",
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [1] * repeat
 
 
 @pytest.mark.parametrize(

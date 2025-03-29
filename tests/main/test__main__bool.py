@@ -1,4 +1,6 @@
+import base64
 import filecmp
+import pickle
 import sys
 from unittest.mock import patch
 
@@ -280,6 +282,92 @@ def test__main__bool__error_duplicate_format(capfd, options):
         assert out == ""
         assert err.startswith("usage:")
         assert "not allowed with argument" in err
+
+
+@pytest.mark.parametrize(
+    ("prop_true", "expected"),
+    [("0", False), ("0.0", False), ("1", True), ("1.0", True)],
+)
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bool__pickle(capfd, tmp_path, prop_true, expected, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "bool",
+        prop_true,
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [expected] * repeat
+
+
+@pytest.mark.parametrize(
+    ("prop_true", "expected"),
+    [("0", False), ("0.0", False), ("1", True), ("1.0", True)],
+)
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bool__pickle_base64(capfd, prop_true, expected, repeat):
+    args = [
+        "randog",
+        "bool",
+        prop_true,
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected] * repeat
+
+
+@pytest.mark.parametrize(
+    ("prop_true", "expected"),
+    [("0", False), ("0.0", False), ("1", True), ("1.0", True)],
+)
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bool__pickle_fmt(capfd, tmp_path, prop_true, expected, repeat):
+    args = [
+        "randog",
+        "bool",
+        prop_true,
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected] * repeat
 
 
 @pytest.mark.parametrize(

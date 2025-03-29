@@ -1,5 +1,7 @@
-import datetime
+import base64
+import datetime as dt
 import filecmp
+import pickle
 import re
 import sys
 from unittest.mock import patch
@@ -89,10 +91,10 @@ def test__main__timedelta__error_when_max_lt_min(capfd):
 @pytest.mark.parametrize(
     ("unit", "minimum", "maximum", "unit_expected"),
     [
-        ("1d", "0s", "10d", datetime.timedelta(days=1)),
-        ("12h", "0s", "10d", datetime.timedelta(hours=12)),
-        ("1s", "0s", "10d", datetime.timedelta(seconds=1)),
-        ("10s", "21s", "31s", datetime.timedelta(seconds=10)),
+        ("1d", "0s", "10d", dt.timedelta(days=1)),
+        ("12h", "0s", "10d", dt.timedelta(hours=12)),
+        ("1s", "0s", "10d", dt.timedelta(seconds=1)),
+        ("10s", "21s", "31s", dt.timedelta(seconds=10)),
     ],
 )
 def test__main__timedelta__unit(capfd, unit, minimum, maximum, unit_expected):
@@ -101,9 +103,7 @@ def test__main__timedelta__unit(capfd, unit, minimum, maximum, unit_expected):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert timedelta_util.from_str(
-            out.strip()
-        ) % unit_expected == datetime.timedelta(0)
+        assert timedelta_util.from_str(out.strip()) % unit_expected == dt.timedelta(0)
         assert err == ""
 
 
@@ -217,6 +217,86 @@ def test__main__timedelta__option_datetime_fmt(capfd, arg, options, expected):
         assert err == ""
 
 
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__timedelta__pickle(capfd, tmp_path, repeat):
+    expected_value = dt.timedelta(3, 4, 5)
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "timedelta",
+        "3d4s5ms",
+        "3d4s5ms",
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__timedelta__pickle_base64(capfd, repeat):
+    expected_value = dt.timedelta(3, 4, 5)
+    args = [
+        "randog",
+        "timedelta",
+        "3d4s5ms",
+        "3d4s5ms",
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__timedelta__pickle_fmt(capfd, tmp_path, repeat):
+    expected_value = dt.timedelta(3, 4, 5)
+    args = [
+        "randog",
+        "timedelta",
+        "3d4s5ms",
+        "3d4s5ms",
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
 @pytest.mark.parametrize(
     "expected",
     ["1d", "20h", "1h30m"],
@@ -278,9 +358,9 @@ def test__main__timedelta__error_with_negative_repeat(capfd, resources, option, 
 @pytest.mark.parametrize(
     ("arg", "expected"),
     [
-        ("1d", datetime.timedelta(days=1)),
-        ("20h", datetime.timedelta(hours=20)),
-        ("1h30m", datetime.timedelta(hours=1, minutes=30)),
+        ("1d", dt.timedelta(days=1)),
+        ("20h", dt.timedelta(hours=20)),
+        ("1h30m", dt.timedelta(hours=1, minutes=30)),
     ],
 )
 @pytest.mark.parametrize(

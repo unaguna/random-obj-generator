@@ -1,5 +1,7 @@
+import base64
 import filecmp
 import ipaddress
+import pickle
 import sys
 from unittest.mock import patch
 
@@ -157,6 +159,87 @@ def test__main__ipv4__fmt__error__lt_3_9(capfd, options):
             "ipv4: error: argument --fmt: python>=3.9.0 is required "
             "to use --fmt for ipv4"
         ) in err
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__ipv4__pickle(capfd, tmp_path, repeat):
+    expected_value = ipaddress.ip_address("127.0.0.5")
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "ipv4",
+        str(expected_value),
+        str(expected_value),
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__ipv4__pickle_base64(capfd, repeat):
+    expected_value = ipaddress.ip_address("127.0.0.5")
+    args = [
+        "randog",
+        "ipv4",
+        str(expected_value),
+        str(expected_value),
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.require_python(">=3.9.0")
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__ipv4__pickle_fmt(capfd, tmp_path, repeat):
+    expected_value = ipaddress.ip_address("127.0.0.5")
+    args = [
+        "randog",
+        "ipv4",
+        str(expected_value),
+        str(expected_value),
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
 
 
 @pytest.mark.parametrize(

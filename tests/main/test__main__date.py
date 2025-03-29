@@ -1,5 +1,7 @@
+import base64
 import datetime as dt
 import filecmp
+import pickle
 import re
 import sys
 from unittest import mock
@@ -181,6 +183,86 @@ def test__main__date__option_json_iso(capfd, arg, expected):
         out, err = capfd.readouterr()
         assert out == f"{expected}\n"
         assert err == ""
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__date__pickle(capfd, tmp_path, repeat):
+    expected_value = dt.date(2000, 1, 2)
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "date",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__date__pickle_base64(capfd, repeat):
+    expected_value = dt.date(2000, 1, 2)
+    args = [
+        "randog",
+        "date",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__date__pickle_fmt(capfd, tmp_path, repeat):
+    expected_value = dt.date(2000, 1, 2)
+    args = [
+        "randog",
+        "date",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
 
 
 @pytest.mark.parametrize(

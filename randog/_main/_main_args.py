@@ -76,6 +76,13 @@ class Args:
         return self._args.list
 
     @property
+    def pickle(self) -> bool:
+        if hasattr(self._args, "pickle"):
+            return self._args.pickle
+        else:
+            return False
+
+    @property
     def binary_fmt(self) -> t.Optional[t.Literal["base64"]]:
         """バイト列から他の形式への変換方法"""
         return "base64" if self._args.base64 else None

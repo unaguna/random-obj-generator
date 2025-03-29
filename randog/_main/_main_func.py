@@ -24,7 +24,12 @@ from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryStopException, FactoryDef
 from .._output import generate_to_csv
-from ..postprocess import Base64PostProcess, FormatPostProcess, IsoFormatPostProcess
+from ..postprocess import (
+    Base64PostProcess,
+    FormatPostProcess,
+    IsoFormatPostProcess,
+    PicklePostProcess,
+)
 
 
 def _build_factories(
@@ -58,9 +63,14 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
+            if args.pickle:
+                factory = factory.post_process(PicklePostProcess()).post_process(
+                    BytesWrapper
+                )
             if post_process_of_binary_fmt is not None:
                 factory = factory.post_process(post_process_of_binary_fmt)
-            # Don't use post_process_of_value_fmt
+            if post_process_of_value_fmt is not None:
+                factory = factory.post_process(post_process_of_value_fmt)
 
             yield factory_count, def_file_name, factory, factory_def
     else:
@@ -71,6 +81,10 @@ def _build_factories(
             _repr_function_call(construct_factory, iargs, kwargs),
         )
         factory = construct_factory(*iargs, **kwargs)
+        if args.pickle:
+            factory = factory.post_process(
+                StripWrapper(PicklePostProcess())
+            ).post_process(BytesWrapper)
         if post_process_of_binary_fmt is not None:
             factory = factory.post_process(post_process_of_binary_fmt)
         if post_process_of_value_fmt is not None:

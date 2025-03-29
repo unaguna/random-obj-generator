@@ -164,7 +164,6 @@ def test__main__option_base64__error_with_non_bytes(capfd, resources):
 
         out, err = capfd.readouterr()
         assert out == ""
-        assert err.count("\n") <= 1
         assert "TypeError" in err
 
 

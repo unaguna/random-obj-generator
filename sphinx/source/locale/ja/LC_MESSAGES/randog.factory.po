@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: random-obj-generator 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-09 19:04+0900\n"
+"POT-Creation-Date: 2025-03-29 17:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.12.1\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../source/randog.factory.rst:2
 msgid "randog.factory package"
@@ -73,23 +73,7 @@ msgstr "ただし、引数 `raise_on_factory_stopped` が True でない場合�
 msgid "Examples"
 msgstr ""
 
-#: of randog.factory._base.Factory.infinity_iter
-#: randog.factory._base.Factory.iter randog.factory._base.Factory.next
-#: randog.factory._base.Factory.or_none
-#: randog.factory._base.Factory.post_process
-#: randog.factory._base.Factory.post_process_items
-#: randog.factory._bool.randbool randog.factory._by_callable.by_callable
-#: randog.factory._by_iterator.by_iterator randog.factory._choice.randchoice
-#: randog.factory._choice.randenum randog.factory._const.const
-#: randog.factory._date.randdate randog.factory._datetime.randdatetime
-#: randog.factory._decimal.randdecimal randog.factory._dice.dice
-#: randog.factory._dict.randdict randog.factory._float.randfloat
-#: randog.factory._from_example.from_example
-#: randog.factory._from_pyfile.from_pyfile randog.factory._increment.increment
-#: randog.factory._int.randint randog.factory._ipv4.randipv4
-#: randog.factory._iterrange.iterrange randog.factory._list.randlist
-#: randog.factory._str.randstr randog.factory._time.randtime
-#: randog.factory._timedelta.randtimedelta randog.factory._union.union
+#: ../../source/randog.factory.rst
 msgid "Parameters"
 msgstr ""
 
@@ -115,7 +99,8 @@ msgstr ""
 
 #: of randog.factory._base.Factory.infinity_iter:27
 #: randog.factory._base.Factory.iter:34 randog.factory._base.Factory.or_none:21
-#: randog.factory._bool.randbool:5 randog.factory._choice.randchoice:8
+#: randog.factory._bool.randbool:5 randog.factory._bytes.randbytearray:5
+#: randog.factory._bytes.randbytes:5 randog.factory._choice.randchoice:8
 #: randog.factory._choice.randenum:7 randog.factory._date.randdate:7
 #: randog.factory._datetime.randdatetime:12
 #: randog.factory._decimal.randdecimal:18 randog.factory._dice.dice:5
@@ -128,11 +113,7 @@ msgstr ""
 msgid "random number generator to be used"
 msgstr "乱数生成に使用するインスタンス"
 
-#: of randog.factory._base.Factory.infinity_iter
-#: randog.factory._base.Factory.iter randog.factory._base.Factory.next
-#: randog.factory._base.Factory.or_none
-#: randog.factory._base.Factory.post_process
-#: randog.factory._base.Factory.post_process_items
+#: ../../source/randog.factory.rst
 msgid "Returns"
 msgstr ""
 
@@ -140,11 +121,7 @@ msgstr ""
 msgid "An infinity iterator"
 msgstr "無限イテレータ"
 
-#: of randog.factory._base.Factory.infinity_iter
-#: randog.factory._base.Factory.iter randog.factory._base.Factory.next
-#: randog.factory._base.Factory.or_none
-#: randog.factory._base.Factory.post_process
-#: randog.factory._base.Factory.post_process_items
+#: ../../source/randog.factory.rst
 msgid "Return type"
 msgstr ""
 
@@ -289,16 +266,7 @@ msgstr "サイコロの目の合計としてランダムに int 型の値を生�
 msgid "dice notation"
 msgstr "ダイスロール記法による指定"
 
-#: of randog.factory._bool.randbool randog.factory._choice.randchoice
-#: randog.factory._choice.randenum randog.factory._date.randdate
-#: randog.factory._datetime.randdatetime randog.factory._decimal.randdecimal
-#: randog.factory._dice.dice randog.factory._float.randfloat
-#: randog.factory._from_example.from_example
-#: randog.factory._increment.increment randog.factory._int.randint
-#: randog.factory._ipv4.randipv4 randog.factory._iterrange.iterrange
-#: randog.factory._list.randlist randog.factory._str.randstr
-#: randog.factory._time.randtime randog.factory._timedelta.randtimedelta
-#: randog.factory._union.union
+#: ../../source/randog.factory.rst
 msgid "Raises"
 msgstr ""
 
@@ -430,7 +398,8 @@ msgstr "bool 値をランダムに生成する factory を返す。"
 msgid "the probability of True"
 msgstr "True を生成する確率"
 
-#: of randog.factory._bool.randbool:8 randog.factory._date.randdate:10
+#: of randog.factory._bool.randbool:8 randog.factory._bytes.randbytearray:8
+#: randog.factory._bytes.randbytes:8 randog.factory._date.randdate:10
 #: randog.factory._datetime.randdatetime:15
 #: randog.factory._decimal.randdecimal:21 randog.factory._float.randfloat:19
 #: randog.factory._int.randint:13 randog.factory._ipv4.randipv4:8
@@ -438,6 +407,18 @@ msgstr "True を生成する確率"
 #: randog.factory._time.randtime:15 randog.factory._timedelta.randtimedelta:12
 msgid "When the specified generating conditions are inconsistent."
 msgstr "指定した生成条件に矛盾がある場合。"
+
+#: of randog.factory._bytes.randbytearray:1
+msgid "Return a factory generating random bytearray values."
+msgstr "ランダムに bytearray 型の値を生成する factory を返す。"
+
+#: of randog.factory._bytes.randbytearray:3 randog.factory._bytes.randbytes:3
+msgid "length of generated bytes"
+msgstr "生成されるバイト列の長さ"
+
+#: of randog.factory._bytes.randbytes:1
+msgid "Return a factory generating random bytes values."
+msgstr "ランダムに bytes 型の値を生成する factory を返す。"
 
 #: of randog.factory._choice.randchoice:1
 msgid "Return a factory choosing one of values."

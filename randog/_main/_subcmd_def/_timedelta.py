@@ -5,12 +5,12 @@ import typing as t
 
 import randog.factory
 from ..._utils.type import timedelta, positive_timedelta
-from ... import timedelta_util
 from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
 from ...factory import Factory
+from .fmt_wrapper.timedelta import TimedeltaWrapper
 
 
 class SubcmdDefTimedelta(SubcmdDef):
@@ -114,31 +114,5 @@ class SubcmdDefTimedelta(SubcmdDef):
 
     def get_factory_constructor(self) -> t.Callable[..., Factory[dt.timedelta]]:
         return lambda *a, **kw: randog.factory.randtimedelta(*a, **kw).post_process(
-            _TimedeltaWrapper
+            TimedeltaWrapper
         )
-
-
-class _TimedeltaWrapper(dt.timedelta):
-    _base: dt.timedelta
-
-    def __new__(cls, base: dt.timedelta):
-        ins = super(_TimedeltaWrapper, cls).__new__(
-            cls,
-            days=base.days,
-            seconds=base.seconds,
-            microseconds=base.microseconds,
-        )
-        ins._base = base
-        return ins
-
-    def __str__(self):
-        return timedelta_util.to_str(self)
-
-    def __repr__(self):
-        return repr(self._base)
-
-    def __format__(self, format_spec):
-        return timedelta_util.to_fmt(self, format_spec)
-
-    def isoformat(self):
-        return timedelta_util.to_iso(self)

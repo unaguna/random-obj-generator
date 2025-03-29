@@ -8,6 +8,8 @@ import typing as t
 import warnings
 
 import randog.factory
+from ._subcmd_def.fmt_wrapper import StripWrapper
+from ._subcmd_def.fmt_wrapper.bytes import BytesWrapper
 from ..exceptions import RandogWarning
 from .._processmode import Subcmd, set_process_mode
 from . import Args, get_subcmd_def
@@ -22,6 +24,7 @@ from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryStopException, FactoryDef
 from .._output import generate_to_csv
+from ..postprocess import Base64PostProcess, FormatPostProcess, IsoFormatPostProcess
 
 
 def _build_factories(
@@ -35,6 +38,8 @@ def _build_factories(
     ]
 ]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
+    post_process_of_binary_fmt = _post_process_of_binary_fmt(args.binary_fmt)
+    post_process_of_value_fmt = _post_process_of_value_fmt(args)
 
     if args.sub_cmd == Subcmd.Byfile:
         for factory_count, filepath in enumerate(args.factories):
@@ -53,6 +58,10 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
+            if post_process_of_binary_fmt is not None:
+                factory = factory.post_process(post_process_of_binary_fmt)
+            # Don't use post_process_of_value_fmt
+
             yield factory_count, def_file_name, factory, factory_def
     else:
         iargs, kwargs = subcmd_def.build_args(args)
@@ -62,15 +71,35 @@ def _build_factories(
             _repr_function_call(construct_factory, iargs, kwargs),
         )
         factory = construct_factory(*iargs, **kwargs)
-        if args.iso:
-            factory = factory.post_process(
-                lambda x: x.isoformat() if x is not None else None
-            )
-        elif args.format:
-            factory = factory.post_process(
-                lambda x: format(x, args.format) if x is not None else None
-            )
+        if post_process_of_binary_fmt is not None:
+            factory = factory.post_process(post_process_of_binary_fmt)
+        if post_process_of_value_fmt is not None:
+            factory = factory.post_process(post_process_of_value_fmt)
         yield 0, "", factory, None
+
+
+def _post_process_of_binary_fmt(
+    binary_fmt: t.Optional[str],
+) -> t.Optional[t.Callable[[t.Any], t.Any]]:
+    """callable object to convert bytes to str according binary_fmt"""
+    if binary_fmt is None:
+        return None
+    elif binary_fmt == "base64":
+        return StripWrapper(Base64PostProcess())
+    else:
+        raise ValueError(f"unknown binary format: {binary_fmt}")
+
+
+def _post_process_of_value_fmt(
+    args: Args,
+) -> t.Optional[t.Callable[[t.Any], t.Any]]:
+    """callable object to convert value to str according Args.format etc."""
+    if args.iso:
+        return IsoFormatPostProcess()
+    elif args.format:
+        return FormatPostProcess(args.format)
+    else:
+        return None
 
 
 class _DummyIO:
@@ -132,6 +161,10 @@ def _open_output_fp(
 def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
     if args.output_fmt == "repr":
         print(repr(generated), file=fp)
+    elif isinstance(generated, bytes):
+        fp.buffer.write(generated)
+    elif isinstance(generated, BytesWrapper):
+        fp.buffer.write(generated.base)
     elif args.output_fmt == "json":
         json.dump(
             generated,

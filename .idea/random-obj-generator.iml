@@ -12,6 +12,8 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv_sqlalchemy1.4" />
       <excludeFolder url="file://$MODULE_DIR$/.venv_sqlalchemy2.0" />
       <excludeFolder url="file://$MODULE_DIR$/sphinx/.venv_sphinx" />
+      <excludeFolder url="file://$MODULE_DIR$/.venv_sphinx__" />
+      <excludeFolder url="file://$MODULE_DIR$/sphinx/.venv_sphinx_" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

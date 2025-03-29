@@ -73,7 +73,7 @@ def randstr(
 
 
 class StrRandomFactory(Factory[str]):
-    """factory generating random int values"""
+    """factory generating random str values"""
 
     _random: Random
     _length: t.Union[int, Factory[int]]

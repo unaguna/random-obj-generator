@@ -68,6 +68,18 @@ By default, the output is binary data, but you can change the output format to t
     # generates a value expressed in hexadecimal with padding zeros on the left.
     randog bytes --fmt '0>20x'
 
+You can also use the option :code:`--base64` to encode the output in base64. If you use :code:`--fmt` at the same time, the base64-encoded result is treated as a string and output in the format specified by :code:`--fmt`.
+
+.. code-block:: shell
+
+    # output base64-encoded value such as 'QIj/'
+    randog bytes --base64
+
+    # output base64-encoded value such as '  QIj/'
+    randog bytes --base64 --fmt '>6s'
+    # output base64-encoded value such as '"QIj/"'
+    randog bytes --base64 --json
+
 
 Repeatedly Generate
 ~~~~~~~~~~~~~~~~~~~

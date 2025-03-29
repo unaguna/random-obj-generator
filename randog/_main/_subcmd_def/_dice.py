@@ -29,6 +29,13 @@ class SubcmdDefDice(SubcmdDef):
             metavar="DICE_ROLL",
             help="the dice notation",
         )
+        dice_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '011.2f'",
+        )
         add_common_arguments(dice_parser)
 
         return dice_parser

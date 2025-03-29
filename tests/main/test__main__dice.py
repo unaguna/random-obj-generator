@@ -81,6 +81,25 @@ def test__main__dice__error_when_illegal_code(capfd, code):
         assert "dice: error: argument DICE_ROLL: invalid dice_roll value: " in err
 
 
+@pytest.mark.parametrize(
+    ("options", "expected"),
+    [
+        (["1d1", "--repr"], "1"),
+        (["1d1", "--json"], "1"),
+        (["1d1", "--fmt", ">3d"], "  1"),
+        (["1d1", "--fmt", ".2f"], "1.00"),
+    ],
+)
+def test__main__dice__fmt(capfd, options, expected):
+    args = ["randog", "dice", *options]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == f"{expected}\n"
+        assert err == ""
+
+
 @pytest.mark.parametrize("repeat", [1, 2])
 def test__main__dice__pickle(capfd, tmp_path, repeat):
     output_path = tmp_path.joinpath("out.txt")

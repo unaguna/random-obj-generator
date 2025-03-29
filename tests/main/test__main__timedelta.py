@@ -224,8 +224,8 @@ def test__main__timedelta__pickle(capfd, tmp_path, repeat):
     args = [
         "randog",
         "timedelta",
-        "3d4s5ms",
-        "3d4s5ms",
+        "3d4s5us",
+        "3d4s5us",
         "--pickle",
         "--output",
         str(output_path),
@@ -251,8 +251,8 @@ def test__main__timedelta__pickle_base64(capfd, repeat):
     args = [
         "randog",
         "timedelta",
-        "3d4s5ms",
-        "3d4s5ms",
+        "3d4s5us",
+        "3d4s5us",
         "--pickle",
         "--base64",
         "--repeat",
@@ -278,8 +278,8 @@ def test__main__timedelta__pickle_fmt(capfd, tmp_path, repeat):
     args = [
         "randog",
         "timedelta",
-        "3d4s5ms",
-        "3d4s5ms",
+        "3d4s5us",
+        "3d4s5us",
         "--pickle",
         "--fmt=x",
         "--repeat",

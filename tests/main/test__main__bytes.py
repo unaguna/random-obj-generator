@@ -143,7 +143,6 @@ def test__main__bytes__error_with_option_json(capfd):
         (["--fmt", "_x"], re.compile(r"([0-9a-f]{4}_){3}[0-9a-f]{4}")),
         (["--fmt", "X"], re.compile(r"[0-9A-F]{16}")),
         (["--fmt", "_X"], re.compile(r"([0-9A-F]{4}_){3}[0-9A-F]{4}")),
-        # TODO: base64 形式にするオプション
     ],
 )
 def test__main__bytes__fmt(capfd, options, expected_regex):
@@ -193,9 +192,11 @@ def test__main__bytes__fmt_c(capfd, options, parse):
         (["--fmt", "_x"], b"\x40\x88\xff", "4088_ff"),
         (["--fmt", "X"], b"\x40\x88\xff", "4088FF"),
         (["--fmt", "_X"], b"\x40\x88\xff", "4088_FF"),
-        # TODO: base64 形式にするオプション
         (["--fmt", "c"], b"\x40\x88\xff", r"@\x88\xff"),
         (["--fmt", "s"], b"\x40\x88\xff", r"b'@\x88\xff'"),
+        (["--base64"], b"\x40\x88\xff", "QIj/"),
+        (["--base64", "--json"], b"\x40\x88\xff", '"QIj/"'),
+        (["--base64", "--fmt", ">6s"], b"\x40\x88\xff", "  QIj/"),
     ],
 )
 def test__main__bytes__fmt_value(capfd, options, mock_bytes, expected):
@@ -208,6 +209,24 @@ def test__main__bytes__fmt_value(capfd, options, mock_bytes, expected):
         out, err = capfd.readouterr()
         assert out == expected + "\n"
         assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("options",),
+    [
+        (["--json", "--repr"],),
+    ],
+)
+def test__main__bytes__error_duplicate_format(capfd, options):
+    args = ["randog", "bytes", *options]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err.startswith("usage:")
+        assert "not allowed with argument" in err
 
 
 @pytest.mark.parametrize(

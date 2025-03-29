@@ -76,6 +76,11 @@ class Args:
         return self._args.list
 
     @property
+    def binary_fmt(self) -> t.Optional[t.Literal["base64"]]:
+        """バイト列から他の形式への変換方法"""
+        return "base64" if self._args.base64 else None
+
+    @property
     def output_fmt(self) -> t.Optional[str]:
         return self._args.output_fmt
 

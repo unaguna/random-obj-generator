@@ -8,6 +8,7 @@ import typing as t
 import warnings
 
 import randog.factory
+from ._subcmd_def.fmt_wrapper import strip_wrapper
 from ._subcmd_def.fmt_wrapper.bytes import BytesWrapper
 from ..exceptions import RandogWarning
 from .._processmode import Subcmd, set_process_mode
@@ -23,6 +24,7 @@ from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
 from ..factory import FactoryStopException, FactoryDef
 from .._output import generate_to_csv
+from ..postprocess import Base64PostProcess
 
 
 def _build_factories(
@@ -63,6 +65,10 @@ def _build_factories(
             _repr_function_call(construct_factory, iargs, kwargs),
         )
         factory = construct_factory(*iargs, **kwargs)
+        if args.binary_fmt == "base64":
+            factory = factory.post_process(strip_wrapper).post_process(
+                Base64PostProcess()
+            )
         if args.iso:
             factory = factory.post_process(
                 lambda x: x.isoformat() if x is not None else None

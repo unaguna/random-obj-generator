@@ -1,8 +1,12 @@
+from ._base import BaseWrapper
 from ...._utils.formatutils import format_bytes
 
 
-class BytesWrapper:
+class BytesWrapper(BaseWrapper):
     base: bytes
+
+    def origin(self) -> bytes:
+        return self.base
 
     def __init__(self, base: bytes):
         self.base = base

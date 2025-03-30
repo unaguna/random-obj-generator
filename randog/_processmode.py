@@ -12,6 +12,7 @@ class Subcmd(Enum):
     Dice = "dice"
     Float = "float"
     String = "str"
+    Bytes = "bytes"
     Decimal = "decimal"
     Datetime = "datetime"
     Date = "date"

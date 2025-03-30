@@ -8,12 +8,15 @@ from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
 from ..._utils.type import dice_roll
 from ...exceptions import FactoryConstructionError
-from ...factory import parse_dice_notation
+from ...factory import parse_dice_notation, Factory
 
 
 class SubcmdDefDice(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Dice
+
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
 
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         dice_parser = subparsers.add_parser(
@@ -28,6 +31,13 @@ class SubcmdDefDice(SubcmdDef):
             type=dice_roll,
             metavar="DICE_ROLL",
             help="the dice notation",
+        )
+        dice_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '011.2f'",
         )
         add_common_arguments(dice_parser)
 
@@ -50,5 +60,5 @@ class SubcmdDefDice(SubcmdDef):
             "rnd": rnd,
         }
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[int]]:
         return randog.factory.dice

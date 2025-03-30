@@ -8,6 +8,8 @@ import typing as t
 import warnings
 
 import randog.factory
+from ._subcmd_def.fmt_wrapper import StripWrapper, strip_wrapper
+from ._subcmd_def.fmt_wrapper.bytes import BytesWrapper
 from ..exceptions import RandogWarning
 from .._processmode import Subcmd, set_process_mode
 from . import Args, get_subcmd_def
@@ -20,8 +22,14 @@ from ._logging import (
 from ._rnd import construct_random
 from ._warning import apply_formatwarning
 from .._utils.exceptions import get_message_recursive
-from ..factory import FactoryStopException, FactoryDef
+from ..factory import FactoryStopException, FactoryDef, Factory
 from .._output import generate_to_csv
+from ..postprocess import (
+    Base64PostProcess,
+    FormatPostProcess,
+    IsoFormatPostProcess,
+    PicklePostProcess,
+)
 
 
 def _build_factories(
@@ -31,10 +39,15 @@ def _build_factories(
         int,
         str,
         randog.factory.Factory,
-        FactoryDef,
+        t.Optional[FactoryDef],
     ]
 ]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
+    post_process_of_binary_fmt = _post_process_of_binary_fmt(
+        args.binary_fmt,
+        strict_type=args.sub_cmd != Subcmd.Byfile,
+    )
+    post_process_of_value_fmt = _post_process_of_value_fmt(args)
 
     if args.sub_cmd == Subcmd.Byfile:
         for factory_count, filepath in enumerate(args.factories):
@@ -53,6 +66,35 @@ def _build_factories(
                 )
             factory = factory_def.factory
 
+            if args.pickle:
+                # only if --pickle is specified, apply --list before --pickle.
+                # It is in order to allow the flow --list -> --pickle -> base64/fmt
+                # in order to output pickle of list as base64 or --fmt=x etc.
+                if args.list is not None:
+                    factory = _IterAsListFactory(
+                        factory.post_process(strip_wrapper),
+                        length=args.list,
+                        regenerate=args.regenerate,
+                        discard=args.discard,
+                        raise_on_factory_stopped=args.error_on_factory_stopped,
+                    )
+                factory = factory.post_process(PicklePostProcess()).post_process(
+                    BytesWrapper
+                )
+            if post_process_of_binary_fmt is not None:
+                factory = factory.post_process(post_process_of_binary_fmt)
+            if post_process_of_value_fmt is not None:
+                factory = factory.post_process(post_process_of_value_fmt)
+            # if --pickle is not specified, apply --list after --fmt etc.
+            if not args.pickle and args.list is not None:
+                factory = _IterAsListFactory(
+                    factory,
+                    length=args.list,
+                    regenerate=args.regenerate,
+                    discard=args.discard,
+                    raise_on_factory_stopped=args.error_on_factory_stopped,
+                )
+
             yield factory_count, def_file_name, factory, factory_def
     else:
         iargs, kwargs = subcmd_def.build_args(args)
@@ -62,15 +104,94 @@ def _build_factories(
             _repr_function_call(construct_factory, iargs, kwargs),
         )
         factory = construct_factory(*iargs, **kwargs)
-        if args.iso:
+        if args.pickle:
+            # only if --pickle is specified, apply --list before --pickle.
+            # It is in order to allow the flow --list -> --pickle -> base64/fmt
+            # in order to output pickle of list as base64 or --fmt=x etc.
+            if args.list is not None:
+                factory = _IterAsListFactory(
+                    factory.post_process(strip_wrapper),
+                    length=args.list,
+                    regenerate=args.regenerate,
+                    discard=args.discard,
+                    raise_on_factory_stopped=args.error_on_factory_stopped,
+                )
             factory = factory.post_process(
-                lambda x: x.isoformat() if x is not None else None
-            )
-        elif args.format:
-            factory = factory.post_process(
-                lambda x: format(x, args.format) if x is not None else None
+                StripWrapper(PicklePostProcess())
+            ).post_process(BytesWrapper)
+        if post_process_of_binary_fmt is not None:
+            factory = factory.post_process(post_process_of_binary_fmt)
+        if post_process_of_value_fmt is not None:
+            factory = factory.post_process(post_process_of_value_fmt)
+        # if --pickle is not specified, apply --list after --fmt etc.
+        if not args.pickle and args.list is not None:
+            factory = _IterAsListFactory(
+                factory,
+                length=args.list,
+                regenerate=args.regenerate,
+                discard=args.discard,
+                raise_on_factory_stopped=args.error_on_factory_stopped,
             )
         yield 0, "", factory, None
+
+
+class _IterAsListFactory(Factory[t.List]):
+    _base: Factory
+    _length: int
+    _regenerate: float
+    _discard: float
+    _raise_on_factory_stopped: bool
+
+    def __init__(
+        self,
+        factory: Factory,
+        *,
+        length: int,
+        regenerate: float,
+        discard: float,
+        raise_on_factory_stopped: bool,
+    ):
+        self._base = factory
+        self._length = length
+        self._regenerate = regenerate
+        self._discard = discard
+        self._raise_on_factory_stopped = raise_on_factory_stopped
+
+    def _next(self) -> t.List:
+        return list(
+            self._base.iter(
+                self._length,
+                regenerate=self._regenerate,
+                discard=self._discard,
+                raise_on_factory_stopped=self._raise_on_factory_stopped,
+            )
+        )
+
+
+def _post_process_of_binary_fmt(
+    binary_fmt: t.Optional[str],
+    *,
+    strict_type: bool,
+) -> t.Optional[t.Callable[[t.Any], t.Any]]:
+    """callable object to convert bytes to str according binary_fmt"""
+    if binary_fmt is None:
+        return None
+    elif binary_fmt == "base64":
+        return StripWrapper(Base64PostProcess(strict_type=strict_type))
+    else:
+        raise ValueError(f"unknown binary format: {binary_fmt}")
+
+
+def _post_process_of_value_fmt(
+    args: Args,
+) -> t.Optional[t.Callable[[t.Any], t.Any]]:
+    """callable object to convert value to str according Args.format etc."""
+    if args.iso:
+        return IsoFormatPostProcess()
+    elif args.format:
+        return FormatPostProcess(args.format)
+    else:
+        return None
 
 
 class _DummyIO:
@@ -132,6 +253,10 @@ def _open_output_fp(
 def _output_generated(generated: t.Any, fp: t.TextIO, args: Args):
     if args.output_fmt == "repr":
         print(repr(generated), file=fp)
+    elif isinstance(generated, bytes):
+        fp.buffer.write(generated)
+    elif isinstance(generated, BytesWrapper):
+        fp.buffer.write(generated.base)
     elif args.output_fmt == "json":
         json.dump(
             generated,
@@ -179,14 +304,8 @@ def _generate_according_args(
         raise RuntimeError("cannot use this method if --csv is specified")
 
     if args.list is not None:
-        generated = list(
-            factory.iter(
-                args.list,
-                regenerate=args.regenerate,
-                discard=args.discard,
-                raise_on_factory_stopped=args.error_on_factory_stopped,
-            )
-        )
+        # If generates test, args.regenerate and args.discard are already attached
+        generated = factory.next()
     else:
         try:
             while True:

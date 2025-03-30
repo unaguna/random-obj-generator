@@ -1,6 +1,9 @@
+import base64
+import datetime as dt
 import filecmp
 import itertools
 import json
+import pickle
 import sys
 import warnings
 from unittest.mock import patch
@@ -134,6 +137,246 @@ def test__main__error_with_json_indent_without_json(capfd, resources, options):
             "byfile: error: argument --json-indent: not allowed without argument --json"
             in err
         )
+
+
+def test__main__option_base64(capfd, resources):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_bytes_const.py")),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == "QIj/\n"
+        assert err == ""
+
+
+@pytest.mark.parametrize(
+    ("def_file", "expected"),
+    [
+        (
+            "factory_def_bytes_const_in_dict.py",
+            "{'int': 1, 'str': 'aaa', 'bytes': 'QIj/'}\n",
+        ),
+        ("factory_def_bbb.py", "bbb\n"),
+        (
+            "factory_def_dict.py",
+            "{'id': 0, 'name': 'aaa', 'join_date': datetime.date(2019, 10, 14)}\n",
+        ),
+    ],
+)
+def test__main__option_base64__dict(capfd, resources, def_file, expected):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath(def_file)),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == expected
+        assert err == ""
+
+
+def test__main__option_base64__list(capfd, resources):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_bytes_const_in_list.py")),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == "[1, 'aaa', 'QIj/']\n"
+        assert err == ""
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__byfile__pickle(capfd, tmp_path, resources, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    expected_values = [
+        {
+            "id": 0,
+            "name": "aaa",
+            "join_date": dt.date(2019, 10, 14),
+        },
+        {
+            "id": 1,
+            "name": "aaa",
+            "join_date": dt.date(2019, 10, 14),
+        },
+    ]
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == expected_values[:repeat]
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__byfile__pickle_base64(capfd, tmp_path, resources, repeat):
+    expected_values = [
+        {
+            "id": 0,
+            "name": "aaa",
+            "join_date": dt.date(2019, 10, 14),
+        },
+        {
+            "id": 1,
+            "name": "aaa",
+            "join_date": dt.date(2019, 10, 14),
+        },
+    ]
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == expected_values[:repeat]
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__byfile__pickle_fmt(capfd, tmp_path, resources, repeat):
+    expected_values = [
+        {
+            "id": 0,
+            "name": "aaa",
+            "join_date": dt.date(2019, 10, 14),
+        },
+        {
+            "id": 1,
+            "name": "aaa",
+            "join_date": dt.date(2019, 10, 14),
+        },
+    ]
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == expected_values[:repeat]
+
+
+def test__main__byfile__error_if_fmt_without_pickle(capfd, tmp_path, resources):
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def.py")),
+        "--fmt=x",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert "error: --fmt can only be used with --pickle" in err
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__byfile__pickle_list(capfd, tmp_path, resources, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    list_length = 2
+    expected_values = [
+        [
+            {
+                "id": 0,
+                "name": "aaa",
+                "join_date": dt.date(2019, 10, 14),
+            },
+            {
+                "id": 1,
+                "name": "aaa",
+                "join_date": dt.date(2019, 10, 14),
+            },
+        ],
+        [
+            {
+                "id": 2,
+                "name": "aaa",
+                "join_date": dt.date(2019, 10, 14),
+            },
+            {
+                "id": 3,
+                "name": "aaa",
+                "join_date": dt.date(2019, 10, 14),
+            },
+        ],
+    ]
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == expected_values[:repeat]
 
 
 @pytest.mark.parametrize(

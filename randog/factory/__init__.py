@@ -7,6 +7,7 @@ from ._dice import DiceRandomFactory, dice, parse_dice_notation
 from ._float import FloatRandomFactory, randfloat
 from ._decimal import DecimalRandomFactory, randdecimal
 from ._str import StrRandomFactory, randstr
+from ._bytes import BytesRandomFactory, randbytes, randbytearray
 from ._time import TimeRandomFactory, randtime
 from ._date import DateRandomFactory, randdate
 from ._timedelta import TimedeltaRandomFactory, randtimedelta
@@ -37,6 +38,8 @@ __all__ = [
     "randfloat",
     "randdecimal",
     "randstr",
+    "randbytes",
+    "randbytearray",
     "randtime",
     "randdate",
     "randtimedelta",

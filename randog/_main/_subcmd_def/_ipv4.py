@@ -2,6 +2,7 @@ import argparse
 import ipaddress
 import sys
 import typing as t
+from ipaddress import IPv4Address
 
 import randog.factory
 from ..._utils.type import ipv4_network
@@ -9,11 +10,15 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
+from ...factory import Factory
 
 
 class SubcmdDefIPV4(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.IPV4
+
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
 
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         ipv4_parser = subparsers.add_parser(
@@ -66,5 +71,5 @@ class SubcmdDefIPV4(SubcmdDef):
 
         return tuple(), kwargs
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[IPv4Address]]:
         return randog.factory.randipv4

@@ -7,11 +7,15 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
+from ...factory import Factory
 
 
 class SubcmdDefFloat(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Float
+
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
 
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         float_parser = subparsers.add_parser(
@@ -116,5 +120,5 @@ class SubcmdDefFloat(SubcmdDef):
             "rnd": rnd,
         }
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[float]]:
         return randog.factory.randfloat

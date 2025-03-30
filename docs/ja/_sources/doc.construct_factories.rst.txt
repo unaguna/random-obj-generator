@@ -60,6 +60,16 @@ You can create a factory that generates values of the following types:
      - a string value
      - :doc:`detail <doc.str_factory>`
 
+   * - :code:`bytes`
+     - `randbytes <randog.factory.html#randog.factory.randbytes>`_
+     - a 'bytes' value
+     - :doc:`detail <doc.bytes_factory>`
+
+   * - :code:`bytearray`
+     - `randbytearray <randog.factory.html#randog.factory.randbytearray>`_
+     - a bytearray value
+     - :doc:`detail <doc.bytes_factory>`
+
    * - :code:`list`
      - `randlist <randog.factory.html#randog.factory.randlist>`_
      - a list
@@ -328,6 +338,7 @@ Details on how to build individual factories
    doc.dict_factory
    doc.list_factory
    doc.str_factory
+   doc.bytes_factory
    doc.ipv4_factory
    doc.enum_factory
 

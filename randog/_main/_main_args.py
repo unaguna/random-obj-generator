@@ -10,6 +10,7 @@ import typing as t
 
 from .._utils.linesep import Linesep
 from .._processmode import Subcmd
+import randog
 
 
 class Args:
@@ -27,6 +28,9 @@ class Args:
             prog="randog",
             description="It generates values randomly according to the specified mode "
             "and arguments.",
+        )
+        parser.add_argument(
+            "--version", action="version", version=f"%(prog)s {randog.__version__}"
         )
         subparsers = parser.add_subparsers(
             required=True,
@@ -70,6 +74,18 @@ class Args:
     @property
     def list(self) -> t.Optional[int]:
         return self._args.list
+
+    @property
+    def pickle(self) -> bool:
+        if hasattr(self._args, "pickle"):
+            return self._args.pickle
+        else:
+            return False
+
+    @property
+    def binary_fmt(self) -> t.Optional[t.Literal["base64"]]:
+        """バイト列から他の形式への変換方法"""
+        return "base64" if self._args.base64 else None
 
     @property
     def output_fmt(self) -> t.Optional[str]:

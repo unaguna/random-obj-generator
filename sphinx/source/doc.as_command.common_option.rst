@@ -140,6 +140,28 @@ If no seed value is specified, a random seed value is used. The seed value used 
 If you note the observed seed value, you can reproduce the generation the next time by using that seed value.
 
 
+Convert to pickle
+-----------------
+
+Output data can be converted to `pickle <https://docs.python.org/3/library/pickle.html>`_ by using the :code:`--pickle` option as shown below.
+
+.. code-block:: shell
+
+    # output generated value as pickle into file
+    randog date --pickle --output out.pickle
+
+
+The above example outputs binary to file, but it can also be output as a string by combining with :code:`--base64` or :code:`--fmt`. You can use :ref:`the formatting codes of bytes mode <bytes-format-codes>` when using :code:`--fmt`.
+
+.. code-block:: shell
+
+    # output generated value as pickle in hex
+    randog date --pickle --fmt 'x'
+
+    # output generated value as pickle in base64
+    randog date --pickle --base64
+
+
 Modify environment variable
 ---------------------------
 

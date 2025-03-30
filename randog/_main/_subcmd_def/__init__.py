@@ -11,6 +11,7 @@ from ._dice import SubcmdDefDice
 from ._float import SubcmdDefFloat
 from ._int import SubcmdDefInt
 from ._str import SubcmdDefString
+from ._bytes import SubcmdDefBytes
 from ._time import SubcmdDefTime
 from ._timedelta import SubcmdDefTimedelta
 from ._ipv4 import SubcmdDefIPV4
@@ -25,6 +26,7 @@ _subcmd_def_list: t.Sequence[SubcmdDef] = (
     SubcmdDefFloat(),
     SubcmdDefInt(),
     SubcmdDefString(),
+    SubcmdDefBytes(),
     SubcmdDefTime(),
     SubcmdDefTimedelta(),
     SubcmdDefIPV4(),

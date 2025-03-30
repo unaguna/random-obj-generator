@@ -77,6 +77,19 @@ def test__from_example__str_value(obj):
     assert isinstance(value, str)
 
 
+def test__from_example__bytes_type():
+    factory = randog.factory.from_example(bytes)
+    value = factory.next()
+    assert isinstance(value, bytes)
+
+
+@pytest.mark.parametrize("obj", (b"a", b"bc", b"xyz"))
+def test__from_example__bytes_value(obj):
+    factory = randog.factory.from_example(obj)
+    value = factory.next()
+    assert isinstance(value, bytes)
+
+
 def test__from_example__enum_type():
     factory = randog.factory.from_example(MyEnum)
     value = factory.next()

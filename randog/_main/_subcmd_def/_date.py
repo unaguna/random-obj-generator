@@ -8,11 +8,15 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
+from ...factory import Factory
 
 
 class SubcmdDefDate(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Date
+
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
 
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         date_parser = subparsers.add_parser(
@@ -110,7 +114,7 @@ class SubcmdDefDate(SubcmdDef):
 
         return (minimum, maximum), {"rnd": rnd}
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[dt.date]]:
         return randog.factory.randdate
 
 

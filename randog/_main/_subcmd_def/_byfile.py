@@ -6,12 +6,15 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from ..._utils.type import positive_int, probability
-from ...factory import REGENERATE_PROB_MAX
+from ...factory import REGENERATE_PROB_MAX, Factory
 
 
 class SubcmdDefByfile(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Byfile
+
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return False
 
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         byfile_parser = subparsers.add_parser(
@@ -75,6 +78,16 @@ class SubcmdDefByfile(SubcmdDef):
                 "If not specified, the generation simply stops in the case."
             ),
         )
+        byfile_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help=(
+                "It can only be used with --pickle. "
+                "If specified, it outputs generated value as pickle bytes "
+                "with the specified format, such as 'b'"
+            ),
+        )
         add_common_arguments(byfile_parser)
 
         return byfile_parser
@@ -93,10 +106,13 @@ class SubcmdDefByfile(SubcmdDef):
                 f"argument --regenerate: must be lower than or equal to {prob_max}"
             )
 
+        if args.format is not None and not args.pickle:
+            subparser.error("--fmt can only be used with --pickle")
+
     def build_args(
         self, args: Args
     ) -> t.Tuple[t.Sequence[t.Any], t.Mapping[str, t.Any]]:
         pass
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory]:
         pass

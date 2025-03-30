@@ -7,11 +7,15 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
+from ...factory import Factory
 
 
 class SubcmdDefString(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.String
+
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
 
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         ipv4_parser = subparsers.add_parser(
@@ -100,7 +104,7 @@ class SubcmdDefString(SubcmdDef):
 
         return tuple(), kwargs
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[str]]:
         return randog.factory.randstr
 
 

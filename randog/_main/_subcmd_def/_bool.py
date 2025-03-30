@@ -7,11 +7,15 @@ from ..._processmode import Subcmd
 from .. import Args
 from ._base import SubcmdDef, add_common_arguments
 from .._rnd import construct_random
+from ...factory import Factory
 
 
 class SubcmdDefBool(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Bool
+
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
 
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         bool_parser = subparsers.add_parser(
@@ -49,5 +53,5 @@ class SubcmdDefBool(SubcmdDef):
         rnd = construct_random(args.seed)
         return (args.get("prop_true"),), {"rnd": rnd}
 
-    def get_factory_constructor(self) -> t.Callable:
+    def get_factory_constructor(self) -> t.Callable[..., Factory[bool]]:
         return randog.factory.randbool

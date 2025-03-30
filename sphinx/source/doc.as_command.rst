@@ -48,6 +48,12 @@ The following modes are available for command execution. Arguments and options a
      - :code:`XTGh3VH1`
      - :doc:`detail <doc.as_command.str>`
 
+   * - bytes
+     - :code:`bytes`
+     - :code:`randog bytes`
+     - binary data
+     - :doc:`detail <doc.as_command.bytes>`
+
    * - decimal
      - :code:`Decimal`
      - :code:`randog decimal -10 10 --decimal-len 2`
@@ -121,6 +127,7 @@ Details of Modes
    doc.as_command.int
    doc.as_command.float
    doc.as_command.str
+   doc.as_command.bytes
    doc.as_command.decimal
    doc.as_command.datetime
    doc.as_command.date

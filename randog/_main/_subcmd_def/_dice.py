@@ -15,6 +15,9 @@ class SubcmdDefDice(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Dice
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         dice_parser = subparsers.add_parser(
             Subcmd.Dice.value,
@@ -28,6 +31,13 @@ class SubcmdDefDice(SubcmdDef):
             type=dice_roll,
             metavar="DICE_ROLL",
             help="the dice notation",
+        )
+        dice_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help="if specified, it outputs generated value with the specified format, "
+            "such as '011.2f'",
         )
         add_common_arguments(dice_parser)
 

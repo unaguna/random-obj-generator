@@ -1,4 +1,7 @@
+import base64
 import filecmp
+import datetime as dt
+import pickle
 from datetime import datetime, timedelta
 import re
 import sys
@@ -197,6 +200,138 @@ def test__main__datetime__option_json_iso(capfd, arg, expected):
         out, err = capfd.readouterr()
         assert out == f"{expected}\n"
         assert err == ""
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__datetime__pickle(capfd, tmp_path, repeat):
+    expected_value = dt.datetime(2000, 1, 2, 3, 4, 5)
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "datetime",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__datetime__pickle_base64(capfd, repeat):
+    expected_value = dt.datetime(2000, 1, 2, 3, 4, 5)
+    args = [
+        "randog",
+        "datetime",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+def test__main__datetime__err_base64_without_pickle(capfd):
+    expected_value = dt.datetime(2000, 1, 2, 3, 4, 5)
+    args = [
+        "randog",
+        "datetime",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "randog datetime: error: argument --base64: not allowed without argument "
+            "--pickle in this mode" in err
+        )
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__datetime__pickle_fmt(capfd, tmp_path, repeat):
+    expected_value = dt.datetime(2000, 1, 2, 3, 4, 5)
+    args = [
+        "randog",
+        "datetime",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__datetime__pickle_list(capfd, tmp_path, repeat):
+    expected_value = dt.datetime(2000, 1, 2, 3, 4, 5)
+    list_length = 2
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "datetime",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [[expected_value] * list_length] * repeat
 
 
 @pytest.mark.parametrize(

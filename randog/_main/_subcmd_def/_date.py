@@ -15,6 +15,9 @@ class SubcmdDefDate(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Date
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         date_parser = subparsers.add_parser(
             Subcmd.Date.value,

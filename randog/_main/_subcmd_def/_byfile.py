@@ -13,6 +13,9 @@ class SubcmdDefByfile(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Byfile
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return False
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         byfile_parser = subparsers.add_parser(
             Subcmd.Byfile.value,
@@ -75,6 +78,16 @@ class SubcmdDefByfile(SubcmdDef):
                 "If not specified, the generation simply stops in the case."
             ),
         )
+        byfile_args_group.add_argument(
+            "--fmt",
+            dest="format",
+            metavar="FORMAT",
+            help=(
+                "It can only be used with --pickle. "
+                "If specified, it outputs generated value as pickle bytes "
+                "with the specified format, such as 'b'"
+            ),
+        )
         add_common_arguments(byfile_parser)
 
         return byfile_parser
@@ -92,6 +105,9 @@ class SubcmdDefByfile(SubcmdDef):
             subparser.error(
                 f"argument --regenerate: must be lower than or equal to {prob_max}"
             )
+
+        if args.format is not None and not args.pickle:
+            subparser.error("--fmt can only be used with --pickle")
 
     def build_args(
         self, args: Args

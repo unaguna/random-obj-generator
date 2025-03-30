@@ -15,6 +15,9 @@ class SubcmdDefTime(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Time
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         time_parser = subparsers.add_parser(
             Subcmd.Time.value,

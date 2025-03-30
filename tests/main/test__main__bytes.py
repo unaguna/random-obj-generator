@@ -1,8 +1,11 @@
 import ast
+import base64
 import filecmp
 import os.path
+import pickle
 import re
 import sys
+import typing
 from unittest.mock import patch
 
 import pytest
@@ -197,13 +200,32 @@ def test__main__bytes__fmt_c(capfd, options, parse):
         (["--base64"], b"\x40\x88\xff", "QIj/"),
         (["--base64", "--json"], b"\x40\x88\xff", '"QIj/"'),
         (["--base64", "--fmt", ">6s"], b"\x40\x88\xff", "  QIj/"),
+        # with --list
+        (
+            ["--fmt", "x", "--list=2"],
+            [b"\x40\x88\xff", b"\x40\x88\xfe"],
+            "['4088ff', '4088fe']",
+        ),
+        (
+            ["--fmt", "c", "--list=2"],
+            [b"\x40\x88\xff", b"\x40\x88\xfe"],
+            r"['@\\x88\\xff', '@\\x88\\xfe']",
+        ),
+        # with --list and --json
+        (
+            ["--fmt", "x", "--list=2", "--json"],
+            [b"\x40\x88\xff", b"\x40\x88\xfe"],
+            '["4088ff", "4088fe"]',
+        ),
     ],
 )
 def test__main__bytes__fmt_value(capfd, options, mock_bytes, expected):
+    if not isinstance(mock_bytes, typing.List):
+        mock_bytes = [mock_bytes]
     args = ["randog", "bytes", "--length=3", *options]
     with patch.object(sys, "argv", args):
         with patch("random.Random.getrandbits") as m:
-            m.return_value = int.from_bytes(mock_bytes, "big")
+            m.side_effect = [int.from_bytes(b, "big") for b in mock_bytes]
             randog.__main__.main()
 
         out, err = capfd.readouterr()
@@ -227,6 +249,121 @@ def test__main__bytes__error_duplicate_format(capfd, options):
         assert out == ""
         assert err.startswith("usage:")
         assert "not allowed with argument" in err
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bytes__pickle(capfd, tmp_path, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    expected_value = b"\x40\x88\xff"
+    args = [
+        "randog",
+        "bytes",
+        "--length=3",
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        with patch("random.Random.getrandbits") as m:
+            m.return_value = int.from_bytes(expected_value, "big")
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bytes__pickle_base64(capfd, repeat):
+    expected_value = b"\x40\x88\xff"
+    args = [
+        "randog",
+        "bytes",
+        "--length=3",
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        with patch("random.Random.getrandbits") as m:
+            m.return_value = int.from_bytes(expected_value, "big")
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bytes__pickle_fmt(capfd, tmp_path, repeat):
+    expected_value = b"\x40\x88\xff"
+    args = [
+        "randog",
+        "bytes",
+        "--length=3",
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        with patch("random.Random.getrandbits") as m:
+            m.return_value = int.from_bytes(expected_value, "big")
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bytes__pickle_list(capfd, tmp_path, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    list_length = 2
+    expected_value = b"\x40\x88\xff"
+    args = [
+        "randog",
+        "bytes",
+        "--length=3",
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        with patch("random.Random.getrandbits") as m:
+            m.return_value = int.from_bytes(expected_value, "big")
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [[expected_value] * list_length] * repeat
 
 
 @pytest.mark.parametrize(

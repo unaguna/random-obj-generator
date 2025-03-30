@@ -1,4 +1,6 @@
+import base64
 import filecmp
+import pickle
 import sys
 from unittest import mock
 from unittest.mock import patch
@@ -286,6 +288,13 @@ def test__main__float__weight__exp_uniform(
         (["10000", "10000", "--fmt", ","], "10,000.0"),
         (["10000", "10000", "--fmt", ".0f"], "10000"),
         (["10000", "10000", "--fmt", ".2f"], "10000.00"),
+        # with --list
+        (["10000", "10000", "--fmt", ".2f", "--list=2"], "['10000.00', '10000.00']"),
+        # with --list and --json
+        (
+            ["10000", "10000", "--fmt", ".2f", "--list=2", "--json"],
+            '["10000.00", "10000.00"]',
+        ),
     ],
 )
 def test__main__float__fmt(capfd, options, expected):
@@ -296,6 +305,138 @@ def test__main__float__fmt(capfd, options, expected):
         out, err = capfd.readouterr()
         assert out == f"{expected}\n"
         assert err == ""
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__float__pickle(capfd, tmp_path, repeat):
+    expected_value = 1.25
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "float",
+        str(expected_value),
+        str(expected_value),
+        "--pickle",
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__float__pickle_base64(capfd, repeat):
+    expected_value = 1.25
+    args = [
+        "randog",
+        "float",
+        str(expected_value),
+        str(expected_value),
+        "--pickle",
+        "--base64",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [
+        base64.b64decode(s, validate=True) for s in out.split("\n") if s != ""
+    ]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+def test__main__float__err_base64_without_pickle(capfd):
+    expected_value = 1.25
+    args = [
+        "randog",
+        "float",
+        str(expected_value),
+        str(expected_value),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "randog float: error: argument --base64: not allowed without argument "
+            "--pickle in this mode" in err
+        )
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__float__pickle_fmt(capfd, tmp_path, repeat):
+    expected_value = 1.25
+    args = [
+        "randog",
+        "float",
+        str(expected_value),
+        str(expected_value),
+        "--pickle",
+        "--fmt=x",
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert err == ""
+
+    pickle_encoded = [bytes.fromhex(s) for s in out.split("\n") if s != ""]
+    values = [pickle.loads(b) for b in pickle_encoded]
+
+    assert values == [expected_value] * repeat
+
+
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__float__pickle_list(capfd, tmp_path, repeat):
+    expected_value = 1.25
+    list_length = 2
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "float",
+        str(expected_value),
+        str(expected_value),
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [[expected_value] * list_length] * repeat
 
 
 @pytest.mark.parametrize(

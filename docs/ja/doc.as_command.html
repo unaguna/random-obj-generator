@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>コマンドとして実行 &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+  <title>コマンドとして実行 &mdash; random-obj-generator 0.19.0 ドキュメント</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/documentation_options.js?v=52e18afe"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
             <div class="version">
-              0.18.0
+              0.19.0
             </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -67,6 +67,7 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.int.html">int モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.float.html">float モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.str.html">str モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.bytes.html">bytes モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.decimal.html">decimal モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.datetime.html">datetime モード</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.as_command.date.html">date モード</a></li>
@@ -160,49 +161,55 @@
 <td><p><code class="code docutils literal notranslate"><span class="pre">XTGh3VH1</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.str.html"><span class="doc">detail</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>decimal</p></td>
+<tr class="row-even"><td><p>bytes</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">bytes</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">bytes</span></code></p></td>
+<td><p>binary data</p></td>
+<td><p><a class="reference internal" href="doc.as_command.bytes.html"><span class="doc">detail</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>decimal</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">Decimal</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">decimal</span> <span class="pre">-10</span> <span class="pre">10</span> <span class="pre">--decimal-len</span> <span class="pre">2</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">3.91</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.decimal.html"><span class="doc">detail</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>datetime</p></td>
+<tr class="row-even"><td><p>datetime</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">datetime</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">datetime</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">2022-03-20</span> <span class="pre">12:43:51.110244</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.datetime.html"><span class="doc">detail</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>date</p></td>
+<tr class="row-odd"><td><p>date</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">date</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">date</span> <span class="pre">2022-01-01</span> <span class="pre">2023-01-01</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">2022-03-20</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.date.html"><span class="doc">detail</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>time</p></td>
+<tr class="row-even"><td><p>time</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">time</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">time</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">12:43:51.110244</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.time.html"><span class="doc">detail</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>timedelta</p></td>
+<tr class="row-odd"><td><p>timedelta</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">timedelta</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">timedelta</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">17h</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.timedelta.html"><span class="doc">detail</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>ipv4</p></td>
+<tr class="row-even"><td><p>ipv4</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">IPv4Address</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">ipv4</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">192.0.2.71</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.ipv4.html"><span class="doc">detail</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>dice</p></td>
+<tr class="row-odd"><td><p>dice</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">int</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">randog</span> <span class="pre">dice</span> <span class="pre">2d6</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">9</span></code></p></td>
 <td><p><a class="reference internal" href="doc.as_command.dice.html"><span class="doc">detail</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>byfile</p></td>
+<tr class="row-even"><td><p>byfile</p></td>
 <td><div class="line-block">
 <div class="line">according to</div>
 <div class="line">the definition file</div>
@@ -230,6 +237,7 @@
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#output-to-file">ファイル出力</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#iteration">繰り返し</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#seed">シード値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#convert-to-pickle">pickle 化</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#modify-environment-variable">環境変数を変更</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#logging">ログ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doc.as_command.common_option.html#warning">警告</a></li>
@@ -246,6 +254,7 @@
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.int.html">int モード</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.float.html">float モード</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.str.html">str モード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.as_command.bytes.html">bytes モード</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.decimal.html">decimal モード</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.datetime.html">datetime モード</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doc.as_command.date.html">date モード</a></li>

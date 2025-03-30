@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>randog.factory package &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+  <title>randog.factory package &mdash; random-obj-generator 0.19.0 ドキュメント</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/documentation_options.js?v=52e18afe"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
             <div class="version">
-              0.18.0
+              0.19.0
             </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -78,6 +78,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.iterrange"><code class="docutils literal notranslate"><span class="pre">iterrange()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.parse_dice_notation"><code class="docutils literal notranslate"><span class="pre">parse_dice_notation()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.randbool"><code class="docutils literal notranslate"><span class="pre">randbool()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#randog.factory.randbytearray"><code class="docutils literal notranslate"><span class="pre">randbytearray()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#randog.factory.randbytes"><code class="docutils literal notranslate"><span class="pre">randbytes()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.randchoice"><code class="docutils literal notranslate"><span class="pre">randchoice()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.randdate"><code class="docutils literal notranslate"><span class="pre">randdate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#randog.factory.randdatetime"><code class="docutils literal notranslate"><span class="pre">randdatetime()</span></code></a></li>
@@ -588,6 +590,40 @@
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>prop_true</strong> (<em>float</em>) -- True を生成する確率</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
+</ul>
+</dd>
+<dt class="field-even">例外<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="randog.factory.randbytearray">
+<span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randbytearray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bytearray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randbytearray" title="Link to this definition"></a></dt>
+<dd><p>ランダムに bytearray 型の値を生成する factory を返す。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<em>int</em><em>|</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>[</em><em>int</em><em>]</em><em>, </em><em>default=8</em>) -- 生成されるバイト列の長さ</p></li>
+<li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
+</ul>
+</dd>
+<dt class="field-even">例外<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="randog.exceptions.html#randog.exceptions.FactoryConstructionError" title="randog.exceptions.FactoryConstructionError"><strong>FactoryConstructionError</strong></a> -- 指定した生成条件に矛盾がある場合。</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="randog.factory.randbytes">
+<span class="sig-prename descclassname"><span class="pre">randog.factory.</span></span><span class="sig-name descname"><span class="pre">randbytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Random</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#randog.factory.Factory" title="randog.factory._base.Factory"><span class="pre">Factory</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#randog.factory.randbytes" title="Link to this definition"></a></dt>
+<dd><p>ランダムに bytes 型の値を生成する factory を返す。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<em>int</em><em>|</em><a class="reference internal" href="#randog.factory.Factory" title="randog.factory.Factory"><em>Factory</em></a><em>[</em><em>int</em><em>]</em><em>, </em><em>default=8</em>) -- 生成されるバイト列の長さ</p></li>
 <li><p><strong>rnd</strong> (<em>Random</em><em>, </em><em>optional</em>) -- 乱数生成に使用するインスタンス</p></li>
 </ul>
 </dd>

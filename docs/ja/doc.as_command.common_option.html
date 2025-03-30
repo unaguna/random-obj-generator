@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>共通オプション &mdash; random-obj-generator 0.18.0 ドキュメント</title>
+  <title>共通オプション &mdash; random-obj-generator 0.19.0 ドキュメント</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2334c0a7"></script>
+      <script src="_static/documentation_options.js?v=52e18afe"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
             random-obj-generator
           </a>
             <div class="version">
-              0.18.0
+              0.19.0
             </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -64,6 +64,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#output-to-file">ファイル出力</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#iteration">繰り返し</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seed">シード値</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#convert-to-pickle">pickle 化</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modify-environment-variable">環境変数を変更</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#logging">ログ</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#warning">警告</a></li>
@@ -235,6 +236,22 @@ randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class
 </pre></div>
 </div>
 <p>確認したシード値をメモしておけば、次回、そのシード値を使用することで生成を再現できます。</p>
+</section>
+<section id="convert-to-pickle">
+<h2>pickle 化<a class="headerlink" href="#convert-to-pickle" title="Link to this heading"></a></h2>
+<p>下記のように <code class="code docutils literal notranslate"><span class="pre">--pickle</span></code> オプションを使用することで出力データを <a class="reference external" href="https://docs.python.org/ja/3/library/pickle.html">pickle</a> に変換することができます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output generated value as pickle into file</span>
+randog<span class="w"> </span>date<span class="w"> </span>--pickle<span class="w"> </span>--output<span class="w"> </span>out.pickle
+</pre></div>
+</div>
+<p>上記の例ではバイナリをファイル出力していますが、<code class="code docutils literal notranslate"><span class="pre">--base64</span></code> や <code class="code docutils literal notranslate"><span class="pre">--fmt</span></code> と組み合わせることで文字列としても出力できます。  <code class="code docutils literal notranslate"><span class="pre">--fmt</span></code> を使用するときは、<a class="reference internal" href="doc.as_command.bytes.html#bytes-format-codes"><span class="std std-ref">bytes モードと同じ書式コード</span></a> を使用できます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output generated value as pickle in hex</span>
+randog<span class="w"> </span>date<span class="w"> </span>--pickle<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;x&#39;</span>
+
+<span class="c1"># output generated value as pickle in base64</span>
+randog<span class="w"> </span>date<span class="w"> </span>--pickle<span class="w"> </span>--base64
+</pre></div>
+</div>
 </section>
 <section id="modify-environment-variable">
 <h2>環境変数を変更<a class="headerlink" href="#modify-environment-variable" title="Link to this heading"></a></h2>

@@ -42,3 +42,13 @@ A single command execution can output results multiple times:
 
     # Generate list which contains 10 values
     randog dice 2d6 -L 10
+
+Format: 0-padding, etc.
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The output format can be specified in `format specification mini-language <https://docs.python.org/3/library/string.html?highlight=string#format-specification-mini-language>`_ as follows:
+
+.. code-block:: shell
+
+    # output 0-padded integer such as '08'
+    randog dice 2d6 --fmt 02

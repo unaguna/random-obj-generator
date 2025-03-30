@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bytes モード &mdash; random-obj-generator 0.19.0 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=52e18afe"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=ccdb6887"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="decimal モード" href="doc.as_command.decimal.html" />
+    <link rel="prev" title="str モード" href="doc.as_command.str.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            random-obj-generator
+          </a>
+            <div class="version">
+              0.19.0
+            </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.quickstart.html">クイックスタート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.construct_factories.html">Factory の生成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.use_factories.html">Factory を使用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.write_generated.html">Factory で生成した値の出力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.external_def.html">Factory の外部定義ファイル</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="doc.as_command.html">コマンドとして実行</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#modes">モード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.as_command.html#arguments-and-options">引数とオプション</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="doc.as_command.html#details-of-modes">各モードの詳細</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.bool.html">bool モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.int.html">int モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.float.html">float モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.str.html">str モード</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">bytes モード</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#arguments-and-options">引数とオプション</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">実行例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#format-codes">書式コード</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.decimal.html">decimal モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.datetime.html">datetime モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.date.html">date モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.time.html">time モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.timedelta.html">timedelta モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.ipv4.html">ipv4 Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.byfile.html">byfile モード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.as_command.dice.html">dice モード</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.logging.html">ログ出力</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc.tips.html">Tips (使い方)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randog.html">randog package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">random-obj-generator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="doc.as_command.html">コマンドとして実行</a></li>
+      <li class="breadcrumb-item active">bytes モード</li>
+    <li class="spacer"></li>
+    <li class="wy-breadcrumbs-aside">
+        <select name="lang" onchange="location.href=value;">
+            <option value="../en/doc.as_command.bytes.html"
+            >English</option>
+            <option value="../ja/doc.as_command.bytes.html"
+                selected
+            >日本語</option>
+        </select>
+    </li>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bytes-mode">
+<h1>bytes モード<a class="headerlink" href="#bytes-mode" title="Link to this heading"></a></h1>
+<p>byte モードでは、バイト列を生成します。コマンドの形式は次の通りです：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>bytes<span class="w"> </span><span class="o">[</span>--length<span class="w"> </span>LENGTH<span class="o">]</span><span class="w"> </span><span class="o">[</span>--fmt<span class="w"> </span>FORMAT<span class="o">]</span><span class="w"> </span><span class="o">[</span>common-options<span class="o">]</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>このバイト列生成では、暗号学的に安全であることは保証されません。認証用トークンの生成など、セキュリティ要件があるケースでは、<a class="reference external" href="https://docs.python.org/ja/3/library/secrets.html">secrets</a> モジュール等の使用を検討してください。</p>
+</div>
+<section id="arguments-and-options">
+<h2>引数とオプション<a class="headerlink" href="#arguments-and-options" title="Link to this heading"></a></h2>
+<ul>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">LENGTH</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>生成されるバイト列の長さ。<code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">5</span></code> のように整数値を指定することや、<code class="code docutils literal notranslate"><span class="pre">--length</span> <span class="pre">3:8</span></code> のように範囲を指定することができる。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">--fmt</span> <span class="pre">FORMAT</span></code> (optional):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>指定した場合、指定したフォーマットで出力する。フォーマットは <a class="reference internal" href="#bytes-format-codes"><span class="std std-ref">独自の書式コード</span></a> で指定する。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">common-options</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="doc.as_command.common_option.html"><span class="doc">共通オプション</span></a></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="examples">
+<h2>実行例<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<p>最も簡素な例は次の通りです：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>randog<span class="w"> </span>bytes<span class="w"> </span>--output<span class="w"> </span>./result.dat
+</pre></div>
+</div>
+<p>次の例のように、バイト列長を指定することができます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate bytes of length 16</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--length<span class="w"> </span><span class="m">16</span><span class="w"> </span>--output<span class="w"> </span>./result.dat
+
+<span class="c1"># generate bytes of length 8 - 16</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--length<span class="w"> </span><span class="m">8</span>:16<span class="w"> </span>--output<span class="w"> </span>./result.dat
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>後述する <a class="reference internal" href="#bytes-format"><span class="std std-ref">出力フォーマット</span></a> を使用しない場合、バイナリデータのまま出力されます。コンソール画面に出力しようとすると windows powershell などでは正常に出力されないため、上述の例のように <code class="code docutils literal notranslate"><span class="pre">--output</span></code> オプションを使用してファイル出力します。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>このバイト列生成では、暗号学的に安全であることは保証されません。認証用トークンの生成など、セキュリティ要件があるケースでは、<a class="reference external" href="https://docs.python.org/ja/3/library/secrets.html">secrets</a> モジュール等の使用を検討してください。</p>
+</div>
+<section id="format">
+<span id="bytes-format"></span><h3>出力フォーマット<a class="headerlink" href="#format" title="Link to this heading"></a></h3>
+<p>デフォルトではバイナリデータが出力されますが、次の例のように <a class="reference internal" href="#bytes-format-codes"><span class="std std-ref">書式コード</span></a> を使用することで出力フォーマットを変更できます。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value casted by str()</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--fmt<span class="w"> </span>s
+<span class="c1"># generates a value expressed in hexadecimal with padding zeros on the left.</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;0&gt;20x&#39;</span>
+</pre></div>
+</div>
+<p>オプション <code class="code docutils literal notranslate"><span class="pre">--base64</span></code> を使用することで、base64 にエンコードすることもできます。<code class="code docutils literal notranslate"><span class="pre">--fmt</span></code> を併用した場合、base64 エンコードの結果を文字列とみなして <code class="code docutils literal notranslate"><span class="pre">--fmt</span></code> に指定したフォーマットで出力します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output base64-encoded value such as &#39;QIj/&#39;</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--base64
+
+<span class="c1"># output base64-encoded value such as &#39;  QIj/&#39;</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--base64<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;&gt;6s&#39;</span>
+<span class="c1"># output base64-encoded value such as &#39;&quot;QIj/&quot;&#39;</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--base64<span class="w"> </span>--json
+</pre></div>
+</div>
+</section>
+<section id="repeatedly-generate">
+<h3>繰り返し生成<a class="headerlink" href="#repeatedly-generate" title="Link to this heading"></a></h3>
+<p><code class="code docutils literal notranslate"><span class="pre">-r</span></code> オプションを使用することで、複数回値を生成することができます。</p>
+<p>ただし、出力フォーマットを指定しない場合はバイナリで出力され、複数の値は区切り文字無しで連続で出力されます。これを避けるためには、次の例のように、<a class="reference internal" href="doc.as_command.common_option.html#output-file"><span class="std std-ref">--output オプション</span></a> を使用して生成ごとに異なるファイルへ出力します。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Repeat 10 times; results are output as binary continuously without a delimiter</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span>
+
+<span class="c1"># Repeat 10 times; results are separated into different files</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>-r<span class="w"> </span><span class="m">10</span><span class="w"> </span>--output<span class="w"> </span><span class="s1">&#39;result_{0}&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="format-codes">
+<span id="bytes-format-codes"></span><h2>書式コード<a class="headerlink" href="#format-codes" title="Link to this heading"></a></h2>
+<p>bytes オブジェクトには書式コードが定義されていませんが、このモードでは <a class="reference external" href="https://docs.python.org/ja/3/library/string.html#format-specification-mini-language">Standard Format Specifier</a> に近い書式コードを使用できます.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># generates a value casted by str()</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--fmt<span class="w"> </span>s
+<span class="c1"># generates a value expressed in hexadecimal with padding zeros on the left.</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;0&gt;20x&#39;</span>
+<span class="c1"># generates a value expressed in binary notation with 4 digits each divided by &#39;_&#39;.</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--fmt<span class="w"> </span>_b
+<span class="c1"># generates a value expressed in hexadecimal with prefix &#39;0x&#39;.</span>
+randog<span class="w"> </span>bytes<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;#x&#39;</span>
+</pre></div>
+</div>
+<p>利用可能な表現型は以下です:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">s</span></code>: 文字列。出力は <code class="code docutils literal notranslate"><span class="pre">str()</span></code> の出力と同一です。例: <code class="code docutils literal notranslate"><span class="pre">b'ab\xff'</span></code>.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">c</span></code>: 文字列。出力は <code class="code docutils literal notranslate"><span class="pre">str()</span></code> の出力の内側部分と同一です。例: <code class="code docutils literal notranslate"><span class="pre">ab\xff</span></code>.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">b</span></code>: 2進数。出力される数値は2を基数とします。</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">x</span></code>: 16進数。出力される数値は16を基数とします。10進で9を超える数字には小文字が使われます。</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">X</span></code>: 16進数。出力される数値は16を基数とします。10進で9を超える数字には大文字が使われます。'#' が指定された場合に付く接頭辞の '0x' も大文字の '0X' になります。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.as_command.str.html" class="btn btn-neutral float-left" title="str モード" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.as_command.decimal.html" class="btn btn-neutral float-right" title="decimal モード" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, k-izumi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

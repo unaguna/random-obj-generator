@@ -314,6 +314,38 @@ def test__main__bytes__pickle_fmt(capfd, tmp_path, repeat):
     assert values == [expected_value] * repeat
 
 
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bytes__pickle_list(capfd, tmp_path, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    list_length = 2
+    expected_value = b"\x40\x88\xff"
+    args = [
+        "randog",
+        "bytes",
+        "--length=3",
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        with patch("random.Random.getrandbits") as m:
+            m.return_value = int.from_bytes(expected_value, "big")
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [[expected_value] * list_length] * repeat
+
+
 @pytest.mark.parametrize(
     ("option", "count"),
     [

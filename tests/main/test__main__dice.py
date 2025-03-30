@@ -174,6 +174,35 @@ def test__main__dice__pickle_fmt(capfd, tmp_path, repeat):
     assert values == [1] * repeat
 
 
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__dice__pickle_list(capfd, tmp_path, repeat):
+    list_length = 2
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "dice",
+        "1d1",
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [[1] * list_length] * repeat
+
+
 @pytest.mark.parametrize(
     "expected",
     [1, 2, 3],

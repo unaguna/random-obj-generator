@@ -326,6 +326,61 @@ def test__main__byfile__error_if_fmt_without_pickle(capfd, tmp_path, resources):
         assert "error: --fmt can only be used with --pickle" in err
 
 
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__byfile__pickle_list(capfd, tmp_path, resources, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    list_length = 2
+    expected_values = [
+        [
+            {
+                "id": 0,
+                "name": "aaa",
+                "join_date": dt.date(2019, 10, 14),
+            },
+            {
+                "id": 1,
+                "name": "aaa",
+                "join_date": dt.date(2019, 10, 14),
+            },
+        ],
+        [
+            {
+                "id": 2,
+                "name": "aaa",
+                "join_date": dt.date(2019, 10, 14),
+            },
+            {
+                "id": 3,
+                "name": "aaa",
+                "join_date": dt.date(2019, 10, 14),
+            },
+        ],
+    ]
+    args = [
+        "randog",
+        "byfile",
+        str(resources.joinpath("factory_def_dict.py")),
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == expected_values[:repeat]
+
+
 @pytest.mark.parametrize(
     ("option", "count"),
     [

@@ -265,6 +265,37 @@ def test__main__date__pickle_fmt(capfd, tmp_path, repeat):
     assert values == [expected_value] * repeat
 
 
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__date__pickle_list(capfd, tmp_path, repeat):
+    expected_value = dt.date(2000, 1, 2)
+    list_length = 2
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "date",
+        expected_value.isoformat(),
+        expected_value.isoformat(),
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [[expected_value] * list_length] * repeat
+
+
 @pytest.mark.parametrize(
     ("arg", "expected"),
     [

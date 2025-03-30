@@ -210,6 +210,37 @@ def test__main__int__pickle_fmt(capfd, tmp_path, repeat):
     assert values == [expected_value] * repeat
 
 
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__int__pickle_list(capfd, tmp_path, repeat):
+    expected_value = 12
+    list_length = 2
+    output_path = tmp_path.joinpath("out.txt")
+    args = [
+        "randog",
+        "int",
+        str(expected_value),
+        str(expected_value),
+        "--pickle",
+        "--list",
+        str(list_length),
+        "--output",
+        str(output_path),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [[expected_value] * list_length] * repeat
+
+
 @pytest.mark.parametrize(
     "expected",
     [-1, 0, 1],

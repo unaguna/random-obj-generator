@@ -371,6 +371,39 @@ def test__main__bool__pickle_fmt(capfd, tmp_path, prop_true, expected, repeat):
 
 
 @pytest.mark.parametrize(
+    ("prop_true", "expected"),
+    [("0", False), ("1", True)],
+)
+@pytest.mark.parametrize("repeat", [1, 2])
+def test__main__bool__pickle_list(capfd, tmp_path, prop_true, expected, repeat):
+    output_path = tmp_path.joinpath("out.txt")
+    list_length = 2
+    args = [
+        "randog",
+        "bool",
+        prop_true,
+        "--pickle",
+        "--output",
+        str(output_path),
+        "-L",
+        str(list_length),
+        "--repeat",
+        str(repeat),
+    ]
+    with patch.object(sys, "argv", args):
+        randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert err == ""
+
+    with open(output_path, mode="br") as fp:
+        values = [pickle.load(fp) for _ in range(repeat)]
+
+    assert values == [[expected] * list_length] * repeat
+
+
+@pytest.mark.parametrize(
     ("seed0", "seed1", "expect_same_output"),
     [
         (["--seed=100"], ["--seed=100"], True),

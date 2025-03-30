@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IPv4 address factory &mdash; random-obj-generator 0.19.0 ドキュメント</title>
+  <title>Bytes factory &mdash; random-obj-generator 0.19.0 ドキュメント</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -23,8 +23,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="next" title="Enum factory" href="doc.enum_factory.html" />
-    <link rel="prev" title="Bytes factory" href="doc.bytes_factory.html" /> 
+    <link rel="next" title="IPv4 address factory" href="doc.ipv4_factory.html" />
+    <link rel="prev" title="Str factory" href="doc.str_factory.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -64,12 +64,12 @@
 <li class="toctree-l3"><a class="reference internal" href="doc.dict_factory.html">Dict factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.list_factory.html">List factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.str_factory.html">Str factory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doc.bytes_factory.html">Bytes factory</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">IPv4 address factory</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Bytes factory</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#simple-factory">単純な factory</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#specify-the-address-space">アドレス空間を指定する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specify-the-length">バイト列長を指定する</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="doc.ipv4_factory.html">IPv4 address factory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doc.enum_factory.html">Enum factory</a></li>
 </ul>
 </li>
@@ -100,13 +100,13 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="doc.construct_factories.html">Factory の生成</a></li>
-      <li class="breadcrumb-item active">IPv4 address factory</li>
+      <li class="breadcrumb-item active">Bytes factory</li>
     <li class="spacer"></li>
     <li class="wy-breadcrumbs-aside">
         <select name="lang" onchange="location.href=value;">
-            <option value="../en/doc.ipv4_factory.html"
+            <option value="../en/doc.bytes_factory.html"
             >English</option>
-            <option value="../ja/doc.ipv4_factory.html"
+            <option value="../ja/doc.bytes_factory.html"
                 selected
             >日本語</option>
         </select>
@@ -118,42 +118,55 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="ipv4-address-factory">
-<h1>IPv4 address factory<a class="headerlink" href="#ipv4-address-factory" title="Link to this heading"></a></h1>
-<p><a class="reference external" href="randog.factory.html#randog.factory.randipv4">randipv4</a> を使用することで、<a class="reference external" href="https://docs.python.org/ja/3/library/ipaddress.html#ipaddress.IPv4Address">IPv4Address</a> の値を生成する factory を作成できます。</p>
+  <section id="bytes-factory">
+<h1>Bytes factory<a class="headerlink" href="#bytes-factory" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="randog.factory.html#randog.factory.randbytes">randbytes</a> を使用することで、バイト列を生成する factory を作成できます。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> に IPv4Address の値を例として渡しても IPv4Address の factory を作成できますが、生成条件の指定ができません。</p>
+<p><a class="reference external" href="randog.factory.html#randog.factory.from_example">from_example</a> にバイト列を例として渡しても bytes の factory を作成できますが、生成条件の指定ができません。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><a class="reference external" href="randog.factory.html#randog.factory.randbytearray">randbytearray</a> を使用することで、bytearray (編集可能なバイト列) オブジェクトを生成する factory を作成することもできます。引数は randbytes と同じです。</p>
 </div>
 <section id="simple-factory">
 <h2>単純な factory<a class="headerlink" href="#simple-factory" title="Link to this heading"></a></h2>
-<p>生成される値が IPv4 アドレスでありさえすればよい場合には、次のように引数を指定せずに <a class="reference external" href="randog.factory.html#randog.factory.randipv4">randipv4</a> を使用します。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ipaddress</span><span class="w"> </span><span class="kn">import</span> <span class="n">IPv4Address</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
+<p>生成される値がバイト列でありさえすればよい場合には、次のように引数を指定せずに <a class="reference external" href="randog.factory.html#randog.factory.randbytes">randbytes</a> を使用します。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randipv4</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randbytes</span><span class="p">()</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">IPv4Address</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
 </pre></div>
 </div>
 </section>
-<section id="specify-the-address-space">
-<h2>アドレス空間を指定する<a class="headerlink" href="#specify-the-address-space" title="Link to this heading"></a></h2>
-<p>次の例のように、生成される IPv4 アドレスが属するネットワークを指定することができます。</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ipaddress</span><span class="w"> </span><span class="kn">import</span> <span class="n">IPv4Address</span><span class="p">,</span> <span class="n">ip_network</span>
+<section id="specify-the-length">
+<h2>バイト列長を指定する<a class="headerlink" href="#specify-the-length" title="Link to this heading"></a></h2>
+<p>引数 <code class="code docutils literal notranslate"><span class="pre">length</span></code> を使用することで、生成されるバイト列の長さを指定することができます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">factory1</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randipv4</span><span class="p">(</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">factory2</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randipv4</span><span class="p">([</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">),</span> <span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.2.0/24&quot;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randbytes</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generated1</span> <span class="o">=</span> <span class="n">factory1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated1</span> <span class="ow">in</span> <span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">hosts</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">length</span></code> に <a class="reference external" href="randog.factory.html#randog.factory.randint">randint()</a> を指定することで、バイト列長をランダムにすることもできます。</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">randog.factory</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">generated2</span> <span class="o">=</span> <span class="n">factory2</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">generated2</span> <span class="ow">in</span> <span class="p">[</span><span class="o">*</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.0.0/24&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">hosts</span><span class="p">(),</span> <span class="o">*</span><span class="n">ip_network</span><span class="p">(</span><span class="s2">&quot;192.168.2.0/24&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">hosts</span><span class="p">()]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a factory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randbytes</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">randog</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="mi">10</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">19</span>
 </pre></div>
 </div>
 </section>
@@ -163,8 +176,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="doc.bytes_factory.html" class="btn btn-neutral float-left" title="Bytes factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="doc.enum_factory.html" class="btn btn-neutral float-right" title="Enum factory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.str_factory.html" class="btn btn-neutral float-left" title="Str factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc.ipv4_factory.html" class="btn btn-neutral float-right" title="IPv4 address factory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

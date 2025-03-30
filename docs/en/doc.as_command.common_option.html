@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Common Options &mdash; random-obj-generator 0.18.0 documentation</title>
+  <title>Common Options &mdash; random-obj-generator 0.19.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/my_theme.css?v=4eecd16f" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=ba2e7b09"></script>
+      <script src="_static/documentation_options.js?v=cbfb3150"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -38,7 +38,7 @@
             random-obj-generator
           </a>
             <div class="version">
-              0.18.0
+              0.19.0
             </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -63,6 +63,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#output-to-file">Output to file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#iteration">Iteration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seed">Seed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#convert-to-pickle">Convert to pickle</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modify-environment-variable">Modify environment variable</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#logging">Logging</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#warning">Warning</a></li>
@@ -236,6 +237,22 @@ randog<span class="w"> </span>str<span class="w"> </span>--log-stderr<span class
 </pre></div>
 </div>
 <p>If you note the observed seed value, you can reproduce the generation the next time by using that seed value.</p>
+</section>
+<section id="convert-to-pickle">
+<h2>Convert to pickle<a class="headerlink" href="#convert-to-pickle" title="Link to this heading"></a></h2>
+<p>Output data can be converted to <a class="reference external" href="https://docs.python.org/3/library/pickle.html">pickle</a> by using the <code class="code docutils literal notranslate"><span class="pre">--pickle</span></code> option as shown below.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output generated value as pickle into file</span>
+randog<span class="w"> </span>date<span class="w"> </span>--pickle<span class="w"> </span>--output<span class="w"> </span>out.pickle
+</pre></div>
+</div>
+<p>The above example outputs binary to file, but it can also be output as a string by combining with <code class="code docutils literal notranslate"><span class="pre">--base64</span></code> or <code class="code docutils literal notranslate"><span class="pre">--fmt</span></code>. You can use <a class="reference internal" href="doc.as_command.bytes.html#bytes-format-codes"><span class="std std-ref">the formatting codes of bytes mode</span></a> when using <code class="code docutils literal notranslate"><span class="pre">--fmt</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># output generated value as pickle in hex</span>
+randog<span class="w"> </span>date<span class="w"> </span>--pickle<span class="w"> </span>--fmt<span class="w"> </span><span class="s1">&#39;x&#39;</span>
+
+<span class="c1"># output generated value as pickle in base64</span>
+randog<span class="w"> </span>date<span class="w"> </span>--pickle<span class="w"> </span>--base64
+</pre></div>
+</div>
 </section>
 <section id="modify-environment-variable">
 <h2>Modify environment variable<a class="headerlink" href="#modify-environment-variable" title="Link to this heading"></a></h2>

@@ -14,6 +14,9 @@ class SubcmdDefString(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.String
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         ipv4_parser = subparsers.add_parser(
             Subcmd.String.value,

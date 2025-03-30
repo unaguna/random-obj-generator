@@ -13,6 +13,9 @@ class SubcmdDefByfile(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Byfile
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return False
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         byfile_parser = subparsers.add_parser(
             Subcmd.Byfile.value,

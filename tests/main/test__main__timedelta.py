@@ -272,6 +272,26 @@ def test__main__timedelta__pickle_base64(capfd, repeat):
     assert values == [expected_value] * repeat
 
 
+def test__main__timedelta__err_base64_without_pickle(capfd):
+    args = [
+        "randog",
+        "timedelta",
+        "3d4s5us",
+        "3d4s5us",
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "randog timedelta: error: argument --base64: not allowed without argument "
+            "--pickle in this mode" in err
+        )
+
+
 @pytest.mark.parametrize("repeat", [1, 2])
 def test__main__timedelta__pickle_fmt(capfd, tmp_path, repeat):
     expected_value = dt.timedelta(3, 4, 5)

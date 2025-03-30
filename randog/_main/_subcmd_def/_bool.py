@@ -14,6 +14,9 @@ class SubcmdDefBool(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Bool
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         bool_parser = subparsers.add_parser(
             Subcmd.Bool.value,

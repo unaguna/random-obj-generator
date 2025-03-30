@@ -43,7 +43,10 @@ def _build_factories(
     ]
 ]:
     subcmd_def = get_subcmd_def(args.sub_cmd)
-    post_process_of_binary_fmt = _post_process_of_binary_fmt(args.binary_fmt)
+    post_process_of_binary_fmt = _post_process_of_binary_fmt(
+        args.binary_fmt,
+        strict_type=args.sub_cmd != Subcmd.Byfile,
+    )
     post_process_of_value_fmt = _post_process_of_value_fmt(args)
 
     if args.sub_cmd == Subcmd.Byfile:
@@ -167,12 +170,14 @@ class _IterAsListFactory(Factory[t.List]):
 
 def _post_process_of_binary_fmt(
     binary_fmt: t.Optional[str],
+    *,
+    strict_type: bool,
 ) -> t.Optional[t.Callable[[t.Any], t.Any]]:
     """callable object to convert bytes to str according binary_fmt"""
     if binary_fmt is None:
         return None
     elif binary_fmt == "base64":
-        return StripWrapper(Base64PostProcess())
+        return StripWrapper(Base64PostProcess(strict_type=strict_type))
     else:
         raise ValueError(f"unknown binary format: {binary_fmt}")
 

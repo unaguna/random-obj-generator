@@ -17,6 +17,9 @@ class SubcmdDefTimedelta(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Timedelta
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         timedelta_parser = subparsers.add_parser(
             Subcmd.Timedelta.value,

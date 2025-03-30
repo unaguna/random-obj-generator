@@ -447,6 +447,29 @@ def test__main__decimal__pickle_base64(capfd, repeat):
     assert values == [expected_value] * repeat
 
 
+def test__main__decimal__err_base64_without_pickle(capfd):
+    expected_value = Decimal("1.230")
+    args = [
+        "randog",
+        "decimal",
+        str(expected_value),
+        str(expected_value),
+        "--decimal-len",
+        str(-1 * expected_value.as_tuple().exponent),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "randog decimal: error: argument --base64: not allowed without argument "
+            "--pickle in this mode" in err
+        )
+
+
 @pytest.mark.parametrize("repeat", [1, 2])
 def test__main__decimal__pickle_fmt(capfd, tmp_path, repeat):
     expected_value = Decimal("1.230")

@@ -5,6 +5,11 @@ from ._base import BasePostProcess
 
 
 class Base64PostProcess(BasePostProcess):
+    _strict_type: bool
+
+    def __init__(self, *, strict_type: bool = True):
+        self._strict_type = strict_type
+
     def get_input_type(self) -> t.Sequence[t.Type]:
         return (bytes,)
 
@@ -13,8 +18,10 @@ class Base64PostProcess(BasePostProcess):
 
     def __call__(self, pre_value: t.Any) -> t.Any:
         next_val = _b64encode_or_asis(pre_value)
-        if pre_value is next_val:
-            raise TypeError()
+        if self._strict_type and pre_value is next_val:
+            raise TypeError(
+                f"base64 requires a bytes-like object, not '{type(pre_value).__name__}'"
+            )
 
         return next_val
 

@@ -155,6 +155,25 @@ def test__main__dice__pickle_base64(capfd, repeat):
     assert values == [1] * repeat
 
 
+def test__main__dice__err_base64_without_pickle(capfd):
+    args = [
+        "randog",
+        "dice",
+        "1d1",
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "randog dice: error: argument --base64: not allowed without argument "
+            "--pickle in this mode" in err
+        )
+
+
 @pytest.mark.parametrize("repeat", [1, 2])
 def test__main__dice__pickle_fmt(capfd, tmp_path, repeat):
     args = [

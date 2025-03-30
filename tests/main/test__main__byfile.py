@@ -154,18 +154,32 @@ def test__main__option_base64(capfd, resources):
         assert err == ""
 
 
-def test__main__option_base64__dict(capfd, resources):
+@pytest.mark.parametrize(
+    ("def_file", "expected"),
+    [
+        (
+            "factory_def_bytes_const_in_dict.py",
+            "{'int': 1, 'str': 'aaa', 'bytes': 'QIj/'}\n",
+        ),
+        ("factory_def_bbb.py", "bbb\n"),
+        (
+            "factory_def_dict.py",
+            "{'id': 0, 'name': 'aaa', 'join_date': datetime.date(2019, 10, 14)}\n",
+        ),
+    ],
+)
+def test__main__option_base64__dict(capfd, resources, def_file, expected):
     args = [
         "randog",
         "byfile",
-        str(resources.joinpath("factory_def_bytes_const_in_dict.py")),
+        str(resources.joinpath(def_file)),
         "--base64",
     ]
     with patch.object(sys, "argv", args):
         randog.__main__.main()
 
         out, err = capfd.readouterr()
-        assert out == "{'int': 1, 'str': 'aaa', 'bytes': 'QIj/'}\n"
+        assert out == expected
         assert err == ""
 
 
@@ -182,22 +196,6 @@ def test__main__option_base64__list(capfd, resources):
         out, err = capfd.readouterr()
         assert out == "[1, 'aaa', 'QIj/']\n"
         assert err == ""
-
-
-def test__main__option_base64__error_with_non_bytes(capfd, resources):
-    args = [
-        "randog",
-        "byfile",
-        str(resources.joinpath("factory_def.py")),
-        "--base64",
-    ]
-    with patch.object(sys, "argv", args):
-        with pytest.raises(SystemExit):
-            randog.__main__.main()
-
-        out, err = capfd.readouterr()
-        assert out == ""
-        assert "TypeError" in err
 
 
 @pytest.mark.parametrize("repeat", [1, 2])

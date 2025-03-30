@@ -15,6 +15,9 @@ class SubcmdDefDice(SubcmdDef):
     def cmd(self) -> Subcmd:
         return Subcmd.Dice
 
+    def generate_bytes_only_with_pickle(self) -> bool:
+        return True
+
     def add_parser(self, subparsers) -> argparse.ArgumentParser:
         dice_parser = subparsers.add_parser(
             Subcmd.Dice.value,

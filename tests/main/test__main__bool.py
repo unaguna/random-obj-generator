@@ -352,6 +352,29 @@ def test__main__bool__pickle_base64(capfd, prop_true, expected, repeat):
     ("prop_true", "expected"),
     [("0", False), ("0.0", False), ("1", True), ("1.0", True)],
 )
+def test__main__bool__err_base64_without_pickle(capfd, prop_true, expected):
+    args = [
+        "randog",
+        "bool",
+        prop_true,
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "randog bool: error: argument --base64: not allowed without argument "
+            "--pickle in this mode" in err
+        )
+
+
+@pytest.mark.parametrize(
+    ("prop_true", "expected"),
+    [("0", False), ("0.0", False), ("1", True), ("1.0", True)],
+)
 @pytest.mark.parametrize("repeat", [1, 2])
 def test__main__bool__pickle_fmt(capfd, tmp_path, prop_true, expected, repeat):
     args = [

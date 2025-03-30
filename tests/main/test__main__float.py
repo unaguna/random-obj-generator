@@ -362,6 +362,27 @@ def test__main__float__pickle_base64(capfd, repeat):
     assert values == [expected_value] * repeat
 
 
+def test__main__float__err_base64_without_pickle(capfd):
+    expected_value = 1.25
+    args = [
+        "randog",
+        "float",
+        str(expected_value),
+        str(expected_value),
+        "--base64",
+    ]
+    with patch.object(sys, "argv", args):
+        with pytest.raises(SystemExit):
+            randog.__main__.main()
+
+        out, err = capfd.readouterr()
+        assert out == ""
+        assert (
+            "randog float: error: argument --base64: not allowed without argument "
+            "--pickle in this mode" in err
+        )
+
+
 @pytest.mark.parametrize("repeat", [1, 2])
 def test__main__float__pickle_fmt(capfd, tmp_path, repeat):
     expected_value = 1.25

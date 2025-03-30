@@ -369,6 +369,13 @@ def test__main__decimal__option_json(capfd, arg, expected):
         (["10000", "10000", "--fmt", ","], "10,000"),
         (["10000", "10000", "--fmt", ".0f"], "10000"),
         (["10000", "10000", "--fmt", ".2f"], "10000.00"),
+        # with --list
+        (["10000", "10000", "--fmt", ",", "--list=2"], "['10,000', '10,000']"),
+        # with --list and --json
+        (
+            ["10000", "10000", "--fmt", ",", "--list=2", "--json"],
+            '["10,000", "10,000"]',
+        ),
     ],
 )
 def test__main__decimal__fmt(capfd, options, expected):

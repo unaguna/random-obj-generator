@@ -5,6 +5,7 @@ import os.path
 import pickle
 import re
 import sys
+import typing
 from unittest.mock import patch
 
 import pytest
@@ -199,13 +200,32 @@ def test__main__bytes__fmt_c(capfd, options, parse):
         (["--base64"], b"\x40\x88\xff", "QIj/"),
         (["--base64", "--json"], b"\x40\x88\xff", '"QIj/"'),
         (["--base64", "--fmt", ">6s"], b"\x40\x88\xff", "  QIj/"),
+        # with --list
+        (
+            ["--fmt", "x", "--list=2"],
+            [b"\x40\x88\xff", b"\x40\x88\xfe"],
+            "['4088ff', '4088fe']",
+        ),
+        (
+            ["--fmt", "c", "--list=2"],
+            [b"\x40\x88\xff", b"\x40\x88\xfe"],
+            r"['@\\x88\\xff', '@\\x88\\xfe']",
+        ),
+        # with --list and --json
+        (
+            ["--fmt", "x", "--list=2", "--json"],
+            [b"\x40\x88\xff", b"\x40\x88\xfe"],
+            '["4088ff", "4088fe"]',
+        ),
     ],
 )
 def test__main__bytes__fmt_value(capfd, options, mock_bytes, expected):
+    if not isinstance(mock_bytes, typing.List):
+        mock_bytes = [mock_bytes]
     args = ["randog", "bytes", "--length=3", *options]
     with patch.object(sys, "argv", args):
         with patch("random.Random.getrandbits") as m:
-            m.return_value = int.from_bytes(mock_bytes, "big")
+            m.side_effect = [int.from_bytes(b, "big") for b in mock_bytes]
             randog.__main__.main()
 
         out, err = capfd.readouterr()

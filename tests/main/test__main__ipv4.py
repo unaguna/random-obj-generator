@@ -123,6 +123,13 @@ def test__main__ipv4__option_json(capfd, options, expected):
         (["192.168.0.1/32", "--fmt", "_b"], "1100_0000_1010_1000_0000_0000_0000_0001"),
         (["192.168.0.1/32", "--fmt", "x"], "c0a80001"),
         (["192.168.0.1/32", "--fmt", "X"], "C0A80001"),
+        # with --list
+        (["192.168.0.1/32", "--fmt", "x", "--list=2"], "['c0a80001', 'c0a80001']"),
+        # with --list and --json
+        (
+            ["192.168.0.1/32", "--fmt", "x", "--list=2", "--json"],
+            '["c0a80001", "c0a80001"]',
+        ),
     ],
 )
 def test__main__ipv4__fmt(capfd, options, expected):

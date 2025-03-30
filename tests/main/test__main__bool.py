@@ -58,6 +58,11 @@ def test__main__bool__error_when_illegal_prop_true(capfd, prop_true):
         (["1", "--json"], "true"),
         (["0", "--fmt", "1"], "0"),
         (["1", "--fmt", "1"], "1"),
+        # with --list
+        (["0", "--fmt", "1", "--list", "2"], "['0', '0']"),
+        (["1", "--fmt", "1", "--list", "2"], "['1', '1']"),
+        # with --list and --json
+        (["1", "--fmt", "1", "--list", "2", "--json"], '["1", "1"]'),
     ],
 )
 def test__main__bool__fmt(capfd, options, expected):

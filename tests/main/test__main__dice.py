@@ -88,6 +88,10 @@ def test__main__dice__error_when_illegal_code(capfd, code):
         (["1d1", "--json"], "1"),
         (["1d1", "--fmt", ">3d"], "  1"),
         (["1d1", "--fmt", ".2f"], "1.00"),
+        # with --list
+        (["1d1", "--fmt", ">3d", "--list=2"], "['  1', '  1']"),
+        # with --list and --json
+        (["1d1", "--fmt", ">3d", "--list=2", "--json"], '["  1", "  1"]'),
     ],
 )
 def test__main__dice__fmt(capfd, options, expected):

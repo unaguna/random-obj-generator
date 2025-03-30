@@ -220,6 +220,16 @@ def test__main__str__option_json_unicode(capfd, options, expected):
     ("options", "expected"),
     [
         (["--charset=a", "--length=3", "--fmt", ">5"], "  aaa"),
+        # with --list
+        (
+            ["--charset=a", "--length=3", "--fmt", ">5", "--list=2"],
+            "['  aaa', '  aaa']",
+        ),
+        # with --list and --json
+        (
+            ["--charset=a", "--length=3", "--fmt", ">5", "--list=2", "--json"],
+            '["  aaa", "  aaa"]',
+        ),
     ],
 )
 def test__main__str__fmt(capfd, options, expected):

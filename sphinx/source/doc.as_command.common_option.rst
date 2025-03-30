@@ -151,7 +151,7 @@ Output data can be converted to `pickle <https://docs.python.org/3/library/pickl
     randog date --pickle --output out.pickle
 
 
-The above example outputs binary to file, but it can also be output as a string by combining with :code:`--base64` or :code:`--fmt`.
+The above example outputs binary to file, but it can also be output as a string by combining with :code:`--base64` or :code:`--fmt`. You can use :ref:`the formatting codes of bytes mode <bytes-format-codes>` when using :code:`--fmt`.
 
 .. code-block:: shell
 
